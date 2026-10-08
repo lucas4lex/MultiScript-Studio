@@ -4,243 +4,5457 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MultiScript HTML Editor V14</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
 <style>
-:root{--bg:#0b0f14;--panel:#111720;--panel2:#151d28;--line:#263242;--text:#e7edf5;--muted:#8d9bad;--accent:#4da3ff;--danger:#ff6262;--ok:#52d68b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif;height:100vh;overflow:hidden}
-button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:#182231;color:var(--text);border-radius:7px;padding:8px 11px}button:hover{background:#202d3e}button.primary{background:#1769aa;border-color:#2588d2}button.danger{background:#65252c;border-color:#87343d}
-.top{height:58px;background:#0f151e;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:8px 12px}.brand{font-weight:800;margin-right:10px;white-space:nowrap}.brand b{color:var(--accent)}
-.nav{display:flex;gap:5px;flex:1}.nav button.active{background:#1d4263;border-color:#327fb9}
-.layout{height:calc(100vh - 58px);display:grid;grid-template-columns:250px 1fr;min-width:900px}.side{background:#0f151d;border-right:1px solid var(--line);overflow:auto;padding:12px}.workspace{min-width:0;display:flex;flex-direction:column}
-.section-title{font-size:11px;color:#6f7e90;font-weight:800;letter-spacing:.12em;margin:16px 5px 7px}.tree button{width:100%;text-align:left;background:transparent;border:0;padding:7px 8px;color:#bdc9d7}.tree button:hover{background:#18222e}.tree button.active{background:#183451;color:#fff}.lock{color:#e2b84b}.crumb{height:40px;border-bottom:1px solid var(--line);padding:11px 15px;color:var(--muted);background:#101720}.view{display:none;flex:1;min-height:0;overflow:auto}.view.active{display:block}.editor{height:100%;display:grid;grid-template-rows:40px 1fr}.editorbar{display:flex;gap:7px;align-items:center;padding:6px 9px;border-bottom:1px solid var(--line);background:#111821}.editorbar span{color:var(--muted);margin-right:auto}.codewrap{position:relative;height:100%;overflow:hidden}.code{width:100%;height:100%;resize:none;border:0;outline:0;background:#090d12;color:#d8e1eb;padding:15px 18px;font:13px/1.6 Consolas,Monaco,monospace;tab-size:2}
-.panel{padding:22px;max-width:1200px;margin:auto}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:17px}.card h3{margin:0 0 8px}.card p{color:var(--muted);line-height:1.5}.field{display:flex;flex-direction:column;gap:6px;margin:10px 0}.field label{color:#b8c4d1;font-size:12px}.field input,.field select,.field textarea{background:#0b1118;border:1px solid var(--line);color:#fff;border-radius:7px;padding:9px;outline:0}.field textarea{min-height:110px;resize:vertical}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.list{display:grid;gap:8px}.row{display:flex;align-items:center;gap:10px;padding:11px;background:#101822;border:1px solid var(--line);border-radius:8px}.row .grow{flex:1}.small{font-size:12px;color:var(--muted)}.tag{display:inline-block;padding:3px 7px;border:1px solid var(--line);border-radius:20px;font-size:11px;color:#aebbd0}
-.modal-bg{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:50}.modal-bg.open{display:flex}.modal{width:min(720px,92vw);max-height:90vh;overflow:auto;background:#121a24;border:1px solid #304052;border-radius:12px;box-shadow:0 25px 80px #000;padding:20px}.modal h2{margin-top:0}.toast{position:fixed;right:18px;bottom:18px;background:#172333;border:1px solid #35506d;padding:11px 15px;border-radius:8px;display:none;z-index:100}.toast.show{display:block}
-.image-editor{height:100%;display:grid;grid-template-columns:180px 1fr 220px;min-height:0}.tools,.layers{background:#101720;padding:10px;border-color:var(--line);border-style:solid}.tools{border-width:0 1px 0 0}.layers{border-width:0 0 0 1px;overflow:auto}.tools button{display:block;width:100%;margin-bottom:7px}.canvasarea{display:flex;flex-direction:column;min-width:0;background:#0a0e13}.canvasbar{padding:8px;border-bottom:1px solid var(--line);display:flex;gap:6px;flex-wrap:wrap}.canvasbox{flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;padding:25px;background:repeating-conic-gradient(#151b22 0 25%,#11161c 0 50%) 50%/24px 24px}.canvasbox svg{background:white;box-shadow:0 10px 40px #0008;max-width:90%;max-height:80%}.layer{padding:7px;border:1px solid var(--line);margin-bottom:5px;border-radius:6px;background:#141d28}.layer button{padding:2px 5px;float:right}.code-svg{width:100%;height:100%;background:#090d12;color:#d8e1eb;border:0;padding:15px;font:13px Consolas,monospace}
-@media(max-width:1000px){.layout{grid-template-columns:210px 1fr}.image-editor{grid-template-columns:145px 1fr 180px}}
+:root{
+    --bg:#080c11;
+    --panel:#101720;
+    --panel2:#151e29;
+    --panel3:#1a2634;
+    --line:#293747;
+    --text:#edf3f8;
+    --muted:#8998a9;
+    --accent:#43a5ff;
+    --accent2:#1769aa;
+    --danger:#e05260;
+    --success:#45d483;
+    --warning:#e4b64d;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    margin:0;
+}
+
+body{
+    overflow:hidden;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    font-size:14px;
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+    border:1px solid var(--line);
+    background:#17212d;
+    color:var(--text);
+    border-radius:7px;
+    padding:8px 11px;
+}
+
+button:hover{
+    background:#203043;
+}
+
+button.primary{
+    background:var(--accent2);
+    border-color:#2b8bd0;
+}
+
+button.primary:hover{
+    background:#2182c8;
+}
+
+button.danger{
+    background:#56232b;
+    border-color:#873640;
+}
+
+button.success{
+    background:#174d35;
+    border-color:#277c55;
+}
+
+button.small-btn{
+    padding:5px 8px;
+    font-size:12px;
+}
+
+/* TOP */
+
+.topbar{
+    height:58px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:8px 11px;
+    background:#0e141c;
+    border-bottom:1px solid var(--line);
+}
+
+.brand{
+    font-size:15px;
+    font-weight:800;
+    white-space:nowrap;
+    margin-right:8px;
+}
+
+.brand span{
+    color:var(--accent);
+}
+
+.nav{
+    display:flex;
+    gap:4px;
+    flex:1;
+}
+
+.nav button{
+    background:transparent;
+    border-color:transparent;
+}
+
+.nav button.active{
+    background:#173753;
+    border-color:#276a99;
+}
+
+/* LAYOUT */
+
+.layout{
+    height:calc(100vh - 58px);
+    display:grid;
+    grid-template-columns:255px minmax(0,1fr);
+}
+
+.sidebar{
+    background:#0d141c;
+    border-right:1px solid var(--line);
+    overflow:auto;
+    padding:10px;
+}
+
+.workspace{
+    min-width:0;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+}
+
+.breadcrumb{
+    height:40px;
+    display:flex;
+    align-items:center;
+    padding:0 14px;
+    background:#101720;
+    border-bottom:1px solid var(--line);
+    color:var(--muted);
+}
+
+/* TREE */
+
+.tree-title{
+    color:#65768a;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.12em;
+    margin:15px 5px 6px;
+}
+
+.tree{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.tree button{
+    width:100%;
+    text-align:left;
+    border:0;
+    background:transparent;
+    color:#b9c6d4;
+    padding:7px 8px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.tree button:hover{
+    background:#17212c;
+}
+
+.tree button.active{
+    background:#183957;
+    color:#fff;
+}
+
+.lock{
+    color:var(--warning);
+}
+
+/* VIEWS */
+
+.view{
+    display:none;
+    flex:1;
+    min-height:0;
+    overflow:auto;
+}
+
+.view.active{
+    display:block;
+}
+
+/* EDITOR */
+
+.editor{
+    height:100%;
+    display:grid;
+    grid-template-rows:42px 1fr;
+}
+
+.editorbar{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:6px 9px;
+    background:#111a23;
+    border-bottom:1px solid var(--line);
+}
+
+.editorbar .filename{
+    flex:1;
+    color:#c6d2de;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.codewrap{
+    position:relative;
+    min-height:0;
+    overflow:hidden;
+}
+
+.code{
+    width:100%;
+    height:100%;
+    border:0;
+    outline:0;
+    resize:none;
+    padding:16px 20px;
+    background:#080c11;
+    color:#dce6ef;
+    font:13px/1.65 Consolas,Monaco,"Courier New",monospace;
+    tab-size:4;
+}
+
+/* PANELS */
+
+.panel{
+    width:min(1200px,100%);
+    margin:auto;
+    padding:25px;
+}
+
+.panel h1{
+    margin:0 0 8px;
+}
+
+.panel h2{
+    margin-top:30px;
+}
+
+.muted{
+    color:var(--muted);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:14px;
+}
+
+.card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:17px;
+}
+
+.card h3{
+    margin:0 0 8px;
+}
+
+.card p{
+    color:var(--muted);
+    line-height:1.55;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:13px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin:12px 0;
+}
+
+.field label{
+    color:#b9c6d4;
+    font-size:12px;
+}
+
+.field input,
+.field select,
+.field textarea{
+    width:100%;
+    border:1px solid var(--line);
+    outline:0;
+    border-radius:7px;
+    background:#0a1017;
+    color:#fff;
+    padding:9px;
+}
+
+.field textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.list{
+    display:grid;
+    gap:8px;
+}
+
+.row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:#101821;
+}
+
+.row .grow{
+    flex:1;
+    min-width:0;
+}
+
+.row .grow b{
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.tag{
+    display:inline-block;
+    padding:3px 7px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    color:#aebdcd;
+    font-size:11px;
+}
+
+/* MODAL */
+
+.modal-bg{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:#000b;
+    z-index:100;
+}
+
+.modal-bg.open{
+    display:flex;
+}
+
+.modal{
+    width:min(720px,92vw);
+    max-height:90vh;
+    overflow:auto;
+    background:#121a24;
+    border:1px solid #304052;
+    border-radius:12px;
+    box-shadow:0 25px 80px #000;
+    padding:21px;
+}
+
+.modal h2{
+    margin:0 0 15px;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:200;
+    display:none;
+    padding:11px 15px;
+    background:#172333;
+    border:1px solid #35506d;
+    border-radius:8px;
+    box-shadow:0 10px 30px #0008;
+}
+
+.toast.show{
+    display:block;
+}
+
+/* IMAGE EDITOR */
+
+.image-editor{
+    height:100%;
+    min-height:0;
+    display:grid;
+    grid-template-columns:180px minmax(0,1fr) 230px;
+}
+
+.image-tools,
+.image-layers{
+    background:#101720;
+    padding:10px;
+    overflow:auto;
+}
+
+.image-tools{
+    border-right:1px solid var(--line);
+}
+
+.image-layers{
+    border-left:1px solid var(--line);
+}
+
+.image-tools button{
+    display:block;
+    width:100%;
+    margin-bottom:7px;
+}
+
+.image-canvas{
+    min-width:0;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    background:#090d12;
+}
+
+.image-toolbar{
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:7px;
+    flex-wrap:wrap;
+    background:#111a23;
+    border-bottom:1px solid var(--line);
+}
+
+.image-toolbar .svg-file{
+    flex:1;
+    font-weight:bold;
+    color:#dbe7f2;
+}
+
+.canvas-area{
+    position:relative;
+    flex:1;
+    min-height:0;
+    overflow:auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    background:
+        repeating-conic-gradient(
+            #171d24 0 25%,
+            #11161c 0 50%
+        ) 50% / 24px 24px;
+}
+
+.svg-stage{
+    background:#fff;
+    box-shadow:0 15px 50px #000b;
+    transform-origin:center center;
+}
+
+.layer{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:7px;
+    margin-bottom:5px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    background:#151e28;
+}
+
+.layer.active{
+    border-color:var(--accent);
+    background:#18324a;
+}
+
+.layer-name{
+    flex:1;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.image-code{
+    display:none;
+    position:absolute;
+    inset:0;
+    z-index:10;
+    width:100%;
+    height:100%;
+    border:0;
+    outline:0;
+    resize:none;
+    padding:20px;
+    background:#080c11;
+    color:#dce6ef;
+    font:13px/1.6 Consolas,monospace;
+}
+
+.image-code.open{
+    display:block;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+    .nav button{
+        font-size:12px;
+        padding:7px;
+    }
+
+    .layout{
+        grid-template-columns:210px minmax(0,1fr);
+    }
+
+    .image-editor{
+        grid-template-columns:145px minmax(0,1fr) 190px;
+    }
+}
+
+@media(max-width:800px){
+    body{
+        overflow:auto;
+    }
+
+    .topbar{
+        height:auto;
+        min-height:58px;
+        flex-wrap:wrap;
+    }
+
+    .nav{
+        order:3;
+        width:100%;
+        overflow:auto;
+    }
+
+    .layout{
+        height:calc(100vh - 105px);
+        grid-template-columns:180px minmax(0,1fr);
+    }
+
+    .image-editor{
+        grid-template-columns:120px minmax(0,1fr);
+    }
+
+    .image-layers{
+        display:none;
+    }
+}
 </style>
 </head>
+
 <body>
-<header class="top">
-  <div class="brand">MultiScript <b>V14</b></div>
-  <div class="nav">
-    <button data-view="editor" class="active">🖥 Editor</button>
-    <button data-view="generators">⚙️ Geradores</button>
-    <button data-view="images">🖼 Imagens</button>
-    <button data-view="plugins">🔌 Plugins</button>
-    <button data-view="preview">👁 Preview</button>
-  </div>
-  <button id="newBtn">＋ Novo</button><button id="openBtn">📂 Abrir</button><button id="saveBtn" class="primary">Salvar</button><button id="zipBtn">📦 ZIP</button>
+
+<header class="topbar">
+
+    <div class="brand">
+        MultiScript <span>V14</span>
+    </div>
+
+    <nav class="nav">
+        <button data-view="editor" class="active">🖥 Editor</button>
+        <button data-view="generators">⚙️ Geradores</button>
+        <button data-view="images">🖼 Imagens</button>
+        <button data-view="plugins">🔌 Plugins</button>
+        <button data-view="preview">👁 Preview</button>
+    </nav>
+
+    <button id="newBtn">＋ Novo</button>
+    <button id="openBtn">📂 Abrir</button>
+    <button id="saveBtn" class="primary">💾 Salvar</button>
+    <button id="zipBtn">📦 ZIP</button>
+
 </header>
+
 <div class="layout">
-<aside class="side">
-  <div class="section-title">PROJETO</div><div class="tree" id="projectTree"></div>
-  <div class="section-title">PÁGINAS</div><div class="tree" id="pageTree"></div>
-  <div class="section-title">IMAGENS</div><div class="tree" id="imageTree"></div>
-  <div class="section-title">ARQUIVOS</div><div class="tree" id="assetTree"></div>
-  <div class="section-title">PLUGINS PHP</div><div class="tree" id="pluginTree"></div>
-  <div class="section-title">SISTEMA</div><div class="tree"><button>🔒 multiscript.json</button></div>
-</aside>
-<main class="workspace">
-  <div class="crumb" id="crumb">Projeto / index.html</div>
 
-  <section id="view-editor" class="view active">
-    <div class="editor">
-      <div class="editorbar"><span id="fileLabel">index.html</span><button id="formatBtn">Formatar</button><button id="previewBtn">Preview</button></div>
-      <div class="codewrap"><textarea id="code" class="code" spellcheck="false"></textarea></div>
+    <aside class="sidebar">
+
+        <div class="tree-title">PROJETO</div>
+        <div id="projectTree" class="tree"></div>
+
+        <div class="tree-title">PÁGINAS</div>
+        <div id="pageTree" class="tree"></div>
+
+        <div class="tree-title">IMAGENS</div>
+        <div id="imageTree" class="tree"></div>
+
+        <div class="tree-title">ARQUIVOS</div>
+        <div id="assetTree" class="tree"></div>
+
+        <div class="tree-title">PLUGINS PHP</div>
+        <div id="pluginTree" class="tree"></div>
+
+        <div class="tree-title">SISTEMA</div>
+        <div class="tree">
+            <button id="protectedBtn">🔒 multiscript.json</button>
+        </div>
+
+    </aside>
+
+    <main class="workspace">
+
+        <div id="breadcrumb" class="breadcrumb">
+            Projeto / index.html
+        </div>
+
+        <!-- EDITOR -->
+
+        <section id="view-editor" class="view active">
+
+            <div class="editor">
+
+                <div class="editorbar">
+
+                    <span id="fileLabel" class="filename">
+                        index.html
+                    </span>
+
+                    <button id="formatBtn">
+                        Formatar
+                    </button>
+
+                    <button id="previewBtn">
+                        Preview
+                    </button>
+
+                </div>
+
+                <div class="codewrap">
+
+                    <textarea
+                        id="code"
+                        class="code"
+                        spellcheck="false"
+                        autocomplete="off"
+                        autocorrect="off"
+                        autocapitalize="off"></textarea>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- GENERATORS -->
+
+        <section id="view-generators" class="view">
+
+            <div class="panel">
+
+                <h1>⚙️ Geradores</h1>
+
+                <p class="muted">
+                    Crie e organize as páginas do projeto sem destruir
+                    conteúdo personalizado.
+                </p>
+
+                <div class="grid">
+
+                    <div class="card">
+                        <h3>📌 Menu</h3>
+                        <p>
+                            Gerencia as páginas principais:
+                            index.html, categorias.html e institucional.html.
+                        </p>
+                        <button
+                            class="primary"
+                            onclick="openGenerator('menu')">
+                            Abrir
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <h3>🏷 Categorias</h3>
+                        <p>
+                            Cria exclusivamente páginas de categorias.
+                        </p>
+                        <button
+                            onclick="openGenerator('category')">
+                            Nova categoria
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <h3>🏢 Institucional</h3>
+                        <p>
+                            Cria exclusivamente páginas institucionais.
+                        </p>
+                        <button
+                            onclick="openGenerator('institutional')">
+                            Nova institucional
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <h3>📄 Subpágina</h3>
+                        <p>
+                            Cria páginas relacionadas a uma categoria
+                            ou página institucional.
+                        </p>
+                        <button
+                            onclick="openGenerator('subpage')">
+                            Nova subpágina
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <h3>🗺 Sitemap</h3>
+                        <p>
+                            Gera o sitemap.xml com todas as páginas.
+                        </p>
+                        <button
+                            onclick="openGenerator('sitemap')">
+                            Gerar sitemap
+                        </button>
+                    </div>
+
+                </div>
+
+                <h2>Páginas do projeto</h2>
+
+                <div id="pageManager" class="list"></div>
+
+            </div>
+
+        </section>
+
+        <!-- IMAGE EDITOR -->
+
+        <section id="view-images" class="view">
+
+            <div class="image-editor">
+
+                <aside class="image-tools">
+
+                    <b>🎨 Ferramentas</b>
+
+                    <hr>
+
+                    <button onclick="setSvgTool('select')">
+                        ↖ Seleção
+                    </button>
+
+                    <button onclick="setSvgTool('rect')">
+                        ▭ Retângulo
+                    </button>
+
+                    <button onclick="setSvgTool('circle')">
+                        ○ Círculo
+                    </button>
+
+                    <button onclick="setSvgTool('text')">
+                        T Texto
+                    </button>
+
+                    <button onclick="setSvgTool('pen')">
+                        ✎ Pincel
+                    </button>
+
+                    <button onclick="importSvgImage()">
+                        🖼 Imagem
+                    </button>
+
+                    <button onclick="duplicateSvgElement()">
+                        ⧉ Duplicar
+                    </button>
+
+                    <button
+                        class="danger"
+                        onclick="deleteSvgElement()">
+                        🗑 Excluir
+                    </button>
+
+                    <button onclick="undoSvg()">
+                        ↶ Desfazer
+                    </button>
+
+                    <button onclick="redoSvg()">
+                        ↷ Refazer
+                    </button>
+
+                </aside>
+
+                <section class="image-canvas">
+
+                    <div class="image-toolbar">
+
+                        <span
+                            id="svgName"
+                            class="svg-file">
+                            Nenhuma imagem
+                        </span>
+
+                        <button onclick="saveSvg()">
+                            💾 Salvar SVG
+                        </button>
+
+                        <button onclick="exportPng()">
+                            PNG
+                        </button>
+
+                        <button onclick="toggleSvgCode()">
+                            &lt;/&gt; Código
+                        </button>
+
+                        <label>
+                            Zoom
+                            <input
+                                id="svgZoom"
+                                type="range"
+                                min="25"
+                                max="200"
+                                value="100"
+                                oninput="setSvgZoom(this.value)">
+                        </label>
+
+                    </div>
+
+                    <div
+                        id="canvasArea"
+                        class="canvas-area">
+
+                    </div>
+
+                    <textarea
+                        id="svgCode"
+                        class="image-code"
+                        spellcheck="false"></textarea>
+
+                </section>
+
+                <aside class="image-layers">
+
+                    <b>CAMADAS</b>
+
+                    <div
+                        id="layers"
+                        style="margin-top:10px">
+                    </div>
+
+                    <hr>
+
+                    <div class="field">
+                        <label>Preenchimento</label>
+
+                        <input
+                            id="fillColor"
+                            type="color"
+                            value="#1769aa">
+                    </div>
+
+                    <div class="field">
+                        <label>Traço</label>
+
+                        <input
+                            id="strokeColor"
+                            type="color"
+                            value="#111111">
+                    </div>
+
+                    <div class="field">
+                        <label>Espessura</label>
+
+                        <input
+                            id="strokeWidth"
+                            type="number"
+                            value="2"
+                            min="0"
+                            max="100">
+                    </div>
+
+                    <button
+                        class="primary"
+                        style="width:100%"
+                        onclick="applySvgStyle()">
+                        Aplicar
+                    </button>
+
+                </aside>
+
+            </div>
+
+        </section>
+
+        <!-- PLUGINS -->
+
+        <section id="view-plugins" class="view">
+
+            <div class="panel">
+
+                <h1>🔌 Plugins PHP</h1>
+
+                <p class="muted">
+                    O MultiScript não fornece plugins PHP prontos.
+                    Os arquivos PHP pertencem ao usuário.
+                </p>
+
+                <input
+                    type="file"
+                    id="phpInput"
+                    accept=".php"
+                    multiple
+                    hidden>
+
+                <button
+                    class="primary"
+                    onclick="document.getElementById('phpInput').click()">
+                    ＋ Importar PHP
+                </button>
+
+                <div
+                    id="pluginManager"
+                    class="list"
+                    style="margin-top:18px">
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- PREVIEW -->
+
+        <section id="view-preview" class="view">
+
+            <iframe
+                id="previewFrame"
+                style="
+                    width:100%;
+                    height:100%;
+                    border:0;
+                    background:white;
+                ">
+            </iframe>
+
+        </section>
+
+    </main>
+
+</div>
+
+<input
+    type="file"
+    id="folderInput"
+    webkitdirectory
+    directory
+    multiple
+    hidden>
+
+<input
+    type="file"
+    id="jsonInput"
+    accept=".json"
+    hidden>
+
+<input
+    type="file"
+    id="svgImageInput"
+    accept="image/*"
+    hidden>
+
+<div id="modalBg" class="modal-bg">
+
+    <div
+        id="modal"
+        class="modal">
     </div>
-  </section>
 
-  <section id="view-generators" class="view">
-    <div class="panel">
-      <h1>Geradores</h1><p class="small">Crie páginas sem destruir o conteúdo que você já editou.</p>
-      <div class="grid">
-        <div class="card"><h3>📌 Menu</h3><p>Gera index.html, categorias.html e institucional.html.</p><button class="primary" onclick="openGenerator('menu')">Abrir gerador</button></div>
-        <div class="card"><h3>🏷 Categorias</h3><p>Cria somente páginas de categorias.</p><button onclick="openGenerator('category')">Nova categoria</button></div>
-        <div class="card"><h3>🏢 Institucional</h3><p>Cria somente páginas institucionais.</p><button onclick="openGenerator('institutional')">Nova institucional</button></div>
-        <div class="card"><h3>📄 Subpágina</h3><p>Cria páginas vinculadas a uma categoria ou institucional.</p><button onclick="openGenerator('subpage')">Nova subpágina</button></div>
-        <div class="card"><h3>🗺 Sitemap</h3><p>Gera sitemap.xml usando todas as páginas cadastradas.</p><button onclick="openGenerator('sitemap')">Gerar sitemap</button></div>
-      </div>
-      <h2 style="margin-top:30px">Páginas geradas</h2><div id="pageManager" class="list"></div>
-    </div>
-  </section>
+</div>
 
-  <section id="view-images" class="view">
-    <div class="image-editor">
-      <aside class="tools">
-        <b>🎨 Ferramentas</b><hr>
-        <button onclick="svgTool('select')">↖ Seleção</button>
-        <button onclick="svgTool('rect')">▭ Retângulo</button>
-        <button onclick="svgTool('circle')">○ Círculo</button>
-        <button onclick="svgTool('text')">T Texto</button>
-        <button onclick="svgTool('pen')">✎ Pincel</button>
-        <button onclick="importSvgImage()">🖼 Imagem</button>
-        <button onclick="duplicateSvg()">⧉ Duplicar</button>
-        <button class="danger" onclick="deleteSvg()">🗑 Excluir</button>
-        <button onclick="undoSvg()">↶ Desfazer</button>
-        <button onclick="redoSvg()">↷ Refazer</button>
-      </aside>
-      <div class="canvasarea">
-        <div class="canvasbar"><b id="svgName">logo.svg</b><button onclick="saveSvg()">Salvar SVG</button><button onclick="exportPng()">PNG</button><button onclick="toggleSvgCode()">Código SVG</button><label>Zoom <input id="zoom" type="range" min="25" max="200" value="100" oninput="setZoom(this.value)"></label></div>
-        <div class="canvasbox" id="svgCanvas"></div>
-      </div>
-      <aside class="layers"><b>CAMADAS</b><div id="layers"></div><hr><div class="field"><label>Preenchimento</label><input id="fill" type="color" value="#1769aa" onchange="applySvgStyle()"></div><div class="field"><label>Traço</label><input id="stroke" type="color" value="#111111" onchange="applySvgStyle()"></div></aside>
-    </div>
-  </section>
-
-  <section id="view-plugins" class="view"><div class="panel"><h1>🔌 Plugins PHP</h1><p class="small">O MultiScript não fornece plugins PHP prontos. Você controla os seus arquivos.</p><input type="file" id="phpInput" accept=".php" multiple hidden><button class="primary" onclick="document.getElementById('phpInput').click()">＋ Importar PHP</button><div id="pluginManager" class="list" style="margin-top:18px"></div></div></section>
-
-  <section id="view-preview" class="view"><iframe id="previewFrame" style="width:100%;height:100%;border:0;background:white"></iframe></section>
-</main></div>
-
-<input type="file" id="folderInput" webkitdirectory directory multiple hidden>
-<input type="file" id="jsonInput" accept=".json" hidden>
-<div id="modalBg" class="modal-bg"><div class="modal" id="modal"></div></div><div id="toast" class="toast"></div>
+<div
+    id="toast"
+    class="toast">
+</div>
 
 <script>
 "use strict";
-const BOOT_CSS='<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">';
-const BOOT_JS='<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"><\/script>';
-const KEY="multiscript-v14-project";
 
-let project;
-let currentFile="index.html";
-let currentView="editor";
-let svgState={file:"",svg:null,selected:null,tool:"select",undo:[],redo:[],scale:1};
-let drag=null;
+/* =========================================================
+   CONSTANTES
+========================================================= */
 
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
-function slugify(s){return String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"pagina";}
-function toast(s){const e=document.getElementById("toast");e.textContent=s;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2200);}
-function showModal(html){document.getElementById("modal").innerHTML=html;document.getElementById("modalBg").classList.add("open");}
-function closeModal(){document.getElementById("modalBg").classList.remove("open");}
-document.getElementById("modalBg").addEventListener("click",e=>{if(e.target.id==="modalBg")closeModal();});
+const STORAGE_KEY = "multiscript-v14-project";
 
-function defaultSvg(name){
-  const wh=name==="favicon.svg"?'256" height="256"':'1200" height="600"';
-  return '<svg xmlns="http://www.w3.org/2000/svg" width="'+wh+'" viewBox="0 0 '+(name==="favicon.svg"?"256 256":"1200 600")+'"><rect width="100%" height="100%" fill="#e9eef5"/><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="'+(name==="favicon.svg"?"36":"64")+'" fill="#1769aa">'+esc(name.replace(".svg","").replaceAll("_"," "))+'</text></svg>';
+const BOOTSTRAP_CSS =
+    '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">';
+
+const BOOTSTRAP_JS =
+    '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"><\/script>';
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+let project = null;
+
+let currentFile = "index.html";
+
+let currentView = "editor";
+
+const svgState = {
+    file:null,
+    svg:null,
+    selected:null,
+    tool:"select",
+    zoom:1,
+    history:[],
+    future:[],
+    dragging:false,
+    drawing:false,
+    dragStart:null,
+    originalTransform:null,
+    activePath:null
+};
+
+/* =========================================================
+   UTILIDADES
+========================================================= */
+
+function esc(value){
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        char => ({
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#39;"
+        }[char])
+    );
 }
-function makeProject(name="MEU-PROJETO"){
-  const p={name,files:{},plugins:{},pages:{},protectedFiles:["multiscript.json"]};
-  ["index.html","categorias.html","institucional.html","style.css","script.js"].forEach(f=>p.files[f]="");
-  p.files["images/logo.svg"]=defaultSvg("logo.svg");p.files["images/favicon.svg"]=defaultSvg("favicon.svg");
-  for(let i=1;i<=8;i++)p.files["images/vitrine_0"+i+".svg"]=defaultSvg("vitrine_0"+i+".svg");
-  p.pages={
-    "index.html":{type:"menu",name:"Início",slug:"",url:"/"},
-    "categorias.html":{type:"menu",name:"Categorias",slug:"categorias",url:"/categorias"},
-    "institucional.html":{type:"menu",name:"Institucional",slug:"institucional",url:"/institucional"}
-  };
-  buildBasePages(p);updateMeta(p);return p;
+
+function slugify(value){
+
+    return String(value ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g,"-")
+        .replace(/^-+|-+$/g,"")
+        || "pagina";
 }
-function footer(){
- return '<footer style="background:#101827;color:#cbd5e1;margin-top:70px;padding:45px 0 20px"><div class="container"><div class="row g-4"><div class="col-md-5"><img src="images/logo.svg" style="max-width:170px;max-height:70px"><p class="mt-3">Informação, serviços e soluções digitais.</p></div><div class="col-md-2"><h5>Navegação</h5><a class="d-block text-light text-decoration-none mb-2" href="index.html">Início</a><a class="d-block text-light text-decoration-none mb-2" href="categorias.html">Categorias</a><a class="d-block text-light text-decoration-none mb-2" href="institucional.html">Institucional</a></div><div class="col-md-2"><h5>Institucional</h5><a class="d-block text-light text-decoration-none mb-2" href="institucional.html">Sobre nós</a></div><div class="col-md-3"><h5>Atendimento</h5><p>Estamos à disposição.</p></div></div><hr><div class="d-flex justify-content-between flex-wrap gap-2 small"><span>© 2026 Todos os direitos reservados.</span><span>Desenvolvido com MultiScript HTML Editor V14</span></div></div></footer>';
+
+function toast(message){
+
+    const element =
+        document.getElementById("toast");
+
+    element.textContent = message;
+
+    element.classList.add("show");
+
+    clearTimeout(element._timer);
+
+    element._timer =
+        setTimeout(
+            () => element.classList.remove("show"),
+            2300
+        );
 }
-function pageShell(title,body){
- return '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title>'+BOOT_CSS+'<link rel="stylesheet" href="style.css"></head><body><nav class="navbar navbar-expand-lg bg-dark navbar-dark"><div class="container"><a class="navbar-brand" href="index.html"><img src="images/logo.svg" style="height:38px;max-width:150px"></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button><div id="nav" class="collapse navbar-collapse"><div class="navbar-nav ms-auto"><a class="nav-link" href="index.html">Início</a><a class="nav-link" href="categorias.html">Categorias</a><a class="nav-link" href="institucional.html">Institucional</a></div></div></div></nav><main>'+body+'</main>'+footer() + BOOT_JS + '<script src="script.js"><\/script></body></html>';
+
+function openModal(html){
+
+    document.getElementById("modal").innerHTML = html;
+
+    document
+        .getElementById("modalBg")
+        .classList.add("open");
 }
-function buildBasePages(p){
- const cards=[];for(let i=1;i<=8;i++)cards.push('<div class="col-md-6 col-lg-3"><div class="card h-100 shadow-sm"><img src="images/vitrine_0'+i+'.svg" class="card-img-top" alt="Vitrine '+i+'"><div class="card-body"><h5 class="card-title">Vitrine '+i+'</h5><a href="#" class="btn btn-primary">Ver página</a></div></div></div>');
- p.files["index.html"]=pageShell("Início",'<section class="py-5 bg-light"><div class="container py-4"><div class="row align-items-center g-4"><div class="col-lg-7"><span class="badge text-bg-primary">MultiScript V14</span><h1 class="display-4 fw-bold mt-3">Seu site começa aqui.</h1><p class="lead">Uma estrutura responsiva pronta para você editar e publicar.</p></div><div class="col-lg-5"><img src="images/vitrine_01.svg" class="img-fluid rounded-4 shadow"></div></div></div></section><section class="py-5"><div class="container"><h2 class="mb-4">Vitrines</h2><div class="row g-4">'+cards.join("")+'</div></div></section>');
- p.files["categorias.html"]=pageShell("Categorias",'<section class="py-5"><div class="container"><h1>Categorias</h1><div id="categories" class="row g-4"><!-- MULTISCRIPT:CATEGORIES:START --><!-- MULTISCRIPT:CATEGORIES:END --></div></div></section>');
- p.files["institucional.html"]=pageShell("Institucional",'<section class="py-5"><div class="container"><h1>Institucional</h1><div id="institutional" class="row g-4"><!-- MULTISCRIPT:INSTITUTIONAL:START --><!-- MULTISCRIPT:INSTITUTIONAL:END --></div></div></section>');
- p.files["style.css"]="body{min-height:100vh}a{text-decoration:none}.card{border:0}";
- p.files["script.js"]="document.addEventListener('DOMContentLoaded',()=>{});";
- updateParentLists(p);
+
+function closeModal(){
+
+    document
+        .getElementById("modalBg")
+        .classList.remove("open");
 }
-function replaceBlock(html,start,end,content){
- const a=html.indexOf(start),b=html.indexOf(end);
- if(a<0||b<a)return html;
- return html.slice(0,a+start.length)+content+html.slice(b);
+
+document
+    .getElementById("modalBg")
+    .addEventListener(
+        "click",
+        event => {
+
+            if(event.target.id === "modalBg"){
+                closeModal();
+            }
+
+        }
+    );
+
+/* =========================================================
+   SVG PADRÃO
+========================================================= */
+
+function defaultSvg(file){
+
+    const favicon =
+        file === "favicon.svg";
+
+    const width =
+        favicon ? 256 : 1200;
+
+    const height =
+        favicon ? 256 : 600;
+
+    const fontSize =
+        favicon ? 32 : 64;
+
+    const label =
+        file
+            .replace(".svg","")
+            .replaceAll("_"," ");
+
+    return `
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="${width}"
+    height="${height}"
+    viewBox="0 0 ${width} ${height}">
+
+    <rect
+        x="0"
+        y="0"
+        width="${width}"
+        height="${height}"
+        fill="#e9eef5"/>
+
+    <text
+        x="${width / 2}"
+        y="${height / 2}"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        font-family="Arial"
+        font-size="${fontSize}"
+        fill="#1769aa">
+        ${esc(label)}
+    </text>
+
+</svg>
+`.trim();
 }
+
+/* =========================================================
+   PROJETO
+========================================================= */
+
+function createProject(name){
+
+    const p = {
+
+        name:
+            name ||
+            "MEU-PROJETO",
+
+        files:{},
+
+        plugins:{},
+
+        pages:{},
+
+        protectedFiles:[
+            "multiscript.json"
+        ]
+
+    };
+
+    const baseFiles = [
+        "index.html",
+        "categorias.html",
+        "institucional.html",
+        "style.css",
+        "script.js"
+    ];
+
+    baseFiles.forEach(
+        file => p.files[file] = ""
+    );
+
+    p.files["images/logo.svg"] =
+        defaultSvg("logo.svg");
+
+    p.files["images/favicon.svg"] =
+        defaultSvg("favicon.svg");
+
+    for(let i = 1; i <= 8; i++){
+
+        const number =
+            String(i).padStart(2,"0");
+
+        p.files[
+            "images/vitrine_" +
+            number +
+            ".svg"
+        ] =
+            defaultSvg(
+                "vitrine_" +
+                number +
+                ".svg"
+            );
+    }
+
+    p.pages = {
+
+        "index.html":{
+            type:"menu",
+            name:"Início",
+            slug:"",
+            url:"/"
+        },
+
+        "categorias.html":{
+            type:"menu",
+            name:"Categorias",
+            slug:"categorias",
+            url:"/categorias"
+        },
+
+        "institucional.html":{
+            type:"menu",
+            name:"Institucional",
+            slug:"institucional",
+            url:"/institucional"
+        }
+
+    };
+
+    buildInitialPages(p);
+
+    updateMetadata(p);
+
+    return p;
+}
+
+/* =========================================================
+   FOOTER GERADO
+========================================================= */
+
+function generatedFooter(){
+
+    return `
+<footer class="site-footer bg-dark text-light mt-5">
+
+    <div class="container py-5">
+
+        <div class="row g-4">
+
+            <div class="col-lg-5">
+
+                <img
+                    src="images/logo.svg"
+                    alt="Logo"
+                    style="
+                        max-width:180px;
+                        max-height:80px;
+                    ">
+
+                <p class="text-secondary mt-3 mb-0">
+                    Informação, serviços e soluções
+                    digitais para você e sua empresa.
+                </p>
+
+            </div>
+
+            <div class="col-sm-6 col-lg-2">
+
+                <h5>Navegação</h5>
+
+                <a
+                    href="index.html"
+                    class="d-block text-light text-decoration-none mb-2">
+                    Início
+                </a>
+
+                <a
+                    href="categorias.html"
+                    class="d-block text-light text-decoration-none mb-2">
+                    Categorias
+                </a>
+
+                <a
+                    href="institucional.html"
+                    class="d-block text-light text-decoration-none">
+                    Institucional
+                </a>
+
+            </div>
+
+            <div class="col-sm-6 col-lg-2">
+
+                <h5>Institucional</h5>
+
+                <a
+                    href="institucional.html"
+                    class="d-block text-light text-decoration-none">
+                    Sobre nós
+                </a>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <h5>Atendimento</h5>
+
+                <p class="text-secondary">
+                    Estamos à disposição para
+                    atender você.
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr class="border-secondary">
+
+        <div class="d-flex justify-content-between flex-wrap gap-2 small text-secondary">
+
+            <span>
+                © 2026 Todos os direitos reservados.
+            </span>
+
+            <span>
+                Desenvolvido com MultiScript HTML Editor V14
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+`.trim();
+}
+
+/* =========================================================
+   SHELL HTML
+========================================================= */
+
+function pageShell(title, body){
+
+    return `
+<!doctype html>
+
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1">
+
+<title>${esc(title)}</title>
+
+${BOOTSTRAP_CSS}
+
+<link
+    rel="stylesheet"
+    href="style.css">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand"
+            href="index.html">
+
+            <img
+                src="images/logo.svg"
+                alt="Logo"
+                style="
+                    height:38px;
+                    max-width:150px;
+                    object-fit:contain;
+                ">
+
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div
+            id="mainNavigation"
+            class="collapse navbar-collapse">
+
+            <div class="navbar-nav ms-auto">
+
+                <a
+                    class="nav-link"
+                    href="index.html">
+                    Início
+                </a>
+
+                <a
+                    class="nav-link"
+                    href="categorias.html">
+                    Categorias
+                </a>
+
+                <a
+                    class="nav-link"
+                    href="institucional.html">
+                    Institucional
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<main>
+
+${body}
+
+</main>
+
+${generatedFooter()}
+
+${BOOTSTRAP_JS}
+
+<script src="script.js"><\/script>
+
+</body>
+
+</html>
+`.trim();
+}
+
+/* =========================================================
+   PÁGINAS INICIAIS
+========================================================= */
+
+function buildInitialPages(p){
+
+    const cards = [];
+
+    for(let i = 1; i <= 8; i++){
+
+        const n =
+            String(i).padStart(2,"0");
+
+        cards.push(`
+<div class="col-sm-6 col-lg-3">
+
+    <div class="card h-100 shadow-sm">
+
+        <img
+            src="images/vitrine_${n}.svg"
+            class="card-img-top"
+            alt="Vitrine ${i}">
+
+        <div class="card-body">
+
+            <h5 class="card-title">
+                Vitrine ${i}
+            </h5>
+
+            <p class="card-text">
+                Apresente seu produto ou serviço.
+            </p>
+
+            <a
+                href="#"
+                class="btn btn-primary">
+                Ver página
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+`);
+
+    }
+
+    p.files["index.html"] =
+        pageShell(
+            "Início",
+            `
+<section class="py-5 bg-light">
+
+    <div class="container py-5">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-7">
+
+                <span class="badge text-bg-primary">
+                    MultiScript V14
+                </span>
+
+                <h1 class="display-4 fw-bold mt-3">
+                    Seu site começa aqui.
+                </h1>
+
+                <p class="lead text-secondary">
+                    Estrutura responsiva pronta para
+                    você editar, personalizar e publicar.
+                </p>
+
+                <a
+                    href="categorias.html"
+                    class="btn btn-primary btn-lg">
+                    Explorar
+                </a>
+
+            </div>
+
+            <div class="col-lg-5">
+
+                <img
+                    src="images/vitrine_01.svg"
+                    class="img-fluid rounded-4 shadow"
+                    alt="Vitrine">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="mb-4">
+
+            <span class="text-primary fw-bold">
+                VITRINE
+            </span>
+
+            <h2 class="fw-bold">
+                Destaques
+            </h2>
+
+        </div>
+
+        <div class="row g-4">
+
+            ${cards.join("")}
+
+        </div>
+
+    </div>
+
+</section>
+`
+        );
+
+    p.files["categorias.html"] =
+        pageShell(
+            "Categorias",
+            `
+<section class="py-5">
+
+    <div class="container">
+
+        <span class="text-primary fw-bold">
+            CATEGORIAS
+        </span>
+
+        <h1 class="display-5 fw-bold mt-2">
+            Categorias
+        </h1>
+
+        <p class="lead text-secondary">
+            Encontre nossas categorias.
+        </p>
+
+        <div
+            id="categories"
+            class="row g-4 mt-3">
+
+            <!-- MULTISCRIPT:CATEGORIES:START -->
+            <!-- MULTISCRIPT:CATEGORIES:END -->
+
+        </div>
+
+    </div>
+
+</section>
+`
+        );
+
+    p.files["institucional.html"] =
+        pageShell(
+            "Institucional",
+            `
+<section class="py-5">
+
+    <div class="container">
+
+        <span class="text-primary fw-bold">
+            INSTITUCIONAL
+        </span>
+
+        <h1 class="display-5 fw-bold mt-2">
+            Institucional
+        </h1>
+
+        <p class="lead text-secondary">
+            Conheça nossa empresa.
+        </p>
+
+        <div
+            id="institutional"
+            class="row g-4 mt-3">
+
+            <!-- MULTISCRIPT:INSTITUTIONAL:START -->
+            <!-- MULTISCRIPT:INSTITUTIONAL:END -->
+
+        </div>
+
+    </div>
+
+</section>
+`
+        );
+
+    p.files["style.css"] = `
+body{
+    min-height:100vh;
+}
+
+.card{
+    border:0;
+}
+
+a{
+    text-decoration:none;
+}
+
+.site-footer{
+    border-top:1px solid rgba(255,255,255,.1);
+}
+`.trim();
+
+    p.files["script.js"] = `
+document.addEventListener("DOMContentLoaded",function(){
+    console.log("Projeto carregado pelo MultiScript HTML Editor V14.");
+});
+`.trim();
+
+    updateParentLists(p);
+}
+
+/* =========================================================
+   BLOCOS DINÂMICOS
+========================================================= */
+
+function replaceGeneratedBlock(
+    html,
+    startMarker,
+    endMarker,
+    content
+){
+
+    const start =
+        html.indexOf(startMarker);
+
+    const end =
+        html.indexOf(endMarker);
+
+    if(
+        start === -1 ||
+        end === -1 ||
+        end < start
+    ){
+
+        return html;
+
+    }
+
+    return (
+        html.slice(0,start + startMarker.length) +
+        "\n" +
+        content +
+        "\n" +
+        html.slice(end)
+    );
+}
+
 function updateParentLists(p){
- let cats="",inst="";
- for(const [file,x] of Object.entries(p.pages)){
-   if(x.type==="category")cats+='<div class="col-md-6"><div class="card h-100 p-4 shadow-sm"><h3>'+esc(x.name)+'</h3><p>'+esc(x.description||"")+'</p><a class="btn btn-primary" href="'+esc(file)+'">Acessar</a></div></div>';
-   if(x.type==="institutional")inst+='<div class="col-md-6"><div class="card h-100 p-4 shadow-sm"><h3>'+esc(x.name)+'</h3><p>'+esc(x.description||"")+'</p><a class="btn btn-primary" href="'+esc(file)+'">Acessar</a></div></div>';
- }
- p.files["categorias.html"]=replaceBlock(p.files["categorias.html"],"<!-- MULTISCRIPT:CATEGORIES:START -->","<!-- MULTISCRIPT:CATEGORIES:END -->",cats);
- p.files["institucional.html"]=replaceBlock(p.files["institucional.html"],"<!-- MULTISCRIPT:INSTITUTIONAL:START -->","<!-- MULTISCRIPT:INSTITUTIONAL:END -->",inst);
+
+    let categories = "";
+
+    let institutional = "";
+
+    for(
+        const [file,page]
+        of Object.entries(p.pages)
+    ){
+
+        if(page.type === "category"){
+
+            categories += `
+<div class="col-md-6 col-lg-4">
+
+    <div class="card h-100 shadow-sm">
+
+        <div class="card-body">
+
+            <h3 class="h4">
+                ${esc(page.name)}
+            </h3>
+
+            <p class="text-secondary">
+                ${esc(page.description || "")}
+            </p>
+
+            <a
+                href="${esc(file)}"
+                class="btn btn-primary">
+                Acessar
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+`;
+
+        }
+
+        if(page.type === "institutional"){
+
+            institutional += `
+<div class="col-md-6 col-lg-4">
+
+    <div class="card h-100 shadow-sm">
+
+        <div class="card-body">
+
+            <h3 class="h4">
+                ${esc(page.name)}
+            </h3>
+
+            <p class="text-secondary">
+                ${esc(page.description || "")}
+            </p>
+
+            <a
+                href="${esc(file)}"
+                class="btn btn-primary">
+                Acessar
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+`;
+
+        }
+
+    }
+
+    if(p.files["categorias.html"]){
+
+        p.files["categorias.html"] =
+            replaceGeneratedBlock(
+                p.files["categorias.html"],
+                "<!-- MULTISCRIPT:CATEGORIES:START -->",
+                "<!-- MULTISCRIPT:CATEGORIES:END -->",
+                categories
+            );
+
+    }
+
+    if(p.files["institucional.html"]){
+
+        p.files["institucional.html"] =
+            replaceGeneratedBlock(
+                p.files["institucional.html"],
+                "<!-- MULTISCRIPT:INSTITUTIONAL:START -->",
+                "<!-- MULTISCRIPT:INSTITUTIONAL:END -->",
+                institutional
+            );
+
+    }
 }
-function updateMeta(p){
- const meta={multiscript:{version:"14.0.0",generator:"MultiScript HTML Editor",project:p.name,type:"html-project"},project:{name:p.name,pages:p.pages,protectedFiles:["multiscript.json"]},files:Object.keys(p.files).filter(x=>x!=="multiscript.json"&&x!=="multiscript.js"),plugins:Object.keys(p.plugins||{})};
- p.files["multiscript.json"]=JSON.stringify(meta,null,2);
+
+/* =========================================================
+   METADATA
+========================================================= */
+
+function updateMetadata(p){
+
+    p.files["multiscript.json"] =
+        JSON.stringify(
+            {
+                multiscript:{
+                    version:"14.0.0",
+                    generator:"MultiScript HTML Editor",
+                    type:"html-project"
+                },
+
+                project:{
+                    name:p.name,
+                    pages:p.pages,
+                    protectedFiles:[
+                        "multiscript.json"
+                    ]
+                },
+
+                files:Object.keys(p.files)
+                    .filter(
+                        file =>
+                            file !== "multiscript.json" &&
+                            file !== "multiscript.js"
+                    ),
+
+                plugins:Object.keys(
+                    p.plugins || {}
+                )
+
+            },
+            null,
+            2
+        );
 }
-function saveLocal(){updateMeta(project);localStorage.setItem(KEY,JSON.stringify(project));renderTree();toast("Projeto salvo");}
-function loadLocal(){try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x){project=x;return true}}catch(e){}return false}
-function ensure(){if(!project)project=makeProject();if(!project.files)project.files={};if(!project.plugins)project.plugins={};if(!project.pages)project.pages={};project.protectedFiles=["multiscript.json"];for(const f of ["index.html","categorias.html","institucional.html","style.css","script.js"])if(!(f in project.files))project.files[f]="";if(!project.files["images/logo.svg"])project.files["images/logo.svg"]=defaultSvg("logo.svg");updateMeta(project);}
+
+/* =========================================================
+   GARANTIAS DO PROJETO
+========================================================= */
+
+function ensureProject(){
+
+    if(!project){
+
+        project =
+            createProject();
+
+    }
+
+    if(!project.files){
+        project.files = {};
+    }
+
+    if(!project.pages){
+        project.pages = {};
+    }
+
+    if(!project.plugins){
+        project.plugins = {};
+    }
+
+    project.protectedFiles = [
+        "multiscript.json"
+    ];
+
+    const baseFiles = [
+        "index.html",
+        "categorias.html",
+        "institucional.html",
+        "style.css",
+        "script.js"
+    ];
+
+    baseFiles.forEach(
+        file => {
+
+            if(!(file in project.files)){
+                project.files[file] = "";
+            }
+
+        }
+    );
+
+    const images = [
+        "logo.svg",
+        "favicon.svg",
+        "vitrine_01.svg",
+        "vitrine_02.svg",
+        "vitrine_03.svg",
+        "vitrine_04.svg",
+        "vitrine_05.svg",
+        "vitrine_06.svg",
+        "vitrine_07.svg",
+        "vitrine_08.svg"
+    ];
+
+    images.forEach(
+        file => {
+
+            const path =
+                "images/" + file;
+
+            if(!project.files[path]){
+                project.files[path] =
+                    defaultSvg(file);
+            }
+
+        }
+    );
+
+    if(
+        project.files["multiscript.js"]
+    ){
+
+        delete project.files["multiscript.js"];
+
+    }
+
+    updateMetadata(project);
+}
+
+/* =========================================================
+   LOCAL STORAGE
+========================================================= */
+
+function saveProject(){
+
+    ensureProject();
+
+    updateMetadata(project);
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(project)
+    );
+
+    renderTree();
+
+    toast("Projeto salvo.");
+
+}
+
+function loadProject(){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+        if(!raw){
+            return false;
+        }
+
+        project =
+            JSON.parse(raw);
+
+        ensureProject();
+
+        return true;
+
+    }catch(error){
+
+        console.error(error);
+
+        return false;
+
+    }
+}
+
+/* =========================================================
+   ÁRVORE
+========================================================= */
+
 function renderTree(){
- const pt=document.getElementById("pageTree"),it=document.getElementById("imageTree"),at=document.getElementById("assetTree"),pl=document.getElementById("pluginTree");
- pt.innerHTML="";it.innerHTML="";at.innerHTML="";pl.innerHTML="";
- for(const [f,x] of Object.entries(project.pages))addTree(pt,f,x.name||f);
- for(const f of Object.keys(project.files).filter(f=>f.startsWith("images/")))addTree(it,f,f.slice(7));
- for(const f of Object.keys(project.files).filter(f=>!f.startsWith("images/")&&!f.endsWith(".php")&&!f.includes("multiscript")))addTree(at,f,f);
- for(const f of Object.keys(project.plugins||{}))addTree(pl,f,f);
- document.getElementById("projectTree").innerHTML='<button>📁 '+esc(project.name)+'</button>';
+
+    ensureProject();
+
+    const pageTree =
+        document.getElementById("pageTree");
+
+    const imageTree =
+        document.getElementById("imageTree");
+
+    const assetTree =
+        document.getElementById("assetTree");
+
+    const pluginTree =
+        document.getElementById("pluginTree");
+
+    pageTree.innerHTML = "";
+    imageTree.innerHTML = "";
+    assetTree.innerHTML = "";
+    pluginTree.innerHTML = "";
+
+    const projectTree =
+        document.getElementById("projectTree");
+
+    projectTree.innerHTML = "";
+
+    const projectButton =
+        document.createElement("button");
+
+    projectButton.textContent =
+        "📁 " + project.name;
+
+    projectTree.appendChild(
+        projectButton
+    );
+
+    for(
+        const [file,page]
+        of Object.entries(project.pages)
+    ){
+
+        addTreeItem(
+            pageTree,
+            file,
+            "📄 " + (page.name || file)
+        );
+
+    }
+
+    for(
+        const file of Object.keys(project.files)
+    ){
+
+        if(
+            file.startsWith("images/") &&
+            file.endsWith(".svg")
+        ){
+
+            addTreeItem(
+                imageTree,
+                file,
+                "🎨 " + file.slice(7)
+            );
+
+        }
+
+    }
+
+    for(
+        const file of Object.keys(project.files)
+    ){
+
+        if(
+            file.startsWith("images/") ||
+            file.startsWith("plugins/") ||
+            file === "multiscript.json" ||
+            file === "multiscript.js" ||
+            project.pages[file]
+        ){
+            continue;
+        }
+
+        addTreeItem(
+            assetTree,
+            file,
+            "📄 " + file
+        );
+
+    }
+
+    for(
+        const file of Object.keys(project.plugins || {})
+    ){
+
+        addTreeItem(
+            pluginTree,
+            file,
+            "🔌 " + file.replace(
+                "plugins/",
+                ""
+            )
+        );
+
+    }
+
 }
-function addTree(parent,file,label){const b=document.createElement("button");b.textContent=(file==="multiscript.json"?"🔒 ":"📄 ")+label;b.onclick=()=>openFile(file);parent.appendChild(b);}
+
+function addTreeItem(
+    container,
+    file,
+    label
+){
+
+    const button =
+        document.createElement("button");
+
+    button.textContent = label;
+
+    if(file === currentFile){
+        button.classList.add("active");
+    }
+
+    button.onclick =
+        () => openFile(file);
+
+    container.appendChild(button);
+}
+
+/* =========================================================
+   ABRIR ARQUIVO
+========================================================= */
+
 function openFile(file){
- if(file==="multiscript.json"){showModal('<h2>🔒 Arquivo protegido</h2><p><code>multiscript.json</code> é um arquivo interno do MultiScript e não pode ser editado manualmente.</p><button class="primary" onclick="closeModal()">Entendi</button>');return}
- if(file.startsWith("images/")&&file.endsWith(".svg")){openSvg(file);showView("images");return}
- currentFile=file;document.getElementById("code").value=project.files[file]||"";document.getElementById("fileLabel").textContent=file;document.getElementById("crumb").textContent=project.name+" / "+file;showView("editor");}
-function showView(name){
- currentView=name;document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));document.getElementById("view-"+name).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===name));
- if(name==="generators")renderPageManager();if(name==="plugins")renderPlugins();
+
+    if(
+        file === "multiscript.json"
+    ){
+
+        openModal(`
+<h2>🔒 Arquivo protegido</h2>
+
+<p>
+    <code>multiscript.json</code>
+    é um arquivo interno do MultiScript
+    e não pode ser editado manualmente.
+</p>
+
+<div class="actions">
+
+    <button
+        class="primary"
+        onclick="closeModal()">
+        Entendi
+    </button>
+
+</div>
+`);
+
+        return;
+    }
+
+    if(
+        file === "multiscript.js"
+    ){
+
+        return;
+
+    }
+
+    if(
+        file.startsWith("images/") &&
+        file.endsWith(".svg")
+    ){
+
+        openSvg(file);
+
+        showView("images");
+
+        return;
+    }
+
+    currentFile = file;
+
+    document.getElementById("code").value =
+        project.files[file] || "";
+
+    document.getElementById("fileLabel")
+        .textContent = file;
+
+    document.getElementById("breadcrumb")
+        .textContent =
+            project.name + " / " + file;
+
+    showView("editor");
+
+    renderTree();
 }
-document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>showView(b.dataset.view));
-document.getElementById("code").addEventListener("input",()=>{if(project.protectedFiles.includes(currentFile))return;project.files[currentFile]=document.getElementById("code").value;});
-document.getElementById("saveBtn").onclick=saveLocal;
-document.getElementById("formatBtn").onclick=()=>{let s=document.getElementById("code").value.replace(/></g,">\n<");document.getElementById("code").value=s;project.files[currentFile]=s;toast("HTML formatado");};
-document.getElementById("previewBtn").onclick=preview;
-function preview(){const html=project.files[currentFile]||project.files["index.html"];document.getElementById("previewFrame").srcdoc=html;showView("preview");}
-document.getElementById("newBtn").onclick=()=>{showModal('<h2>Novo projeto</h2><div class="field"><label>Nome</label><input id="newName" value="MEU-PROJETO"></div><div class="actions"><button class="primary" onclick="createNew()">Criar</button><button onclick="closeModal()">Cancelar</button></div>');};
-function createNew(){project=makeProject(document.getElementById("newName").value.trim()||"MEU-PROJETO");currentFile="index.html";closeModal();saveLocal();openFile(currentFile);}
-document.getElementById("openBtn").onclick=()=>showModal('<h2>📂 Abrir Projeto</h2><p>O modo recomendado importa a pasta completa e reconstrói o projeto usando o <code>multiscript.json</code>.</p><div class="actions"><button class="primary" onclick="closeModal();document.getElementById(\'folderInput\').click()">📁 Abrir pasta</button><button onclick="closeModal();document.getElementById(\'jsonInput\').click()">📄 Abrir multiscript.json</button></div>');
-document.getElementById("folderInput").addEventListener("change",async e=>{await importFolder([...e.target.files]);e.target.value=""});
-document.getElementById("jsonInput").addEventListener("change",async e=>{const f=e.target.files[0];if(f)await importJson(f);e.target.value=""});
-function rel(f){const p=(f.webkitRelativePath||f.name).split("/");if(p.length>1)p.shift();return p.join("/");}
-async function importFolder(files){
- const jf=files.find(f=>rel(f).toLowerCase()==="multiscript.json");if(!jf)return alert("Projeto inválido: multiscript.json não encontrado.");
- let meta;try{meta=JSON.parse(await jf.text())}catch(e){return alert("multiscript.json inválido.");}
- const p={name:meta.project?.name||meta.multiscript?.project||"PROJETO-IMPORTADO",files:{},plugins:{},pages:meta.project?.pages||{},protectedFiles:["multiscript.json"]};
- for(const f of files){const path=rel(f);if(!path||path==="multiscript.js")continue;p.files[path]=await f.text();if(path.toLowerCase().startsWith("plugins/")&&path.toLowerCase().endsWith(".php"))p.plugins[path]=true;}
- project=p;ensure();inferPages();updateMeta(project);saveLocal();currentFile=project.files["index.html"]?"index.html":Object.keys(project.files)[0];openFile(currentFile);toast("Projeto importado");}
-async function importJson(f){let m;try{m=JSON.parse(await f.text())}catch(e){return alert("JSON inválido.");}project=makeProject(m.project?.name||m.multiscript?.project||"PROJETO-IMPORTADO");project.pages=m.project?.pages||project.pages;updateMeta(project);saveLocal();closeModal();alert("O JSON contém metadados, mas não os conteúdos dos arquivos. Use Abrir Projeto → Abrir pasta para restaurar o projeto completo.");}
-function inferPages(){for(const f of Object.keys(project.files)){if(!f.endsWith(".html")||project.pages[f])continue;const name=f.replace(".html","").replaceAll("-"," ");project.pages[f]={type:"subpage",name:name.replace(/\b\w/g,c=>c.toUpperCase()),slug:f.replace(".html",""),url:"/"+f.replace(".html","")};}}
+
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
+
+function showView(view){
+
+    currentView = view;
+
+    document
+        .querySelectorAll(".view")
+        .forEach(
+            element =>
+                element.classList.remove("active")
+        );
+
+    const target =
+        document.getElementById(
+            "view-" + view
+        );
+
+    if(target){
+        target.classList.add("active");
+    }
+
+    document
+        .querySelectorAll(".nav button")
+        .forEach(
+            button =>
+                button.classList.toggle(
+                    "active",
+                    button.dataset.view === view
+                )
+        );
+
+    if(view === "generators"){
+        renderPageManager();
+    }
+
+    if(view === "plugins"){
+        renderPluginManager();
+    }
+
+}
+
+/* =========================================================
+   EDITOR
+========================================================= */
+
+document
+    .querySelectorAll(".nav button")
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () =>
+                    showView(
+                        button.dataset.view
+                    )
+            );
+
+        }
+    );
+
+document
+    .getElementById("code")
+    .addEventListener(
+        "input",
+        function(){
+
+            if(
+                project.protectedFiles
+                    .includes(currentFile)
+            ){
+
+                return;
+
+            }
+
+            project.files[currentFile] =
+                this.value;
+
+        }
+    );
+
+document
+    .getElementById("saveBtn")
+    .onclick =
+        saveProject;
+
+document
+    .getElementById("formatBtn")
+    .onclick =
+        formatCurrentFile;
+
+document
+    .getElementById("previewBtn")
+    .onclick =
+        previewCurrentFile;
+
+function formatCurrentFile(){
+
+    if(
+        project.protectedFiles
+            .includes(currentFile)
+    ){
+
+        return;
+
+    }
+
+    let text =
+        document.getElementById("code").value;
+
+    text =
+        text
+            .replace(/>\s*</g, ">\n<")
+            .replace(
+                /\n{3,}/g,
+                "\n\n"
+            );
+
+    document.getElementById("code")
+        .value = text;
+
+    project.files[currentFile] =
+        text;
+
+    toast("Arquivo formatado.");
+}
+
+function previewCurrentFile(){
+
+    if(
+        !currentFile.endsWith(".html")
+    ){
+
+        alert(
+            "O Preview visual está disponível para arquivos HTML."
+        );
+
+        return;
+
+    }
+
+    previewPage(currentFile);
+}
+
+function previewPage(file){
+
+    const html =
+        project.files[file] || "";
+
+    document.getElementById(
+        "previewFrame"
+    ).srcdoc = html;
+
+    showView("preview");
+}
+
+/* =========================================================
+   NOVO PROJETO
+========================================================= */
+
+document
+    .getElementById("newBtn")
+    .onclick =
+    () => {
+
+        openModal(`
+
+<h2>＋ Novo Projeto</h2>
+
+<div class="field">
+
+    <label>
+        Nome do projeto
+    </label>
+
+    <input
+        id="newProjectName"
+        value="MEU-PROJETO">
+
+</div>
+
+<div class="actions">
+
+    <button
+        class="primary"
+        onclick="createNewProject()">
+        Criar projeto
+    </button>
+
+    <button
+        onclick="closeModal()">
+        Cancelar
+    </button>
+
+</div>
+
+`);
+
+    };
+
+function createNewProject(){
+
+    const name =
+        document
+            .getElementById("newProjectName")
+            .value
+            .trim();
+
+    project =
+        createProject(
+            name || "MEU-PROJETO"
+        );
+
+    currentFile =
+        "index.html";
+
+    closeModal();
+
+    saveProject();
+
+    openFile("index.html");
+
+    toast("Novo projeto criado.");
+
+}
+
+/* =========================================================
+   ABRIR PROJETO
+========================================================= */
+
+document
+    .getElementById("openBtn")
+    .onclick =
+    () => {
+
+        openModal(`
+
+<h2>📂 Abrir Projeto</h2>
+
+<p class="muted">
+    Para restaurar um projeto corretamente,
+    abra a pasta completa contendo
+    <code>multiscript.json</code>.
+</p>
+
+<div class="actions">
+
+    <button
+        class="primary"
+        onclick="
+            closeModal();
+            document.getElementById('folderInput').click();
+        ">
+        📁 Abrir pasta
+    </button>
+
+    <button
+        onclick="
+            closeModal();
+            document.getElementById('jsonInput').click();
+        ">
+        📄 Abrir multiscript.json
+    </button>
+
+    <button
+        onclick="closeModal()">
+        Cancelar
+    </button>
+
+</div>
+
+`);
+
+    };
+
+function relativePath(file){
+
+    const raw =
+        file.webkitRelativePath ||
+        file.name;
+
+    const parts =
+        raw.split("/");
+
+    if(parts.length > 1){
+        parts.shift();
+    }
+
+    return parts.join("/");
+}
+
+document
+    .getElementById("folderInput")
+    .addEventListener(
+        "change",
+        async event => {
+
+            const files =
+                [...event.target.files];
+
+            await importProjectFolder(
+                files
+            );
+
+            event.target.value = "";
+
+        }
+    );
+
+document
+    .getElementById("jsonInput")
+    .addEventListener(
+        "change",
+        async event => {
+
+            const file =
+                event.target.files[0];
+
+            if(file){
+                await importMetadata(file);
+            }
+
+            event.target.value = "";
+
+        }
+    );
+
+async function importProjectFolder(files){
+
+    const jsonFile =
+        files.find(
+            file =>
+                relativePath(file)
+                    .toLowerCase() ===
+                "multiscript.json"
+        );
+
+    if(!jsonFile){
+
+        alert(
+            "Projeto inválido.\n\n" +
+            "multiscript.json não foi encontrado."
+        );
+
+        return;
+    }
+
+    let metadata;
+
+    try{
+
+        metadata =
+            JSON.parse(
+                await jsonFile.text()
+            );
+
+    }catch(error){
+
+        alert(
+            "O multiscript.json está inválido."
+        );
+
+        return;
+    }
+
+    const imported = {
+
+        name:
+            metadata.project?.name ||
+            metadata.multiscript?.project ||
+            "PROJETO-IMPORTADO",
+
+        files:{},
+
+        plugins:{},
+
+        pages:
+            metadata.project?.pages ||
+            {},
+
+        protectedFiles:[
+            "multiscript.json"
+        ]
+
+    };
+
+    for(
+        const file of files
+    ){
+
+        const path =
+            relativePath(file);
+
+        if(!path){
+            continue;
+        }
+
+        if(
+            path.toLowerCase() ===
+            "multiscript.js"
+        ){
+
+            continue;
+        }
+
+        imported.files[path] =
+            await file.text();
+
+        if(
+            path.toLowerCase()
+                .startsWith("plugins/") &&
+            path.toLowerCase()
+                .endsWith(".php")
+        ){
+
+            imported.plugins[path] =
+                true;
+
+        }
+
+    }
+
+    project = imported;
+
+    ensureProject();
+
+    inferPages();
+
+    updateParentLists(project);
+
+    updateMetadata(project);
+
+    saveProject();
+
+    currentFile =
+        project.files["index.html"]
+            ? "index.html"
+            : Object.keys(
+                project.files
+            )[0];
+
+    closeModal();
+
+    openFile(currentFile);
+
+    toast("Projeto importado com sucesso.");
+
+}
+
+async function importMetadata(file){
+
+    let metadata;
+
+    try{
+
+        metadata =
+            JSON.parse(
+                await file.text()
+            );
+
+    }catch(error){
+
+        alert(
+            "multiscript.json inválido."
+        );
+
+        return;
+    }
+
+    const name =
+        metadata.project?.name ||
+        metadata.multiscript?.project ||
+        "PROJETO-IMPORTADO";
+
+    project =
+        createProject(name);
+
+    if(
+        metadata.project?.pages
+    ){
+
+        project.pages =
+            metadata.project.pages;
+
+    }
+
+    updateMetadata(project);
+
+    saveProject();
+
+    alert(
+        "O multiscript.json contém apenas os metadados.\n\n" +
+        "Para restaurar HTML, CSS, JavaScript, imagens e plugins, " +
+        "use Abrir Projeto → Abrir pasta."
+    );
+
+}
+
+/* =========================================================
+   INFERÊNCIA DE PÁGINAS
+========================================================= */
+
+function inferPages(){
+
+    const files =
+        Object.keys(
+            project.files
+        );
+
+    for(
+        const file of files
+    ){
+
+        if(
+            !file.endsWith(".html") ||
+            project.pages[file]
+        ){
+
+            continue;
+
+        }
+
+        const slug =
+            file
+                .replace(
+                    /\.html$/i,
+                    ""
+                );
+
+        const name =
+            slug
+                .replace(/[-_]+/g," ")
+                .replace(
+                    /\b\w/g,
+                    char =>
+                        char.toUpperCase()
+                );
+
+        project.pages[file] = {
+
+            type:"subpage",
+
+            name,
+
+            slug,
+
+            url:"/" + slug
+
+        };
+
+    }
+
+}
+
+/* =========================================================
+   GERADORES
+========================================================= */
+
 function openGenerator(type){
- const parents=Object.entries(project.pages).filter(([f,x])=>type==="subpage"&&(x.type==="category"||x.type==="institutional")).map(([f,x])=>'<option value="'+esc(f)+'">'+esc(x.name)+" ("+esc(x.type)+")</option>").join("");
- let title="",body="";
- if(type==="menu"){title="Gerador de Menu";body='<p>As três páginas principais já existem. Você pode recriá-las com segurança.</p><button class="primary" onclick="buildBasePages(project);updateMeta(project);saveLocal();closeModal();openFile(\'index.html\')">Regenerar páginas base</button>';}
- if(type==="category"||type==="institutional"){const label=type==="category"?"Categoria":"Institucional";title="Nova "+label;body='<div class="field"><label>Nome</label><input id="gName"></div><div class="field"><label>Descrição</label><textarea id="gDesc"></textarea></div><div class="actions"><button class="primary" onclick="generatePage(\''+type+'\')">Gerar</button><button onclick="closeModal()">Cancelar</button></div>';}
- if(type==="subpage"){title="Nova Subpágina";body='<div class="field"><label>Página-pai</label><select id="gParent">'+parents+'</select></div><div class="field"><label>Nome</label><input id="gName"></div><div class="field"><label>Descrição</label><textarea id="gDesc"></textarea></div><div class="actions"><button class="primary" onclick="generatePage(\'subpage\')">Gerar</button><button onclick="closeModal()">Cancelar</button></div>';}
- if(type==="sitemap"){title="Gerar Sitemap";body='<div class="field"><label>URL base</label><input id="siteBase" placeholder="https://exemplo.com.br"></div><button class="primary" onclick="generateSitemap()">Gerar sitemap.xml</button>';}
- showModal("<h2>"+title+"</h2>"+body);
+
+    let title = "";
+
+    let body = "";
+
+    if(type === "menu"){
+
+        title =
+            "📌 Gerador de Menu";
+
+        body = `
+
+<p class="muted">
+    O Menu controla as três páginas
+    principais do projeto.
+</p>
+
+<div class="card">
+
+    <h3>index.html</h3>
+    <p>
+        Página inicial.
+    </p>
+
+</div>
+
+<div class="card" style="margin-top:8px">
+
+    <h3>categorias.html</h3>
+    <p>
+        Lista as páginas de categorias.
+    </p>
+
+</div>
+
+<div class="card" style="margin-top:8px">
+
+    <h3>institucional.html</h3>
+    <p>
+        Lista as páginas institucionais.
+    </p>
+
+</div>
+
+<div class="actions">
+
+    <button
+        class="primary"
+        onclick="
+            regenerateMenu();
+            closeModal();
+        ">
+        Regenerar estrutura do Menu
+    </button>
+
+    <button
+        onclick="closeModal()">
+        Fechar
+    </button>
+
+</div>
+
+`;
+
+    }
+
+    if(
+        type === "category" ||
+        type === "institutional"
+    ){
+
+        const label =
+            type === "category"
+                ? "Categoria"
+                : "Institucional";
+
+        title =
+            "＋ Nova " + label;
+
+        body = `
+
+<div class="field">
+
+    <label>Nome</label>
+
+    <input id="generatorName">
+
+</div>
+
+<div class="field">
+
+    <label>Descrição</label>
+
+    <textarea id="generatorDescription"></textarea>
+
+</div>
+
+<div class="actions">
+
+    <button
+        class="primary"
+        onclick="
+            generatePage('${type}');
+        ">
+        Gerar página
+    </button>
+
+    <button
+        onclick="closeModal()">
+        Cancelar
+    </button>
+
+</div>
+
+`;
+
+    }
+
+    if(type === "subpage"){
+
+        const parents =
+            Object.entries(
+                project.pages
+            )
+            .filter(
+                ([,page]) =>
+                    page.type === "category" ||
+                    page.type === "institutional"
+            )
+            .map(
+                ([file,page]) =>
+                    `
+<option value="${esc(file)}">
+    ${esc(page.name)}
+    — ${esc(page.type)}
+</option>
+`
+            )
+            .join("");
+
+        title =
+            "＋ Nova Subpágina";
+
+        body = `
+
+<div class="field">
+
+    <label>Página-pai</label>
+
+    <select id="generatorParent">
+
+        <option value="">
+            Selecione
+        </option>
+
+        ${parents}
+
+    </select>
+
+</div>
+
+<div class="field">
+
+    <label>Nome</label>
+
+    <input id="generatorName">
+
+</div>
+
+<div class="field">
+
+    <label>Descrição</label>
+
+    <textarea id="generatorDescription"></textarea>
+
+</div>
+
+<div class="actions">
+
+    <button
+        class="primary"
+        onclick="
+            generatePage('subpage');
+        ">
+        Gerar subpágina
+    </button>
+
+    <button
+        onclick="closeModal()">
+        Cancelar
+    </button>
+
+</div>
+
+`;
+
+    }
+
+    if(type === "sitemap"){
+
+        title =
+            "🗺 Gerador de Sitemap";
+
+        body = `
+
+<p class="muted">
+    O domínio não pode ser descoberto pelo editor.
+    Informe a URL oficial do projeto.
+</p>
+
+<div class="field">
+
+    <label>URL base</label>
+
+    <input
+        id="sitemapBase"
+        placeholder="https://exemplo.com.br">
+
+</div>
+
+<div class="actions">
+
+    <button
+        class="primary"
+        onclick="generateSitemap()">
+        Gerar sitemap.xml
+    </button>
+
+    <button
+        onclick="closeModal()">
+        Cancelar
+    </button>
+
+</div>
+
+`;
+
+    }
+
+    openModal(
+        "<h2>" +
+        title +
+        "</h2>" +
+        body
+    );
+
 }
-function uniqueFile(slug){let f=slug+".html",n=2;while(project.files[f])f=slug+"-"+n+++".html";return f;}
+
+/* =========================================================
+   REGENERAR MENU
+========================================================= */
+
+function regenerateMenu(){
+
+    /*
+     * Importante:
+     * não reconstruímos categorias/institucional
+     * de maneira destrutiva.
+     */
+
+    if(
+        !project.files["index.html"]
+    ){
+
+        project.files["index.html"] =
+            pageShell(
+                "Início",
+                "<section class=\"py-5\"><div class=\"container\"><h1>Início</h1></div></section>"
+            );
+
+    }
+
+    if(
+        !project.files["categorias.html"]
+    ){
+
+        project.files["categorias.html"] =
+            pageShell(
+                "Categorias",
+                `
+<section class="py-5">
+<div class="container">
+
+<h1>Categorias</h1>
+
+<div class="row g-4">
+
+<!-- MULTISCRIPT:CATEGORIES:START -->
+<!-- MULTISCRIPT:CATEGORIES:END -->
+
+</div>
+
+</div>
+</section>
+`
+            );
+
+    }
+
+    if(
+        !project.files["institucional.html"]
+    ){
+
+        project.files["institucional.html"] =
+            pageShell(
+                "Institucional",
+                `
+<section class="py-5">
+<div class="container">
+
+<h1>Institucional</h1>
+
+<div class="row g-4">
+
+<!-- MULTISCRIPT:INSTITUTIONAL:START -->
+<!-- MULTISCRIPT:INSTITUTIONAL:END -->
+
+</div>
+
+</div>
+</section>
+`
+            );
+
+    }
+
+    updateParentLists(project);
+
+    updateMetadata(project);
+
+    saveProject();
+
+    renderPageManager();
+
+    toast("Menu atualizado.");
+}
+
+/* =========================================================
+   ARQUIVO ÚNICO
+========================================================= */
+
+function uniquePageFile(slug){
+
+    let file =
+        slug + ".html";
+
+    let number = 2;
+
+    while(
+        project.files[file]
+    ){
+
+        file =
+            slug +
+            "-" +
+            number +
+            ".html";
+
+        number++;
+
+    }
+
+    return file;
+}
+
+/* =========================================================
+   GERAR PÁGINA
+========================================================= */
+
 function generatePage(type){
- const name=document.getElementById("gName").value.trim();if(!name)return alert("Informe o nome.");
- const desc=document.getElementById("gDesc").value.trim();const slug=slugify(name);const file=uniqueFile(slug);
- let parent=null;if(type==="subpage"){parent=document.getElementById("gParent").value;if(!parent)return alert("Crie primeiro uma categoria ou institucional.");}
- project.pages[file]={type,name,slug,url:"/"+slug,description:desc};if(parent){project.pages[file].parent=parent;project.pages[file].parentType=project.pages[parent]?.type;}
- project.files[file]=pageShell(name,'<section class="py-5"><div class="container"><span class="badge text-bg-secondary">'+esc(type)+'</span><h1 class="display-5 fw-bold mt-3">'+esc(name)+'</h1><p class="lead">'+esc(desc)+'</p><div class="mt-4"><p>Edite esta página no Editor.</p></div></div></section>');
- updateParentLists(project);updateMeta(project);saveLocal();closeModal();openFile(file);toast("Página criada");}
-function generateSitemap(){
- const base=(document.getElementById("siteBase").value.trim()||"https://example.com").replace(/\/$/,"");let urls=Object.values(project.pages).map(x=>base+(x.url||"/"));project.files["sitemap.xml"]='<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls.map(u=>"<url><loc>"+esc(u)+"</loc></url>").join("")+"</urlset>";updateMeta(project);saveLocal();closeModal();openFile("sitemap.xml");}
-function renderPageManager(){const e=document.getElementById("pageManager");e.innerHTML="";for(const [f,x] of Object.entries(project.pages)){const r=document.createElement("div");r.className="row";r.innerHTML='<div class="grow"><b>'+esc(x.name)+'</b><div class="small">'+esc(f)+' · '+esc(x.type)+' · '+esc(x.url||"")+'</div></div><button onclick="openFile('+JSON.stringify(f)+')">Editar</button><button onclick="previewPage('+JSON.stringify(f)+')">Ver</button><button class="danger" onclick="removePage('+JSON.stringify(f)+')">Excluir</button>';e.appendChild(r);}}
-function previewPage(f){document.getElementById("previewFrame").srcdoc=project.files[f]||"";showView("preview");}
-function removePage(f){if(["index.html","categorias.html","institucional.html"].includes(f))return alert("As páginas do Menu não podem ser excluídas.");if(!confirm("Excluir "+f+"?"))return;delete project.files[f];delete project.pages[f];updateParentLists(project);saveLocal();renderPageManager();}
-document.getElementById("phpInput").addEventListener("change",async e=>{for(const f of e.target.files){const path="plugins/"+f.name;project.files[path]=await f.text();project.plugins[path]=true;}updateMeta(project);saveLocal();e.target.value=""});
-function renderPlugins(){const e=document.getElementById("pluginManager");e.innerHTML="";for(const f of Object.keys(project.plugins||{})){const r=document.createElement("div");r.className="row";r.innerHTML='<div class="grow"><b>🔌 '+esc(f)+'</b><div class="small">PHP do usuário</div></div><button onclick="openFile('+JSON.stringify(f)+')">Editar</button><button class="danger" onclick="delete project.plugins['+JSON.stringify(f)+'];delete project.files['+JSON.stringify(f)+'];saveLocal();renderPlugins()">Excluir</button>';e.appendChild(r);}}
-function openSvg(file){svgState.file=file;svgState.undo=[];svgState.redo=[];svgState.selected=null;svgState.tool="select";svgState.svg=new DOMParser().parseFromString(project.files[file]||defaultSvg(file),"image/svg+xml").documentElement;document.getElementById("svgName").textContent=file;renderSvg();}
-function renderSvg(){const box=document.getElementById("svgCanvas");box.innerHTML="";const s=svgState.svg.cloneNode(true);s.removeAttribute("style");s.style.width=(svgState.scale*100)+"%";s.style.maxWidth="none";s.style.maxHeight="none";s.addEventListener("mousedown",svgMouseDown);box.appendChild(s);document.getElementById("layers").innerHTML=[...s.children].map((x,i)=>'<div class="layer">'+esc(x.tagName.toLowerCase())+' #'+(i+1)+'</div>').join("");}
-function svgTool(t){svgState.tool=t;toast("Ferramenta: "+t);}
-function snapshot(){svgState.undo.push(new XMLSerializer().serializeToString(svgState.svg));svgState.redo=[];}
-function svgMouseDown(e){if(e.target===svgState.svg&&svgState.tool==="select")return;const t=svgState.tool,s=svgState.svg,pt=s.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const p=pt.matrixTransform(s.getScreenCTM().inverse());snapshot();
- if(t==="rect"){const n=document.createElementNS("http://www.w3.org/2000/svg","rect");n.setAttribute("x",p.x-60);n.setAttribute("y",p.y-35);n.setAttribute("width",120);n.setAttribute("height",70);n.setAttribute("fill",document.getElementById("fill").value);s.appendChild(n);svgState.selected=n;renderSvg();}
- else if(t==="circle"){const n=document.createElementNS("http://www.w3.org/2000/svg","circle");n.setAttribute("cx",p.x);n.setAttribute("cy",p.y);n.setAttribute("r",45);n.setAttribute("fill",document.getElementById("fill").value);s.appendChild(n);svgState.selected=n;renderSvg();}
- else if(t==="text"){const n=document.createElementNS("http://www.w3.org/2000/svg","text");n.setAttribute("x",p.x);n.setAttribute("y",p.y);n.setAttribute("font-size","42");n.setAttribute("font-family","Arial");n.setAttribute("fill",document.getElementById("fill").value);n.textContent="Texto";s.appendChild(n);svgState.selected=n;renderSvg();}
- else if(t==="pen"){const n=document.createElementNS("http://www.w3.org/2000/svg","path");n.setAttribute("d","M "+p.x+" "+p.y);n.setAttribute("fill","none");n.setAttribute("stroke",document.getElementById("stroke").value);n.setAttribute("stroke-width","5");s.appendChild(n);svgState.selected=n;drag={n,last:p};s.addEventListener("mousemove",drawMove);s.addEventListener("mouseup",drawUp,{once:true});}
+
+    const name =
+        document
+            .getElementById(
+                "generatorName"
+            )
+            .value
+            .trim();
+
+    if(!name){
+
+        alert(
+            "Informe o nome da página."
+        );
+
+        return;
+
+    }
+
+    const description =
+        document
+            .getElementById(
+                "generatorDescription"
+            )
+            .value
+            .trim();
+
+    const slug =
+        slugify(name);
+
+    const file =
+        uniquePageFile(slug);
+
+    const page = {
+
+        type,
+
+        name,
+
+        slug,
+
+        url:"/" + slug,
+
+        description
+
+    };
+
+    if(type === "subpage"){
+
+        const parent =
+            document
+                .getElementById(
+                    "generatorParent"
+                )
+                .value;
+
+        if(!parent){
+
+            alert(
+                "Selecione uma página-pai."
+            );
+
+            return;
+
+        }
+
+        page.parent = parent;
+
+        page.parentType =
+            project.pages[parent]?.type ||
+            "";
+
+    }
+
+    project.pages[file] =
+        page;
+
+    project.files[file] =
+        pageShell(
+            name,
+            `
+<section class="py-5">
+
+    <div class="container">
+
+        <span class="badge text-bg-primary">
+            ${esc(type)}
+        </span>
+
+        <h1 class="display-5 fw-bold mt-3">
+            ${esc(name)}
+        </h1>
+
+        <p class="lead text-secondary">
+            ${esc(description)}
+        </p>
+
+        ${
+            type === "subpage"
+            ?
+            `
+<div class="alert alert-light border mt-4">
+    Página vinculada a:
+    <strong>
+        ${esc(
+            project.pages[
+                page.parent
+            ]?.name ||
+            ""
+        )}
+    </strong>
+</div>
+`
+            :
+            ""
+        }
+
+        <div class="mt-4">
+
+            <p>
+                Edite esta página no Editor.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+`
+        );
+
+    updateParentLists(project);
+
+    updateMetadata(project);
+
+    saveProject();
+
+    closeModal();
+
+    openFile(file);
+
+    toast(
+        "Página criada: " + file
+    );
+
 }
-function drawMove(e){if(!drag)return;const s=svgState.svg,pt=s.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const p=pt.matrixTransform(s.getScreenCTM().inverse());drag.n.setAttribute("d",drag.n.getAttribute("d")+" L "+p.x+" "+p.y);renderSvg();}
-function drawUp(){drag=null;}
+
+/* =========================================================
+   SITEMAP
+========================================================= */
+
+function generateSitemap(){
+
+    let base =
+        document
+            .getElementById(
+                "sitemapBase"
+            )
+            .value
+            .trim();
+
+    if(!base){
+        base = "https://example.com";
+    }
+
+    base =
+        base.replace(
+            /\/+$/,
+            ""
+        );
+
+    const urls =
+        Object.values(
+            project.pages
+        ).map(
+            page =>
+                base +
+                (page.url || "/")
+        );
+
+    const body =
+        urls
+            .map(
+                url =>
+                    `
+    <url>
+        <loc>${esc(url)}</loc>
+    </url>
+`
+            )
+            .join("");
+
+    project.files["sitemap.xml"] =
+`<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${body}
+</urlset>`;
+
+    updateMetadata(project);
+
+    saveProject();
+
+    closeModal();
+
+    openFile("sitemap.xml");
+
+    toast("sitemap.xml gerado.");
+}
+
+/* =========================================================
+   GERENCIADOR DE PÁGINAS
+========================================================= */
+
+function renderPageManager(){
+
+    const container =
+        document.getElementById(
+            "pageManager"
+        );
+
+    container.innerHTML = "";
+
+    for(
+        const [file,page]
+        of Object.entries(project.pages)
+    ){
+
+        const row =
+            document.createElement("div");
+
+        row.className = "row";
+
+        const grow =
+            document.createElement("div");
+
+        grow.className = "grow";
+
+        grow.innerHTML = `
+
+<b>${esc(page.name)}</b>
+
+<div class="small muted">
+
+    ${esc(file)}
+    ·
+    ${esc(page.type)}
+    ·
+    ${esc(page.url || "/")}
+
+</div>
+
+`;
+
+        row.appendChild(grow);
+
+        const edit =
+            document.createElement("button");
+
+        edit.textContent = "Editar";
+
+        edit.onclick =
+            () => openFile(file);
+
+        row.appendChild(edit);
+
+        const preview =
+            document.createElement("button");
+
+        preview.textContent = "Ver";
+
+        preview.onclick =
+            () => previewPage(file);
+
+        row.appendChild(preview);
+
+        const remove =
+            document.createElement("button");
+
+        remove.textContent = "Excluir";
+
+        remove.className =
+            "danger";
+
+        remove.onclick =
+            () => removePage(file);
+
+        row.appendChild(remove);
+
+        container.appendChild(row);
+
+    }
+
+}
+
+function removePage(file){
+
+    const fixed = [
+        "index.html",
+        "categorias.html",
+        "institucional.html"
+    ];
+
+    if(fixed.includes(file)){
+
+        alert(
+            "As páginas principais do Menu não podem ser excluídas."
+        );
+
+        return;
+    }
+
+    if(
+        !confirm(
+            "Excluir " + file + "?"
+        )
+    ){
+
+        return;
+
+    }
+
+    delete project.files[file];
+
+    delete project.pages[file];
+
+    /*
+     * Também remove o vínculo de subpáginas
+     * que apontavam para esta página.
+     */
+
+    for(
+        const page of Object.values(
+            project.pages
+        )
+    ){
+
+        if(page.parent === file){
+
+            page.parent = null;
+
+            page.parentType = null;
+
+        }
+
+    }
+
+    updateParentLists(project);
+
+    saveProject();
+
+    renderPageManager();
+
+    if(currentFile === file){
+
+        openFile("index.html");
+
+    }
+
+    toast("Página excluída.");
+
+}
+
+/* =========================================================
+   PLUGINS PHP
+========================================================= */
+
+document
+    .getElementById("phpInput")
+    .addEventListener(
+        "change",
+        async event => {
+
+            for(
+                const file
+                of [...event.target.files]
+            ){
+
+                const path =
+                    "plugins/" +
+                    file.name;
+
+                project.files[path] =
+                    await file.text();
+
+                project.plugins[path] =
+                    true;
+
+            }
+
+            updateMetadata(project);
+
+            saveProject();
+
+            renderPluginManager();
+
+            event.target.value = "";
+
+        }
+    );
+
+function renderPluginManager(){
+
+    const container =
+        document.getElementById(
+            "pluginManager"
+        );
+
+    container.innerHTML = "";
+
+    const plugins =
+        Object.keys(
+            project.plugins || {}
+        );
+
+    if(!plugins.length){
+
+        container.innerHTML = `
+<div class="card">
+
+    <h3>Nenhum plugin PHP</h3>
+
+    <p>
+        Importe seus próprios arquivos
+        <code>.php</code>.
+    </p>
+
+</div>
+`;
+
+        return;
+
+    }
+
+    for(
+        const file of plugins
+    ){
+
+        const row =
+            document.createElement("div");
+
+        row.className = "row";
+
+        const grow =
+            document.createElement("div");
+
+        grow.className = "grow";
+
+        grow.innerHTML = `
+
+<b>🔌 ${esc(
+    file.replace(
+        "plugins/",
+        ""
+    )
+)}</b>
+
+<div class="small muted">
+    Plugin PHP do usuário
+</div>
+
+`;
+
+        row.appendChild(grow);
+
+        const edit =
+            document.createElement("button");
+
+        edit.textContent = "Editar";
+
+        edit.onclick =
+            () => openFile(file);
+
+        row.appendChild(edit);
+
+        const remove =
+            document.createElement("button");
+
+        remove.className = "danger";
+
+        remove.textContent =
+            "Excluir";
+
+        remove.onclick =
+            () => {
+
+                if(
+                    !confirm(
+                        "Excluir este plugin?"
+                    )
+                ){
+
+                    return;
+
+                }
+
+                delete project.plugins[file];
+
+                delete project.files[file];
+
+                updateMetadata(project);
+
+                saveProject();
+
+                renderPluginManager();
+
+            };
+
+        row.appendChild(remove);
+
+        container.appendChild(row);
+
+    }
+
+}
+
+/* =========================================================
+   EDITOR SVG
+========================================================= */
+
+function openSvg(file){
+
+    const source =
+        project.files[file] ||
+        defaultSvg(file);
+
+    let parsed;
+
+    try{
+
+        parsed =
+            new DOMParser()
+                .parseFromString(
+                    source,
+                    "image/svg+xml"
+                );
+
+        if(
+            parsed.querySelector("parsererror")
+        ){
+
+            throw new Error(
+                "SVG inválido"
+            );
+
+        }
+
+    }catch(error){
+
+        alert(
+            "Não foi possível abrir o SVG."
+        );
+
+        return;
+
+    }
+
+    svgState.file = file;
+
+    svgState.svg =
+        parsed.documentElement;
+
+    svgState.selected = null;
+
+    svgState.tool = "select";
+
+    svgState.zoom = 1;
+
+    svgState.history = [];
+
+    svgState.future = [];
+
+    document.getElementById(
+        "svgName"
+    ).textContent = file;
+
+    document.getElementById(
+        "svgZoom"
+    ).value = 100;
+
+    renderSvgEditor();
+
+}
+
+function renderSvgEditor(){
+
+    const area =
+        document.getElementById(
+            "canvasArea"
+        );
+
+    area.innerHTML = "";
+
+    if(!svgState.svg){
+        return;
+    }
+
+    const svg =
+        svgState.svg.cloneNode(true);
+
+    svg.classList.add(
+        "svg-stage"
+    );
+
+    svg.style.width =
+        (
+            svgState.zoom * 100
+        ) + "%";
+
+    svg.style.height = "auto";
+
+    svg.style.maxWidth = "none";
+
+    svg.style.maxHeight = "none";
+
+    svg.addEventListener(
+        "mousedown",
+        handleSvgMouseDown
+    );
+
+    svg.addEventListener(
+        "click",
+        handleSvgClick
+    );
+
+    svg.addEventListener(
+        "mousemove",
+        handleSvgMouseMove
+    );
+
+    svg.addEventListener(
+        "mouseup",
+        handleSvgMouseUp
+    );
+
+    svg.addEventListener(
+        "mouseleave",
+        handleSvgMouseUp
+    );
+
+    area.appendChild(svg);
+
+    renderLayers();
+
+    syncSvgCode();
+
+}
+
+/* =========================================================
+   SVG COORDENADAS
+========================================================= */
+
+function svgPoint(
+    svg,
+    event
+){
+
+    const point =
+        svg.createSVGPoint();
+
+    point.x =
+        event.clientX;
+
+    point.y =
+        event.clientY;
+
+    return point.matrixTransform(
+        svg
+            .getScreenCTM()
+            .inverse()
+    );
+
+}
+
+/* =========================================================
+   SVG SNAPSHOT
+========================================================= */
+
+function saveSvgSnapshot(){
+
+    if(!svgState.svg){
+        return;
+    }
+
+    svgState.history.push(
+        new XMLSerializer()
+            .serializeToString(
+                svgState.svg
+            )
+    );
+
+    if(
+        svgState.history.length > 40
+    ){
+
+        svgState.history.shift();
+
+    }
+
+    svgState.future = [];
+
+}
+
+/* =========================================================
+   SVG SELEÇÃO
+========================================================= */
+
+function isSvgElement(element){
+
+    if(!element){
+        return false;
+    }
+
+    return [
+        "rect",
+        "circle",
+        "ellipse",
+        "path",
+        "text",
+        "image",
+        "line",
+        "polygon",
+        "polyline"
+    ].includes(
+        element.tagName
+    );
+
+}
+
+function handleSvgClick(event){
+
+    if(
+        svgState.tool !== "select"
+    ){
+
+        return;
+
+    }
+
+    const target =
+        event.target;
+
+    if(
+        isSvgElement(target)
+    ){
+
+        svgState.selected =
+            target;
+
+        syncSelectedControls();
+
+        renderLayers();
+
+    }
+
+}
+
+function handleSvgMouseDown(event){
+
+    const svg =
+        svgState.svg;
+
+    if(!svg){
+        return;
+    }
+
+    const point =
+        svgPoint(
+            svg,
+            event
+        );
+
+    const tool =
+        svgState.tool;
+
+    if(tool === "select"){
+
+        if(
+            isSvgElement(event.target)
+        ){
+
+            svgState.selected =
+                event.target;
+
+            svgState.dragging =
+                true;
+
+            svgState.dragStart = point;
+
+            svgState.originalTransform =
+                svgState.selected
+                    .getAttribute(
+                        "transform"
+                    ) || "";
+
+            saveSvgSnapshot();
+
+            event.preventDefault();
+
+        }
+
+        return;
+
+    }
+
+    saveSvgSnapshot();
+
+    if(tool === "rect"){
+
+        const element =
+            document.createElementNS(
+                SVG_NS,
+                "rect"
+            );
+
+        element.setAttribute(
+            "x",
+            point.x - 60
+        );
+
+        element.setAttribute(
+            "y",
+            point.y - 35
+        );
+
+        element.setAttribute(
+            "width",
+            "120"
+        );
+
+        element.setAttribute(
+            "height",
+            "70"
+        );
+
+        element.setAttribute(
+            "fill",
+            document.getElementById(
+                "fillColor"
+            ).value
+        );
+
+        element.setAttribute(
+            "stroke",
+            document.getElementById(
+                "strokeColor"
+            ).value
+        );
+
+        element.setAttribute(
+            "stroke-width",
+            document.getElementById(
+                "strokeWidth"
+            ).value
+        );
+
+        svg.appendChild(element);
+
+        svgState.selected =
+            element;
+
+        renderSvgEditor();
+
+        return;
+
+    }
+
+    if(tool === "circle"){
+
+        const element =
+            document.createElementNS(
+                SVG_NS,
+                "circle"
+            );
+
+        element.setAttribute(
+            "cx",
+            point.x
+        );
+
+        element.setAttribute(
+            "cy",
+            point.y
+        );
+
+        element.setAttribute(
+            "r",
+            "50"
+        );
+
+        element.setAttribute(
+            "fill",
+            document.getElementById(
+                "fillColor"
+            ).value
+        );
+
+        element.setAttribute(
+            "stroke",
+            document.getElementById(
+                "strokeColor"
+            ).value
+        );
+
+        element.setAttribute(
+            "stroke-width",
+            document.getElementById(
+                "strokeWidth"
+            ).value
+        );
+
+        svg.appendChild(element);
+
+        svgState.selected =
+            element;
+
+        renderSvgEditor();
+
+        return;
+
+    }
+
+    if(tool === "text"){
+
+        const element =
+            document.createElementNS(
+                SVG_NS,
+                "text"
+            );
+
+        element.setAttribute(
+            "x",
+            point.x
+        );
+
+        element.setAttribute(
+            "y",
+            point.y
+        );
+
+        element.setAttribute(
+            "font-family",
+            "Arial"
+        );
+
+        element.setAttribute(
+            "font-size",
+            "42"
+        );
+
+        element.setAttribute(
+            "fill",
+            document.getElementById(
+                "fillColor"
+            ).value
+        );
+
+        element.textContent =
+            prompt(
+                "Texto:",
+                "Texto"
+            ) ||
+            "Texto";
+
+        svg.appendChild(element);
+
+        svgState.selected =
+            element;
+
+        renderSvgEditor();
+
+        return;
+
+    }
+
+    if(tool === "pen"){
+
+        const element =
+            document.createElementNS(
+                SVG_NS,
+                "path"
+            );
+
+        element.setAttribute(
+            "d",
+            `M ${point.x} ${point.y}`
+        );
+
+        element.setAttribute(
+            "fill",
+            "none"
+        );
+
+        element.setAttribute(
+            "stroke",
+            document.getElementById(
+                "strokeColor"
+            ).value
+        );
+
+        element.setAttribute(
+            "stroke-width",
+            document.getElementById(
+                "strokeWidth"
+            ).value
+        );
+
+        element.setAttribute(
+            "stroke-linecap",
+            "round"
+        );
+
+        element.setAttribute(
+            "stroke-linejoin",
+            "round"
+        );
+
+        svg.appendChild(element);
+
+        svgState.selected =
+            element;
+
+        svgState.drawing =
+            true;
+
+        svgState.activePath =
+            element;
+
+        event.preventDefault();
+
+    }
+
+}
+
+function handleSvgMouseMove(event){
+
+    if(
+        svgState.drawing &&
+        svgState.activePath
+    ){
+
+        const point =
+            svgPoint(
+                svgState.svg,
+                event
+            );
+
+        const path =
+            svgState.activePath;
+
+        path.setAttribute(
+            "d",
+            path.getAttribute("d") +
+            ` L ${point.x} ${point.y}`
+        );
+
+        renderSvgStageOnly();
+
+        return;
+
+    }
+
+    if(
+        !svgState.dragging ||
+        !svgState.selected
+    ){
+
+        return;
+
+    }
+
+    const point =
+        svgPoint(
+            svgState.svg,
+            event
+        );
+
+    const start =
+        svgState.dragStart;
+
+    const dx =
+        point.x - start.x;
+
+    const dy =
+        point.y - start.y;
+
+    const transform =
+        svgState.originalTransform;
+
+    svgState.selected.setAttribute(
+        "transform",
+        (
+            transform +
+            " translate(" +
+            dx +
+            " " +
+            dy +
+            ")"
+        ).trim()
+    );
+
+    renderSvgStageOnly();
+
+}
+
+function handleSvgMouseUp(){
+
+    if(svgState.drawing){
+
+        svgState.drawing =
+            false;
+
+        svgState.activePath =
+            null;
+
+        renderSvgEditor();
+
+        return;
+
+    }
+
+    if(svgState.dragging){
+
+        svgState.dragging =
+            false;
+
+        renderSvgEditor();
+
+    }
+
+}
+
+/*
+ * Atualiza somente o SVG visual,
+ * sem substituir svgState.svg.
+ */
+function renderSvgStageOnly(){
+
+    const area =
+        document.getElementById(
+            "canvasArea"
+        );
+
+    const stage =
+        area.querySelector(
+            ".svg-stage"
+        );
+
+    if(!stage){
+        return;
+    }
+
+    const clone =
+        svgState.svg.cloneNode(true);
+
+    clone.classList.add(
+        "svg-stage"
+    );
+
+    clone.style.width =
+        (
+            svgState.zoom * 100
+        ) + "%";
+
+    clone.style.height = "auto";
+
+    clone.style.maxWidth = "none";
+
+    clone.style.maxHeight = "none";
+
+    area.replaceChild(
+        clone,
+        stage
+    );
+
+    /*
+     * Mantemos os eventos no clone.
+     */
+
+    clone.addEventListener(
+        "mousedown",
+        handleSvgMouseDown
+    );
+
+    clone.addEventListener(
+        "click",
+        handleSvgClick
+    );
+
+    clone.addEventListener(
+        "mousemove",
+        handleSvgMouseMove
+    );
+
+    clone.addEventListener(
+        "mouseup",
+        handleSvgMouseUp
+    );
+
+    clone.addEventListener(
+        "mouseleave",
+        handleSvgMouseUp
+    );
+
+}
+
+/* =========================================================
+   SVG FERRAMENTAS
+========================================================= */
+
+function setSvgTool(tool){
+
+    svgState.tool =
+        tool;
+
+    toast(
+        "Ferramenta: " +
+        tool
+    );
+
+}
+
+function renderLayers(){
+
+    const container =
+        document.getElementById(
+            "layers"
+        );
+
+    container.innerHTML = "";
+
+    if(!svgState.svg){
+        return;
+    }
+
+    const children =
+        [...svgState.svg.children];
+
+    children.forEach(
+        (element,index) => {
+
+            const layer =
+                document.createElement(
+                    "div"
+                );
+
+            layer.className =
+                "layer";
+
+            if(
+                element ===
+                svgState.selected
+            ){
+
+                layer.classList.add(
+                    "active"
+                );
+
+            }
+
+            const eye =
+                document.createElement(
+                    "button"
+                );
+
+            eye.className =
+                "small-btn";
+
+            eye.textContent =
+                element.style.display ===
+                "none"
+                    ? "🚫"
+                    : "👁";
+
+            eye.onclick =
+                event => {
+
+                    event.stopPropagation();
+
+                    saveSvgSnapshot();
+
+                    element.style.display =
+                        element.style.display ===
+                        "none"
+                            ? ""
+                            : "none";
+
+                    renderSvgEditor();
+
+                };
+
+            layer.appendChild(
+                eye
+            );
+
+            const name =
+                document.createElement(
+                    "span"
+                );
+
+            name.className =
+                "layer-name";
+
+            name.textContent =
+                (
+                    index + 1
+                ) +
+                " — " +
+                element.tagName.toLowerCase();
+
+            layer.appendChild(
+                name
+            );
+
+            layer.onclick =
+                () => {
+
+                    svgState.selected =
+                        element;
+
+                    syncSelectedControls();
+
+                    renderLayers();
+
+                };
+
+            container.appendChild(
+                layer
+            );
+
+        }
+    );
+
+}
+
+/* =========================================================
+   SVG ESTILO
+========================================================= */
+
+function syncSelectedControls(){
+
+    const element =
+        svgState.selected;
+
+    if(!element){
+        return;
+    }
+
+    const fill =
+        element.getAttribute(
+            "fill"
+        );
+
+    const stroke =
+        element.getAttribute(
+            "stroke"
+        );
+
+    const strokeWidth =
+        element.getAttribute(
+            "stroke-width"
+        );
+
+    if(
+        fill &&
+        /^#[0-9a-f]{6}$/i.test(fill)
+    ){
+
+        document.getElementById(
+            "fillColor"
+        ).value = fill;
+
+    }
+
+    if(
+        stroke &&
+        /^#[0-9a-f]{6}$/i.test(stroke)
+    ){
+
+        document.getElementById(
+            "strokeColor"
+        ).value = stroke;
+
+    }
+
+    if(strokeWidth){
+
+        document.getElementById(
+            "strokeWidth"
+        ).value =
+            strokeWidth;
+
+    }
+
+}
+
+function applySvgStyle(){
+
+    const element =
+        svgState.selected;
+
+    if(!element){
+        return;
+    }
+
+    saveSvgSnapshot();
+
+    element.setAttribute(
+        "fill",
+        document.getElementById(
+            "fillColor"
+        ).value
+    );
+
+    element.setAttribute(
+        "stroke",
+        document.getElementById(
+            "strokeColor"
+        ).value
+    );
+
+    element.setAttribute(
+        "stroke-width",
+        document.getElementById(
+            "strokeWidth"
+        ).value
+    );
+
+    renderSvgEditor();
+
+}
+
+/* =========================================================
+   SVG DUPLICAR / EXCLUIR
+========================================================= */
+
+function duplicateSvgElement(){
+
+    if(
+        !svgState.svg ||
+        !svgState.selected
+    ){
+
+        return;
+
+    }
+
+    saveSvgSnapshot();
+
+    const copy =
+        svgState.selected.cloneNode(
+            true
+        );
+
+    copy.removeAttribute(
+        "id"
+    );
+
+    copy.setAttribute(
+        "transform",
+        (
+            copy.getAttribute(
+                "transform"
+            ) || ""
+        ) +
+        " translate(20 20)"
+    );
+
+    svgState.svg.appendChild(
+        copy
+    );
+
+    svgState.selected =
+        copy;
+
+    renderSvgEditor();
+
+}
+
+function deleteSvgElement(){
+
+    if(
+        !svgState.svg ||
+        !svgState.selected
+    ){
+
+        return;
+
+    }
+
+    saveSvgSnapshot();
+
+    svgState.selected.remove();
+
+    svgState.selected =
+        null;
+
+    renderSvgEditor();
+
+}
+
+/* =========================================================
+   SVG UNDO / REDO
+========================================================= */
+
+function restoreSvgString(
+    source
+){
+
+    const parsed =
+        new DOMParser()
+            .parseFromString(
+                source,
+                "image/svg+xml"
+            );
+
+    if(
+        parsed.querySelector(
+            "parsererror"
+        )
+    ){
+
+        return;
+
+    }
+
+    svgState.svg =
+        parsed.documentElement;
+
+    svgState.selected =
+        null;
+
+    renderSvgEditor();
+
+}
+
+function undoSvg(){
+
+    if(
+        !svgState.history.length
+    ){
+
+        toast(
+            "Nada para desfazer."
+        );
+
+        return;
+
+    }
+
+    svgState.future.push(
+        new XMLSerializer()
+            .serializeToString(
+                svgState.svg
+            )
+    );
+
+    const previous =
+        svgState.history.pop();
+
+    restoreSvgString(
+        previous
+    );
+
+}
+
+function redoSvg(){
+
+    if(
+        !svgState.future.length
+    ){
+
+        toast(
+            "Nada para refazer."
+        );
+
+        return;
+
+    }
+
+    svgState.history.push(
+        new XMLSerializer()
+            .serializeToString(
+                svgState.svg
+            )
+    );
+
+    const next =
+        svgState.future.pop();
+
+    restoreSvgString(
+        next
+    );
+
+}
+
+/* =========================================================
+   SVG SALVAR
+========================================================= */
+
+function syncSvgCode(){
+
+    if(!svgState.svg){
+        return;
+    }
+
+    document.getElementById(
+        "svgCode"
+    ).value =
+        new XMLSerializer()
+            .serializeToString(
+                svgState.svg
+            );
+
+}
+
+function saveSvg(){
+
+    if(
+        !svgState.svg ||
+        !svgState.file
+    ){
+
+        return;
+
+    }
+
+    project.files[
+        svgState.file
+    ] =
+        new XMLSerializer()
+            .serializeToString(
+                svgState.svg
+            );
+
+    updateMetadata(project);
+
+    saveProject();
+
+    toast(
+        "SVG salvo."
+    );
+
+}
+
+function toggleSvgCode(){
+
+    const code =
+        document.getElementById(
+            "svgCode"
+        );
+
+    if(
+        code.classList.contains("open")
+    ){
+
+        if(svgState.svg){
+
+            try{
+
+                const parsed =
+                    new DOMParser()
+                        .parseFromString(
+                            code.value,
+                            "image/svg+xml"
+                        );
+
+                if(
+                    parsed.querySelector(
+                        "parsererror"
+                    )
+                ){
+
+                    alert(
+                        "O código SVG possui erros."
+                    );
+
+                    return;
+
+                }
+
+                svgState.svg =
+                    parsed.documentElement;
+
+                svgState.selected =
+                    null;
+
+            }catch(error){
+
+                alert(
+                    "SVG inválido."
+                );
+
+                return;
+
+            }
+
+        }
+
+        code.classList.remove(
+            "open"
+        );
+
+        renderSvgEditor();
+
+    }else{
+
+        syncSvgCode();
+
+        code.classList.add(
+            "open"
+        );
+
+        code.focus();
+
+    }
+
+}
+
+/* =========================================================
+   SVG ZOOM
+========================================================= */
+
+function setSvgZoom(value){
+
+    svgState.zoom =
+        Number(value) / 100;
+
+    renderSvgStageOnly();
+
+}
+
+/* =========================================================
+   IMPORTAR IMAGEM PARA SVG
+========================================================= */
+
+function importSvgImage(){
+
+    document
+        .getElementById(
+            "svgImageInput"
+        )
+        .click();
+
+}
+
+document
+    .getElementById("svgImageInput")
+    .addEventListener(
+        "change",
+        event => {
+
+            const file =
+                event.target.files[0];
+
+            if(!file){
+                return;
+            }
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                () => {
+
+                    if(!svgState.svg){
+                        return;
+                    }
+
+                    saveSvgSnapshot();
+
+                    const image =
+                        document.createElementNS(
+                            SVG_NS,
+                            "image"
+                        );
+
+                    image.setAttribute(
+                        "href",
+                        reader.result
+                    );
+
+                    image.setAttribute(
+                        "x",
+                        "100"
+                    );
+
+                    image.setAttribute(
+                        "y",
+                        "100"
+                    );
+
+                    image.setAttribute(
+                        "width",
+                        "300"
+                    );
+
+                    image.setAttribute(
+                        "height",
+                        "200"
+                    );
+
+                    svgState.svg.appendChild(
+                        image
+                    );
+
+                    svgState.selected =
+                        image;
+
+                    renderSvgEditor();
+
+                };
+
+            reader.readAsDataURL(
+                file
+            );
+
+            event.target.value = "";
+
+        }
+    );
+
+/* =========================================================
+   EXPORTAR PNG
+========================================================= */
+
+function exportPng(){
+
+    if(!svgState.svg){
+
+        alert(
+            "Abra um SVG primeiro."
+        );
+
+        return;
+
+    }
+
+    const source =
+        new XMLSerializer()
+            .serializeToString(
+                svgState.svg
+            );
+
+    const blob =
+        new Blob(
+            [source],
+            {
+                type:"image/svg+xml"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+    const image =
+        new Image();
+
+    image.onload =
+        () => {
+
+            const width =
+                Number(
+                    svgState.svg
+                        .getAttribute("width")
+                        ?.replace(/[^\d.]/g,"")
+                ) ||
+                1200;
+
+            const height =
+                Number(
+                    svgState.svg
+                        .getAttribute("height")
+                        ?.replace(/[^\d.]/g,"")
+                ) ||
+                600;
+
+            const canvas =
+                document.createElement(
+                    "canvas"
+                );
+
+            canvas.width =
+                width;
+
+            canvas.height =
+                height;
+
+            const context =
+                canvas.getContext(
+                    "2d"
+                );
+
+            context.drawImage(
+                image,
+                0,
+                0,
+                width,
+                height
+            );
+
+            URL.revokeObjectURL(
+                url
+            );
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+            link.download =
+                (
+                    svgState.file
+                        ?.split("/")
+                        .pop()
+                        .replace(
+                            /\.svg$/i,
+                            ""
+                        ) ||
+                    "imagem"
+                ) +
+                ".png";
+
+            link.href =
+                canvas.toDataURL(
+                    "image/png"
+                );
+
+            link.click();
+
+        };
+
+    image.src = url;
+
+}
+
+/* =========================================================
+   ZIP / CRÉDITOS
+========================================================= */
+
+document
+    .getElementById("zipBtn")
+    .onclick =
+        openCreditModal;
+
+function openCreditModal(){
+
+    openModal(`
+
+<h2>📦 Exportar projeto</h2>
+
+<p class="muted">
+    Escolha o crédito que será incluído
+    nos arquivos HTML exportados.
+</p>
+
+<div class="grid">
+
+    <div class="card">
+
+        <h3>Sem crédito</h3>
+
+        <button
+            onclick="exportZip('none')">
+            Exportar
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Multipage Mel</h3>
+
+        <button
+            onclick="exportZip('multipage')">
+            Exportar
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Apenas Corretores</h3>
+
+        <button
+            onclick="exportZip('apenas')">
+            Exportar
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h3>HomemSite</h3>
+
+        <button
+            onclick="exportZip('homemsite')">
+            Exportar
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h3>HomemSite Paraná</h3>
+
+        <button
+            onclick="exportZip('parana')">
+            Exportar
+        </button>
+
+    </div>
+
+</div>
+
+`);
+
+}
+
+function creditHtml(type){
+
+    const links = {
+
+        multipage:[
+            "Multipage Mel",
+            "https://multipagemel.pages.dev/"
+        ],
+
+        apenas:[
+            "Apenas Corretores",
+            "https://apenascorretores.pages.dev/"
+        ],
+
+        homemsite:[
+            "HomemSite",
+            "https://homemsite.pages.dev/"
+        ],
+
+        parana:[
+            "HomemSite Paraná",
+            "https://homemsite.pages.dev/parana/"
+        ]
+
+    };
+
+    if(!links[type]){
+        return "";
+    }
+
+    return `
+
+<!-- MULTISCRIPT CREDITOS INICIO -->
+
+<footer
+    style="
+        padding:20px;
+        text-align:center;
+        font-family:Arial,sans-serif;
+        font-size:12px;
+        color:#777;
+    ">
+
+    <p>
+        Este site garante a segurança
+        na coleta e tratamento de dados,
+        em conformidade com a LGPD.
+    </p>
+
+    <p>
+        © V14.0.0 by MultiScript HTML Editor
+    </p>
+
+    <p>
+
+        <a
+            href="${links[type][1]}"
+            target="_blank"
+            rel="noopener">
+            ${esc(links[type][0])}
+        </a>
+
+    </p>
+
+</footer>
+
+<!-- MULTISCRIPT CREDITOS FIM -->
+
+`;
+
+}
+
+function removeOldCredits(html){
+
+    return html.replace(
+        /<!-- MULTISCRIPT CREDITOS INICIO -->[\s\S]*?<!-- MULTISCRIPT CREDITOS FIM -->/gi,
+        ""
+    );
+}
+
+async function exportZip(type){
+
+    if(
+        typeof JSZip ===
+        "undefined"
+    ){
+
+        alert(
+            "JSZip não foi carregado."
+        );
+
+        return;
+
+    }
+
+    closeModal();
+
+    ensureProject();
+
+    updateMetadata(project);
+
+    const zip =
+        new JSZip();
+
+    const credit =
+        creditHtml(type);
+
+    for(
+        const [path,content]
+        of Object.entries(
+            project.files
+        )
+    ){
+
+        if(
+            path === "multiscript.js"
+        ){
+
+            continue;
+
+        }
+
+        let data =
+            content;
+
+        if(
+            path.endsWith(".html") &&
+            path !== "multiscript.json"
+        ){
+
+            data =
+                removeOldCredits(
+                    data
+                );
+
+            if(credit){
+
+                data += "\n" +
+                    credit;
+
+            }
+
+        }
+
+        zip.file(
+            path,
+            data
+        );
+
+    }
+
+    /*
+     * Garante também os plugins
+     * registrados no projeto.
+     */
+
+    for(
+        const path of Object.keys(
+            project.plugins || {}
+        )
+    ){
+
+        if(
+            project.files[path]
+        ){
+
+            zip.file(
+                path,
+                project.files[path]
+            );
+
+        }
+
+    }
+
+    const blob =
+        await zip.generateAsync(
+            {
+                type:"blob"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+    link.href = url;
+
+    link.download =
+        project.name +
+        ".zip";
+
+    link.click();
+
+    setTimeout(
+        () => URL.revokeObjectURL(url),
+        1000
+    );
+
+    toast(
+        "ZIP exportado."
+    );
+
+}
+
+/* =========================================================
+   PROTEGIDO
+========================================================= */
+
+document
+    .getElementById("protectedBtn")
+    .onclick =
+    () => {
+
+        openModal(`
+
+<h2>🔒 multiscript.json</h2>
+
+<p>
+    Este arquivo é protegido.
+</p>
+
+<p class="muted">
+    O MultiScript utiliza este arquivo
+    para armazenar metadados internos,
+    páginas, arquivos e plugins do projeto.
+</p>
+
+<p class="muted">
+    Ele será incluído no ZIP, mas não pode
+    ser editado diretamente pelo usuário.
+</p>
+
+<div class="actions">
+
+    <button
+        class="primary"
+        onclick="closeModal()">
+        Fechar
+    </button>
+
+</div>
+
+`);
+
+    };
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+(function init(){
+
+    if(!loadProject()){
+
+        project =
+            createProject(
+                "MEU-PROJETO"
+            );
+
+    }
+
+    ensureProject();
+
+    renderTree();
+
+    currentFile =
+        project.files["index.html"]
+            ? "index.html"
+            : Object.keys(
+                project.files
+            )[0];
+
+    openFile(
+        currentFile
+    );
+
+})();
 </script>
+
 </body>
 </html>
