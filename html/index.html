@@ -8,361 +8,662 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <style>
-*{box-sizing:border-box}
-:root{
-    --bg:#0b0f14;
-    --panel:#11161d;
-    --panel2:#151b23;
-    --panel3:#1b222c;
-    --border:#29313d;
-    --text:#e7edf5;
-    --muted:#8994a3;
-    --blue:#2384ff;
-    --blue2:#1265d7;
-    --green:#20c77a;
-    --red:#ef5350;
-    --yellow:#f3bd45;
-    --purple:#9b72ff;
+*{
+    box-sizing:border-box;
 }
-body{
+
+:root{
+    --bg:#080b10;
+    --panel:#0d1117;
+    --panel2:#111821;
+    --panel3:#161e28;
+    --border:#273241;
+    --text:#d9e2ec;
+    --muted:#7e8b9b;
+    --blue:#2684ff;
+    --blue2:#0d5bd7;
+    --green:#20c997;
+    --red:#ff5570;
+    --yellow:#ffc857;
+    --purple:#9b7cff;
+}
+
+html,body{
+    width:100%;
+    height:100%;
     margin:0;
+    overflow:hidden;
     background:var(--bg);
     color:var(--text);
     font-family:Inter,Segoe UI,Arial,sans-serif;
-    overflow:hidden;
 }
-button,input,select,textarea{font:inherit}
+
+button,input,textarea,select{
+    font:inherit;
+}
+
 button{
-    border:1px solid var(--border);
-    background:#171d25;
-    color:var(--text);
-    border-radius:6px;
-    padding:8px 12px;
     cursor:pointer;
 }
-button:hover{background:#202833}
-button.primary{background:var(--blue);border-color:var(--blue)}
-button.primary:hover{background:var(--blue2)}
-button.danger{background:#401719;border-color:#6b2528}
-input,select{
-    width:100%;
-    background:#0d1218;
-    border:1px solid var(--border);
-    color:#fff;
-    border-radius:6px;
-    padding:10px;
-    outline:none;
-}
-input:focus,select:focus{border-color:var(--blue)}
 
 .app{
     height:100vh;
     display:grid;
-    grid-template-rows:52px 1fr 25px;
+    grid-template-rows:58px 1fr 28px;
 }
 
 /* TOPBAR */
 .topbar{
-    background:#0d1218;
-    border-bottom:1px solid var(--border);
     display:flex;
     align-items:center;
     gap:8px;
-    padding:0 10px;
+    padding:8px 12px;
+    background:#0a0e14;
+    border-bottom:1px solid var(--border);
 }
-.logo{
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:245px;
     font-weight:800;
-    font-size:15px;
-    padding:0 12px;
+}
+
+.brand-logo{
+    width:35px;
+    height:35px;
+    border-radius:9px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#2684ff,#875cff);
+    color:white;
+    box-shadow:0 5px 20px #2684ff25;
+}
+
+.brand small{
+    display:block;
+    color:var(--muted);
+    font-size:10px;
+    font-weight:500;
+}
+
+.nav{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    overflow:auto;
+    flex:1;
+}
+
+.nav button,
+.top-action{
+    border:1px solid transparent;
+    background:transparent;
+    color:#aab7c7;
+    padding:8px 10px;
+    border-radius:7px;
     white-space:nowrap;
 }
-.logo span{color:#4d9aff}
+
+.nav button:hover,
+.nav button.active{
+    background:#18212d;
+    border-color:#2c3949;
+    color:white;
+}
+
 .top-actions{
     display:flex;
     gap:6px;
-    flex-wrap:nowrap;
-}
-.top-actions button{font-size:12px}
-.top-spacer{flex:1}
-.project-name{
-    color:var(--muted);
-    font-size:12px;
-    white-space:nowrap;
 }
 
-/* MAIN */
-.main{
+.top-action{
+    border-color:var(--border);
+    background:#111720;
+}
+
+.top-action:hover{
+    background:#192331;
+    color:white;
+}
+
+.top-action.primary{
+    background:var(--blue);
+    border-color:var(--blue);
+    color:white;
+}
+
+/* BODY */
+.body{
     min-height:0;
     display:grid;
-    grid-template-columns:255px 1fr 300px;
+    grid-template-columns:245px 1fr;
 }
 
-/* LEFT */
 .sidebar{
-    background:var(--panel);
-    border-right:1px solid var(--border);
     min-width:0;
     overflow:auto;
+    background:#0b0f15;
+    border-right:1px solid var(--border);
 }
+
+.sidebar-section{
+    padding:15px 10px 5px;
+}
+
 .sidebar-title{
-    padding:13px 15px 8px;
-    color:#fff;
-    font-weight:700;
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:.08em;
+    padding:0 8px 8px;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.1px;
+    color:#647184;
 }
-.nav-section{
-    border-bottom:1px solid #202731;
-    padding:5px 8px 10px;
-}
-.nav-item{
+
+.tree{
     display:flex;
-    align-items:center;
-    gap:9px;
+    flex-direction:column;
+    gap:2px;
+}
+
+.tree button{
     width:100%;
     border:0;
     background:transparent;
+    color:#aab7c7;
     text-align:left;
-    padding:8px 10px;
-    color:#b9c3d0;
-    font-size:13px;
+    padding:7px 9px;
+    border-radius:6px;
 }
-.nav-item:hover{background:#1b222c}
-.nav-item.active{
-    background:#162d4b;
+
+.tree button:hover,
+.tree button.active{
+    background:#17212c;
     color:#fff;
 }
-.nav-icon{width:20px;text-align:center}
-.tree{
-    padding-left:12px;
-}
-.tree-item{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 8px;
-    border-radius:5px;
-    color:#b4bfcd;
-    cursor:pointer;
-    font-size:12px;
-}
-.tree-item:hover{background:#1a212a;color:#fff}
-.tree-item.active{background:#19365a;color:#fff}
-.lock{color:#f3bd45}
-.image-icon{color:#55c7ff}
-.php-icon{color:#9d7bff}
-.html-icon{color:#ff805c}
-.css-icon{color:#4ca5ff}
-.js-icon{color:#f3bd45}
 
-/* EDITOR */
+.tree button.protected{
+    color:#6e7784;
+}
+
+.tree button .lock{
+    color:var(--yellow);
+}
+
 .workspace{
     min-width:0;
     min-height:0;
-    display:grid;
-    grid-template-rows:40px 1fr 135px;
-}
-.tabs{
     display:flex;
-    background:#10151b;
+    flex-direction:column;
+    background:#090d13;
+}
+
+.breadcrumb{
+    height:39px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:0 15px;
     border-bottom:1px solid var(--border);
+    color:var(--muted);
+    font-size:12px;
+}
+
+.breadcrumb strong{
+    color:#dce5ef;
+}
+
+.views{
+    flex:1;
+    min-height:0;
     overflow:auto;
 }
-.tab{
-    min-width:120px;
-    padding:11px 13px;
-    border-right:1px solid var(--border);
-    font-size:12px;
-    color:#8994a3;
-    cursor:pointer;
-    white-space:nowrap;
+
+.view{
+    display:none;
+    height:100%;
+    overflow:auto;
 }
-.tab.active{
-    color:#fff;
-    background:#171d25;
+
+.view.active{
+    display:block;
 }
-.editor-area{
-    min-height:0;
-    position:relative;
+
+/* EDITOR */
+.editor-layout{
+    height:100%;
     display:grid;
-    grid-template-columns:45px 1fr;
-    background:#090d12;
+    grid-template-columns:50px 1fr;
 }
-.lines{
-    background:#0d1218;
-    border-right:1px solid #202731;
-    color:#4e5967;
-    text-align:right;
-    padding:13px 9px;
-    font:13px/20px Consolas,monospace;
+
+.line-numbers{
     overflow:hidden;
+    background:#080b10;
+    border-right:1px solid var(--border);
+    color:#4d5969;
+    text-align:right;
+    padding:15px 9px;
+    font:13px/20px Consolas,monospace;
+    white-space:pre;
     user-select:none;
 }
-#editor{
-    resize:none;
-    border:0;
-    border-radius:0;
-    background:#090d12;
-    color:#d8e0ea;
-    padding:13px 15px;
-    font:13px/20px Consolas,monospace;
-    tab-size:4;
-    outline:none;
-    white-space:pre;
-    overflow:auto;
-}
-.terminal{
-    border-top:1px solid var(--border);
-    background:#080c10;
-    overflow:auto;
-    padding:10px 13px;
-    font:12px/18px Consolas,monospace;
-    color:#9eabb9;
-}
-.term-green{color:#50db9b}
-.term-blue{color:#55a4ff}
-.term-yellow{color:#f4ca62}
-.term-red{color:#ff6969}
 
-/* RIGHT */
-.inspector{
+#editor{
+    width:100%;
+    height:100%;
+    border:0;
+    outline:0;
+    resize:none;
+    background:#0a0e14;
+    color:#d7e0ea;
+    padding:15px;
+    font:13px/20px Consolas,"Courier New",monospace;
+    tab-size:4;
+}
+
+/* DASHBOARD */
+.dashboard{
+    padding:30px;
+    max-width:1400px;
+    margin:auto;
+}
+
+.hero{
+    padding:30px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    background:
+        radial-gradient(circle at 80% 10%,#2684ff18,transparent 35%),
+        linear-gradient(135deg,#111923,#0c1118);
+    margin-bottom:22px;
+}
+
+.hero h1{
+    margin:0 0 8px;
+    font-size:30px;
+}
+
+.hero p{
+    color:var(--muted);
+    margin:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:22px;
+}
+
+.stat{
+    border:1px solid var(--border);
     background:var(--panel);
-    border-left:1px solid var(--border);
-    overflow:auto;
+    border-radius:12px;
+    padding:18px;
 }
-.inspector-section{
-    border-bottom:1px solid var(--border);
-    padding:13px;
+
+.stat b{
+    display:block;
+    font-size:27px;
+    color:white;
 }
-.inspector-title{
+
+.stat span{
+    color:var(--muted);
     font-size:12px;
-    font-weight:800;
-    margin-bottom:10px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+}
+
+.card{
+    border:1px solid var(--border);
+    background:var(--panel);
+    border-radius:12px;
+    padding:18px;
+}
+
+.card h3{
+    margin:0 0 8px;
+}
+
+.card p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+}
+
+.card button{
+    border:1px solid var(--border);
+    background:#151d27;
+    color:white;
+    padding:9px 12px;
+    border-radius:7px;
+}
+
+/* PAGE MANAGER */
+.page-manager,
+.generator{
+    padding:24px;
+    max-width:1400px;
+    margin:auto;
+}
+
+.section-heading{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.section-heading h2{
+    margin:0;
+}
+
+.section-heading p{
+    color:var(--muted);
+    margin:5px 0 0;
+    font-size:13px;
+}
+
+.page-table{
+    width:100%;
+    border-collapse:collapse;
+    border:1px solid var(--border);
+    background:var(--panel);
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.page-table th,
+.page-table td{
+    padding:12px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
+}
+
+.page-table th{
+    color:#8190a2;
+    font-size:11px;
     text-transform:uppercase;
 }
-.info{
+
+.page-type{
+    display:inline-block;
+    padding:4px 7px;
+    border-radius:5px;
+    background:#172331;
+    color:#8ebdff;
+    font-size:10px;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+}
+
+.btn{
+    border:1px solid var(--border);
+    background:#151d27;
+    color:#dce5ef;
+    padding:8px 11px;
+    border-radius:7px;
+}
+
+.btn:hover{
+    background:#1c2938;
+}
+
+.btn.blue{
+    background:var(--blue);
+    border-color:var(--blue);
+    color:white;
+}
+
+.btn.green{
+    background:#116b55;
+    border-color:#18886c;
+    color:white;
+}
+
+.btn.red{
+    background:#521d2a;
+    border-color:#743040;
+    color:#ffb2be;
+}
+
+/* GENERATORS */
+.generator-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:14px;
+}
+
+.generator-card{
+    border:1px solid var(--border);
+    background:linear-gradient(145deg,#111923,#0c1118);
+    border-radius:13px;
+    padding:20px;
+    transition:.2s;
+}
+
+.generator-card:hover{
+    transform:translateY(-2px);
+    border-color:#3a4d64;
+}
+
+.generator-icon{
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    display:grid;
+    place-items:center;
+    background:#172334;
+    margin-bottom:14px;
+    font-size:20px;
+}
+
+.generator-card h3{
+    margin:0 0 7px;
+}
+
+.generator-card p{
     color:var(--muted);
     font-size:12px;
     line-height:1.6;
+    min-height:58px;
 }
-.action-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:6px;
-}
-.action-grid button{font-size:11px}
 
-/* STATUS */
-.status{
-    background:#08713f;
-    color:#fff;
+.generator-card button{
+    width:100%;
+}
+
+/* IMAGES */
+.images-grid{
+    padding:24px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    gap:15px;
+}
+
+.image-card{
+    border:1px solid var(--border);
+    background:#0d131b;
+    border-radius:11px;
+    overflow:hidden;
+}
+
+.image-preview{
+    aspect-ratio:2/1;
+    background:#f2f4f7;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+}
+
+.image-preview img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.image-info{
+    padding:11px;
+}
+
+.image-info b{
+    font-size:12px;
+}
+
+.image-info small{
+    display:block;
+    color:var(--muted);
+    margin:4px 0 9px;
+}
+
+.image-info button{
+    width:100%;
+}
+
+/* PLUGINS */
+.plugins{
+    padding:24px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.plugin-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.plugin{
     display:flex;
     align-items:center;
-    gap:15px;
+    justify-content:space-between;
+    gap:10px;
+    border:1px solid var(--border);
+    background:var(--panel);
+    padding:12px;
+    border-radius:9px;
+}
+
+/* STATUS */
+.statusbar{
+    background:#0a0e14;
+    border-top:1px solid var(--border);
+    color:#657386;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
     padding:0 10px;
-    font-size:11px;
+    font-size:10px;
 }
 
 /* MODAL */
-.modal{
+.modal-backdrop{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.72);
+    background:#000b;
+    backdrop-filter:blur(5px);
     display:none;
     align-items:center;
     justify-content:center;
     z-index:1000;
+    padding:20px;
 }
-.modal.open{display:flex}
-.modal-box{
-    width:min(720px,94vw);
+
+.modal-backdrop.show{
+    display:flex;
+}
+
+.modal{
+    width:min(720px,100%);
     max-height:90vh;
     overflow:auto;
-    background:#121820;
-    border:1px solid #34404e;
-    border-radius:10px;
-    box-shadow:0 25px 100px #000;
+    background:#101720;
+    border:1px solid #334154;
+    border-radius:14px;
+    box-shadow:0 30px 80px #0009;
 }
+
 .modal-header{
-    padding:15px 18px;
+    padding:17px 19px;
     border-bottom:1px solid var(--border);
     display:flex;
-    align-items:center;
-    gap:10px;
+    justify-content:space-between;
 }
-.modal-header strong{font-size:15px}
-.modal-close{
-    margin-left:auto;
-    background:transparent;
-    border:0;
-    font-size:18px;
+
+.modal-header h3{
+    margin:0;
 }
-.modal-body{padding:18px}
+
+.modal-body{
+    padding:19px;
+}
+
 .modal-footer{
-    padding:12px 18px;
+    padding:14px 19px;
     border-top:1px solid var(--border);
     display:flex;
     justify-content:flex-end;
-    gap:8px;
+    gap:7px;
 }
-.form-group{margin-bottom:13px}
+
+.form-group{
+    margin-bottom:14px;
+}
+
 .form-group label{
     display:block;
-    font-size:12px;
-    color:#aeb8c6;
+    color:#9aa8b8;
+    font-size:11px;
     margin-bottom:6px;
 }
 
-/* GENERATOR */
-.generator-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-}
-.generator-card{
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
     border:1px solid var(--border);
-    border-radius:8px;
-    padding:15px;
-    background:#151c24;
-    cursor:pointer;
-}
-.generator-card:hover{
-    border-color:#3e73a8;
-    background:#19232e;
-}
-.generator-card .big{font-size:24px}
-.generator-card strong{
-    display:block;
-    margin-top:8px;
-}
-.generator-card small{
-    display:block;
-    color:var(--muted);
-    line-height:1.4;
-    margin-top:5px;
+    background:#0a0f15;
+    color:white;
+    border-radius:7px;
+    padding:10px;
+    outline:0;
 }
 
-/* PAGE LIST */
-.page-list{
-    display:flex;
-    flex-direction:column;
-    gap:5px;
+.form-group textarea{
+    min-height:130px;
+    resize:vertical;
 }
-.page-card{
+
+.generator-tabs{
     display:flex;
-    align-items:center;
-    gap:8px;
-    background:#151b22;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:18px;
+}
+
+.generator-tabs button{
     border:1px solid var(--border);
-    border-radius:6px;
-    padding:9px;
-    cursor:pointer;
+    background:#111821;
+    color:#9eacbc;
+    padding:9px 12px;
+    border-radius:7px;
 }
-.page-card:hover{background:#1b242e}
-.page-card small{
-    display:block;
-    color:var(--muted);
+
+.generator-tabs button.active{
+    background:#1b3150;
+    border-color:#2c67a8;
+    color:white;
 }
 
 /* IMAGE EDITOR */
@@ -370,142 +671,205 @@ input:focus,select:focus{border-color:var(--blue)}
     position:fixed;
     inset:0;
     z-index:2000;
+    background:#080b10;
     display:none;
-    background:#080b0f;
+    grid-template-rows:54px 1fr 34px;
 }
-.image-editor.open{display:grid}
-.image-app{
+
+.image-editor.show{
     display:grid;
-    grid-template-rows:48px 1fr 34px;
-    height:100%;
 }
-.image-top{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    padding:7px;
-    background:#11161d;
-    border-bottom:1px solid var(--border);
-}
-.image-top strong{
-    margin:0 12px;
-    white-space:nowrap;
-}
-.image-main{
-    min-height:0;
-    display:grid;
-    grid-template-columns:205px 1fr 255px;
-}
-.image-tools{
-    background:#11161d;
-    border-right:1px solid var(--border);
-    padding:8px;
-    overflow:auto;
-}
-.tool-title{
-    color:#7e8997;
-    text-transform:uppercase;
-    font-size:10px;
-    font-weight:bold;
-    padding:7px;
-}
-.tool-button{
-    width:100%;
-    text-align:left;
-    margin-bottom:4px;
-    font-size:12px;
-}
-.tool-button.active{
-    background:#1d4774;
-    border-color:#2e6da8;
-}
-.image-canvas-area{
-    min-width:0;
-    min-height:0;
-    position:relative;
-    overflow:auto;
-    background:
-        linear-gradient(45deg,#111 25%,transparent 25%) 0 0/24px 24px,
-        linear-gradient(-45deg,#111 25%,transparent 25%) 0 12px/24px 24px,
-        linear-gradient(45deg,transparent 75%,#111 75%) 12px -12px/24px 24px,
-        linear-gradient(-45deg,transparent 75%,#111 75%) -12px 0/24px 24px,
-        #151515;
-}
-#svgCanvas{
-    display:block;
-    margin:50px auto;
-    background:white;
-    box-shadow:0 10px 50px #000;
-}
-.image-layers{
-    background:#11161d;
-    border-left:1px solid var(--border);
-    overflow:auto;
-}
-.layer-head{
-    padding:12px;
-    border-bottom:1px solid var(--border);
-    font-weight:bold;
-    font-size:12px;
-}
-.layer-row{
+
+.image-editor-top{
     display:flex;
     align-items:center;
     gap:7px;
     padding:8px;
-    border-bottom:1px solid #202731;
-    font-size:11px;
-    cursor:pointer;
+    border-bottom:1px solid var(--border);
 }
-.layer-row:hover{background:#192029}
-.layer-row.selected{background:#19365a}
-.layer-vis{
-    width:25px;
-    border:0;
-    padding:3px;
-    background:transparent;
+
+.image-editor-top strong{
+    margin-right:auto;
 }
-.layer-name{flex:1;overflow:hidden;text-overflow:ellipsis}
-.image-properties{
-    padding:10px;
-    border-top:1px solid var(--border);
-}
-.prop-grid{
+
+.image-editor-body{
+    min-height:0;
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:5px;
+    grid-template-columns:190px 1fr 230px;
 }
-.prop-grid label{
-    font-size:10px;
-    color:#8c98a7;
+
+.tools{
+    border-right:1px solid var(--border);
+    padding:10px;
+    overflow:auto;
 }
-.prop-grid input{
-    padding:6px;
-    font-size:11px;
+
+.tool-btn{
+    width:100%;
+    margin-bottom:5px;
+    padding:9px;
+    border:1px solid transparent;
+    background:#101720;
+    color:#aab6c5;
+    border-radius:7px;
+    text-align:left;
 }
-.image-bottom{
-    background:#11161d;
-    border-top:1px solid var(--border);
+
+.tool-btn:hover,
+.tool-btn.active{
+    background:#192635;
+    border-color:#30455d;
+    color:white;
+}
+
+.canvas-area{
+    position:relative;
+    overflow:auto;
+    display:grid;
+    place-items:center;
+    background:
+        linear-gradient(45deg,#121821 25%,transparent 25%) 0 0/24px 24px,
+        linear-gradient(-45deg,#121821 25%,transparent 25%) 0 0/24px 24px,
+        linear-gradient(45deg,transparent 75%,#121821 75%) 0 0/24px 24px,
+        linear-gradient(-45deg,transparent 75%,#121821 75%) 0 0/24px 24px,
+        #0c1117;
+}
+
+#svgCanvas{
+    background:white;
+    box-shadow:0 20px 60px #0008;
+    transform-origin:center;
+}
+
+.layers{
+    border-left:1px solid var(--border);
+    padding:10px;
+    overflow:auto;
+}
+
+.layer{
     display:flex;
     align-items:center;
-    gap:15px;
-    padding:0 10px;
-    color:#8994a3;
-    font-size:11px;
+    gap:7px;
+    padding:8px;
+    margin-bottom:4px;
+    border:1px solid transparent;
+    border-radius:6px;
+    color:#aab6c5;
+    font-size:12px;
 }
-.code-toggle{
-    margin-left:auto;
+
+.layer:hover,
+.layer.selected{
+    background:#182431;
+    border-color:#2d4054;
+    color:white;
+}
+
+.image-editor-bottom{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:5px 9px;
+    border-top:1px solid var(--border);
+    font-size:11px;
+    color:#8390a0;
+}
+
+.image-editor-bottom input{
+    width:70px;
+    background:#101720;
+    border:1px solid var(--border);
+    color:white;
+    border-radius:5px;
+    padding:4px;
+}
+
+/* TOAST */
+.toast{
+    position:fixed;
+    right:18px;
+    bottom:45px;
+    background:#17202b;
+    border:1px solid #34465a;
+    color:white;
+    padding:11px 15px;
+    border-radius:8px;
+    box-shadow:0 10px 30px #0007;
+    transform:translateY(20px);
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:3000;
+}
+
+.toast.show{
+    opacity:1;
+    transform:none;
 }
 
 /* RESPONSIVE */
 @media(max-width:1000px){
-    .main{grid-template-columns:210px 1fr}
-    .inspector{display:none}
+    .brand{
+        min-width:auto;
+    }
+
+    .brand-text{
+        display:none;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .image-editor-body{
+        grid-template-columns:150px 1fr 180px;
+    }
 }
+
 @media(max-width:700px){
-    .main{grid-template-columns:1fr}
-    .sidebar{display:none}
-    .top-actions button:nth-child(n+5){display:none}
+    .app{
+        grid-template-rows:55px 1fr 28px;
+    }
+
+    .body{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    .topbar{
+        overflow:hidden;
+    }
+
+    .top-actions{
+        display:none;
+    }
+
+    .nav{
+        overflow-x:auto;
+    }
+
+    .dashboard,
+    .page-manager,
+    .generator,
+    .plugins{
+        padding:15px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .image-editor-body{
+        grid-template-columns:100px 1fr;
+    }
+
+    .layers{
+        display:none;
+    }
 }
 </style>
 </head>
@@ -515,373 +879,507 @@ input:focus,select:focus{border-color:var(--blue)}
 <div class="app">
 
 <header class="topbar">
-    <div class="logo">MultiScript <span>V14</span></div>
+
+    <div class="brand">
+        <div class="brand-logo">MS</div>
+        <div class="brand-text">
+            MultiScript HTML Editor
+            <small>V14.0.0 • Site Generator</small>
+        </div>
+    </div>
+
+    <nav class="nav">
+        <button data-view="dashboard" class="active" onclick="showView('dashboard')">⌂ Dashboard</button>
+        <button data-view="editor" onclick="showView('editor')">⌘ Editor</button>
+        <button data-view="pages" onclick="showView('pages')">▤ Páginas</button>
+        <button data-view="generators" onclick="showView('generators')">⚙ Geradores</button>
+        <button data-view="images" onclick="showView('images')">▧ Imagens</button>
+        <button data-view="plugins" onclick="showView('plugins')">🧩 Plugins</button>
+    </nav>
 
     <div class="top-actions">
-        <button onclick="newProject()">＋ Novo</button>
-        <button onclick="openGeneratorMenu()">＋ Gerar Página</button>
-        <button onclick="openImageManager()">🖼 Imagens</button>
-        <button onclick="openPlugins()">＋ Plugin PHP</button>
-        <button onclick="formatHTML()">Formatar</button>
-        <button onclick="saveProject()">Salvar</button>
-        <button onclick="previewProject()">Preview</button>
-        <button onclick="openCreditModal()">Exportar ZIP</button>
+        <button class="top-action" onclick="newProject()">＋ Novo</button>
+        <button class="top-action" onclick="saveProject()">Salvar</button>
+        <button class="top-action" onclick="previewCurrent()">Preview</button>
+        <button class="top-action primary" onclick="exportZip()">Exportar</button>
     </div>
 
-    <div class="top-spacer"></div>
-    <div class="project-name" id="projectNameTop">MEU-PROJETO</div>
 </header>
 
-<main class="main">
+<div class="body">
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
 
-    <div class="sidebar-title">Navegação</div>
-
-    <div class="nav-section">
-        <button class="nav-item active" onclick="showExplorerSection('pages')">
-            <span class="nav-icon">📄</span> Páginas
-        </button>
-
-        <button class="nav-item" onclick="showExplorerSection('images')">
-            <span class="nav-icon">🖼</span> Imagens
-        </button>
-
-        <button class="nav-item" onclick="showExplorerSection('plugins')">
-            <span class="nav-icon">🧩</span> Plugins PHP
-        </button>
-
-        <button class="nav-item" onclick="openSitemapGenerator()">
-            <span class="nav-icon">🗺</span> Sitemap
-        </button>
-    </div>
-
-    <div id="explorer"></div>
-
-</aside>
-
-<!-- EDITOR -->
-<section class="workspace">
-
-    <div class="tabs" id="tabs"></div>
-
-    <div class="editor-area">
-        <div class="lines" id="lines">1</div>
-        <textarea id="editor"
-            spellcheck="false"
-            oninput="editorInput()"
-            onscroll="syncEditorScroll()"
-            onkeydown="editorKeydown(event)"></textarea>
-    </div>
-
-    <div class="terminal" id="terminal">
-        <div><span class="term-green">●</span> MultiScript V14 iniciado.</div>
-        <div><span class="term-blue">INFO</span> Editor + Gerador + Image Editor carregados.</div>
-    </div>
-
-</section>
-
-<!-- INSPECTOR -->
-<aside class="inspector">
-
-    <div class="inspector-section">
-        <div class="inspector-title">Página atual</div>
-        <div class="info" id="currentInfo">
-            Nenhum arquivo selecionado.
+    <div class="sidebar-section">
+        <div class="sidebar-title">PROJETO</div>
+        <div class="tree">
+            <button onclick="showView('dashboard')">⌂ Dashboard</button>
+            <button onclick="newProject()">＋ Novo projeto</button>
         </div>
     </div>
 
-    <div class="inspector-section">
-        <div class="inspector-title">Geradores</div>
+    <div class="sidebar-section">
+        <div class="sidebar-title">PÁGINAS</div>
+        <div id="pageTree" class="tree"></div>
+    </div>
 
-        <div class="action-grid">
-            <button onclick="openCategoryGenerator()">🏷 Categoria</button>
-            <button onclick="openInstitutionalGenerator()">🏢 Institucional</button>
-            <button onclick="openSubpageGenerator()">↳ Subpágina</button>
-            <button onclick="openSitemapGenerator()">🗺 Sitemap</button>
+    <div class="sidebar-section">
+        <div class="sidebar-title">IMAGENS</div>
+        <div id="imageTree" class="tree"></div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-title">ASSETS</div>
+        <div class="tree">
+            <button onclick="openFile('style.css')">🎨 style.css</button>
+            <button onclick="openFile('script.js')">JS script.js</button>
+            <button onclick="openFile('sitemap.xml')">🗺 sitemap.xml</button>
         </div>
     </div>
 
-    <div class="inspector-section">
-        <div class="inspector-title">Página</div>
-
-        <div class="action-grid">
-            <button onclick="previewProject()">👁 Preview</button>
-            <button onclick="duplicateCurrentPage()">⧉ Duplicar</button>
-            <button onclick="renameCurrentPage()">✎ Renomear</button>
-            <button onclick="deleteCurrentPage()">🗑 Excluir</button>
-        </div>
+    <div class="sidebar-section">
+        <div class="sidebar-title">PLUGINS PHP</div>
+        <div id="pluginTree" class="tree"></div>
     </div>
 
-    <div class="inspector-section">
-        <div class="inspector-title">Projeto</div>
-
-        <div class="info">
-            As páginas são arquivos HTML reais dentro do projeto.
-            <br><br>
-            O MultiScript apenas gera e edita os arquivos.
-            PHP não é executado no navegador.
+    <div class="sidebar-section">
+        <div class="sidebar-title">SISTEMA</div>
+        <div class="tree">
+            <button class="protected" onclick="openProtected()">🔒 multiscript.json</button>
         </div>
     </div>
 
 </aside>
+
+<main class="workspace">
+
+    <div class="breadcrumb">
+        <span>MultiScript</span>
+        <span>›</span>
+        <strong id="breadcrumbCurrent">Dashboard</strong>
+    </div>
+
+    <div class="views">
+
+        <!-- DASHBOARD -->
+        <section id="view-dashboard" class="view active">
+
+            <div class="dashboard">
+
+                <div class="hero">
+                    <h1 id="dashboardTitle">MEU-PROJETO</h1>
+                    <p>Crie, edite, organize e exporte seu site diretamente pelo MultiScript HTML Editor V14.</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <b id="statPages">0</b>
+                        <span>Páginas</span>
+                    </div>
+                    <div class="stat">
+                        <b id="statImages">0</b>
+                        <span>Imagens SVG</span>
+                    </div>
+                    <div class="stat">
+                        <b id="statPlugins">0</b>
+                        <span>Plugins PHP</span>
+                    </div>
+                    <div class="stat">
+                        <b>14.0.0</b>
+                        <span>Versão MultiScript</span>
+                    </div>
+                </div>
+
+                <div class="cards">
+
+                    <div class="card">
+                        <h3>📝 Editor</h3>
+                        <p>Edite diretamente o HTML, CSS, JavaScript, XML e seus plugins.</p>
+                        <button onclick="showView('editor')">Abrir Editor</button>
+                    </div>
+
+                    <div class="card">
+                        <h3>⚙️ Geradores</h3>
+                        <p>Crie páginas de menu, categorias, institucional, subpáginas e sitemap.</p>
+                        <button onclick="showView('generators')">Abrir Geradores</button>
+                    </div>
+
+                    <div class="card">
+                        <h3>🎨 Imagens</h3>
+                        <p>Edite suas vitrines SVG visualmente, como em um pequeno editor gráfico.</p>
+                        <button onclick="showView('images')">Abrir Imagens</button>
+                    </div>
+
+                    <div class="card">
+                        <h3>🧩 Plugins PHP</h3>
+                        <p>Adicione somente os seus próprios plugins PHP ao projeto.</p>
+                        <button onclick="showView('plugins')">Gerenciar Plugins</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- EDITOR -->
+        <section id="view-editor" class="view">
+
+            <div class="editor-layout">
+
+                <div id="lineNumbers" class="line-numbers">1</div>
+
+                <textarea
+                    id="editor"
+                    spellcheck="false"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    oninput="editorInput()"
+                    onscroll="syncEditorScroll()"
+                    onkeydown="editorKeydown(event)"
+                ></textarea>
+
+            </div>
+
+        </section>
+
+        <!-- PAGES -->
+        <section id="view-pages" class="view">
+
+            <div class="page-manager">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Gerenciador de Páginas</h2>
+                        <p>Gerencie todas as páginas geradas pelo projeto.</p>
+                    </div>
+
+                    <button class="btn blue" onclick="showView('generators')">
+                        ＋ Gerar Página
+                    </button>
+                </div>
+
+                <div id="pageManager"></div>
+
+            </div>
+
+        </section>
+
+        <!-- GENERATORS -->
+        <section id="view-generators" class="view">
+
+            <div class="generator">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Geradores</h2>
+                        <p>Gere somente as páginas que o seu projeto precisa.</p>
+                    </div>
+                </div>
+
+                <div class="generator-tabs">
+                    <button class="active" onclick="generatorFocus(this,'all')">Todos</button>
+                    <button onclick="generatorFocus(this,'menu')">Menu</button>
+                    <button onclick="generatorFocus(this,'category')">Categorias</button>
+                    <button onclick="generatorFocus(this,'institutional')">Institucional</button>
+                    <button onclick="generatorFocus(this,'subpage')">Subpágina</button>
+                    <button onclick="generatorFocus(this,'sitemap')">Sitemap</button>
+                </div>
+
+                <div class="generator-grid">
+
+                    <div class="generator-card gen-menu">
+                        <div class="generator-icon">☰</div>
+                        <h3>Menu</h3>
+                        <p>Gera as páginas principais: Início, Categorias e Institucional.</p>
+                        <button class="btn blue" onclick="generateMenu()">Gerar Menu</button>
+                    </div>
+
+                    <div class="generator-card gen-category">
+                        <div class="generator-icon">▦</div>
+                        <h3>Categorias</h3>
+                        <p>Cria páginas de categorias diretamente na raiz do projeto.</p>
+                        <button class="btn blue" onclick="openCategoryModal()">Nova Categoria</button>
+                    </div>
+
+                    <div class="generator-card gen-institutional">
+                        <div class="generator-icon">🏢</div>
+                        <h3>Institucional</h3>
+                        <p>Cria páginas institucionais e organiza suas respectivas subpáginas.</p>
+                        <button class="btn blue" onclick="openInstitutionalModal()">Nova Institucional</button>
+                    </div>
+
+                    <div class="generator-card gen-subpage">
+                        <div class="generator-icon">↳</div>
+                        <h3>Subpágina</h3>
+                        <p>Cria páginas relacionadas a uma categoria ou página institucional.</p>
+                        <button class="btn blue" onclick="openSubpageModal()">Nova Subpágina</button>
+                    </div>
+
+                    <div class="generator-card gen-sitemap">
+                        <div class="generator-icon">🗺</div>
+                        <h3>Sitemap</h3>
+                        <p>Gera automaticamente o sitemap.xml com todas as páginas do projeto.</p>
+                        <button class="btn green" onclick="openSitemapModal()">Gerar Sitemap</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- IMAGES -->
+        <section id="view-images" class="view">
+
+            <div class="section-heading" style="padding:24px 24px 0">
+                <div>
+                    <h2>Editor de Imagens</h2>
+                    <p>As imagens SVG do projeto são editáveis visualmente.</p>
+                </div>
+            </div>
+
+            <div id="imagesGrid" class="images-grid"></div>
+
+        </section>
+
+        <!-- PLUGINS -->
+        <section id="view-plugins" class="view">
+
+            <div class="plugins">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Plugins PHP</h2>
+                        <p>Somente plugins PHP adicionados por você fazem parte do projeto.</p>
+                    </div>
+
+                    <button class="btn blue" onclick="document.getElementById('phpInput').click()">
+                        ＋ Adicionar PHP
+                    </button>
+
+                    <input
+                        type="file"
+                        id="phpInput"
+                        accept=".php"
+                        multiple
+                        hidden
+                        onchange="importPHP(event)"
+                    >
+                </div>
+
+                <div id="pluginList" class="plugin-list"></div>
+
+            </div>
+
+        </section>
+
+    </div>
 
 </main>
 
-<footer class="status">
-    <span>● Pronto</span>
-    <span id="statusFile">index.html</span>
-    <span id="statusStats">0 linhas</span>
+</div>
+
+<footer class="statusbar">
+    <span id="statusLeft">Pronto.</span>
+    <span>MultiScript HTML Editor V14.0.0</span>
 </footer>
 
 </div>
 
+
 <!-- MODAL -->
-<div class="modal" id="modal">
-    <div class="modal-box">
+<div id="modalBackdrop" class="modal-backdrop">
+
+    <div class="modal">
+
         <div class="modal-header">
-            <strong id="modalTitle">MultiScript</strong>
-            <button class="modal-close" onclick="closeModal()">×</button>
+            <h3 id="modalTitle">MultiScript</h3>
+            <button class="btn" onclick="closeModal()">×</button>
         </div>
 
-        <div class="modal-body" id="modalBody"></div>
+        <div id="modalBody" class="modal-body"></div>
 
-        <div class="modal-footer" id="modalFooter"></div>
+        <div id="modalFooter" class="modal-footer"></div>
+
     </div>
+
 </div>
+
 
 <!-- IMAGE EDITOR -->
-<div class="image-editor" id="imageEditor">
+<div id="imageEditor" class="image-editor">
 
-    <div class="image-app">
+    <div class="image-editor-top">
 
-        <div class="image-top">
-            <button onclick="closeImageEditor()">← Voltar</button>
+        <strong>🎨 MultiScript Image Editor</strong>
 
-            <strong id="imageEditorName">logo.svg</strong>
+        <button class="btn" onclick="imageUndo()">↶</button>
+        <button class="btn" onclick="imageRedo()">↷</button>
 
-            <button onclick="imageUndo()">↶</button>
-            <button onclick="imageRedo()">↷</button>
-            <button onclick="imageDuplicate()">⧉</button>
-            <button onclick="imageDelete()">🗑</button>
+        <button class="btn" onclick="exportSVG()">SVG</button>
+        <button class="btn" onclick="exportPNG()">PNG</button>
 
-            <button onclick="saveCurrentSVG()">💾 Salvar SVG</button>
-            <button onclick="exportPNG()">PNG</button>
-
-            <button class="code-toggle" onclick="openSVGCode()">〈/〉 Código SVG</button>
-        </div>
-
-        <div class="image-main">
-
-            <aside class="image-tools">
-
-                <div class="tool-title">Ferramentas</div>
-
-                <button class="tool-button active" data-tool="select"
-                    onclick="setImageTool('select')">↖ Seleção</button>
-
-                <button class="tool-button" data-tool="rect"
-                    onclick="setImageTool('rect')">▭ Retângulo</button>
-
-                <button class="tool-button" data-tool="circle"
-                    onclick="setImageTool('circle')">○ Círculo</button>
-
-                <button class="tool-button" data-tool="line"
-                    onclick="setImageTool('line')">╱ Linha</button>
-
-                <button class="tool-button" data-tool="text"
-                    onclick="setImageTool('text')">T Texto</button>
-
-                <button class="tool-button" data-tool="pen"
-                    onclick="setImageTool('pen')">✎ Pincel</button>
-
-                <button class="tool-button"
-                    onclick="importImageIntoSVG()">🖼 Imagem</button>
-
-                <div class="tool-title">Canvas</div>
-
-                <button onclick="resizeSVG()">📐 Tamanho</button>
-                <button onclick="zoomSVG(1.15)">＋ Zoom</button>
-                <button onclick="zoomSVG(.87)">－ Zoom</button>
-                <button onclick="resetSVGZoom()">100%</button>
-
-                <div class="tool-title">Preenchimento</div>
-
-                <input type="color" id="fillColor" value="#2384ff"
-                    onchange="applySVGProperty('fill',this.value)">
-
-                <div style="height:6px"></div>
-
-                <div class="tool-title">Contorno</div>
-
-                <input type="color" id="strokeColor" value="#111111"
-                    onchange="applySVGProperty('stroke',this.value)">
-
-                <div style="height:6px"></div>
-
-                <label style="font-size:10px;color:#8994a3">
-                    Espessura
-                </label>
-
-                <input type="number" id="strokeWidth"
-                    value="2" min="0"
-                    onchange="applySVGProperty('stroke-width',this.value)">
-
-            </aside>
-
-            <section class="image-canvas-area" id="imageCanvasArea">
-                <svg id="svgCanvas"
-                     xmlns="http://www.w3.org/2000/svg"
-                     width="1200"
-                     height="600"
-                     viewBox="0 0 1200 600"></svg>
-            </section>
-
-            <aside class="image-layers">
-
-                <div class="layer-head">
-                    CAMADAS
-                </div>
-
-                <div id="layers"></div>
-
-                <div class="image-properties">
-
-                    <div class="layer-head" style="padding:5px 0 10px">
-                        PROPRIEDADES
-                    </div>
-
-                    <div class="prop-grid">
-
-                        <div>
-                            <label>X</label>
-                            <input id="propX" type="number"
-                                   onchange="applyTransformProperty('x',this.value)">
-                        </div>
-
-                        <div>
-                            <label>Y</label>
-                            <input id="propY" type="number"
-                                   onchange="applyTransformProperty('y',this.value)">
-                        </div>
-
-                        <div>
-                            <label>Largura</label>
-                            <input id="propW" type="number"
-                                   onchange="applyTransformProperty('width',this.value)">
-                        </div>
-
-                        <div>
-                            <label>Altura</label>
-                            <input id="propH" type="number"
-                                   onchange="applyTransformProperty('height',this.value)">
-                        </div>
-
-                        <div>
-                            <label>Rotação</label>
-                            <input id="propR" type="number"
-                                   onchange="applyRotation(this.value)">
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </aside>
-
-        </div>
-
-        <div class="image-bottom">
-            <span id="imageStatus">Selecione uma camada.</span>
-            <span id="imageZoom">Zoom: 100%</span>
-        </div>
+        <button class="btn blue" onclick="saveImage()">Salvar</button>
+        <button class="btn red" onclick="closeImageEditor()">Fechar</button>
 
     </div>
+
+    <div class="image-editor-body">
+
+        <aside class="tools">
+
+            <button class="tool-btn active" data-tool="select" onclick="setImageTool('select')">↖ Seleção</button>
+            <button class="tool-btn" data-tool="rect" onclick="setImageTool('rect')">▱ Retângulo</button>
+            <button class="tool-btn" data-tool="circle" onclick="setImageTool('circle')">○ Círculo</button>
+            <button class="tool-btn" data-tool="line" onclick="setImageTool('line')">╱ Linha</button>
+            <button class="tool-btn" data-tool="text" onclick="setImageTool('text')">T Texto</button>
+            <button class="tool-btn" data-tool="draw" onclick="setImageTool('draw')">✎ Pincel</button>
+
+            <hr style="border-color:#273241">
+
+            <button class="tool-btn" onclick="importImageToSVG()">🖼 Importar imagem</button>
+            <input id="imageImport" type="file" accept="image/*" hidden onchange="handleImageImport(event)">
+
+            <div class="form-group">
+                <label>Preenchimento</label>
+                <input type="color" id="svgFill" value="#2684ff" onchange="applySVGStyle()">
+            </div>
+
+            <div class="form-group">
+                <label>Contorno</label>
+                <input type="color" id="svgStroke" value="#111827" onchange="applySVGStyle()">
+            </div>
+
+            <div class="form-group">
+                <label>Espessura</label>
+                <input type="number" id="svgStrokeWidth" value="2" min="0" max="50" onchange="applySVGStyle()">
+            </div>
+
+            <button class="tool-btn" onclick="deleteSelectedLayer()">🗑 Excluir</button>
+            <button class="tool-btn" onclick="duplicateSelectedLayer()">⧉ Duplicar</button>
+
+        </aside>
+
+        <div class="canvas-area" id="canvasArea">
+
+            <svg
+                id="svgCanvas"
+                xmlns="http://www.w3.org/2000/svg"
+                width="1200"
+                height="600"
+                viewBox="0 0 1200 600"
+            ></svg>
+
+        </div>
+
+        <aside class="layers">
+
+            <strong>CAMADAS</strong>
+
+            <div id="layerList" style="margin-top:10px"></div>
+
+        </aside>
+
+    </div>
+
+    <div class="image-editor-bottom">
+
+        <span>Zoom</span>
+
+        <input
+            id="svgZoom"
+            type="number"
+            value="100"
+            min="20"
+            max="300"
+            onchange="setSVGZoom()"
+        >
+
+        <span>%</span>
+
+        <span style="margin-left:auto">X:</span>
+        <span id="svgX">0</span>
+
+        <span>Y:</span>
+        <span id="svgY">0</span>
+
+        <span id="imageEditorFile"></span>
+
+    </div>
+
 </div>
 
-<input type="file" id="phpInput" accept=".php" multiple hidden>
-<input type="file" id="imageInput" accept="image/*" hidden>
+<div id="toast" class="toast"></div>
 
 <script>
-/* =========================================================
+"use strict";
+
+/* ============================================================
    MULTISCRIPT V14
-   EDITOR + GERADOR + IMAGENS + PLUGINS
-========================================================= */
+   ============================================================ */
 
-const BOOTSTRAP_HEAD =
-'<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">';
+const VERSION = "14.0.0";
 
-const BOOTSTRAP_SCRIPT =
-'<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"><\\/script>';
+const IMAGE_FILES = [
+    "images/logo.svg",
+    "images/favicon.svg",
+    "images/vitrine_01.svg",
+    "images/vitrine_02.svg",
+    "images/vitrine_03.svg",
+    "images/vitrine_04.svg",
+    "images/vitrine_05.svg",
+    "images/vitrine_06.svg",
+    "images/vitrine_07.svg",
+    "images/vitrine_08.svg"
+];
+
+const PROTECTED_FILES = ["multiscript.json"];
 
 let project = {
     name:"MEU-PROJETO",
 
-    files:{
-        "index.html":"",
-        "categorias.html":"",
-        "institucional.html":"",
-        "style.css":"",
-        "script.js":"",
-        "images/logo.svg":"",
-        "images/favicon.svg":"",
-        "images/vitrine_01.svg":"",
-        "images/vitrine_02.svg":"",
-        "images/vitrine_03.svg":"",
-        "images/vitrine_04.svg":"",
-        "images/vitrine_05.svg":"",
-        "images/vitrine_06.svg":"",
-        "images/vitrine_07.svg":"",
-        "images/vitrine_08.svg":"",
-        "multiscript.json":""
-    },
+    files:{},
 
     plugins:{},
 
-    pages:{
-        "index.html":{
-            type:"menu",
-            name:"Início",
-            slug:"",
-            url:"/"
-        },
-
-        "categorias.html":{
-            type:"menu",
-            name:"Categorias",
-            slug:"categorias",
-            url:"/categorias"
-        },
-
-        "institucional.html":{
-            type:"menu",
-            name:"Institucional",
-            slug:"institucional",
-            url:"/institucional"
-        }
-    },
+    pages:{},
 
     protectedFiles:["multiscript.json"]
 };
 
 let currentFile = "index.html";
-let explorerSection = "pages";
 
-/* =========================================================
-   UTIL
-========================================================= */
+let imageState = {
+    file:"",
+    tool:"select",
+    selected:null,
+    zoom:100,
+    history:[],
+    historyIndex:-1,
+    drawing:false,
+    drawPath:null,
+    startX:0,
+    startY:0
+};
 
-function escapeHTML(str){
-    return String(str ?? "")
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+
+function esc(value){
+    return String(value ?? "")
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;");
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
-function escapeXML(str){
-    return String(str ?? "")
+function escXML(value){
+    return String(value ?? "")
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
@@ -889,3072 +1387,3631 @@ function escapeXML(str){
         .replace(/'/g,"&apos;");
 }
 
-function slugify(str){
-    return String(str)
+function slugify(text){
+    return String(text)
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g,"")
         .toLowerCase()
         .trim()
         .replace(/[^a-z0-9]+/g,"-")
-        .replace(/^-+|-+$/g,"");
+        .replace(/^-+|-+$/g,"")
+        || "pagina";
 }
 
-function log(message,type=""){
-    const t = document.getElementById("terminal");
+function toast(message){
+    const el = document.getElementById("toast");
 
-    const div = document.createElement("div");
+    el.textContent = message;
+    el.classList.add("show");
 
-    if(type==="success")
-        div.innerHTML='<span class="term-green">OK</span> '+escapeHTML(message);
-    else if(type==="error")
-        div.innerHTML='<span class="term-red">ERRO</span> '+escapeHTML(message);
-    else if(type==="warning")
-        div.innerHTML='<span class="term-yellow">AVISO</span> '+escapeHTML(message);
-    else
-        div.innerHTML='<span class="term-blue">INFO</span> '+escapeHTML(message);
+    clearTimeout(window.__toast);
 
-    t.appendChild(div);
-    t.scrollTop=t.scrollHeight;
-}
-
-function openModal(title,body,footer=""){
-    document.getElementById("modalTitle").textContent=title;
-    document.getElementById("modalBody").innerHTML=body;
-    document.getElementById("modalFooter").innerHTML=footer;
-    document.getElementById("modal").classList.add("open");
+    window.__toast = setTimeout(()=>{
+        el.classList.remove("show");
+    },2500);
 }
 
 function closeModal(){
-    document.getElementById("modal").classList.remove("open");
+    document.getElementById("modalBackdrop").classList.remove("show");
 }
 
-/* =========================================================
-   BASE HTML
-========================================================= */
+function modal(title,body,footer=""){
+    document.getElementById("modalTitle").textContent = title;
+    document.getElementById("modalBody").innerHTML = body;
+    document.getElementById("modalFooter").innerHTML = footer;
+    document.getElementById("modalBackdrop").classList.add("show");
+}
 
-function baseHTML(title,body,extra=""){
-return `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>${escapeHTML(title)}</title>
-${BOOTSTRAP_HEAD}
-<link rel="icon" href="images/favicon.svg">
-<link rel="stylesheet" href="style.css">
-</head>
+function uniqueFile(base){
+    let name = base;
+    let i = 2;
 
-<body>
+    while(project.files[name]){
+        const p = base.lastIndexOf(".");
+        name = base.slice(0,p) + "-" + i + base.slice(p);
+        i++;
+    }
 
-${body}
+    return name;
+}
 
-<footer class="site-footer">
+
+/* ============================================================
+   BOOTSTRAP
+   ============================================================ */
+
+const BOOTSTRAP_HEAD =
+`<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">`;
+
+const BOOTSTRAP_SCRIPT =
+`<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"><\/script>`;
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+function footerHTML(){
+
+    return `
+<footer class="site-footer mt-5">
     <div class="container py-5">
         <div class="row g-4">
 
             <div class="col-lg-4">
-                <img src="images/logo.svg"
-                     alt="Logo"
-                     style="max-width:190px;max-height:70px"
-                     class="mb-3">
+                <img
+                    src="images/logo.svg"
+                    alt="Logo"
+                    style="max-width:180px;max-height:70px"
+                    class="mb-3"
+                >
 
-                <p>
-                    Soluções digitais, informação e atendimento
-                    para você e sua empresa.
+                <p class="text-secondary">
+                    Uma experiência digital criada com o
+                    MultiScript HTML Editor.
                 </p>
             </div>
 
-            <div class="col-md-4 col-lg-2">
+            <div class="col-sm-6 col-lg-2">
                 <h5>Navegação</h5>
-                <a href="index.html">Início</a><br>
-                <a href="categorias.html">Categorias</a><br>
-                <a href="institucional.html">Institucional</a>
+
+                <ul class="list-unstyled">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="categorias.html">Categorias</a></li>
+                    <li><a href="institucional.html">Institucional</a></li>
+                </ul>
             </div>
 
-            <div class="col-md-4 col-lg-3">
-                <h5>Institucional</h5>
-                <a href="quem-somos.html">Quem Somos</a><br>
-                <a href="contato.html">Contato</a>
+            <div class="col-sm-6 col-lg-3">
+                <h5>Projeto</h5>
+
+                <ul class="list-unstyled">
+                    <li>HTML responsivo</li>
+                    <li>Bootstrap 5.3.8</li>
+                    <li>SVG editável</li>
+                    <li>MultiScript V14</li>
+                </ul>
             </div>
 
             <div class="col-lg-3">
                 <h5>Atendimento</h5>
-                <p>
-                    Estamos à disposição para atender
-                    você e sua empresa.
+
+                <p class="text-secondary">
+                    Entre em contato através dos canais
+                    disponibilizados neste site.
                 </p>
-                <a href="contato.html" class="btn btn-primary">
-                    Fale Conosco
-                </a>
             </div>
 
         </div>
     </div>
 
-    <div class="border-top py-3">
-        <div class="container d-flex justify-content-between flex-wrap gap-2">
-            <span>© 2026 Todos os direitos reservados.</span>
-            <span>Desenvolvido com MultiScript HTML Editor</span>
+    <div class="border-top">
+        <div class="container py-3 d-flex flex-wrap justify-content-between gap-2">
+            <small class="text-secondary">
+                © 2026 Todos os direitos reservados.
+            </small>
+
+            <small class="text-secondary">
+                Desenvolvido com MultiScript HTML Editor V14
+            </small>
         </div>
     </div>
-</footer>
+</footer>`;
+}
 
-${extra}
+
+/* ============================================================
+   SVG DEFAULT
+   ============================================================ */
+
+function defaultSVG(type){
+
+    if(type === "logo"){
+        return `
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="600"
+     height="180"
+     viewBox="0 0 600 180">
+
+    <rect width="600" height="180" rx="24" fill="#111827"/>
+
+    <circle cx="90" cy="90" r="55" fill="#2684ff"/>
+
+    <text x="90" y="110"
+          text-anchor="middle"
+          font-family="Arial"
+          font-size="55"
+          font-weight="bold"
+          fill="white">MS</text>
+
+    <text x="170" y="108"
+          font-family="Arial"
+          font-size="54"
+          font-weight="bold"
+          fill="white">MultiScript</text>
+</svg>`;
+    }
+
+    if(type === "favicon"){
+        return `
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="256"
+     height="256"
+     viewBox="0 0 256 256">
+
+    <rect width="256" height="256" rx="48" fill="#111827"/>
+    <circle cx="128" cy="128" r="85" fill="#2684ff"/>
+
+    <text x="128" y="150"
+          text-anchor="middle"
+          font-family="Arial"
+          font-size="75"
+          font-weight="bold"
+          fill="white">MS</text>
+</svg>`;
+    }
+
+    return `
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1200"
+     height="600"
+     viewBox="0 0 1200 600">
+
+    <rect width="1200" height="600" rx="35" fill="#f3f6fa"/>
+
+    <circle cx="960" cy="130" r="210" fill="#2684ff" opacity=".12"/>
+    <circle cx="1050" cy="470" r="280" fill="#875cff" opacity=".09"/>
+
+    <rect x="70" y="70"
+          width="1060"
+          height="460"
+          rx="28"
+          fill="white"
+          stroke="#d9e2ec"/>
+
+    <text x="120"
+          y="210"
+          font-family="Arial"
+          font-size="52"
+          font-weight="bold"
+          fill="#111827">Sua Vitrine</text>
+
+    <text x="120"
+          y="265"
+          font-family="Arial"
+          font-size="25"
+          fill="#526170">Apresente seus produtos e serviços.</text>
+
+    <rect x="120"
+          y="325"
+          width="220"
+          height="58"
+          rx="12"
+          fill="#2684ff"/>
+
+    <text x="230"
+          y="363"
+          text-anchor="middle"
+          font-family="Arial"
+          font-size="20"
+          font-weight="bold"
+          fill="white">Conheça</text>
+
+</svg>`;
+}
+
+
+/* ============================================================
+   PÁGINAS
+   ============================================================ */
+
+function createIndexPage(){
+
+    const cards = Array.from({length:8},(_,i)=>{
+
+        const n = String(i+1).padStart(2,"0");
+
+        return `
+<div class="col-sm-6 col-lg-3">
+    <article class="card h-100 shadow-sm border-0">
+        <img
+            src="images/vitrine_${n}.svg"
+            class="card-img-top"
+            alt="Vitrine ${n}"
+        >
+
+        <div class="card-body">
+            <h2 class="h5">Vitrine ${n}</h2>
+
+            <p class="text-secondary">
+                Conheça esta seção do nosso site.
+            </p>
+
+            <a
+                href="#"
+                class="btn btn-primary"
+            >Ver detalhes</a>
+        </div>
+    </article>
+</div>`;
+    }).join("");
+
+    return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(project.name)}</title>
+${BOOTSTRAP_HEAD}
+
+<style>
+body{
+    background:#f6f8fb;
+}
+.site-footer{
+    background:#101827;
+    color:#fff;
+}
+.site-footer a{
+    color:#adb9c8;
+    text-decoration:none;
+}
+.site-footer a:hover{
+    color:#fff;
+}
+.hero-home{
+    padding:90px 0;
+    background:linear-gradient(135deg,#0d6efd,#6246ea);
+    color:#fff;
+}
+.vitrine-img{
+    aspect-ratio:2/1;
+    object-fit:cover;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+            <img
+                src="images/logo.svg"
+                alt="Logo"
+                style="height:42px;max-width:170px;object-fit:contain"
+            >
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNav"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="mainNav" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">Início</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="categorias.html">Categorias</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="institucional.html">Institucional</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="hero-home">
+    <div class="container">
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-6">
+                <span class="badge bg-light text-primary mb-3">
+                    MultiScript V14
+                </span>
+
+                <h1 class="display-4 fw-bold">
+                    Bem-vindo ao nosso site.
+                </h1>
+
+                <p class="lead mt-3">
+                    Explore nossas vitrines, categorias e informações.
+                </p>
+
+                <a href="#vitrines" class="btn btn-light btn-lg mt-3">
+                    Explorar vitrines
+                </a>
+            </div>
+
+            <div class="col-lg-6">
+                <img
+                    src="images/vitrine_01.svg"
+                    class="img-fluid rounded-4 shadow"
+                    alt="Vitrine principal"
+                >
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<main>
+
+<section id="vitrines" class="container py-5">
+
+    <div class="text-center mb-5">
+        <span class="text-primary fw-bold">VITRINES</span>
+
+        <h2 class="display-6 fw-bold mt-2">
+            Explore nossas opções
+        </h2>
+
+        <p class="text-secondary">
+            Uma apresentação visual organizada e responsiva.
+        </p>
+    </div>
+
+    <div class="row g-4">
+        ${cards}
+    </div>
+
+</section>
+
+<section class="bg-white py-5">
+    <div class="container text-center">
+
+        <h2 class="fw-bold">
+            Encontre o que procura
+        </h2>
+
+        <p class="text-secondary">
+            Navegue pelas categorias e conheça mais sobre nosso projeto.
+        </p>
+
+        <a href="categorias.html" class="btn btn-primary">
+            Ver categorias
+        </a>
+
+    </div>
+</section>
+
+</main>
+
+${footerHTML()}
 
 ${BOOTSTRAP_SCRIPT}
-<script src="script.js"><\\/script>
 
 </body>
 </html>`;
 }
 
-/* =========================================================
-   DEFAULT SVG
-========================================================= */
-
-function defaultSVG(type){
-    if(type==="favicon"){
-        return `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
-<rect width="256" height="256" rx="45" fill="#2384ff"/>
-<text x="128" y="155" text-anchor="middle" font-family="Arial" font-size="100" font-weight="bold" fill="#fff">MS</text>
-</svg>`;
-    }
-
-    if(type==="logo"){
-        return `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="180" viewBox="0 0 600 180">
-<rect width="600" height="180" rx="25" fill="#10161d"/>
-<circle cx="95" cy="90" r="55" fill="#2384ff"/>
-<text x="95" y="113" text-anchor="middle" font-family="Arial" font-size="58" font-weight="bold" fill="#fff">M</text>
-<text x="175" y="110" font-family="Arial" font-size="55" font-weight="bold" fill="#fff">MEU-PROJETO</text>
-</svg>`;
-    }
-
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
-<rect width="1200" height="600" fill="#eef3f8"/>
-<rect x="60" y="60" width="1080" height="480" rx="35" fill="#2384ff"/>
-<text x="600" y="285"
-      text-anchor="middle"
-      font-family="Arial"
-      font-size="72"
-      font-weight="bold"
-      fill="#ffffff">VITRINE</text>
-<text x="600" y="355"
-      text-anchor="middle"
-      font-family="Arial"
-      font-size="30"
-      fill="#dcecff">Clique e edite esta arte</text>
-</svg>`;
-}
-
-/* =========================================================
-   PAGE GENERATION
-========================================================= */
-
-function createIndexPage(){
-
-let slides="";
-
-for(let i=1;i<=8;i++){
-
-    const file="images/vitrine_"+String(i).padStart(2,"0")+".svg";
-
-    slides += `
-        <div class="carousel-item ${i===1?"active":""}">
-            <img src="${file}"
-                 class="d-block w-100"
-                 alt="Vitrine ${i}">
-        </div>`;
-}
-
-project.files["index.html"]=baseHTML(
-    "Início",
-`
-<header>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="images/logo.svg"
-                     alt="Logo"
-                     style="height:42px;max-width:180px">
-            </a>
-
-            <button class="navbar-toggler"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="menu">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Início</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categorias.html">Categorias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="institucional.html">Institucional</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
-<main>
-
-    <section class="container py-5">
-
-        <div id="vitrineCarousel"
-             class="carousel slide"
-             data-bs-ride="carousel">
-
-            <div class="carousel-inner rounded shadow">
-                ${slides}
-            </div>
-
-            <button class="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#vitrineCarousel"
-                    data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-
-            <button class="carousel-control-next"
-                    type="button"
-                    data-bs-target="#vitrineCarousel"
-                    data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
-
-        </div>
-
-    </section>
-
-    <section class="container py-5">
-        <div class="text-center">
-            <h1>Bem-vindo</h1>
-            <p class="lead">
-                Edite este conteúdo diretamente no MultiScript.
-            </p>
-        </div>
-    </section>
-
-</main>
-`);
-
-log("Index criada usando as 8 vitrines.","success");
-}
 
 function createCategoriesPage(){
 
-let cards="";
+    return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Categorias</title>
+${BOOTSTRAP_HEAD}
+</head>
 
-Object.entries(project.pages).forEach(([file,p])=>{
+<body>
 
-    if(p.type==="category"){
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+            <img src="images/logo.svg" style="height:42px;max-width:170px;object-fit:contain">
+        </a>
 
-        cards += `
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h3>${escapeHTML(p.name)}</h3>
-                    <p>${escapeHTML(p.description || "Categoria do site.")}</p>
-                    <a href="${p.slug}.html"
-                       class="btn btn-primary">
-                       Acessar
-                    </a>
-                </div>
-            </div>
-        </div>`;
-    }
-});
-
-project.files["categorias.html"]=baseHTML(
-    "Categorias",
-`
-<header>
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-<div class="container">
-<a class="navbar-brand" href="index.html">Categorias</a>
-<div class="navbar-nav ms-auto">
-<a class="nav-link" href="index.html">Início</a>
-<a class="nav-link active" href="categorias.html">Categorias</a>
-<a class="nav-link" href="institucional.html">Institucional</a>
-</div>
-</div>
+        <div>
+            <a class="btn btn-sm btn-outline-primary" href="index.html">Início</a>
+            <a class="btn btn-sm btn-primary" href="categorias.html">Categorias</a>
+            <a class="btn btn-sm btn-outline-primary" href="institucional.html">Institucional</a>
+        </div>
+    </div>
 </nav>
-</header>
 
 <main class="container py-5">
 
-<h1 class="mb-4">Categorias</h1>
+    <h1 class="fw-bold">Categorias</h1>
 
-<div class="row g-4">
-${cards || `
-<div class="col-12">
-<p class="text-muted">
-Nenhuma categoria foi criada ainda.
-</p>
-</div>`}
-</div>
+    <p class="text-secondary">
+        Encontre conteúdos organizados por categoria.
+    </p>
+
+    <!-- MULTISCRIPT:CATEGORIES:START -->
+
+    <div class="row g-4" id="categorias-lista">
+        <div class="col-12">
+            <div class="alert alert-light border">
+                Nenhuma categoria foi criada ainda.
+            </div>
+        </div>
+    </div>
+
+    <!-- MULTISCRIPT:CATEGORIES:END -->
 
 </main>
-`);
+
+${footerHTML()}
+
+${BOOTSTRAP_SCRIPT}
+
+</body>
+</html>`;
 }
+
 
 function createInstitutionalPage(){
 
-let cards="";
+    return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Institucional</title>
+${BOOTSTRAP_HEAD}
+</head>
 
-Object.entries(project.pages).forEach(([file,p])=>{
+<body>
 
-    if(p.type==="institutional"){
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+            <img src="images/logo.svg" style="height:42px;max-width:170px;object-fit:contain">
+        </a>
 
-        cards += `
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h3>${escapeHTML(p.name)}</h3>
-                    <p>${escapeHTML(p.description || "Página institucional.")}</p>
-                    <a href="${p.slug}.html"
-                       class="btn btn-primary">
-                       Acessar
-                    </a>
-                </div>
-            </div>
-        </div>`;
-    }
-});
-
-project.files["institucional.html"]=baseHTML(
-    "Institucional",
-`
-<header>
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-<div class="container">
-<a class="navbar-brand" href="index.html">Institucional</a>
-<div class="navbar-nav ms-auto">
-<a class="nav-link" href="index.html">Início</a>
-<a class="nav-link" href="categorias.html">Categorias</a>
-<a class="nav-link active" href="institucional.html">Institucional</a>
-</div>
-</div>
-</nav>
-</header>
-
-<main class="container py-5">
-
-<h1 class="mb-4">Institucional</h1>
-
-<div class="row g-4">
-${cards || `
-<div class="col-12">
-<p class="text-muted">
-Nenhuma página institucional foi criada ainda.
-</p>
-</div>`}
-</div>
-
-</main>
-`);
-}
-
-/* =========================================================
-   CATEGORY GENERATOR
-========================================================= */
-
-function openCategoryGenerator(){
-
-openModal(
-"🏷 Gerar Categoria",
-`
-<div class="form-group">
-<label>Nome da categoria</label>
-<input id="catName" placeholder="Ex.: Seguros para Veículos">
-</div>
-
-<div class="form-group">
-<label>Descrição</label>
-<input id="catDescription"
-       placeholder="Ex.: Conheça nossas opções para veículos.">
-</div>
-
-<div class="form-group">
-<label>Slug / URL</label>
-<input id="catSlug"
-       placeholder="seguros-para-veiculos">
-</div>
-`,
-`
-<button onclick="closeModal()">Cancelar</button>
-<button class="primary" onclick="generateCategoryPage()">Gerar Categoria</button>
-`
-);
-
-document.getElementById("catName").oninput=function(){
-    document.getElementById("catSlug").value=slugify(this.value);
-};
-}
-
-function generateCategoryPage(){
-
-const name=document.getElementById("catName").value.trim();
-
-if(!name){
-    alert("Informe o nome da categoria.");
-    return;
-}
-
-const description=document.getElementById("catDescription").value.trim();
-
-const slug=
-document.getElementById("catSlug").value.trim() ||
-slugify(name);
-
-const file=slug+".html";
-
-project.pages[file]={
-    type:"category",
-    name,
-    description,
-    slug,
-    url:"/"+slug
-};
-
-project.files[file]=baseHTML(
-    name,
-`
-<header>
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-<div class="container">
-<a class="navbar-brand" href="index.html">
-${escapeHTML(name)}
-</a>
-
-<div class="navbar-nav ms-auto">
-<a class="nav-link" href="index.html">Início</a>
-<a class="nav-link" href="categorias.html">Categorias</a>
-<a class="nav-link" href="institucional.html">Institucional</a>
-</div>
-</div>
-</nav>
-</header>
-
-<main class="container py-5">
-
-<h1>${escapeHTML(name)}</h1>
-
-<p class="lead">
-${escapeHTML(description)}
-</p>
-
-<hr>
-
-<h2>Subpáginas</h2>
-
-<div class="row g-4" id="subpaginas">
-    <div class="col-12">
-        <p class="text-muted">
-        Nenhuma subpágina criada ainda.
-        </p>
+        <div>
+            <a class="btn btn-sm btn-outline-primary" href="index.html">Início</a>
+            <a class="btn btn-sm btn-outline-primary" href="categorias.html">Categorias</a>
+            <a class="btn btn-sm btn-primary" href="institucional.html">Institucional</a>
+        </div>
     </div>
-</div>
-
-</main>
-`);
-
-updateGeneratedMenus();
-updateProjectMetadata();
-
-closeModal();
-
-renderExplorer();
-openFile(file);
-
-log("Categoria '"+name+"' criada.","success");
-}
-
-/* =========================================================
-   INSTITUTIONAL GENERATOR
-========================================================= */
-
-function openInstitutionalGenerator(){
-
-openModal(
-"🏢 Gerar Página Institucional",
-`
-<div class="form-group">
-<label>Nome da página</label>
-<input id="instName" placeholder="Ex.: Quem Somos">
-</div>
-
-<div class="form-group">
-<label>Descrição</label>
-<input id="instDescription"
-       placeholder="Ex.: Conheça nossa história.">
-</div>
-
-<div class="form-group">
-<label>Slug / URL</label>
-<input id="instSlug" placeholder="quem-somos">
-</div>
-`,
-`
-<button onclick="closeModal()">Cancelar</button>
-<button class="primary"
-        onclick="generateInstitutionalPage()">
-Gerar Página
-</button>
-`
-);
-
-document.getElementById("instName").oninput=function(){
-    document.getElementById("instSlug").value=slugify(this.value);
-};
-}
-
-function generateInstitutionalPage(){
-
-const name=document.getElementById("instName").value.trim();
-
-if(!name){
-    alert("Informe o nome.");
-    return;
-}
-
-const description=document
-.getElementById("instDescription").value.trim();
-
-const slug=
-document.getElementById("instSlug").value.trim() ||
-slugify(name);
-
-const file=slug+".html";
-
-project.pages[file]={
-    type:"institutional",
-    name,
-    description,
-    slug,
-    url:"/"+slug
-};
-
-project.files[file]=baseHTML(
-    name,
-`
-<header>
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-<div class="container">
-
-<a class="navbar-brand"
-   href="index.html">
-${escapeHTML(name)}
-</a>
-
-<div class="navbar-nav ms-auto">
-<a class="nav-link" href="index.html">Início</a>
-<a class="nav-link" href="categorias.html">Categorias</a>
-<a class="nav-link" href="institucional.html">Institucional</a>
-</div>
-
-</div>
 </nav>
-</header>
 
 <main class="container py-5">
 
-<h1>${escapeHTML(name)}</h1>
+    <h1 class="fw-bold">Institucional</h1>
 
-<p class="lead">
-${escapeHTML(description)}
-</p>
-
-<hr>
-
-<div class="content">
-    <p>
-    Edite esta página diretamente no editor HTML.
+    <p class="text-secondary">
+        Conheça melhor nossa empresa, projeto ou organização.
     </p>
-</div>
 
-</main>
-`);
+    <!-- MULTISCRIPT:INSTITUTIONAL:START -->
 
-updateGeneratedMenus();
-updateProjectMetadata();
-
-closeModal();
-
-renderExplorer();
-openFile(file);
-
-log("Página institucional criada.","success");
-}
-
-/* =========================================================
-   SUBPAGE
-========================================================= */
-
-function openSubpageGenerator(){
-
-const parents=Object.entries(project.pages)
-.filter(([file,p]) =>
-    p.type==="category" ||
-    p.type==="institutional"
-);
-
-let options="";
-
-parents.forEach(([file,p])=>{
-    options+=`
-    <option value="${escapeHTML(file)}">
-        ${escapeHTML(p.name)}
-        (${p.type==="category"?"Categoria":"Institucional"})
-    </option>`;
-});
-
-if(!options){
-    options=`<option value="">Crie primeiro uma categoria ou página institucional.</option>`;
-}
-
-openModal(
-"↳ Gerar Subpágina",
-`
-<div class="form-group">
-<label>Página pai</label>
-<select id="subParent">
-${options}
-</select>
-</div>
-
-<div class="form-group">
-<label>Nome da subpágina</label>
-<input id="subName"
-       placeholder="Ex.: Seguro Auto">
-</div>
-
-<div class="form-group">
-<label>Descrição</label>
-<input id="subDescription"
-       placeholder="Ex.: Proteção completa para seu veículo.">
-</div>
-
-<div class="form-group">
-<label>Slug / URL</label>
-<input id="subSlug"
-       placeholder="seguro-auto">
-</div>
-
-<p class="info">
-A subpágina será associada à página pai,
-mas a URL continuará plana:
-<strong>/seguro-auto</strong>
-</p>
-`,
-`
-<button onclick="closeModal()">Cancelar</button>
-<button class="primary"
-        onclick="generateSubpage()">
-Gerar Subpágina
-</button>
-`
-);
-
-document.getElementById("subName").oninput=function(){
-    document.getElementById("subSlug").value=slugify(this.value);
-};
-}
-
-function generateSubpage(){
-
-const parentFile=document.getElementById("subParent").value;
-
-const parent=project.pages[parentFile];
-
-if(!parent){
-    alert("Página pai inválida.");
-    return;
-}
-
-const name=document.getElementById("subName").value.trim();
-
-if(!name){
-    alert("Informe o nome.");
-    return;
-}
-
-const description=
-document.getElementById("subDescription").value.trim();
-
-const slug=
-document.getElementById("subSlug").value.trim() ||
-slugify(name);
-
-const file=slug+".html";
-
-project.pages[file]={
-    type:"subpage",
-    name,
-    description,
-    parent:parentFile,
-    parentType:parent.type,
-    slug,
-    url:"/"+slug
-};
-
-project.files[file]=baseHTML(
-    name,
-`
-<header>
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-<div class="container">
-
-<a class="navbar-brand"
-   href="${parentFile}">
-${escapeHTML(parent.name)}
-</a>
-
-<div class="navbar-nav ms-auto">
-<a class="nav-link" href="index.html">Início</a>
-<a class="nav-link" href="categorias.html">Categorias</a>
-<a class="nav-link" href="institucional.html">Institucional</a>
-</div>
-
-</div>
-</nav>
-</header>
-
-<main class="container py-5">
-
-<div class="mb-3">
-<a href="${parentFile}">
-← Voltar para ${escapeHTML(parent.name)}
-</a>
-</div>
-
-<h1>${escapeHTML(name)}</h1>
-
-<p class="lead">
-${escapeHTML(description)}
-</p>
-
-<hr>
-
-<section>
-<h2>${escapeHTML(name)}</h2>
-<p>
-Edite este conteúdo no editor do MultiScript.
-</p>
-</section>
-
-</main>
-`);
-
-updateGeneratedMenus();
-updateParentPage(parentFile);
-
-updateProjectMetadata();
-
-closeModal();
-
-renderExplorer();
-openFile(file);
-
-log("Subpágina '"+name+"' criada.","success");
-}
-
-/* =========================================================
-   GENERATED MENUS
-========================================================= */
-
-function updateGeneratedMenus(){
-
-createCategoriesPage();
-createInstitutionalPage();
-
-}
-
-function updateParentPage(parentFile){
-
-const parent=project.pages[parentFile];
-
-if(!parent)return;
-
-const children=Object.entries(project.pages)
-.filter(([file,p])=>p.parent===parentFile);
-
-let html="";
-
-children.forEach(([file,p])=>{
-    html+=`
-    <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <h3>${escapeHTML(p.name)}</h3>
-                <p>${escapeHTML(p.description || "")}</p>
-                <a href="${p.slug}.html"
-                   class="btn btn-primary">
-                   Acessar
-                </a>
+    <div class="row g-4" id="institucional-lista">
+        <div class="col-12">
+            <div class="alert alert-light border">
+                Nenhuma página institucional foi criada ainda.
             </div>
         </div>
-    </div>`;
-});
+    </div>
 
-if(!html){
-    html=`
-    <div class="col-12">
-        <p class="text-muted">
-        Nenhuma subpágina criada ainda.
-        </p>
-    </div>`;
+    <!-- MULTISCRIPT:INSTITUTIONAL:END -->
+
+</main>
+
+${footerHTML()}
+
+${BOOTSTRAP_SCRIPT}
+
+</body>
+</html>`;
 }
 
-/*
-    Mantemos a página gerada simples.
-    O conteúdo é reconstruído somente quando
-    o gerador cria uma nova relação.
-*/
 
-project.files[parentFile]=baseHTML(
-    parent.name,
-`
-<header>
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-<div class="container">
+/* ============================================================
+   TEMPLATES
+   ============================================================ */
 
-<a class="navbar-brand" href="index.html">
-${escapeHTML(parent.name)}
-</a>
+function createCategoryTemplate(name,slug){
 
-<div class="navbar-nav ms-auto">
-<a class="nav-link" href="index.html">Início</a>
-<a class="nav-link" href="categorias.html">Categorias</a>
-<a class="nav-link" href="institucional.html">Institucional</a>
-</div>
+    return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(name)}</title>
+${BOOTSTRAP_HEAD}
+</head>
 
-</div>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+            <img src="images/logo.svg" style="height:42px;max-width:170px;object-fit:contain">
+        </a>
+
+        <div>
+            <a class="btn btn-sm btn-outline-primary" href="index.html">Início</a>
+            <a class="btn btn-sm btn-primary" href="categorias.html">Categorias</a>
+            <a class="btn btn-sm btn-outline-primary" href="institucional.html">Institucional</a>
+        </div>
+    </div>
 </nav>
+
+<header class="bg-light py-5">
+    <div class="container">
+        <span class="badge text-bg-primary">Categoria</span>
+        <h1 class="display-5 fw-bold mt-3">${esc(name)}</h1>
+        <p class="lead text-secondary">
+            Encontre informações e páginas relacionadas.
+        </p>
+    </div>
 </header>
 
 <main class="container py-5">
 
-<h1>${escapeHTML(parent.name)}</h1>
+    <!-- MULTISCRIPT:CHILDREN:START -->
 
-<p class="lead">
-${escapeHTML(parent.description || "")}
-</p>
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="alert alert-light border">
+                Nenhuma subpágina foi criada nesta categoria.
+            </div>
+        </div>
+    </div>
 
-<div class="row g-4 mt-3">
-${html}
-</div>
+    <!-- MULTISCRIPT:CHILDREN:END -->
 
 </main>
-`);
+
+${footerHTML()}
+
+${BOOTSTRAP_SCRIPT}
+
+</body>
+</html>`;
 }
 
-/* =========================================================
-   SITEMAP
-========================================================= */
 
-function openSitemapGenerator(){
+function createInstitutionalTemplate(name,slug){
 
-openModal(
-"🗺 Gerar Sitemap",
-`
-<div class="form-group">
-<label>URL base do site</label>
-<input id="sitemapBase"
-       placeholder="https://exemplo.com.br">
-</div>
+    return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(name)}</title>
+${BOOTSTRAP_HEAD}
+</head>
 
-<p class="info">
-O domínio não pode ser descoberto automaticamente pelo
-MultiScript porque o projeto pode ser publicado em qualquer
-hospedagem.
-</p>
-`,
-`
-<button onclick="closeModal()">Cancelar</button>
-<button class="primary"
-        onclick="generateSitemap()">
-Gerar sitemap.xml
-</button>
-`
-);
+<body>
+
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+            <img src="images/logo.svg" style="height:42px;max-width:170px;object-fit:contain">
+        </a>
+
+        <div>
+            <a class="btn btn-sm btn-outline-primary" href="index.html">Início</a>
+            <a class="btn btn-sm btn-outline-primary" href="categorias.html">Categorias</a>
+            <a class="btn btn-sm btn-primary" href="institucional.html">Institucional</a>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-light py-5">
+    <div class="container">
+        <span class="badge text-bg-secondary">Institucional</span>
+        <h1 class="display-5 fw-bold mt-3">${esc(name)}</h1>
+    </div>
+</header>
+
+<main class="container py-5">
+
+    <div class="row">
+        <div class="col-lg-8">
+
+            <h2>${esc(name)}</h2>
+
+            <p class="lead">
+                Conteúdo institucional desta página.
+            </p>
+
+            <p>
+                Edite esta página diretamente no editor do MultiScript.
+            </p>
+
+        </div>
+    </div>
+
+    <!-- MULTISCRIPT:CHILDREN:START -->
+
+    <div class="row g-4 mt-4">
+        <div class="col-12">
+            <div class="alert alert-light border">
+                Nenhuma subpágina foi criada nesta página.
+            </div>
+        </div>
+    </div>
+
+    <!-- MULTISCRIPT:CHILDREN:END -->
+
+</main>
+
+${footerHTML()}
+
+${BOOTSTRAP_SCRIPT}
+
+</body>
+</html>`;
 }
 
-function generateSitemap(){
 
-let base=document.getElementById("sitemapBase").value.trim();
+function createSubpageTemplate(name,parent){
 
-if(!base){
-    alert("Informe a URL base.");
-    return;
+    return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(name)}</title>
+${BOOTSTRAP_HEAD}
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+            <img src="images/logo.svg" style="height:42px;max-width:170px;object-fit:contain">
+        </a>
+
+        <div>
+            <a class="btn btn-sm btn-outline-primary" href="index.html">Início</a>
+            <a class="btn btn-sm btn-outline-primary" href="categorias.html">Categorias</a>
+            <a class="btn btn-sm btn-outline-primary" href="institucional.html">Institucional</a>
+        </div>
+    </div>
+</nav>
+
+<main class="container py-5">
+
+    <a
+        href="${esc(project.pages[parent]?.url || "#")}"
+        class="btn btn-sm btn-outline-primary mb-4"
+    >
+        ← Voltar
+    </a>
+
+    <span class="badge text-bg-primary d-block w-fit mb-3">
+        Subpágina
+    </span>
+
+    <h1 class="display-5 fw-bold">
+        ${esc(name)}
+    </h1>
+
+    <p class="lead text-secondary">
+        Edite o conteúdo desta página pelo MultiScript.
+    </p>
+
+    <hr class="my-5">
+
+    <div>
+        <p>
+            Este é o conteúdo inicial da subpágina.
+        </p>
+
+        <p>
+            Você pode substituir este conteúdo livremente no editor.
+        </p>
+    </div>
+
+</main>
+
+${footerHTML()}
+
+${BOOTSTRAP_SCRIPT}
+
+</body>
+</html>`;
 }
 
-base=base.replace(/\/+$/,"");
 
-let urls="";
+/* ============================================================
+   CSS / JS BASE
+   ============================================================ */
 
-Object.entries(project.pages).forEach(([file,p])=>{
+function createBaseCSS(){
 
-    urls+=`
-    <url>
-        <loc>${escapeXML(base+p.url)}</loc>
-    </url>`;
-});
-
-project.files["sitemap.xml"]=
-`<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls}
-</urlset>`;
-
-updateProjectMetadata();
-
-closeModal();
-
-renderExplorer();
-
-openFile("sitemap.xml");
-
-log("sitemap.xml gerado com "+Object.keys(project.pages).length+" URLs.","success");
-}
-
-/* =========================================================
-   METADATA
-========================================================= */
-
-function updateProjectMetadata(){
-
-const meta={
-    multiscript:{
-        version:"14.0.0",
-        generator:"MultiScript HTML Editor",
-        project:project.name,
-        type:"html-project"
-    },
-
-    files:Object.keys(project.files)
-        .filter(f=>f!=="multiscript.json"),
-
-    pages:project.pages,
-
-    plugins:Object.keys(project.plugins || {})
-};
-
-project.files["multiscript.json"]=
-JSON.stringify(meta,null,4);
-}
-
-/* =========================================================
-   EXPLORER
-========================================================= */
-
-function showExplorerSection(section){
-
-explorerSection=section;
-
-document.querySelectorAll(".nav-item")
-.forEach(x=>x.classList.remove("active"));
-
-renderExplorer();
-}
-
-function renderExplorer(){
-
-const el=document.getElementById("explorer");
-
-if(explorerSection==="pages"){
-    renderPagesExplorer(el);
-}
-else if(explorerSection==="images"){
-    renderImagesExplorer(el);
-}
-else{
-    renderPluginsExplorer(el);
-}
-}
-
-function renderPagesExplorer(el){
-
-let html=`
-<div class="sidebar-title">Páginas</div>
-<div class="tree">
-`;
-
-const order=[
-    "index.html",
-    "categorias.html",
-    "institucional.html"
-];
-
-order.forEach(file=>{
-
-    if(project.files[file]!==undefined){
-
-        html+=`
-        <div class="tree-item ${currentFile===file?"active":""}"
-             onclick="openFile('${file}')">
-            <span class="html-icon">▣</span>
-            ${file}
-        </div>`;
-    }
-});
-
-Object.entries(project.pages).forEach(([file,p])=>{
-
-    if(order.includes(file))return;
-
-    const icon=
-        p.type==="category"?"🏷":
-        p.type==="institutional"?"🏢":
-        "↳";
-
-    html+=`
-    <div class="tree-item ${currentFile===file?"active":""}"
-         onclick="openFile('${file}')"
-         title="${escapeHTML(p.url)}">
-        <span>${icon}</span>
-        ${escapeHTML(file)}
-    </div>`;
-});
-
-["style.css","script.js","sitemap.xml"].forEach(file=>{
-
-    if(project.files[file]!==undefined){
-
-        html+=`
-        <div class="tree-item ${currentFile===file?"active":""}"
-             onclick="openFile('${file}')">
-            <span>${file==="style.css"?"🎨":file==="script.js"?"JS":"🗺"}</span>
-            ${file}
-        </div>`;
-    }
-});
-
-html+=`
-<div class="tree-item locked-file"
-     onclick="openProtectedFile()">
-    <span class="lock">🔒</span>
-    multiscript.json
-</div>
-`;
-
-html+="</div>";
-
-el.innerHTML=html;
-}
-
-function renderImagesExplorer(el){
-
-let html=`
-<div class="sidebar-title">
-Imagens / SVG
-</div>
-
-<div class="tree">
-`;
-
-Object.keys(project.files)
-.filter(f=>f.startsWith("images/"))
-.forEach(file=>{
-
-    html+=`
-    <div class="tree-item"
-         onclick="openImageEditor('${file}')">
-        <span class="image-icon">🖼</span>
-        ${file.replace("images/","")}
-    </div>`;
-});
-
-html+=`
-<br>
-<div class="tree-item"
-     onclick="createNewSVG()">
-    ＋ Nova imagem SVG
-</div>
-`;
-
-html+="</div>";
-
-el.innerHTML=html;
-}
-
-function renderPluginsExplorer(el){
-
-let html=`
-<div class="sidebar-title">
-Plugins PHP
-</div>
-
-<div class="tree">
-`;
-
-Object.keys(project.plugins).forEach(file=>{
-
-    html+=`
-    <div class="tree-item"
-         onclick="openFile('${file}')">
-        <span class="php-icon">PHP</span>
-        ${file.replace("plugins/","")}
-    </div>`;
-});
-
-html+=`
-<br>
-<div class="tree-item"
-     onclick="document.getElementById('phpInput').click()">
-    ＋ Importar PHP
-</div>
-`;
-
-html+="</div>";
-
-el.innerHTML=html;
-}
-
-/* =========================================================
-   FILE OPEN
-========================================================= */
-
-function openProtectedFile(){
-
-openModal(
-"🔒 Arquivo protegido",
-`
-<p>
-<strong>multiscript.json</strong> é um arquivo interno
-do MultiScript.
-</p>
-
-<p class="info">
-Ele é gerado automaticamente e não pode ser editado
-manualmente.
-</p>
-`,
-`<button class="primary" onclick="closeModal()">Entendi</button>`
-);
-
-}
-
-function openFile(file){
-
-if(file==="multiscript.json"){
-    openProtectedFile();
-    return;
-}
-
-if(!project.files[file]){
-    log("Arquivo vazio: "+file,"warning");
-}
-
-currentFile=file;
-
-document.getElementById("editor").value=
-project.files[file] || "";
-
-updateLineNumbers();
-renderTabs();
-renderExplorer();
-updateInspector();
-
-document.getElementById("statusFile").textContent=file;
-
-if(file.startsWith("images/") &&
-   file.endsWith(".svg")){
-    openImageEditor(file);
-}
-
-}
-
-function renderTabs(){
-
-const tabs=document.getElementById("tabs");
-
-tabs.innerHTML=`
-<div class="tab active">
-${currentFile}
-</div>`;
-}
-
-function updateInspector(){
-
-const info=document.getElementById("currentInfo");
-
-if(project.pages[currentFile]){
-
-const p=project.pages[currentFile];
-
-info.innerHTML=`
-<strong>${escapeHTML(p.name)}</strong>
-<br>
-Tipo: ${escapeHTML(p.type)}
-<br>
-URL: ${escapeHTML(p.url)}
-${p.parent?
-`<br>Pai: ${escapeHTML(p.parent)}`:""}
-`;
-
-}else{
-
-info.innerHTML=`
-<strong>${escapeHTML(currentFile)}</strong>
-<br>
-Arquivo do projeto.
-`;
-}
-}
-
-/* =========================================================
-   EDITOR
-========================================================= */
-
-function editorInput(){
-
-if(project.protectedFiles.includes(currentFile)){
-    document.getElementById("editor").value=
-        project.files[currentFile];
-    return;
-}
-
-project.files[currentFile]=
-document.getElementById("editor").value;
-
-updateLineNumbers();
-
-document.getElementById("statusStats").textContent=
-document.getElementById("editor")
-.value.split("\n").length+" linhas";
-
-localStorage.setItem(
-"multiscript-v14-project",
-JSON.stringify(project)
-);
-}
-
-function updateLineNumbers(){
-
-const count=
-document.getElementById("editor")
-.value.split("\n").length;
-
-let html="";
-
-for(let i=1;i<=count;i++){
-    html+=i+"<br>";
-}
-
-document.getElementById("lines").innerHTML=html;
-}
-
-function syncEditorScroll(){
-
-document.getElementById("lines").scrollTop=
-document.getElementById("editor").scrollTop;
-}
-
-function editorKeydown(e){
-
-if(e.key==="Tab"){
-
-    e.preventDefault();
-
-    const area=e.target;
-    const start=area.selectionStart;
-    const end=area.selectionEnd;
-
-    area.value=
-        area.value.substring(0,start)+
-        "    "+
-        area.value.substring(end);
-
-    area.selectionStart=
-    area.selectionEnd=start+4;
-
-    editorInput();
-}
-}
-
-function formatHTML(){
-
-if(!currentFile.endsWith(".html")){
-    log("Formatação automática disponível para HTML.","warning");
-    return;
-}
-
-let text=project.files[currentFile];
-
-text=text
-.replace(/>\s+</g,"><")
-.replace(/</g,"\n<")
-.replace(/>/g,">\n")
-.replace(/\n+/g,"\n")
-.trim();
-
-let level=0;
-let lines=text.split("\n");
-let out=[];
-
-lines.forEach(line=>{
-
-    line=line.trim();
-
-    if(!line)return;
-
-    if(/^<\//.test(line))
-        level=Math.max(0,level-1);
-
-    out.push("    ".repeat(level)+line);
-
-    if(/^<[^!/?][^>]*[^/]?>$/.test(line) &&
-       !/<\/[^>]+>$/.test(line) &&
-       !/^<(meta|link|img|input|br|hr)/i.test(line)){
-        level++;
-    }
-});
-
-project.files[currentFile]=out.join("\n");
-
-document.getElementById("editor").value=
-project.files[currentFile];
-
-updateLineNumbers();
-
-log("HTML formatado.","success");
-}
-
-/* =========================================================
-   NEW PROJECT
-========================================================= */
-
-function newProject(){
-
-openModal(
-"＋ Novo Projeto",
-`
-<div class="form-group">
-<label>Nome do projeto</label>
-<input id="newProjectName"
-       value="MEU-NOVO-PROJETO"
-       placeholder="Ex.: SITE-EMPRESA">
-</div>
-
-<p class="info">
-Será criado automaticamente:
-</p>
-
-<pre style="color:#aeb8c6;font-size:11px">
-index.html
-categorias.html
-institucional.html
-images/
- ├─ logo.svg
- ├─ favicon.svg
- └─ vitrine_01.svg ... vitrine_08.svg
-style.css
-script.js
-multiscript.json 🔒
-plugins/
-</pre>
-`,
-`
-<button onclick="closeModal()">Cancelar</button>
-<button class="primary" onclick="createNewProject()">Criar Projeto</button>
-`
-);
-}
-
-function createNewProject(){
-
-let name=document
-.getElementById("newProjectName")
-.value.trim();
-
-if(!name)name="MEU-NOVO-PROJETO";
-
-project={
-    name,
-
-    files:{
-        "index.html":"",
-        "categorias.html":"",
-        "institucional.html":"",
-        "style.css":"",
-        "script.js":"",
-
-        "images/logo.svg":defaultSVG("logo"),
-        "images/favicon.svg":defaultSVG("favicon"),
-
-        "images/vitrine_01.svg":defaultSVG("vitrine"),
-        "images/vitrine_02.svg":defaultSVG("vitrine"),
-        "images/vitrine_03.svg":defaultSVG("vitrine"),
-        "images/vitrine_04.svg":defaultSVG("vitrine"),
-        "images/vitrine_05.svg":defaultSVG("vitrine"),
-        "images/vitrine_06.svg":defaultSVG("vitrine"),
-        "images/vitrine_07.svg":defaultSVG("vitrine"),
-        "images/vitrine_08.svg":defaultSVG("vitrine"),
-
-        "multiscript.json":""
-    },
-
-    plugins:{},
-
-    pages:{
-        "index.html":{
-            type:"menu",
-            name:"Início",
-            slug:"",
-            url:"/"
-        },
-
-        "categorias.html":{
-            type:"menu",
-            name:"Categorias",
-            slug:"categorias",
-            url:"/categorias"
-        },
-
-        "institucional.html":{
-            type:"menu",
-            name:"Institucional",
-            slug:"institucional",
-            url:"/institucional"
-        }
-    },
-
-    protectedFiles:["multiscript.json"]
-};
-
-createIndexPage();
-createCategoriesPage();
-createInstitutionalPage();
-
-project.files["style.css"]=`
+    return `
 body{
     min-height:100vh;
 }
 
 .site-footer{
     margin-top:80px;
-    background:#111827;
-    color:#d1d5db;
-}
-
-.site-footer h5{
+    background:#101827;
     color:#fff;
-    margin-bottom:15px;
 }
 
 .site-footer a{
-    color:#9ca3af;
+    color:#adb9c8;
     text-decoration:none;
-    line-height:2;
 }
 
 .site-footer a:hover{
     color:#fff;
 }
 
-.site-footer p{
-    color:#9ca3af;
-    line-height:1.7;
+.site-footer ul{
+    line-height:2;
 }
 
-.carousel-item img{
-    width:100%;
-    max-height:600px;
-    object-fit:cover;
+img{
+    max-width:100%;
+}
+
+@media(max-width:576px){
+    .display-4{
+        font-size:2.5rem;
+    }
 }
 `;
+}
 
-project.files["script.js"]=`
+
+function createBaseJS(){
+
+    return `
 document.addEventListener("DOMContentLoaded",function(){
     console.log("Site carregado.");
 });
 `;
-
-updateProjectMetadata();
-
-currentFile="index.html";
-
-localStorage.setItem(
-"multiscript-v14-project",
-JSON.stringify(project)
-);
-
-closeModal();
-
-document.getElementById("projectNameTop").textContent=
-project.name;
-
-renderExplorer();
-openFile("index.html");
-
-log("Novo projeto '"+project.name+"' criado.","success");
 }
 
-/* =========================================================
-   DUPLICATE / RENAME / DELETE
-========================================================= */
 
-function duplicateCurrentPage(){
+/* ============================================================
+   PROTECTED METADATA
+   ============================================================ */
 
-if(!project.pages[currentFile]){
-    alert("Selecione uma página HTML.");
-    return;
-}
+function updateMetadata(){
 
-const p=project.pages[currentFile];
+    const metadata = {
 
-let newName=p.name+" Cópia";
-let slug=slugify(newName);
-let file=slug+".html";
+        multiscript:{
+            version:VERSION,
+            generator:"MultiScript HTML Editor",
+            project:project.name,
+            type:"html-project"
+        },
 
-let n=2;
+        files:Object.keys(project.files)
+            .filter(file => file !== "multiscript.json"),
 
-while(project.files[file]){
-    file=slugify(newName)+"-"+n+".html";
-    n++;
-}
+        pages:project.pages,
 
-project.pages[file]={
-    ...p,
-    name:newName,
-    slug:file.replace(".html",""),
-    url:"/"+file.replace(".html","")
-};
+        plugins:Object.keys(project.plugins || {}),
 
-project.files[file]=
-project.files[currentFile];
-
-updateProjectMetadata();
-renderExplorer();
-openFile(file);
-
-log("Página duplicada.","success");
-}
-
-function renameCurrentPage(){
-
-if(!project.pages[currentFile]){
-    alert("Selecione uma página gerada.");
-    return;
-}
-
-const p=project.pages[currentFile];
-
-openModal(
-"✎ Renomear página",
-`
-<div class="form-group">
-<label>Novo nome</label>
-<input id="renamePage"
-       value="${escapeHTML(p.name)}">
-</div>
-`,
-`
-<button onclick="closeModal()">Cancelar</button>
-<button class="primary" onclick="applyRenamePage()">
-Renomear
-</button>
-`
-);
-}
-
-function applyRenamePage(){
-
-const p=project.pages[currentFile];
-
-const name=
-document.getElementById("renamePage").value.trim();
-
-if(!name)return;
-
-p.name=name;
-
-updateProjectMetadata();
-renderExplorer();
-updateInspector();
-closeModal();
-
-log("Página renomeada.","success");
-}
-
-function deleteCurrentPage(){
-
-if(!project.pages[currentFile]){
-    alert("Selecione uma página gerada.");
-    return;
-}
-
-if(["index.html","categorias.html","institucional.html"]
-.includes(currentFile)){
-    alert("As páginas principais não podem ser excluídas.");
-    return;
-}
-
-if(!confirm("Excluir esta página?"))return;
-
-const old=currentFile;
-
-delete project.files[old];
-delete project.pages[old];
-
-updateProjectMetadata();
-
-currentFile="index.html";
-
-renderExplorer();
-openFile(currentFile);
-
-log("Página excluída: "+old,"success");
-}
-
-/* =========================================================
-   PREVIEW
-========================================================= */
-
-function previewProject(){
-
-if(!currentFile.endsWith(".html")){
-    alert("Abra uma página HTML para visualizar.");
-    return;
-}
-
-const html=project.files[currentFile];
-
-const blob=new Blob([html],{
-    type:"text/html"
-});
-
-const url=URL.createObjectURL(blob);
-
-window.open(url,"_blank");
-
-log("Preview aberto.","success");
-}
-
-/* =========================================================
-   PHP PLUGINS
-========================================================= */
-
-document.getElementById("phpInput")
-.addEventListener("change",async function(){
-
-for(const file of this.files){
-
-    if(!file.name.toLowerCase().endsWith(".php"))
-        continue;
-
-    const content=await file.text();
-
-    const path="plugins/"+file.name;
-
-    project.files[path]=content;
-    project.plugins[path]=true;
-
-    log("Plugin PHP importado: "+file.name,"success");
-}
-
-updateProjectMetadata();
-
-renderExplorer();
-
-});
-
-function openPlugins(){
-
-explorerSection="plugins";
-renderExplorer();
-
-openModal(
-"🧩 Plugins PHP",
-`
-<p>
-Os plugins PHP são exclusivamente arquivos adicionados
-por você.
-</p>
-
-<div class="page-list">
-
-${
-Object.keys(project.plugins).map(file=>`
-<div class="page-card">
-<div style="flex:1">
-<strong>${escapeHTML(file)}</strong>
-<small>Plugin PHP do projeto</small>
-</div>
-<button onclick="openFile('${file}');closeModal()">Editar</button>
-</div>
-`).join("") || `
-<p class="info">
-Nenhum plugin PHP importado.
-</p>`
-}
-
-</div>
-`,
-`
-<button onclick="closeModal()">Fechar</button>
-<button class="primary"
-onclick="document.getElementById('phpInput').click();closeModal()">
-＋ Importar PHP
-</button>
-`
-);
-}
-
-/* =========================================================
-   IMAGE MANAGEMENT
-========================================================= */
-
-function openImageManager(){
-
-explorerSection="images";
-renderExplorer();
-
-openModal(
-"🖼 Gerenciador de Imagens",
-`
-<p>
-A pasta <strong>images/</strong> é totalmente editável.
-Os arquivos SVG podem ser alterados visualmente pelo
-editor vetorial.
-</p>
-
-<div class="page-list">
-
-${Object.keys(project.files)
-.filter(x=>x.startsWith("images/"))
-.map(file=>`
-<div class="page-card"
-     onclick="closeModal();openImageEditor('${file}')">
-    <span class="image-icon">🖼</span>
-    <div style="flex:1">
-        <strong>${escapeHTML(file.replace("images/",""))}</strong>
-        <small>SVG editável</small>
-    </div>
-</div>
-`).join("")}
-
-</div>
-`,
-`
-<button onclick="closeModal()">Fechar</button>
-<button class="primary"
-onclick="closeModal();createNewSVG()">
-＋ Novo SVG
-</button>
-`
-);
-}
-
-function createNewSVG(){
-
-openModal(
-"＋ Nova imagem SVG",
-`
-<div class="form-group">
-<label>Nome do arquivo</label>
-<input id="newSVGName"
-       placeholder="banner.svg">
-</div>
-
-<p class="info">
-O arquivo será criado dentro de <strong>images/</strong>.
-</p>
-`,
-`
-<button onclick="closeModal()">Cancelar</button>
-<button class="primary" onclick="createSVGFile()">Criar SVG</button>
-`
-);
-}
-
-function createSVGFile(){
-
-let name=
-document.getElementById("newSVGName")
-.value.trim();
-
-if(!name)return;
-
-if(!name.toLowerCase().endsWith(".svg"))
-    name+=".svg";
-
-const path="images/"+name;
-
-if(project.files[path]){
-    alert("Este arquivo já existe.");
-    return;
-}
-
-project.files[path]=defaultSVG("vitrine");
-
-updateProjectMetadata();
-
-closeModal();
-
-openImageEditor(path);
-
-renderExplorer();
-
-log("SVG criado: "+path,"success");
-}
-
-/* =========================================================
-   VISUAL SVG EDITOR
-========================================================= */
-
-let currentSVGFile="";
-let selectedSVGElement=null;
-let imageTool="select";
-let imageZoom=1;
-
-let undoStack=[];
-let redoStack=[];
-
-function openImageEditor(file){
-
-if(!project.files[file])return;
-
-currentSVGFile=file;
-
-document.getElementById("imageEditorName")
-.textContent=file.replace("images/","");
-
-document.getElementById("imageEditor")
-.classList.add("open");
-
-loadSVGIntoEditor(project.files[file]);
-
-}
-
-function closeImageEditor(){
-
-saveCurrentSVG(false);
-
-document.getElementById("imageEditor")
-.classList.remove("open");
-
-currentSVGFile="";
-selectedSVGElement=null;
-
-}
-
-function loadSVGIntoEditor(svgText){
-
-const canvas=document.getElementById("svgCanvas");
-
-canvas.innerHTML="";
-
-try{
-
-const parser=new DOMParser();
-
-const doc=parser.parseFromString(
-    svgText,
-    "image/svg+xml"
-);
-
-const source=doc.documentElement;
-
-canvas.setAttribute(
-    "width",
-    source.getAttribute("width") || "1200"
-);
-
-canvas.setAttribute(
-    "height",
-    source.getAttribute("height") || "600"
-);
-
-canvas.setAttribute(
-    "viewBox",
-    source.getAttribute("viewBox") ||
-    "0 0 "+
-    (source.getAttribute("width")||1200)+" "+
-    (source.getAttribute("height")||600)
-);
-
-Array.from(source.attributes).forEach(attr=>{
-
-    if(!["xmlns","width","height","viewBox"]
-        .includes(attr.name)){
-        canvas.setAttribute(attr.name,attr.value);
-    }
-
-});
-
-Array.from(source.childNodes).forEach(node=>{
-
-    if(node.nodeType===1){
-
-        canvas.appendChild(
-            document.importNode(node,true)
-        );
-    }
-});
-
-}
-catch(e){
-
-alert("SVG inválido.");
-
-return;
-}
-
-undoStack=[];
-redoStack=[];
-selectedSVGElement=null;
-
-refreshLayers();
-
-}
-
-/* =========================================================
-   SVG TOOLS
-========================================================= */
-
-function setImageTool(tool){
-
-imageTool=tool;
-
-document.querySelectorAll(".tool-button")
-.forEach(btn=>{
-    btn.classList.toggle(
-        "active",
-        btn.dataset.tool===tool
-    );
-});
-
-}
-
-document.getElementById("svgCanvas")
-.addEventListener("mousedown",svgMouseDown);
-
-let drawStart=null;
-let drawingElement=null;
-
-function svgPoint(e){
-
-const svg=document.getElementById("svgCanvas");
-
-const pt=svg.createSVGPoint();
-
-pt.x=e.clientX;
-pt.y=e.clientY;
-
-const matrix=svg.getScreenCTM();
-
-if(!matrix)return {x:0,y:0};
-
-const p=pt.matrixTransform(matrix.inverse());
-
-return {x:p.x,y:p.y};
-}
-
-function svgMouseDown(e){
-
-if(e.target===document.getElementById("svgCanvas")){
-
-    selectedSVGElement=null;
-    refreshLayers();
-
-}
-
-if(imageTool==="select"){
-
-    if(e.target!==document.getElementById("svgCanvas")){
-        selectSVGElement(e.target);
-        enableDrag(e);
-    }
-
-    return;
-}
-
-const p=svgPoint(e);
-
-saveUndo();
-
-drawStart=p;
-
-if(imageTool==="rect"){
-
-    drawingElement=document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "rect"
-    );
-
-    drawingElement.setAttribute("x",p.x);
-    drawingElement.setAttribute("y",p.y);
-    drawingElement.setAttribute("width",0);
-    drawingElement.setAttribute("height",0);
-
-}
-
-else if(imageTool==="circle"){
-
-    drawingElement=document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "circle"
-    );
-
-    drawingElement.setAttribute("cx",p.x);
-    drawingElement.setAttribute("cy",p.y);
-    drawingElement.setAttribute("r",0);
-
-}
-
-else if(imageTool==="line"){
-
-    drawingElement=document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "line"
-    );
-
-    drawingElement.setAttribute("x1",p.x);
-    drawingElement.setAttribute("y1",p.y);
-    drawingElement.setAttribute("x2",p.x);
-    drawingElement.setAttribute("y2",p.y);
-
-}
-
-else if(imageTool==="pen"){
-
-    drawingElement=document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "path"
-    );
-
-    drawingElement.setAttribute(
-        "d",
-        `M ${p.x} ${p.y}`
-    );
-
-}
-
-else if(imageTool==="text"){
-
-    const text=prompt("Texto:");
-
-    if(!text){
-        drawingElement=null;
-        return;
-    }
-
-    drawingElement=document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "text"
-    );
-
-    drawingElement.setAttribute("x",p.x);
-    drawingElement.setAttribute("y",p.y);
-    drawingElement.setAttribute("font-family","Arial");
-    drawingElement.setAttribute("font-size","48");
-    drawingElement.textContent=text;
-
-}
-
-if(drawingElement){
-
-    drawingElement.setAttribute(
-        "fill",
-        document.getElementById("fillColor").value
-    );
-
-    drawingElement.setAttribute(
-        "stroke",
-        document.getElementById("strokeColor").value
-    );
-
-    drawingElement.setAttribute(
-        "stroke-width",
-        document.getElementById("strokeWidth").value
-    );
-
-    document.getElementById("svgCanvas")
-        .appendChild(drawingElement);
-
-    selectSVGElement(drawingElement);
-
-    if(imageTool==="text")
-        drawingElement=null;
-}
-}
-
-document.getElementById("svgCanvas")
-.addEventListener("mousemove",function(e){
-
-if(!drawingElement || !drawStart)return;
-
-const p=svgPoint(e);
-
-if(imageTool==="rect"){
-
-    const x=Math.min(drawStart.x,p.x);
-    const y=Math.min(drawStart.y,p.y);
-
-    drawingElement.setAttribute("x",x);
-    drawingElement.setAttribute("y",y);
-
-    drawingElement.setAttribute(
-        "width",
-        Math.abs(p.x-drawStart.x)
-    );
-
-    drawingElement.setAttribute(
-        "height",
-        Math.abs(p.y-drawStart.y)
-    );
-}
-
-else if(imageTool==="circle"){
-
-    const r=Math.sqrt(
-        Math.pow(p.x-drawStart.x,2)+
-        Math.pow(p.y-drawStart.y,2)
-    );
-
-    drawingElement.setAttribute("r",r);
-}
-
-else if(imageTool==="line"){
-
-    drawingElement.setAttribute("x2",p.x);
-    drawingElement.setAttribute("y2",p.y);
-
-}
-
-else if(imageTool==="pen"){
-
-    let d=drawingElement.getAttribute("d");
-
-    d+=` L ${p.x} ${p.y}`;
-
-    drawingElement.setAttribute("d",d);
-}
-
-});
-
-document.getElementById("svgCanvas")
-.addEventListener("mouseup",function(){
-
-if(drawingElement){
-
-    refreshLayers();
-
-}
-
-drawingElement=null;
-drawStart=null;
-
-});
-
-/* =========================================================
-   SELECT / DRAG
-========================================================= */
-
-function selectSVGElement(el){
-
-if(!el || el===document.getElementById("svgCanvas"))
-    return;
-
-selectedSVGElement=el;
-
-document.getElementById("imageStatus").textContent=
-"Camada: "+el.tagName;
-
-updatePropertiesPanel();
-
-refreshLayers();
-
-}
-
-let dragData=null;
-
-function enableDrag(e){
-
-if(!selectedSVGElement)return;
-
-const start=svgPoint(e);
-
-const el=selectedSVGElement;
-
-dragData={
-    start,
-    el,
-    originalTransform:el.getAttribute("transform") || ""
-};
-
-function move(ev){
-
-    if(!dragData)return;
-
-    const p=svgPoint(ev);
-
-    const dx=p.x-start.x;
-    const dy=p.y-start.y;
-
-    let x=parseFloat(el.getAttribute("x"));
-    let y=parseFloat(el.getAttribute("y"));
-
-    if(!isNaN(x) && !isNaN(y)){
-
-        el.setAttribute("x",x+dx);
-        el.setAttribute("y",y+dy);
-
-    }
-    else{
-
-        let t=el.getAttribute("transform") || "";
-
-        const match=t.match(/translate\(([-\d.]+)[ ,]([-\d.]+)\)/);
-
-        if(match){
-
-            const tx=parseFloat(match[1])+dx;
-            const ty=parseFloat(match[2])+dy;
-
-            el.setAttribute(
-                "transform",
-                `translate(${tx} ${ty})`
-            );
-        }
-        else{
-
-            el.setAttribute(
-                "transform",
-                `translate(${dx} ${dy})`
-            );
-        }
-    }
-
-    updatePropertiesPanel();
-}
-
-function up(){
-
-    document.removeEventListener("mousemove",move);
-    document.removeEventListener("mouseup",up);
-
-    dragData=null;
-
-    refreshLayers();
-}
-
-document.addEventListener("mousemove",move);
-document.addEventListener("mouseup",up);
-
-}
-
-/* =========================================================
-   LAYERS
-========================================================= */
-
-function refreshLayers(){
-
-const list=document.getElementById("layers");
-
-const canvas=document.getElementById("svgCanvas");
-
-list.innerHTML="";
-
-Array.from(canvas.children)
-.reverse()
-.forEach((el,index)=>{
-
-    const row=document.createElement("div");
-
-    row.className=
-        "layer-row"+
-        (el===selectedSVGElement?" selected":"");
-
-    row.innerHTML=`
-        <button class="layer-vis"
-                onclick="toggleSVGVisibility(event,this)">
-            ${el.style.display==="none"?"○":"●"}
-        </button>
-
-        <span class="layer-name">
-            ${escapeHTML(
-                el.getAttribute("data-name") ||
-                el.textContent?.trim().slice(0,25) ||
-                el.tagName
-            )}
-        </span>
-    `;
-
-    row.onclick=function(){
-
-        selectSVGElement(el);
+        images:IMAGE_FILES
+            .filter(file => !!project.files[file])
 
     };
 
-    list.appendChild(row);
-});
-
+    project.files["multiscript.json"] =
+        JSON.stringify(metadata,null,4);
 }
 
-function toggleSVGVisibility(e,button){
 
-e.stopPropagation();
+/* ============================================================
+   PROJECT
+   ============================================================ */
 
-if(!selectedSVGElement)return;
+function initializeProject(){
 
-selectedSVGElement.style.display=
-selectedSVGElement.style.display==="none"
-?"":"none";
+    project = {
+        name:"MEU-PROJETO",
 
-refreshLayers();
+        files:{
+            "index.html":"",
+            "categorias.html":"",
+            "institucional.html":"",
+            "style.css":createBaseCSS(),
+            "script.js":createBaseJS(),
+            "sitemap.xml":""
+        },
 
+        plugins:{},
+
+        pages:{
+            "index.html":{
+                type:"menu",
+                name:"Início",
+                slug:"",
+                url:"/"
+            },
+
+            "categorias.html":{
+                type:"menu",
+                name:"Categorias",
+                slug:"categorias",
+                url:"/categorias"
+            },
+
+            "institucional.html":{
+                type:"menu",
+                name:"Institucional",
+                slug:"institucional",
+                url:"/institucional"
+            }
+        },
+
+        protectedFiles:["multiscript.json"]
+    };
+
+    project.files["index.html"] = createIndexPage();
+    project.files["categorias.html"] = createCategoriesPage();
+    project.files["institucional.html"] = createInstitutionalPage();
+
+    for(const file of IMAGE_FILES){
+
+        if(file.includes("/logo.")){
+            project.files[file] = defaultSVG("logo");
+        }
+        else if(file.includes("/favicon.")){
+            project.files[file] = defaultSVG("favicon");
+        }
+        else{
+            project.files[file] = defaultSVG("vitrine");
+        }
+    }
+
+    updateMetadata();
+
+    currentFile = "index.html";
+
+    saveLocal();
+
+    refreshAll();
+
+    toast("Novo projeto criado.");
 }
 
-/* =========================================================
-   SVG PROPERTIES
-========================================================= */
 
-function applySVGProperty(property,value){
+function newProject(){
 
-if(!selectedSVGElement)return;
+    modal(
+        "Novo Projeto",
+        `
+        <div class="form-group">
+            <label>Nome do projeto</label>
+            <input id="newProjectName" value="MEU-NOVO-PROJETO">
+        </div>
 
-saveUndo();
-
-selectedSVGElement.setAttribute(
-    property,
-    value
-);
-
+        <p style="color:#7e8b9b;font-size:12px">
+            Será criado um projeto virtual com páginas, imagens SVG,
+            arquivos base e multiscript.json protegido.
+        </p>
+        `,
+        `
+        <button class="btn" onclick="closeModal()">Cancelar</button>
+        <button class="btn blue" onclick="confirmNewProject()">Criar Projeto</button>
+        `
+    );
 }
 
-function updatePropertiesPanel(){
 
-const el=selectedSVGElement;
+function confirmNewProject(){
 
-if(!el)return;
+    const name =
+        document.getElementById("newProjectName").value.trim()
+        || "MEU-NOVO-PROJETO";
 
-const x=
-parseFloat(el.getAttribute("x")) ||
-parseFloat(el.getAttribute("cx")) ||
-0;
+    initializeProject();
 
-const y=
-parseFloat(el.getAttribute("y")) ||
-parseFloat(el.getAttribute("cy")) ||
-0;
+    project.name = name;
 
-const w=
-parseFloat(el.getAttribute("width")) || "";
+    project.files["index.html"] =
+        createIndexPage();
 
-const h=
-parseFloat(el.getAttribute("height")) || "";
+    updateMetadata();
 
-document.getElementById("propX").value=x;
-document.getElementById("propY").value=y;
-document.getElementById("propW").value=w;
-document.getElementById("propH").value=h;
+    saveLocal();
+    refreshAll();
 
-document.getElementById("fillColor").value=
-normalizeColor(
-el.getAttribute("fill") || "#2384ff"
-);
+    closeModal();
 
-document.getElementById("strokeColor").value=
-normalizeColor(
-el.getAttribute("stroke") || "#111111"
-);
-
-document.getElementById("strokeWidth").value=
-el.getAttribute("stroke-width") || 2;
-
+    toast("Projeto criado com sucesso.");
 }
 
-function normalizeColor(value){
 
-if(!value || value==="none")return "#000000";
+/* ============================================================
+   LOCAL STORAGE
+   ============================================================ */
 
-if(/^#/.test(value))return value;
+function saveLocal(){
 
-const temp=document.createElement("div");
+    updateMetadata();
 
-temp.style.color=value;
-
-document.body.appendChild(temp);
-
-const rgb=getComputedStyle(temp).color;
-
-temp.remove();
-
-const m=rgb.match(/\d+/g);
-
-if(!m)return "#000000";
-
-return "#"+
-m.slice(0,3)
-.map(x=>Number(x).toString(16).padStart(2,"0"))
-.join("");
+    localStorage.setItem(
+        "multiscript_v14_project",
+        JSON.stringify(project)
+    );
 }
 
-function applyTransformProperty(prop,value){
 
-if(!selectedSVGElement)return;
+function loadLocal(){
 
-saveUndo();
+    const raw =
+        localStorage.getItem("multiscript_v14_project");
 
-if(prop==="width" ||
-   prop==="height"){
+    if(!raw){
+        initializeProject();
+        return;
+    }
 
-    selectedSVGElement.setAttribute(prop,value);
-    return;
+    try{
+
+        project = JSON.parse(raw);
+
+        if(!project.files){
+            initializeProject();
+            return;
+        }
+
+        migrateProject();
+
+        refreshAll();
+
+    }catch(error){
+
+        console.error(error);
+        initializeProject();
+
+    }
 }
 
-if(prop==="x" ||
-   prop==="y"){
 
-    if(selectedSVGElement.tagName==="circle"){
+function migrateProject(){
 
-        selectedSVGElement.setAttribute(
-            prop==="x"?"cx":"cy",
-            value
+    project.protectedFiles = ["multiscript.json"];
+
+    if(!project.plugins){
+        project.plugins = {};
+    }
+
+    if(!project.pages){
+        project.pages = {};
+    }
+
+    if(project.files["multiscript.js"]){
+
+        delete project.files["multiscript.js"];
+
+        toast("Projeto migrado: multiscript.js removido.");
+    }
+
+    for(const file of IMAGE_FILES){
+
+        if(!project.files[file]){
+
+            if(file.includes("/logo.")){
+                project.files[file] = defaultSVG("logo");
+            }
+            else if(file.includes("/favicon.")){
+                project.files[file] = defaultSVG("favicon");
+            }
+            else{
+                project.files[file] = defaultSVG("vitrine");
+            }
+        }
+    }
+
+    if(!project.files["style.css"]){
+        project.files["style.css"] = createBaseCSS();
+    }
+
+    if(!project.files["script.js"]){
+        project.files["script.js"] = createBaseJS();
+    }
+
+    if(!project.files["index.html"]){
+        project.files["index.html"] = createIndexPage();
+    }
+
+    updateMetadata();
+
+    saveLocal();
+}
+
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+
+function showView(view){
+
+    document.querySelectorAll(".view")
+        .forEach(v=>v.classList.remove("active"));
+
+    const target =
+        document.getElementById("view-"+view);
+
+    if(target){
+        target.classList.add("active");
+    }
+
+    document.querySelectorAll(".nav button")
+        .forEach(btn=>{
+            btn.classList.toggle(
+                "active",
+                btn.dataset.view === view
+            );
+        });
+
+    const labels = {
+        dashboard:"Dashboard",
+        editor:"Editor",
+        pages:"Páginas",
+        generators:"Geradores",
+        images:"Imagens",
+        plugins:"Plugins PHP"
+    };
+
+    document.getElementById("breadcrumbCurrent").textContent =
+        labels[view] || view;
+
+    refreshStats();
+}
+
+
+/* ============================================================
+   EXPLORER
+   ============================================================ */
+
+function renderExplorer(){
+
+    const pageTree =
+        document.getElementById("pageTree");
+
+    const imageTree =
+        document.getElementById("imageTree");
+
+    const pluginTree =
+        document.getElementById("pluginTree");
+
+    pageTree.innerHTML = "";
+
+    imageTree.innerHTML = "";
+
+    pluginTree.innerHTML = "";
+
+    for(const [file,page] of Object.entries(project.pages)){
+
+        addTreeButton(
+            pageTree,
+            "📄 " + page.name,
+            ()=>{
+                openFile(file);
+            },
+            file === currentFile
+        );
+    }
+
+    for(const file of IMAGE_FILES){
+
+        if(!project.files[file]) continue;
+
+        addTreeButton(
+            imageTree,
+            "🖼 " + file.split("/").pop(),
+            ()=>{
+                openImageEditor(file);
+            },
+            false
+        );
+    }
+
+    for(const file of Object.keys(project.plugins)){
+
+        addTreeButton(
+            pluginTree,
+            "🧩 " + file.split("/").pop(),
+            ()=>{
+                openFile(file);
+            },
+            file === currentFile
+        );
+    }
+}
+
+
+function addTreeButton(parent,text,callback,active){
+
+    const btn =
+        document.createElement("button");
+
+    btn.textContent = text;
+
+    if(active){
+        btn.classList.add("active");
+    }
+
+    btn.onclick = callback;
+
+    parent.appendChild(btn);
+}
+
+
+/* ============================================================
+   EDITOR
+   ============================================================ */
+
+function openFile(file){
+
+    if(file === "multiscript.json"){
+        openProtected();
+        return;
+    }
+
+    if(!project.files[file]){
+        toast("Arquivo não encontrado.");
+        return;
+    }
+
+    currentFile = file;
+
+    document.getElementById("editor").value =
+        project.files[file];
+
+    updateLineNumbers();
+
+    showView("editor");
+
+    document.getElementById("breadcrumbCurrent").textContent =
+        file;
+
+    renderExplorer();
+}
+
+
+function openProtected(){
+
+    modal(
+        "🔒 Arquivo protegido",
+        `
+        <div style="
+            padding:18px;
+            background:#17140b;
+            border:1px solid #5a4921;
+            border-radius:9px;
+            color:#f3d27b;
+        ">
+            <strong>multiscript.json</strong> é um arquivo interno
+            do MultiScript e não pode ser editado manualmente.
+        </div>
+
+        <p style="color:#8b98a8;margin-top:15px">
+            O MultiScript atualiza esse arquivo automaticamente
+            quando o projeto é salvo ou exportado.
+        </p>
+        `,
+        `<button class="btn" onclick="closeModal()">Fechar</button>`
+    );
+}
+
+
+function editorInput(){
+
+    if(PROTECTED_FILES.includes(currentFile)){
+
+        document.getElementById("editor").value =
+            project.files[currentFile] || "";
+
+        return;
+    }
+
+    project.files[currentFile] =
+        document.getElementById("editor").value;
+
+    updateLineNumbers();
+
+    updateMetadata();
+
+    saveLocal();
+
+    document.getElementById("statusLeft").textContent =
+        "Editando " + currentFile;
+}
+
+
+function updateLineNumbers(){
+
+    const text =
+        document.getElementById("editor").value;
+
+    const count =
+        Math.max(1,text.split("\n").length);
+
+    document.getElementById("lineNumbers").textContent =
+        Array.from({length:count},(_,i)=>i+1).join("\n");
+}
+
+
+function syncEditorScroll(){
+
+    document.getElementById("lineNumbers").scrollTop =
+        document.getElementById("editor").scrollTop;
+}
+
+
+function editorKeydown(event){
+
+    if(event.key === "Tab"){
+
+        event.preventDefault();
+
+        const textarea =
+            document.getElementById("editor");
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+
+        textarea.value =
+            textarea.value.substring(0,start)
+            + "    "
+            + textarea.value.substring(end);
+
+        textarea.selectionStart =
+            textarea.selectionEnd = start + 4;
+
+        editorInput();
+    }
+
+    if((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s"){
+
+        event.preventDefault();
+
+        saveProject();
+    }
+}
+
+
+function formatHTML(){
+
+    if(!currentFile.endsWith(".html")){
+        toast("A formatação automática é para HTML.");
+        return;
+    }
+
+    if(PROTECTED_FILES.includes(currentFile)){
+        return;
+    }
+
+    let html = project.files[currentFile];
+
+    html = html
+        .replace(/>\s*</g,"><")
+        .replace(/></g,">\n<");
+
+    let depth = 0;
+
+    const lines =
+        html.split("\n").map(line=>line.trim()).filter(Boolean);
+
+    const formatted = [];
+
+    for(let line of lines){
+
+        if(/^<\//.test(line)){
+            depth = Math.max(0,depth-1);
+        }
+
+        formatted.push("    ".repeat(depth)+line);
+
+        if(
+            /^<[^!/?][^>]*>$/.test(line) &&
+            !/<\/[^>]+>$/.test(line) &&
+            !/\/>$/.test(line) &&
+            !/<(meta|link|img|input|br|hr|area|base|embed|source|track|wbr)\b/i.test(line)
+        ){
+            depth++;
+        }
+    }
+
+    project.files[currentFile] =
+        formatted.join("\n");
+
+    document.getElementById("editor").value =
+        project.files[currentFile];
+
+    updateLineNumbers();
+
+    saveLocal();
+
+    toast("HTML formatado.");
+}
+
+
+/* ============================================================
+   SAVE
+   ============================================================ */
+
+function saveProject(){
+
+    if(currentFile &&
+       project.files[currentFile] !== undefined &&
+       !PROTECTED_FILES.includes(currentFile)){
+
+        project.files[currentFile] =
+            document.getElementById("editor").value;
+    }
+
+    updateMetadata();
+    saveLocal();
+
+    refreshAll();
+
+    toast("Projeto salvo.");
+}
+
+
+/* ============================================================
+   GENERATOR MENU
+   ============================================================ */
+
+function generateMenu(){
+
+    project.files["index.html"] =
+        createIndexPage();
+
+    project.files["categorias.html"] =
+        createCategoriesPage();
+
+    project.files["institucional.html"] =
+        createInstitutionalPage();
+
+    project.pages["index.html"] = {
+        type:"menu",
+        name:"Início",
+        slug:"",
+        url:"/"
+    };
+
+    project.pages["categorias.html"] = {
+        type:"menu",
+        name:"Categorias",
+        slug:"categorias",
+        url:"/categorias"
+    };
+
+    project.pages["institucional.html"] = {
+        type:"menu",
+        name:"Institucional",
+        slug:"institucional",
+        url:"/institucional"
+    };
+
+    updateMetadata();
+    saveLocal();
+    refreshAll();
+
+    toast("Menu principal gerado.");
+}
+
+
+/* ============================================================
+   CATEGORY MODAL
+   ============================================================ */
+
+function openCategoryModal(){
+
+    modal(
+        "Nova Categoria",
+        `
+        <div class="form-group">
+            <label>Nome da categoria</label>
+            <input id="categoryName" placeholder="Ex.: Seguros para Veículos">
+        </div>
+
+        <div class="form-group">
+            <label>Slug / URL</label>
+            <input id="categorySlug" placeholder="seguros-para-veiculos">
+        </div>
+
+        <p style="font-size:12px;color:#778596">
+            A página será criada na raiz:
+            /seguros-para-veiculos
+        </p>
+        `,
+        `
+        <button class="btn" onclick="closeModal()">Cancelar</button>
+        <button class="btn blue" onclick="generateCategory()">Criar Categoria</button>
+        `
+    );
+
+    document.getElementById("categoryName").oninput =
+        function(){
+            document.getElementById("categorySlug").value =
+                slugify(this.value);
+        };
+}
+
+
+function generateCategory(){
+
+    const name =
+        document.getElementById("categoryName").value.trim();
+
+    const slug =
+        slugify(
+            document.getElementById("categorySlug").value || name
+        );
+
+    if(!name){
+        toast("Digite o nome da categoria.");
+        return;
+    }
+
+    const file =
+        uniqueFile(slug + ".html");
+
+    project.files[file] =
+        createCategoryTemplate(name,slug);
+
+    project.pages[file] = {
+        type:"category",
+        name,
+        slug,
+        url:"/"+slug
+    };
+
+    updateCategoryMenuPage();
+
+    updateMetadata();
+    saveLocal();
+    refreshAll();
+
+    closeModal();
+
+    openFile(file);
+
+    toast("Categoria criada.");
+}
+
+
+/* ============================================================
+   INSTITUTIONAL MODAL
+   ============================================================ */
+
+function openInstitutionalModal(){
+
+    modal(
+        "Nova Página Institucional",
+        `
+        <div class="form-group">
+            <label>Nome da página</label>
+            <input id="institutionalName" placeholder="Ex.: Quem Somos">
+        </div>
+
+        <div class="form-group">
+            <label>Slug / URL</label>
+            <input id="institutionalSlug" placeholder="quem-somos">
+        </div>
+        `,
+        `
+        <button class="btn" onclick="closeModal()">Cancelar</button>
+        <button class="btn blue" onclick="generateInstitutional()">Criar Página</button>
+        `
+    );
+
+    document.getElementById("institutionalName").oninput =
+        function(){
+            document.getElementById("institutionalSlug").value =
+                slugify(this.value);
+        };
+}
+
+
+function generateInstitutional(){
+
+    const name =
+        document.getElementById("institutionalName").value.trim();
+
+    const slug =
+        slugify(
+            document.getElementById("institutionalSlug").value || name
+        );
+
+    if(!name){
+        toast("Digite o nome da página.");
+        return;
+    }
+
+    const file =
+        uniqueFile(slug + ".html");
+
+    project.files[file] =
+        createInstitutionalTemplate(name,slug);
+
+    project.pages[file] = {
+        type:"institutional",
+        name,
+        slug,
+        url:"/"+slug
+    };
+
+    updateInstitutionalMenuPage();
+
+    updateMetadata();
+    saveLocal();
+    refreshAll();
+
+    closeModal();
+
+    openFile(file);
+
+    toast("Página institucional criada.");
+}
+
+
+/* ============================================================
+   SUBPAGE
+   ============================================================ */
+
+function openSubpageModal(){
+
+    const parents =
+        Object.entries(project.pages)
+            .filter(([file,page]) =>
+                page.type === "category" ||
+                page.type === "institutional"
+            );
+
+    if(!parents.length){
+
+        modal(
+            "Subpágina",
+            `
+            <div class="alert" style="
+                padding:15px;
+                border:1px solid #493b1a;
+                background:#17140b;
+                color:#e6cb7c;
+                border-radius:8px;
+            ">
+                Crie primeiro uma categoria ou página institucional.
+            </div>
+            `,
+            `<button class="btn" onclick="closeModal()">Fechar</button>`
+        );
+
+        return;
+    }
+
+    modal(
+        "Nova Subpágina",
+        `
+        <div class="form-group">
+            <label>Página pai</label>
+
+            <select id="subParent">
+                ${parents.map(([file,page])=>`
+                    <option value="${esc(file)}">
+                        ${esc(page.name)}
+                        — ${page.type === "category" ? "Categoria" : "Institucional"}
+                    </option>
+                `).join("")}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Nome da subpágina</label>
+            <input id="subName" placeholder="Ex.: Seguro Auto">
+        </div>
+
+        <div class="form-group">
+            <label>Slug / URL</label>
+            <input id="subSlug" placeholder="seguro-auto">
+        </div>
+
+        <p style="font-size:12px;color:#778596">
+            A relação com a página pai é lógica.
+            A URL pública continua sendo plana:
+            /seguro-auto
+        </p>
+        `,
+        `
+        <button class="btn" onclick="closeModal()">Cancelar</button>
+        <button class="btn blue" onclick="generateSubpage()">Criar Subpágina</button>
+        `
+    );
+
+    document.getElementById("subName").oninput =
+        function(){
+            document.getElementById("subSlug").value =
+                slugify(this.value);
+        };
+}
+
+
+function generateSubpage(){
+
+    const parent =
+        document.getElementById("subParent").value;
+
+    const name =
+        document.getElementById("subName").value.trim();
+
+    const slug =
+        slugify(
+            document.getElementById("subSlug").value || name
+        );
+
+    if(!name){
+        toast("Digite o nome da subpágina.");
+        return;
+    }
+
+    const file =
+        uniqueFile(slug + ".html");
+
+    const parentPage =
+        project.pages[parent];
+
+    project.files[file] =
+        createSubpageTemplate(name,parent);
+
+    project.pages[file] = {
+        type:"subpage",
+        name,
+        parent,
+        parentType:parentPage.type,
+        slug,
+        url:"/"+slug
+    };
+
+    updateParentPage(parent);
+
+    updateMetadata();
+    saveLocal();
+    refreshAll();
+
+    closeModal();
+
+    openFile(file);
+
+    toast("Subpágina criada.");
+}
+
+
+/* ============================================================
+   PARENT MARKERS
+   ============================================================ */
+
+function childrenHTML(parentFile){
+
+    const children =
+        Object.entries(project.pages)
+            .filter(([file,page]) =>
+                page.parent === parentFile
+            );
+
+    if(!children.length){
+
+        return `
+<div class="row g-4">
+    <div class="col-12">
+        <div class="alert alert-light border">
+            Nenhuma subpágina foi criada nesta página.
+        </div>
+    </div>
+</div>`;
+    }
+
+    return `
+<div class="row g-4">
+${children.map(([file,page])=>`
+    <div class="col-md-6 col-lg-4">
+        <article class="card h-100 shadow-sm">
+            <div class="card-body">
+                <span class="badge text-bg-secondary mb-2">
+                    Subpágina
+                </span>
+
+                <h2 class="h5">
+                    ${esc(page.name)}
+                </h2>
+
+                <p class="text-secondary">
+                    ${esc(page.url)}
+                </p>
+
+                <a
+                    href="${esc(page.url)}"
+                    class="btn btn-primary"
+                >
+                    Abrir página
+                </a>
+            </div>
+        </article>
+    </div>
+`).join("")}
+</div>`;
+}
+
+
+function replaceMarker(html,start,end,replacement){
+
+    const a = html.indexOf(start);
+    const b = html.indexOf(end);
+
+    if(a === -1 || b === -1 || b < a){
+        return html;
+    }
+
+    return (
+        html.slice(0,a + start.length)
+        + "\n\n"
+        + replacement
+        + "\n\n"
+        + html.slice(b)
+    );
+}
+
+
+function updateParentPage(parentFile){
+
+    if(!project.files[parentFile]) return;
+
+    project.files[parentFile] =
+        replaceMarker(
+            project.files[parentFile],
+            "<!-- MULTISCRIPT:CHILDREN:START -->",
+            "<!-- MULTISCRIPT:CHILDREN:END -->",
+            childrenHTML(parentFile)
+        );
+}
+
+
+function updateCategoryMenuPage(){
+
+    if(!project.files["categorias.html"]) return;
+
+    const categories =
+        Object.entries(project.pages)
+            .filter(([file,page]) =>
+                page.type === "category"
+            );
+
+    const html = categories.length
+        ? `
+<div class="row g-4">
+${categories.map(([file,page])=>`
+    <div class="col-md-6 col-lg-4">
+        <article class="card h-100 shadow-sm">
+            <div class="card-body">
+                <span class="badge text-bg-primary mb-2">
+                    Categoria
+                </span>
+
+                <h2 class="h5">${esc(page.name)}</h2>
+
+                <p class="text-secondary">
+                    ${esc(page.url)}
+                </p>
+
+                <a
+                    href="${esc(page.url)}"
+                    class="btn btn-primary"
+                >
+                    Ver categoria
+                </a>
+            </div>
+        </article>
+    </div>
+`).join("")}
+</div>`
+        : `
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-light border">
+            Nenhuma categoria foi criada ainda.
+        </div>
+    </div>
+</div>`;
+
+    project.files["categorias.html"] =
+        replaceMarker(
+            project.files["categorias.html"],
+            "<!-- MULTISCRIPT:CATEGORIES:START -->",
+            "<!-- MULTISCRIPT:CATEGORIES:END -->",
+            html
+        );
+}
+
+
+function updateInstitutionalMenuPage(){
+
+    if(!project.files["institucional.html"]) return;
+
+    const pages =
+        Object.entries(project.pages)
+            .filter(([file,page]) =>
+                page.type === "institutional"
+            );
+
+    const html = pages.length
+        ? `
+<div class="row g-4">
+${pages.map(([file,page])=>`
+    <div class="col-md-6 col-lg-4">
+        <article class="card h-100 shadow-sm">
+            <div class="card-body">
+                <span class="badge text-bg-secondary mb-2">
+                    Institucional
+                </span>
+
+                <h2 class="h5">${esc(page.name)}</h2>
+
+                <p class="text-secondary">
+                    ${esc(page.url)}
+                </p>
+
+                <a
+                    href="${esc(page.url)}"
+                    class="btn btn-primary"
+                >
+                    Ver página
+                </a>
+            </div>
+        </article>
+    </div>
+`).join("")}
+</div>`
+        : `
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-light border">
+            Nenhuma página institucional foi criada ainda.
+        </div>
+    </div>
+</div>`;
+
+    project.files["institucional.html"] =
+        replaceMarker(
+            project.files["institucional.html"],
+            "<!-- MULTISCRIPT:INSTITUTIONAL:START -->",
+            "<!-- MULTISCRIPT:INSTITUTIONAL:END -->",
+            html
+        );
+}
+
+
+/* ============================================================
+   SITEMAP
+   ============================================================ */
+
+function openSitemapModal(){
+
+    modal(
+        "Gerar Sitemap",
+        `
+        <div class="form-group">
+            <label>URL base do site</label>
+
+            <input
+                id="sitemapBase"
+                value="https://www.exemplo.com"
+                placeholder="https://www.seusite.com"
+            >
+        </div>
+
+        <p style="font-size:12px;color:#778596">
+            O domínio precisa ser informado porque o MultiScript
+            não sabe onde o projeto será publicado.
+        </p>
+        `,
+        `
+        <button class="btn" onclick="closeModal()">Cancelar</button>
+        <button class="btn green" onclick="generateSitemap()">Gerar Sitemap</button>
+        `
+    );
+}
+
+
+function normalizeBaseURL(url){
+
+    url = url.trim();
+
+    if(!/^https?:\/\//i.test(url)){
+        url = "https://" + url;
+    }
+
+    return url.replace(/\/+$/,"");
+}
+
+
+function generateSitemap(){
+
+    const base =
+        normalizeBaseURL(
+            document.getElementById("sitemapBase").value
+        );
+
+    const urls =
+        Object.values(project.pages)
+            .map(page =>
+                `<url><loc>${escXML(base + page.url)}</loc></url>`
+            )
+            .join("\n");
+
+    project.files["sitemap.xml"] =
+`<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls}
+</urlset>`;
+
+    saveLocal();
+    refreshAll();
+
+    closeModal();
+
+    openFile("sitemap.xml");
+
+    toast("sitemap.xml gerado.");
+}
+
+
+/* ============================================================
+   PAGE MANAGER
+   ============================================================ */
+
+function renderPageManager(){
+
+    const container =
+        document.getElementById("pageManager");
+
+    const entries =
+        Object.entries(project.pages);
+
+    if(!entries.length){
+
+        container.innerHTML =
+            `<div class="card">
+                Nenhuma página.
+            </div>`;
+
+        return;
+    }
+
+    container.innerHTML = `
+<table class="page-table">
+
+<thead>
+<tr>
+    <th>Página</th>
+    <th>Tipo</th>
+    <th>URL</th>
+    <th>Ações</th>
+</tr>
+</thead>
+
+<tbody>
+
+${entries.map(([file,page])=>`
+
+<tr>
+
+<td>
+    <strong>${esc(page.name)}</strong>
+    <div style="color:#657386;font-size:11px">
+        ${esc(file)}
+    </div>
+</td>
+
+<td>
+    <span class="page-type">
+        ${esc(page.type)}
+    </span>
+</td>
+
+<td>
+    <code>${esc(page.url)}</code>
+</td>
+
+<td>
+
+<div class="actions">
+
+<button
+    class="btn"
+    onclick="openFile('${esc(file)}')"
+>
+    Editar
+</button>
+
+<button
+    class="btn"
+    onclick="previewFile('${esc(file)}')"
+>
+    Preview
+</button>
+
+${
+    page.type === "menu"
+    ? ""
+    : `
+<button
+    class="btn red"
+    onclick="deletePage('${esc(file)}')"
+>
+    Excluir
+</button>
+`
+}
+
+</div>
+
+</td>
+
+</tr>
+
+`).join("")}
+
+</tbody>
+
+</table>`;
+}
+
+
+function deletePage(file){
+
+    const page =
+        project.pages[file];
+
+    if(!page) return;
+
+    modal(
+        "Excluir página",
+        `
+        <p>
+            Deseja excluir
+            <strong>${esc(page.name)}</strong>?
+        </p>
+
+        <p style="color:#7e8b9b;font-size:12px">
+            Esta operação remove o arquivo da estrutura do projeto.
+        </p>
+        `,
+        `
+        <button class="btn" onclick="closeModal()">Cancelar</button>
+        <button class="btn red" onclick="confirmDeletePage('${esc(file)}')">
+            Excluir
+        </button>
+        `
+    );
+}
+
+
+function confirmDeletePage(file){
+
+    const page =
+        project.pages[file];
+
+    if(!page) return;
+
+    delete project.files[file];
+    delete project.pages[file];
+
+    if(page.parent){
+        updateParentPage(page.parent);
+    }
+
+    updateCategoryMenuPage();
+    updateInstitutionalMenuPage();
+
+    saveLocal();
+    refreshAll();
+
+    closeModal();
+
+    showView("pages");
+
+    toast("Página excluída.");
+}
+
+
+/* ============================================================
+   PREVIEW
+   ============================================================ */
+
+function previewFile(file){
+
+    const content =
+        project.files[file];
+
+    if(!content){
+        toast("Arquivo vazio.");
+        return;
+    }
+
+    const blob =
+        new Blob([content],{type:"text/html"});
+
+    const url =
+        URL.createObjectURL(blob);
+
+    window.open(url,"_blank");
+
+    setTimeout(()=>{
+        URL.revokeObjectURL(url);
+    },60000);
+}
+
+
+function previewCurrent(){
+
+    if(currentFile.endsWith(".html")){
+        previewFile(currentFile);
+    }else{
+        toast("Abra uma página HTML para visualizar.");
+    }
+}
+
+
+/* ============================================================
+   PHP
+   ============================================================ */
+
+async function importPHP(event){
+
+    const files =
+        Array.from(event.target.files || []);
+
+    for(const file of files){
+
+        if(!file.name.toLowerCase().endsWith(".php")){
+            continue;
+        }
+
+        const content =
+            await file.text();
+
+        const path =
+            "plugins/" + file.name;
+
+        project.files[path] = content;
+        project.plugins[path] = true;
+    }
+
+    updateMetadata();
+
+    saveLocal();
+    refreshAll();
+
+    event.target.value = "";
+
+    toast(files.length + " plugin(s) PHP importado(s).");
+}
+
+
+function renderPlugins(){
+
+    const list =
+        document.getElementById("pluginList");
+
+    const plugins =
+        Object.keys(project.plugins);
+
+    if(!plugins.length){
+
+        list.innerHTML = `
+<div class="card">
+    <h3>Nenhum plugin PHP</h3>
+
+    <p>
+        Adicione seus próprios arquivos
+        <code>.php</code> usando o botão acima.
+    </p>
+</div>`;
+
+        return;
+    }
+
+    list.innerHTML =
+        plugins.map(file=>`
+
+<div class="plugin">
+
+    <div>
+        <strong>🧩 ${esc(file.split("/").pop())}</strong>
+
+        <div style="color:#687688;font-size:11px;margin-top:4px">
+            ${esc(file)}
+        </div>
+    </div>
+
+    <div class="actions">
+
+        <button
+            class="btn"
+            onclick="openFile('${esc(file)}')"
+        >
+            Editar
+        </button>
+
+        <button
+            class="btn red"
+            onclick="removePlugin('${esc(file)}')"
+        >
+            Remover
+        </button>
+
+    </div>
+
+</div>
+
+`).join("");
+}
+
+
+function removePlugin(file){
+
+    delete project.plugins[file];
+    delete project.files[file];
+
+    if(currentFile === file){
+        currentFile = "index.html";
+    }
+
+    saveLocal();
+    refreshAll();
+
+    toast("Plugin removido.");
+}
+
+
+/* ============================================================
+   IMAGENS
+   ============================================================ */
+
+function renderImages(){
+
+    const grid =
+        document.getElementById("imagesGrid");
+
+    grid.innerHTML =
+        IMAGE_FILES.map(file=>{
+
+            if(!project.files[file]){
+                return "";
+            }
+
+            const encoded =
+                "data:image/svg+xml;charset=utf-8," +
+                encodeURIComponent(project.files[file]);
+
+            const name =
+                file.split("/").pop();
+
+            return `
+<div class="image-card">
+
+    <div class="image-preview">
+        <img
+            src="${encoded}"
+            alt="${esc(name)}"
+        >
+    </div>
+
+    <div class="image-info">
+
+        <b>${esc(name)}</b>
+
+        <small>images/ • SVG editável</small>
+
+        <button
+            class="btn blue"
+            onclick="openImageEditor('${esc(file)}')"
+        >
+            🎨 Editar visualmente
+        </button>
+
+    </div>
+
+</div>`;
+
+        }).join("");
+}
+
+
+/* ============================================================
+   IMAGE EDITOR
+   ============================================================ */
+
+function openImageEditor(file){
+
+    if(!project.files[file]) return;
+
+    imageState.file = file;
+    imageState.tool = "select";
+    imageState.selected = null;
+    imageState.history = [];
+    imageState.historyIndex = -1;
+
+    const svg =
+        document.getElementById("svgCanvas");
+
+    svg.innerHTML = "";
+
+    try{
+
+        const parser =
+            new DOMParser();
+
+        const doc =
+            parser.parseFromString(
+                project.files[file],
+                "image/svg+xml"
+            );
+
+        const source =
+            doc.documentElement;
+
+        for(const attr of source.attributes){
+            svg.setAttribute(
+                attr.name,
+                attr.value
+            );
+        }
+
+        while(source.firstChild){
+            svg.appendChild(
+                document.importNode(
+                    source.firstChild,
+                    true
+                )
+            );
+        }
+
+    }catch(error){
+
+        console.error(error);
+        svg.innerHTML = defaultSVG("vitrine");
+    }
+
+    document.getElementById("imageEditorFile").textContent =
+        file;
+
+    document.getElementById("imageEditor")
+        .classList.add("show");
+
+    bindSVGEvents();
+    updateLayers();
+    saveImageHistory();
+
+    setImageTool("select");
+}
+
+
+function closeImageEditor(){
+
+    document.getElementById("imageEditor")
+        .classList.remove("show");
+}
+
+
+function svgPoint(event){
+
+    const svg =
+        document.getElementById("svgCanvas");
+
+    const pt =
+        svg.createSVGPoint();
+
+    pt.x = event.clientX;
+    pt.y = event.clientY;
+
+    const matrix =
+        svg.getScreenCTM().inverse();
+
+    return pt.matrixTransform(matrix);
+}
+
+
+function bindSVGEvents(){
+
+    const svg =
+        document.getElementById("svgCanvas");
+
+    svg.onmousedown = svgMouseDown;
+    svg.onmousemove = svgMouseMove;
+    svg.onmouseup = svgMouseUp;
+    svg.onmouseleave = svgMouseUp;
+
+    svg.ondblclick = function(event){
+
+        if(imageState.tool === "text"){
+            const point = svgPoint(event);
+
+            const text =
+                prompt("Texto:");
+
+            if(!text) return;
+
+            const el =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "text"
+                );
+
+            el.setAttribute("x",point.x);
+            el.setAttribute("y",point.y);
+            el.setAttribute("font-family","Arial");
+            el.setAttribute("font-size","42");
+            el.setAttribute("fill",
+                document.getElementById("svgFill").value
+            );
+
+            el.textContent = text;
+
+            svg.appendChild(el);
+
+            selectSVGElement(el);
+            saveImageHistory();
+            updateLayers();
+        }
+    };
+}
+
+
+function svgMouseDown(event){
+
+    const svg =
+        document.getElementById("svgCanvas");
+
+    const point =
+        svgPoint(event);
+
+    imageState.startX = point.x;
+    imageState.startY = point.y;
+
+    if(imageState.tool === "select"){
+
+        let target =
+            event.target;
+
+        if(target === svg){
+            selectSVGElement(null);
+            return;
+        }
+
+        selectSVGElement(target);
+
+        imageState.dragging = true;
+
+        return;
+    }
+
+    if(imageState.tool === "rect"){
+
+        const el =
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "rect"
+            );
+
+        el.setAttribute("x",point.x);
+        el.setAttribute("y",point.y);
+        el.setAttribute("width",1);
+        el.setAttribute("height",1);
+        el.setAttribute("fill",
+            document.getElementById("svgFill").value
+        );
+        el.setAttribute("stroke",
+            document.getElementById("svgStroke").value
+        );
+        el.setAttribute("stroke-width",
+            document.getElementById("svgStrokeWidth").value
+        );
+
+        svg.appendChild(el);
+
+        imageState.selected = el;
+        imageState.drawing = true;
+
+        return;
+    }
+
+    if(imageState.tool === "circle"){
+
+        const el =
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "circle"
+            );
+
+        el.setAttribute("cx",point.x);
+        el.setAttribute("cy",point.y);
+        el.setAttribute("r",1);
+        el.setAttribute("fill",
+            document.getElementById("svgFill").value
+        );
+        el.setAttribute("stroke",
+            document.getElementById("svgStroke").value
+        );
+        el.setAttribute("stroke-width",
+            document.getElementById("svgStrokeWidth").value
+        );
+
+        svg.appendChild(el);
+
+        imageState.selected = el;
+        imageState.drawing = true;
+
+        return;
+    }
+
+    if(imageState.tool === "line"){
+
+        const el =
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "line"
+            );
+
+        el.setAttribute("x1",point.x);
+        el.setAttribute("y1",point.y);
+        el.setAttribute("x2",point.x);
+        el.setAttribute("y2",point.y);
+
+        el.setAttribute("stroke",
+            document.getElementById("svgStroke").value
+        );
+
+        el.setAttribute("stroke-width",
+            document.getElementById("svgStrokeWidth").value
+        );
+
+        svg.appendChild(el);
+
+        imageState.selected = el;
+        imageState.drawing = true;
+
+        return;
+    }
+
+    if(imageState.tool === "draw"){
+
+        const el =
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "path"
+            );
+
+        el.setAttribute(
+            "d",
+            `M ${point.x} ${point.y}`
+        );
+
+        el.setAttribute("fill","none");
+        el.setAttribute("stroke",
+            document.getElementById("svgStroke").value
+        );
+        el.setAttribute("stroke-width",
+            document.getElementById("svgStrokeWidth").value
+        );
+        el.setAttribute("stroke-linecap","round");
+        el.setAttribute("stroke-linejoin","round");
+
+        svg.appendChild(el);
+
+        imageState.drawPath = el;
+        imageState.drawing = true;
+    }
+}
+
+
+function svgMouseMove(event){
+
+    const svg =
+        document.getElementById("svgCanvas");
+
+    const point =
+        svgPoint(event);
+
+    document.getElementById("svgX").textContent =
+        Math.round(point.x);
+
+    document.getElementById("svgY").textContent =
+        Math.round(point.y);
+
+    if(!imageState.drawing &&
+       !imageState.dragging){
+        return;
+    }
+
+    const el =
+        imageState.selected;
+
+    if(imageState.tool === "rect" && el){
+
+        el.setAttribute(
+            "x",
+            Math.min(imageState.startX,point.x)
+        );
+
+        el.setAttribute(
+            "y",
+            Math.min(imageState.startY,point.y)
+        );
+
+        el.setAttribute(
+            "width",
+            Math.abs(point.x-imageState.startX)
+        );
+
+        el.setAttribute(
+            "height",
+            Math.abs(point.y-imageState.startY)
+        );
+
+        return;
+    }
+
+    if(imageState.tool === "circle" && el){
+
+        const dx =
+            point.x-imageState.startX;
+
+        const dy =
+            point.y-imageState.startY;
+
+        el.setAttribute(
+            "r",
+            Math.sqrt(dx*dx+dy*dy)
+        );
+
+        return;
+    }
+
+    if(imageState.tool === "line" && el){
+
+        el.setAttribute("x2",point.x);
+        el.setAttribute("y2",point.y);
+
+        return;
+    }
+
+    if(imageState.tool === "draw" &&
+       imageState.drawPath){
+
+        const d =
+            imageState.drawPath.getAttribute("d");
+
+        imageState.drawPath.setAttribute(
+            "d",
+            d + ` L ${point.x} ${point.y}`
+        );
+
+        return;
+    }
+
+    if(imageState.tool === "select" &&
+       imageState.dragging &&
+       imageState.selected){
+
+        const el =
+            imageState.selected;
+
+        const dx =
+            point.x-imageState.startX;
+
+        const dy =
+            point.y-imageState.startY;
+
+        moveSVGElement(el,dx,dy);
+
+        imageState.startX = point.x;
+        imageState.startY = point.y;
+    }
+}
+
+
+function svgMouseUp(){
+
+    if(imageState.drawing ||
+       imageState.dragging){
+
+        imageState.drawing = false;
+        imageState.dragging = false;
+
+        imageState.drawPath = null;
+
+        saveImageHistory();
+        updateLayers();
+    }
+}
+
+
+function moveSVGElement(el,dx,dy){
+
+    const tag =
+        el.tagName.toLowerCase();
+
+    if(tag === "rect"){
+
+        el.setAttribute(
+            "x",
+            parseFloat(el.getAttribute("x") || 0)+dx
+        );
+
+        el.setAttribute(
+            "y",
+            parseFloat(el.getAttribute("y") || 0)+dy
+        );
+
+    }else if(tag === "circle"){
+
+        el.setAttribute(
+            "cx",
+            parseFloat(el.getAttribute("cx") || 0)+dx
+        );
+
+        el.setAttribute(
+            "cy",
+            parseFloat(el.getAttribute("cy") || 0)+dy
+        );
+
+    }else if(tag === "line"){
+
+        el.setAttribute(
+            "x1",
+            parseFloat(el.getAttribute("x1") || 0)+dx
+        );
+
+        el.setAttribute(
+            "x2",
+            parseFloat(el.getAttribute("x2") || 0)+dx
+        );
+
+        el.setAttribute(
+            "y1",
+            parseFloat(el.getAttribute("y1") || 0)+dy
+        );
+
+        el.setAttribute(
+            "y2",
+            parseFloat(el.getAttribute("y2") || 0)+dy
+        );
+
+    }else if(tag === "text"){
+
+        el.setAttribute(
+            "x",
+            parseFloat(el.getAttribute("x") || 0)+dx
+        );
+
+        el.setAttribute(
+            "y",
+            parseFloat(el.getAttribute("y") || 0)+dy
         );
 
     }else{
 
-        selectedSVGElement.setAttribute(
-            prop,
-            value
+        const transform =
+            el.getAttribute("transform") || "";
+
+        el.setAttribute(
+            "transform",
+            `${transform} translate(${dx} ${dy})`
         );
     }
 }
+
+
+function selectSVGElement(el){
+
+    imageState.selected = el;
+
+    if(el){
+
+        document.getElementById("svgFill").value =
+            rgbToHex(
+                el.getAttribute("fill") || "#2684ff"
+            );
+
+        document.getElementById("svgStroke").value =
+            rgbToHex(
+                el.getAttribute("stroke") || "#111827"
+            );
+
+        document.getElementById("svgStrokeWidth").value =
+            parseFloat(
+                el.getAttribute("stroke-width") || 2
+            );
+    }
+
+    updateLayers();
 }
 
-function applyRotation(value){
 
-if(!selectedSVGElement)return;
+function rgbToHex(value){
 
-saveUndo();
+    if(/^#[0-9a-f]{6}$/i.test(value)){
+        return value;
+    }
 
-const x=
-parseFloat(
-    selectedSVGElement.getAttribute("x")
-)||0;
+    const match =
+        String(value).match(
+            /rgb\s*\(\s*(\d+),\s*(\d+),\s*(\d+)\s*\)/i
+        );
 
-const y=
-parseFloat(
-    selectedSVGElement.getAttribute("y")
-)||0;
+    if(!match){
+        return "#2684ff";
+    }
 
-selectedSVGElement.setAttribute(
-    "transform",
-    `rotate(${value} ${x} ${y})`
-);
+    return "#" +
+        [match[1],match[2],match[3]]
+            .map(v=>Number(v).toString(16).padStart(2,"0"))
+            .join("");
 }
 
-/* =========================================================
-   IMAGE EDITOR ACTIONS
-========================================================= */
 
-function imageUndo(){
+function applySVGStyle(){
 
-if(!undoStack.length)return;
+    const el =
+        imageState.selected;
 
-redoStack.push(
-    serializeSVG()
-);
+    if(!el) return;
 
-loadSVGIntoEditor(
-    undoStack.pop()
-);
+    if(el.tagName.toLowerCase() !== "image"){
 
+        el.setAttribute(
+            "fill",
+            document.getElementById("svgFill").value
+        );
+    }
+
+    el.setAttribute(
+        "stroke",
+        document.getElementById("svgStroke").value
+    );
+
+    el.setAttribute(
+        "stroke-width",
+        document.getElementById("svgStrokeWidth").value
+    );
+
+    saveImageHistory();
+    updateLayers();
 }
 
-function imageRedo(){
 
-if(!redoStack.length)return;
+function setImageTool(tool){
 
-undoStack.push(
-    serializeSVG()
-);
+    imageState.tool = tool;
 
-loadSVGIntoEditor(
-    redoStack.pop()
-);
-
+    document.querySelectorAll(".tool-btn[data-tool]")
+        .forEach(btn=>{
+            btn.classList.toggle(
+                "active",
+                btn.dataset.tool === tool
+            );
+        });
 }
 
-function saveUndo(){
 
-undoStack.push(
-    serializeSVG()
-);
+function updateLayers(){
 
-if(undoStack.length>40)
-    undoStack.shift();
+    const list =
+        document.getElementById("layerList");
 
-redoStack=[];
+    const svg =
+        document.getElementById("svgCanvas");
 
+    const children =
+        Array.from(svg.children);
+
+    list.innerHTML = "";
+
+    children
+        .slice()
+        .reverse()
+        .forEach((el,index)=>{
+
+            const div =
+                document.createElement("div");
+
+            div.className = "layer";
+
+            if(el === imageState.selected){
+                div.classList.add("selected");
+            }
+
+            const visible =
+                el.style.display !== "none";
+
+            div.innerHTML =
+                `<span>${visible ? "👁" : "🚫"}</span>
+                 <span>${el.tagName}</span>`;
+
+            div.onclick = ()=>{
+                selectSVGElement(el);
+            };
+
+            div.ondblclick = ()=>{
+                el.style.display =
+                    visible ? "none" : "";
+                updateLayers();
+            };
+
+            list.appendChild(div);
+        });
 }
+
+
+function deleteSelectedLayer(){
+
+    if(!imageState.selected) return;
+
+    imageState.selected.remove();
+
+    imageState.selected = null;
+
+    saveImageHistory();
+    updateLayers();
+}
+
+
+function duplicateSelectedLayer(){
+
+    if(!imageState.selected) return;
+
+    const clone =
+        imageState.selected.cloneNode(true);
+
+    const svg =
+        document.getElementById("svgCanvas");
+
+    svg.appendChild(clone);
+
+    selectSVGElement(clone);
+
+    moveSVGElement(clone,20,20);
+
+    saveImageHistory();
+    updateLayers();
+}
+
+
+/* ============================================================
+   IMAGE HISTORY
+   ============================================================ */
 
 function serializeSVG(){
 
-const canvas=document
-.getElementById("svgCanvas");
+    const svg =
+        document.getElementById("svgCanvas");
 
-return new XMLSerializer()
-.serializeToString(canvas);
-
+    return new XMLSerializer()
+        .serializeToString(svg);
 }
 
-function saveCurrentSVG(showLog=true){
 
-if(!currentSVGFile)return;
+function saveImageHistory(){
 
-project.files[currentSVGFile]=
-serializeSVG();
+    const snapshot =
+        serializeSVG();
 
-updateProjectMetadata();
+    imageState.history =
+        imageState.history.slice(
+            0,
+            imageState.historyIndex + 1
+        );
 
-localStorage.setItem(
-    "multiscript-v14-project",
-    JSON.stringify(project)
-);
+    imageState.history.push(snapshot);
 
-if(showLog)
-    log("SVG salvo: "+currentSVGFile,"success");
+    if(imageState.history.length > 40){
+        imageState.history.shift();
+    }
 
+    imageState.historyIndex =
+        imageState.history.length - 1;
 }
 
-function imageDuplicate(){
 
-if(!selectedSVGElement)return;
+function restoreSVG(snapshot){
 
-saveUndo();
+    const parser =
+        new DOMParser();
 
-const clone=
-selectedSVGElement.cloneNode(true);
+    const doc =
+        parser.parseFromString(
+            snapshot,
+            "image/svg+xml"
+        );
 
-if(clone.hasAttribute("x"))
-    clone.setAttribute(
-        "x",
-        parseFloat(clone.getAttribute("x"))+20
+    const source =
+        doc.documentElement;
+
+    const svg =
+        document.getElementById("svgCanvas");
+
+    while(svg.firstChild){
+        svg.removeChild(svg.firstChild);
+    }
+
+    for(const attr of Array.from(source.attributes)){
+
+        svg.setAttribute(
+            attr.name,
+            attr.value
+        );
+    }
+
+    for(const child of Array.from(source.children)){
+
+        svg.appendChild(
+            document.importNode(child,true)
+        );
+    }
+
+    imageState.selected = null;
+
+    bindSVGEvents();
+    updateLayers();
+}
+
+
+function imageUndo(){
+
+    if(imageState.historyIndex <= 0) return;
+
+    imageState.historyIndex--;
+
+    restoreSVG(
+        imageState.history[
+            imageState.historyIndex
+        ]
     );
+}
 
-if(clone.hasAttribute("y"))
-    clone.setAttribute(
-        "y",
-        parseFloat(clone.getAttribute("y"))+20
+
+function imageRedo(){
+
+    if(
+        imageState.historyIndex >=
+        imageState.history.length - 1
+    ){
+        return;
+    }
+
+    imageState.historyIndex++;
+
+    restoreSVG(
+        imageState.history[
+            imageState.historyIndex
+        ]
     );
-
-document.getElementById("svgCanvas")
-.appendChild(clone);
-
-selectSVGElement(clone);
-
-refreshLayers();
-
 }
 
-function imageDelete(){
 
-if(!selectedSVGElement)return;
+/* ============================================================
+   SAVE IMAGE
+   ============================================================ */
 
-saveUndo();
+function saveImage(){
 
-selectedSVGElement.remove();
+    if(!imageState.file) return;
 
-selectedSVGElement=null;
+    project.files[imageState.file] =
+        serializeSVG();
 
-refreshLayers();
+    saveLocal();
 
+    renderImages();
+    renderExplorer();
+
+    toast("SVG salvo.");
 }
 
-function zoomSVG(value){
 
-imageZoom*=value;
+function exportSVG(){
 
-imageZoom=Math.max(.2,Math.min(4,imageZoom));
+    const svg =
+        serializeSVG();
 
-const canvas=document.getElementById("svgCanvas");
+    const blob =
+        new Blob([svg],{
+            type:"image/svg+xml"
+        });
 
-canvas.style.width=
-parseFloat(canvas.getAttribute("width"))*
-imageZoom+"px";
-
-canvas.style.height=
-parseFloat(canvas.getAttribute("height"))*
-imageZoom+"px";
-
-document.getElementById("imageZoom")
-.textContent=
-"Zoom: "+Math.round(imageZoom*100)+"%";
-
+    downloadBlob(
+        blob,
+        imageState.file.split("/").pop()
+    );
 }
 
-function resetSVGZoom(){
-
-imageZoom=1;
-
-const canvas=document.getElementById("svgCanvas");
-
-canvas.style.width="";
-canvas.style.height="";
-
-document.getElementById("imageZoom")
-.textContent="Zoom: 100%";
-
-}
-
-function resizeSVG(){
-
-openModal(
-"📐 Tamanho do Canvas",
-`
-<div class="form-group">
-<label>Largura</label>
-<input id="canvasWidth"
-value="${document.getElementById("svgCanvas").getAttribute("width")}">
-</div>
-
-<div class="form-group">
-<label>Altura</label>
-<input id="canvasHeight"
-value="${document.getElementById("svgCanvas").getAttribute("height")}">
-</div>
-`,
-`
-<button onclick="closeModal()">Cancelar</button>
-<button class="primary" onclick="applyCanvasSize()">Aplicar</button>
-`
-);
-}
-
-function applyCanvasSize(){
-
-const w=document.getElementById("canvasWidth").value;
-const h=document.getElementById("canvasHeight").value;
-
-const canvas=document.getElementById("svgCanvas");
-
-canvas.setAttribute("width",w);
-canvas.setAttribute("height",h);
-canvas.setAttribute("viewBox",`0 0 ${w} ${h}`);
-
-closeModal();
-
-log("Canvas SVG redimensionado.","success");
-}
-
-/* =========================================================
-   IMPORT IMAGE INTO SVG
-========================================================= */
-
-function importImageIntoSVG(){
-
-document.getElementById("imageInput").click();
-
-}
-
-document.getElementById("imageInput")
-.addEventListener("change",function(){
-
-const file=this.files[0];
-
-if(!file)return;
-
-const reader=new FileReader();
-
-reader.onload=function(){
-
-saveUndo();
-
-const image=document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "image"
-);
-
-image.setAttribute("href",reader.result);
-image.setAttribute("x",50);
-image.setAttribute("y",50);
-image.setAttribute("width",300);
-image.setAttribute("height",200);
-
-document.getElementById("svgCanvas")
-.appendChild(image);
-
-selectSVGElement(image);
-
-refreshLayers();
-
-};
-
-reader.readAsDataURL(file);
-
-this.value="";
-
-});
-
-/* =========================================================
-   EXPORT PNG
-========================================================= */
 
 function exportPNG(){
 
-saveCurrentSVG(false);
+    const svg =
+        serializeSVG();
 
-const svg=serializeSVG();
+    const blob =
+        new Blob([svg],{
+            type:"image/svg+xml"
+        });
 
-const blob=new Blob(
-    [svg],
-    {type:"image/svg+xml;charset=utf-8"}
-);
+    const url =
+        URL.createObjectURL(blob);
 
-const url=URL.createObjectURL(blob);
+    const img =
+        new Image();
 
-const img=new Image();
+    img.onload = function(){
 
-img.onload=function(){
+        const canvas =
+            document.createElement("canvas");
 
-    const canvas=document.createElement("canvas");
+        canvas.width =
+            parseInt(
+                document.getElementById("svgCanvas")
+                    .getAttribute("width") || 1200
+            );
 
-    canvas.width=
-        parseInt(document.getElementById("svgCanvas")
-        .getAttribute("width")) || 1200;
+        canvas.height =
+            parseInt(
+                document.getElementById("svgCanvas")
+                    .getAttribute("height") || 600
+            );
 
-    canvas.height=
-        parseInt(document.getElementById("svgCanvas")
-        .getAttribute("height")) || 600;
+        const ctx =
+            canvas.getContext("2d");
 
-    const ctx=canvas.getContext("2d");
+        ctx.drawImage(
+            img,
+            0,
+            0
+        );
 
-    ctx.drawImage(img,0,0);
+        canvas.toBlob(blob=>{
+            downloadBlob(
+                blob,
+                imageState.file
+                    .split("/")
+                    .pop()
+                    .replace(/\.svg$/i,".png")
+            );
+        });
 
-    URL.revokeObjectURL(url);
+        URL.revokeObjectURL(url);
+    };
 
-    const a=document.createElement("a");
+    img.src = url;
+}
 
-    a.download=
-        currentSVGFile
-        .replace("images/","")
-        .replace(".svg",".png");
 
-    a.href=canvas.toDataURL("image/png");
+function downloadBlob(blob,name){
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+    a.download = name;
+
+    document.body.appendChild(a);
 
     a.click();
-};
 
-img.src=url;
+    a.remove();
 
+    setTimeout(()=>{
+        URL.revokeObjectURL(url);
+    },1000);
 }
 
-/* =========================================================
-   SVG CODE EDITOR
-========================================================= */
 
-function openSVGCode(){
+function setSVGZoom(){
 
-saveCurrentSVG(false);
+    imageState.zoom =
+        Number(
+            document.getElementById("svgZoom").value
+        ) || 100;
 
-document.getElementById("imageEditor")
-.classList.remove("open");
-
-currentFile=currentSVGFile;
-
-document.getElementById("editor").value=
-project.files[currentFile];
-
-updateLineNumbers();
-renderTabs();
-renderExplorer();
-
-openModal(
-"〈/〉 Código SVG",
-`
-<p>
-O código SVG está disponível no editor principal.
-</p>
-<p class="info">
-Depois de editar o código, salve e abra novamente o
-editor visual para visualizar as alterações.
-</p>
-`,
-`
-<button class="primary"
-onclick="closeModal();openImageEditor('${currentFile}')">
-Abrir Editor Visual
-</button>
-`
-);
-
+    document.getElementById("svgCanvas")
+        .style.transform =
+            `scale(${imageState.zoom/100})`;
 }
 
-/* =========================================================
-   SAVE / LOAD
-========================================================= */
 
-function saveProject(){
+function importImageToSVG(){
 
-updateProjectMetadata();
-
-localStorage.setItem(
-    "multiscript-v14-project",
-    JSON.stringify(project)
-);
-
-log("Projeto salvo no navegador.","success");
+    document.getElementById("imageImport").click();
 }
 
-function loadProject(){
 
-const raw=
-localStorage.getItem(
-    "multiscript-v14-project"
-);
+function handleImageImport(event){
 
-if(!raw){
+    const file =
+        event.target.files[0];
 
-newProjectSilently();
+    if(!file) return;
 
-return;
+    const reader =
+        new FileReader();
+
+    reader.onload = function(){
+
+        const svg =
+            document.getElementById("svgCanvas");
+
+        const image =
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "image"
+            );
+
+        image.setAttribute(
+            "href",
+            reader.result
+        );
+
+        image.setAttribute("x",50);
+        image.setAttribute("y",50);
+        image.setAttribute("width",400);
+        image.setAttribute("height",300);
+        image.setAttribute("preserveAspectRatio","xMidYMid meet");
+
+        svg.appendChild(image);
+
+        selectSVGElement(image);
+
+        saveImageHistory();
+        updateLayers();
+    };
+
+    reader.readAsDataURL(file);
+
+    event.target.value = "";
 }
 
-try{
 
-project=JSON.parse(raw);
+/* ============================================================
+   GENERATOR FILTER
+   ============================================================ */
 
-if(!project.protectedFiles)
-    project.protectedFiles=["multiscript.json"];
+function generatorFocus(button,type){
 
-if(!project.files["multiscript.json"])
-    project.files["multiscript.json"]="";
+    document.querySelectorAll(".generator-tabs button")
+        .forEach(btn=>btn.classList.remove("active"));
 
-if(!project.files["images/logo.svg"])
-    project.files["images/logo.svg"]=defaultSVG("logo");
+    button.classList.add("active");
 
-if(!project.files["images/favicon.svg"])
-    project.files["images/favicon.svg"]=defaultSVG("favicon");
+    document.querySelectorAll(".generator-card")
+        .forEach(card=>{
 
-for(let i=1;i<=8;i++){
+            if(type === "all"){
+                card.style.display = "";
+                return;
+            }
 
-    const f=
-    "images/vitrine_"+
-    String(i).padStart(2,"0")+
-    ".svg";
-
-    if(!project.files[f])
-        project.files[f]=defaultSVG("vitrine");
+            card.style.display =
+                card.classList.contains("gen-"+type)
+                    ? ""
+                    : "none";
+        });
 }
 
-if(project.files["multiscript.js"]){
-    delete project.files["multiscript.js"];
-}
 
-updateProjectMetadata();
-
-}
-catch(e){
-
-newProjectSilently();
-
-}
-
-document.getElementById("projectNameTop")
-.textContent=project.name;
-
-renderExplorer();
-
-openFile("index.html");
-
-}
-
-function newProjectSilently(){
-
-createIndexPage();
-createCategoriesPage();
-createInstitutionalPage();
-
-project.files["style.css"]=`
-body{min-height:100vh}
-.site-footer{
-margin-top:80px;
-background:#111827;
-color:#d1d5db;
-}
-.site-footer a{
-color:#9ca3af;
-text-decoration:none;
-}
-.site-footer a:hover{color:#fff}
-`;
-
-project.files["script.js"]=
-`console.log("Site carregado.");`;
-
-for(let i=1;i<=8;i++){
-
-    project.files[
-        "images/vitrine_"+
-        String(i).padStart(2,"0")+
-        ".svg"
-    ]=defaultSVG("vitrine");
-}
-
-project.files["images/logo.svg"]=
-defaultSVG("logo");
-
-project.files["images/favicon.svg"]=
-defaultSVG("favicon");
-
-updateProjectMetadata();
-}
-
-/* =========================================================
-   ZIP EXPORT
-========================================================= */
+/* ============================================================
+   EXPORT ZIP
+   ============================================================ */
 
 function openCreditModal(){
 
-openModal(
-"📦 Exportar projeto",
-`
-<p>
-Escolha o crédito que será colocado no projeto exportado.
-</p>
+    return new Promise(resolve=>{
 
-<div class="form-group">
-<select id="creditChoice">
-<option value="">Sem crédito</option>
-<option value="multipage">MultiPage Mel</option>
-<option value="corretores">Apenas Corretores</option>
-<option value="homemsite">HomemSite</option>
-<option value="parana">HomemSite Paraná</option>
-</select>
-</div>
-`,
-`
-<button onclick="closeModal()">Cancelar</button>
-<button class="primary" onclick="exportZip()">Exportar ZIP</button>
-`
-);
+        modal(
+            "Créditos do projeto",
+            `
+            <p>
+                Escolha o crédito que será incluído nas páginas
+                HTML exportadas.
+            </p>
+
+            <div class="form-group">
+
+                <label>Crédito</label>
+
+                <select id="creditChoice">
+
+                    <option value="">Sem crédito</option>
+
+                    <option value="Multipage Mel">
+                        Multipage Mel
+                    </option>
+
+                    <option value="Apenas Corretores">
+                        Apenas Corretores
+                    </option>
+
+                    <option value="HomemSite">
+                        HomemSite
+                    </option>
+
+                    <option value="HomemSite Paraná">
+                        HomemSite Paraná
+                    </option>
+
+                </select>
+
+            </div>
+            `,
+            `
+            <button class="btn" onclick="closeModal();window.__creditResolve('')">
+                Sem crédito
+            </button>
+
+            <button class="btn blue" onclick="
+                const v=document.getElementById('creditChoice').value;
+                closeModal();
+                window.__creditResolve(v);
+            ">
+                Continuar
+            </button>
+            `
+        );
+
+        window.__creditResolve = resolve;
+    });
 }
 
-function getCreditHTML(choice){
 
-const links={
-    multipage:[
-        "MultiPage Mel",
-        "https://multipagemel.pages.dev/"
-    ],
+function creditHTML(choice){
 
-    corretores:[
-        "Apenas Corretores",
-        "https://apenascorretores.pages.dev/"
-    ],
+    if(!choice){
+        return "";
+    }
 
-    homemsite:[
-        "HomemSite",
-        "https://homemsite.pages.dev/"
-    ],
+    const links = {
+        "Multipage Mel":
+            "https://multipagemel.pages.dev/",
 
-    parana:[
-        "HomemSite Paraná",
-        "https://homemsite.pages.dev/parana/"
-    ]
-};
+        "Apenas Corretores":
+            "https://apenascorretores.pages.dev/",
 
-if(!links[choice])
-    return "";
+        "HomemSite":
+            "https://homemsite.pages.dev/",
 
-const [name,url]=links[choice];
+        "HomemSite Paraná":
+            "https://homemsite.pages.dev/parana/"
+    };
 
-return `
+    return `
 <!-- MULTISCRIPT CREDITOS INICIO -->
 <footer class="multiscript-credit"
-style="padding:20px;text-align:center">
+style="
+margin-top:60px;
+padding:25px;
+background:#111827;
+color:#9ca3af;
+text-align:center;
+font-family:Arial,sans-serif;
+font-size:13px;
+">
 <p>
-Este site garante a segurança na coleta e tratamento
-de dados, em conformidade com a LGPD.
+Este site garante a segurança na coleta e tratamento de dados,
+em conformidade com a LGPD.
 </p>
 
-<p>© V14.0.0 by MultiScript HTML Editor</p>
+<p>
+© V14.0.0 by MultiScript HTML Editor
+</p>
 
 <p>
-<a href="${url}"
+<a
+href="${links[choice]}"
 target="_blank"
-rel="noopener">
-${name}
+rel="noopener"
+style="color:#60a5fa"
+>
+${choice}
 </a>
 </p>
 </footer>
-<!-- MULTISCRIPT CREDITOS FIM -->
-`;
+<!-- MULTISCRIPT CREDITOS FIM -->`;
 }
+
+
+function removeOldCredit(html){
+
+    return html.replace(
+        /<!-- MULTISCRIPT CREDITOS INICIO -->[\s\S]*?<!-- MULTISCRIPT CREDITOS FIM -->/g,
+        ""
+    );
+}
+
 
 async function exportZip(){
 
-const choice=
-document.getElementById("creditChoice").value;
+    saveProject();
 
-updateProjectMetadata();
+    const credit =
+        await openCreditModal();
 
-const zip=new JSZip();
+    const zip =
+        new JSZip();
 
-const files={
-    ...project.files
-};
+    const root =
+        zip.folder(project.name);
 
-Object.entries(project.plugins)
-.forEach(([path])=>{
-    if(files[path]===undefined)
-        files[path]="";
-});
+    for(const [path,content] of Object.entries(project.files)){
 
-if(choice){
+        if(path === "multiscript.json"){
 
-Object.keys(files)
-.filter(file=>file.endsWith(".html"))
-.forEach(file=>{
+            root.file(
+                path,
+                content
+            );
 
-    files[file]=
-        files[file]
-        .replace("</body>",
-            getCreditHTML(choice)+
-            "</body>");
-});
+            continue;
+        }
 
+        let finalContent =
+            content;
+
+        if(path.endsWith(".html")){
+
+            finalContent =
+                removeOldCredit(finalContent);
+
+            finalContent =
+                finalContent.replace(
+                    /<\/body\s*>/i,
+                    `${credit}\n<\/body>`
+                );
+        }
+
+        root.file(
+            path,
+            finalContent
+        );
+    }
+
+    const blob =
+        await zip.generateAsync({
+            type:"blob"
+        });
+
+    downloadBlob(
+        blob,
+        project.name + ".zip"
+    );
+
+    toast("ZIP exportado.");
 }
 
-Object.entries(files)
-.forEach(([path,content])=>{
-    zip.file(path,content);
-});
 
-const blob=
-await zip.generateAsync({
-    type:"blob"
-});
+/* ============================================================
+   STATS
+   ============================================================ */
 
-const a=document.createElement("a");
+function refreshStats(){
 
-a.href=URL.createObjectURL(blob);
+    document.getElementById("dashboardTitle")
+        .textContent = project.name;
 
-a.download=
-(project.name || "MEU-PROJETO")+".zip";
+    document.getElementById("statPages")
+        .textContent =
+            Object.keys(project.pages).length;
 
-a.click();
+    document.getElementById("statImages")
+        .textContent =
+            IMAGE_FILES.filter(
+                file=>project.files[file]
+            ).length;
 
-closeModal();
-
-log("ZIP exportado com sucesso.","success");
+    document.getElementById("statPlugins")
+        .textContent =
+            Object.keys(project.plugins).length;
 }
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
 
-loadProject();
+/* ============================================================
+   REFRESH
+   ============================================================ */
+
+function refreshAll(){
+
+    updateMetadata();
+
+    renderExplorer();
+    renderPageManager();
+    renderImages();
+    renderPlugins();
+    refreshStats();
+
+    if(
+        project.files[currentFile] !== undefined &&
+        !PROTECTED_FILES.includes(currentFile)
+    ){
+
+        document.getElementById("editor").value =
+            project.files[currentFile];
+
+        updateLineNumbers();
+    }
+}
+
+
+/* ============================================================
+   INITIALIZAÇÃO
+   ============================================================ */
+
+loadLocal();
+
+if(!project.files["index.html"]){
+    initializeProject();
+}
+
+refreshAll();
+
+document.getElementById("editor").addEventListener(
+    "keydown",
+    editorKeydown
+);
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(event.key === "Escape"){
+
+            if(
+                document.getElementById("imageEditor")
+                    .classList.contains("show")
+            ){
+
+                closeImageEditor();
+                return;
+            }
+
+            closeModal();
+        }
+    }
+);
 
 </script>
 
