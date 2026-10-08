@@ -15,253 +15,430 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: Arial, Helvetica, sans-serif;
     background: #1e1e1e;
-    color: #fff;
+    color: #ddd;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
 body {
-    min-width: 1100px;
+    min-width: 1180px;
 }
 
-/* =========================
-   TOPO
-========================= */
+/* =========================================================
+   TOP BAR
+========================================================= */
 
 .topbar {
-    height: 58px;
-    background: #151515;
-    border-bottom: 1px solid #333;
+    height: 54px;
+    background: #171717;
+    border-bottom: 1px solid #303030;
     display: flex;
     align-items: center;
-    padding: 0 15px;
-    gap: 12px;
+    padding: 0 14px;
+    gap: 10px;
 }
 
 .logo {
-    width: 36px;
-    height: 36px;
-    background: #fff;
-    color: #111;
+    width: 34px;
+    height: 34px;
     border-radius: 7px;
+    background: linear-gradient(135deg, #ffffff, #bdbdbd);
+    color: #111;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-}
-
-.title-area {
-    flex: 1;
-}
-
-.title {
-    font-size: 17px;
-    font-weight: bold;
-}
-
-.subtitle {
-    font-size: 10px;
-    color: #888;
-    letter-spacing: 1px;
-}
-
-.top-buttons {
-    display: flex;
-    gap: 6px;
-}
-
-.top-buttons button,
-.toolbar button {
-    border: 1px solid #3d3d3d;
-    background: #252525;
-    color: #ddd;
-    padding: 8px 11px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.top-buttons button:hover,
-.toolbar button:hover {
-    background: #333;
-}
-
-/* =========================
-   TOOLBAR
-========================= */
-
-.toolbar {
-    height: 46px;
-    background: #202020;
-    border-bottom: 1px solid #333;
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    gap: 5px;
-}
-
-.toolbar .separator {
-    width: 1px;
-    height: 25px;
-    background: #444;
-    margin: 0 6px;
-}
-
-.toolbar button.active {
-    background: #444;
-}
-
-/* =========================
-   ÁREA PRINCIPAL
-========================= */
-
-.workspace {
-    height: calc(100vh - 104px);
-    display: flex;
-}
-
-/* =========================
-   SIDEBAR
-========================= */
-
-.sidebar {
-    width: 230px;
-    background: #181818;
-    border-right: 1px solid #333;
-    padding: 14px;
-    overflow-y: auto;
-}
-
-.sidebar-title {
-    font-size: 11px;
-    color: #888;
-    text-transform: uppercase;
-    margin: 8px 0;
-}
-
-.project {
-    background: #242424;
-    border: 1px solid #383838;
-    border-radius: 6px;
-    padding: 10px;
-    margin-bottom: 7px;
-    cursor: pointer;
-}
-
-.project:hover {
-    background: #303030;
-}
-
-.project strong {
-    display: block;
+    font-weight: 800;
     font-size: 13px;
 }
 
-.project span {
-    color: #888;
-    font-size: 11px;
+.brand {
+    line-height: 1.1;
+    width: 240px;
 }
 
-.new-project {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    background: #fff;
-    color: #111;
+.brand strong {
+    font-size: 15px;
+    color: #fff;
+}
+
+.brand small {
+    display: block;
+    color: #777;
+    font-size: 9px;
+    letter-spacing: 1px;
+    margin-top: 3px;
+}
+
+.menu {
+    display: flex;
+    gap: 2px;
+}
+
+.menu button,
+.top-action {
+    background: transparent;
+    color: #bbb;
+    border: 1px solid transparent;
+    padding: 7px 9px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.menu button:hover,
+.top-action:hover {
+    background: #292929;
+    border-color: #3a3a3a;
+    color: #fff;
+}
+
+.top-spacer {
+    flex: 1;
+}
+
+.run {
+    background: #168a45 !important;
+    color: #fff !important;
+    border-color: #22a75a !important;
+}
+
+/* =========================================================
+   WORKSPACE
+========================================================= */
+
+.workspace {
+    height: calc(100vh - 79px);
+    display: flex;
+}
+
+/* =========================================================
+   ACTIVITY BAR
+========================================================= */
+
+.activity {
+    width: 48px;
+    background: #151515;
+    border-right: 1px solid #303030;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 8px;
+}
+
+.activity button {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
     border: 0;
-    border-radius: 5px;
+    background: transparent;
+    color: #777;
+    cursor: pointer;
+    font-size: 17px;
+    border-left: 2px solid transparent;
+}
+
+.activity button:hover,
+.activity button.active {
+    color: #fff;
+    background: #252525;
+    border-left-color: #fff;
+}
+
+/* =========================================================
+   EXPLORER
+========================================================= */
+
+.explorer {
+    width: 235px;
+    background: #191919;
+    border-right: 1px solid #303030;
+    display: flex;
+    flex-direction: column;
+}
+
+.explorer-header {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    color: #aaa;
+    font-size: 10px;
+    letter-spacing: .8px;
+}
+
+.explorer-actions button {
+    border: 0;
+    background: transparent;
+    color: #888;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.explorer-actions button:hover {
+    color: white;
+}
+
+.project-name {
+    padding: 10px 13px;
+    color: #ddd;
+    font-size: 12px;
     font-weight: bold;
+}
+
+.folder {
+    padding: 6px 13px;
+    color: #aaa;
+    font-size: 12px;
+}
+
+.file {
+    padding: 7px 13px 7px 27px;
+    font-size: 12px;
+    color: #999;
     cursor: pointer;
 }
 
-/* =========================
-   EDITOR
-========================= */
-
-.editor-area {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    background: #111;
+.file:hover {
+    background: #242424;
+    color: white;
 }
 
-.panel-title {
-    height: 35px;
+.file.active {
+    background: #303030;
+    color: white;
+}
+
+.html {
+    color: #e44;
+}
+
+.css {
+    color: #38a8ff;
+}
+
+.js {
+    color: #e5c93d;
+}
+
+.json {
+    color: #c78cff;
+}
+
+.models {
+    margin-top: 18px;
+    border-top: 1px solid #303030;
+    padding-top: 12px;
+}
+
+.model {
+    padding: 8px 13px;
+    color: #999;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.model:hover {
+    color: white;
+    background: #242424;
+}
+
+/* =========================================================
+   CENTRAL AREA
+========================================================= */
+
+.center {
+    flex: 1;
+    min-width: 500px;
+    display: flex;
+    flex-direction: column;
+    background: #101010;
+}
+
+/* tabs */
+
+.tabs {
+    height: 38px;
+    display: flex;
+    background: #191919;
+    border-bottom: 1px solid #303030;
+}
+
+.tab {
+    min-width: 130px;
+    max-width: 180px;
+    padding: 0 12px;
     display: flex;
     align-items: center;
-    padding: 0 12px;
-    background: #1d1d1d;
-    border-bottom: 1px solid #333;
-    color: #aaa;
+    gap: 7px;
+    border-right: 1px solid #303030;
+    color: #888;
     font-size: 12px;
+    cursor: pointer;
 }
 
-#codigo {
-    flex: 1;
-    width: 100%;
-    resize: none;
-    border: 0;
-    outline: 0;
-    padding: 15px;
+.tab.active {
     background: #101010;
-    color: #d4d4d4;
+    color: white;
+    border-top: 1px solid #fff;
+}
+
+/* editor */
+
+.editor-container {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.line-numbers {
+    width: 50px;
+    background: #111;
+    color: #555;
+    text-align: right;
+    padding: 14px 10px 14px 0;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow: hidden;
+    user-select: none;
+}
+
+.line-numbers div {
+    height: 20.8px;
+}
+
+#editor {
+    flex: 1;
+    resize: none;
+    outline: none;
+    border: 0;
+    padding: 14px 18px;
+    background: #101010;
+    color: #d8d8d8;
     font-family: Consolas, "Courier New", monospace;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.6;
     tab-size: 4;
+    white-space: pre;
+    overflow: auto;
 }
 
-/* =========================
-   PREVIEW
-========================= */
+/* =========================================================
+   RIGHT PREVIEW
+========================================================= */
 
-.preview-area {
-    width: 50%;
+.preview {
+    width: 430px;
+    background: #181818;
+    border-left: 1px solid #303030;
     display: flex;
     flex-direction: column;
-    background: #ddd;
+}
+
+.preview-header {
+    height: 38px;
+    background: #191919;
+    border-bottom: 1px solid #303030;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 6px;
 }
 
 .preview-title {
-    height: 35px;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    background: #1d1d1d;
-    border-bottom: 1px solid #333;
-    color: #aaa;
-    font-size: 12px;
-}
-
-.preview-frame {
     flex: 1;
-    background: white;
-    padding: 0;
+    font-size: 11px;
+    color: #aaa;
 }
 
-#preview {
+.preview-header button {
+    border: 1px solid #333;
+    background: #242424;
+    color: #aaa;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.preview-header button:hover {
+    color: white;
+}
+
+.preview iframe {
+    flex: 1;
     width: 100%;
-    height: 100%;
     border: 0;
     background: white;
 }
 
-/* =========================
-   STATUS
-========================= */
+/* =========================================================
+   BOTTOM PANEL
+========================================================= */
+
+.bottom {
+    height: 115px;
+    background: #171717;
+    border-top: 1px solid #303030;
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom-tabs {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-left: 12px;
+    border-bottom: 1px solid #303030;
+}
+
+.bottom-tabs button {
+    border: 0;
+    background: transparent;
+    color: #777;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.bottom-tabs button.active {
+    color: white;
+}
+
+.console {
+    flex: 1;
+    padding: 9px 13px;
+    overflow: auto;
+    font-family: Consolas, monospace;
+    font-size: 11px;
+    color: #777;
+}
+
+.console .success {
+    color: #59bd7a;
+}
+
+.console .warning {
+    color: #d8ae45;
+}
+
+/* =========================================================
+   STATUS BAR
+========================================================= */
 
 .statusbar {
     position: fixed;
-    left: 0;
     bottom: 0;
-    width: 100%;
+    left: 0;
     height: 25px;
-    background: #151515;
-    border-top: 1px solid #333;
-    color: #888;
-    font-size: 11px;
+    width: 100%;
+    background: #1669a5;
+    color: white;
     display: flex;
     align-items: center;
-    padding: 0 12px;
+    padding: 0 10px;
+    font-size: 11px;
+    z-index: 50;
 }
 
 .status-left {
@@ -270,196 +447,296 @@ body {
 
 .status-right {
     display: flex;
-    gap: 18px;
+    gap: 16px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal {
+    width: 480px;
+    background: #222;
+    border: 1px solid #444;
+    border-radius: 8px;
+    box-shadow: 0 20px 70px rgba(0,0,0,.7);
+}
+
+.modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #333;
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 18px;
+}
+
+.modal-body p {
+    color: #999;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.modal-footer {
+    padding: 12px 15px;
+    border-top: 1px solid #333;
+    text-align: right;
+}
+
+.modal-footer button {
+    border: 1px solid #444;
+    background: #333;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-footer button.primary {
+    background: white;
+    color: #111;
 }
 </style>
 </head>
 
 <body>
+
+<!-- =====================================================
+     TOP
+===================================================== -->
 
 <header class="topbar">
 
     <div class="logo">MS</div>
 
-    <div class="title-area">
-        <div class="title">MultiScript HTML Editor</div>
-        <div class="subtitle">EDITOR DE SITES · HTML / CSS / JAVASCRIPT</div>
+    <div class="brand">
+        <strong>MultiScript HTML Editor</strong>
+        <small>WEB DEVELOPMENT STUDIO</small>
     </div>
 
-    <div class="top-buttons">
-        <button onclick="novoProjeto()">Novo</button>
-        <button onclick="salvar()">Salvar</button>
-        <button onclick="exportar()">Exportar HTML</button>
-    </div>
+    <nav class="menu">
+        <button onclick="novoProjeto()">Arquivo</button>
+        <button onclick="salvarProjeto()">Editar</button>
+        <button onclick="abrirModelos()">Modelos</button>
+        <button onclick="abrirCreditos()">Ajuda</button>
+    </nav>
+
+    <div class="top-spacer"></div>
+
+    <button class="top-action" onclick="salvarProjeto()">
+        💾 Salvar
+    </button>
+
+    <button class="top-action" onclick="exportar()">
+        📦 Exportar
+    </button>
+
+    <button class="top-action run" onclick="executar()">
+        ▶ Executar
+    </button>
 
 </header>
 
 
-<div class="toolbar">
+<!-- =====================================================
+     WORKSPACE
+===================================================== -->
 
-    <button onclick="executar()">▶ Executar</button>
+<div class="workspace">
 
-    <div class="separator"></div>
+    <!-- ACTIVITY -->
 
-    <button onclick="inserir('h1')">&lt;H1&gt;</button>
-    <button onclick="inserir('p')">&lt;P&gt;</button>
-    <button onclick="inserir('div')">&lt;DIV&gt;</button>
-    <button onclick="inserir('a')">&lt;A&gt;</button>
-    <button onclick="inserir('img')">&lt;IMG&gt;</button>
-    <button onclick="inserir('button')">&lt;BUTTON&gt;</button>
+    <aside class="activity">
 
-    <div class="separator"></div>
-
-    <button onclick="formatarCodigo()">Formatar</button>
-    <button onclick="limpar()">Limpar</button>
-
-</div>
-
-
-<main class="workspace">
-
-    <!-- =========================
-         PROJETOS
-    ========================== -->
-
-    <aside class="sidebar">
-
-        <button class="new-project" onclick="novoProjeto()">
-            + Novo projeto
+        <button class="active" title="Explorador">
+            📁
         </button>
 
-        <div class="sidebar-title">
-            Modelos
+        <button title="Pesquisar">
+            🔎
+        </button>
+
+        <button title="Extensões">
+            🧩
+        </button>
+
+        <div style="flex:1"></div>
+
+        <button onclick="abrirCreditos()" title="Sobre">
+            ⓘ
+        </button>
+
+    </aside>
+
+
+    <!-- EXPLORER -->
+
+    <aside class="explorer">
+
+        <div class="explorer-header">
+            <span>EXPLORADOR</span>
+
+            <div class="explorer-actions">
+                <button onclick="novoProjeto()">＋</button>
+                <button onclick="salvarProjeto()">💾</button>
+            </div>
         </div>
 
-        <div class="project" onclick="carregarV09()">
-            <strong>V09 — ReciPet</strong>
-            <span>Projeto de reciclagem</span>
+        <div class="project-name">
+            📁 MEU-PROJETO
         </div>
 
-        <div class="project" onclick="carregarV10()">
-            <strong>V10 — RSK Computadores</strong>
-            <span>Informática</span>
+        <div class="folder">
+            ▼ public
         </div>
 
-        <div class="project" onclick="carregarV12()">
-            <strong>V12 — ARTERUST</strong>
-            <span>Escorregadores</span>
+        <div class="file active" onclick="arquivo('html')">
+            <span class="html">▣</span>
+            index.html
         </div>
 
-        <div class="sidebar-title">
-            Ferramentas
+        <div class="file" onclick="arquivo('css')">
+            <span class="css">▣</span>
+            style.css
         </div>
 
-        <div class="project" onclick="document.getElementById('codigo').focus()">
-            <strong>Editor HTML</strong>
-            <span>Código fonte</span>
+        <div class="file" onclick="arquivo('js')">
+            <span class="js">▣</span>
+            script.js
         </div>
 
-        <div class="project" onclick="executar()">
-            <strong>Preview</strong>
-            <span>Visualização em tempo real</span>
+        <div class="file" onclick="arquivo('json')">
+            <span class="json">▣</span>
+            projeto.json
+        </div>
+
+        <div class="models">
+
+            <div class="folder">
+                ▼ MODELOS
+            </div>
+
+            <div class="model" onclick="modeloV09()">
+                ♻️ V09 — ReciPet
+            </div>
+
+            <div class="model" onclick="modeloV10()">
+                💻 V10 — RSK Computadores
+            </div>
+
+            <div class="model" onclick="modeloV12()">
+                🛝 V12 — ARTERUST
+            </div>
+
         </div>
 
     </aside>
 
 
-    <!-- =========================
-         CÓDIGO
-    ========================== -->
+    <!-- CENTER -->
 
-    <section class="editor-area">
+    <section class="center">
 
-        <div class="panel-title">
-            index.html
+        <div class="tabs">
+
+            <div class="tab active">
+                <span class="html">▣</span>
+                index.html
+                <span style="margin-left:auto">●</span>
+            </div>
+
         </div>
 
-        <textarea id="codigo" spellcheck="false"><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
 
-<title>Meu Site</title>
+        <div class="editor-container">
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #f5f5f5;
-    color: #222;
-}
+            <div class="line-numbers" id="lineNumbers">
+            </div>
 
-header {
-    background: #111;
-    color: white;
-    padding: 30px;
-    text-align: center;
-}
+            <textarea id="editor" spellcheck="false"></textarea>
 
-main {
-    width: 900px;
-    margin: 40px auto;
-    background: white;
-    padding: 30px;
-}
-
-button {
-    padding: 10px 20px;
-    cursor: pointer;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-    <h1>Meu Site</h1>
-    <p>Desenvolvido com MultiScript HTML Editor</p>
-</header>
-
-<main>
-
-    <h2>Olá!</h2>
-
-    <p>
-        Comece a editar seu HTML aqui.
-    </p>
-
-    <button>
-        Meu botão
-    </button>
-
-</main>
-
-</body>
-</html></textarea>
-
-    </section>
-
-
-    <!-- =========================
-         PREVIEW
-    ========================== -->
-
-    <section class="preview-area">
-
-        <div class="preview-title">
-            Preview · Página
         </div>
 
-        <div class="preview-frame">
-            <iframe
-                id="preview"
-                sandbox="allow-scripts allow-forms allow-modals">
-            </iframe>
+
+        <div class="bottom">
+
+            <div class="bottom-tabs">
+
+                <button class="active">
+                    TERMINAL
+                </button>
+
+                <button>
+                    PROBLEMAS
+                </button>
+
+                <button>
+                    SAÍDA
+                </button>
+
+            </div>
+
+            <div class="console" id="console">
+
+                <div>
+                    MultiScript HTML Editor iniciado.
+                </div>
+
+                <div class="success">
+                    ✓ Ambiente pronto.
+                </div>
+
+            </div>
+
         </div>
 
     </section>
 
-</main>
+
+    <!-- PREVIEW -->
+
+    <section class="preview">
+
+        <div class="preview-header">
+
+            <span class="preview-title">
+                🌐 PREVIEW
+            </span>
+
+            <button onclick="recarregarPreview()">
+                ↻
+            </button>
+
+            <button onclick="abrirPreview()">
+                ↗
+            </button>
+
+        </div>
+
+        <iframe
+            id="preview"
+            sandbox="allow-scripts allow-forms allow-modals">
+        </iframe>
+
+    </section>
+
+</div>
 
 
-<div class="statusbar">
+<!-- STATUS -->
+
+<footer class="statusbar">
 
     <div class="status-left">
         MultiScript HTML Editor
@@ -467,9 +744,42 @@ button {
 
     <div class="status-right">
         <span>HTML</span>
-        <span id="linhas">Linhas: 0</span>
-        <span id="caracteres">Caracteres: 0</span>
+        <span id="statusLine">Ln 1, Col 1</span>
+        <span id="statusChars">0 caracteres</span>
         <span>UTF-8</span>
+    </div>
+
+</footer>
+
+
+<!-- MODAL -->
+
+<div class="modal-bg" id="modal">
+
+    <div class="modal">
+
+        <div class="modal-header" id="modalTitle">
+            MultiScript HTML Editor
+        </div>
+
+        <div class="modal-body" id="modalContent">
+        </div>
+
+        <div class="modal-footer">
+
+            <button onclick="fecharModal()">
+                Fechar
+            </button>
+
+            <button
+                class="primary"
+                id="modalAction"
+                style="display:none">
+                OK
+            </button>
+
+        </div>
+
     </div>
 
 </div>
@@ -477,498 +787,279 @@ button {
 
 <script>
 
-/* =====================================================
-   ELEMENTOS
-===================================================== */
+/* =========================================================
+   ESTADO
+========================================================= */
 
-const codigo = document.getElementById("codigo");
+const editor = document.getElementById("editor");
 const preview = document.getElementById("preview");
+const lineNumbers = document.getElementById("lineNumbers");
+const consoleBox = document.getElementById("console");
+
+let arquivos = {
+
+    html: "",
+    css: "",
+    js: "",
+    json: ""
+
+};
+
+let arquivoAtual = "html";
 
 
-/* =====================================================
-   PREVIEW
-===================================================== */
+/* =========================================================
+   CÓDIGO INICIAL
+========================================================= */
 
-function executar() {
+arquivos.html = `<!DOCTYPE html>
+<html lang="pt-BR">
 
-    preview.srcdoc = codigo.value;
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Meu Site</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Meu Site</h1>
+
+<p>Desenvolvido com MultiScript HTML Editor.</p>
+
+</header>
+
+<main>
+
+<h2>Olá!</h2>
+
+<p>
+Comece a criar seu site aqui.
+</p>
+
+<button onclick="mensagem()">
+Clique aqui
+</button>
+
+</main>
+
+<script src="script.js"><\/script>
+
+</body>
+
+</html>`;
+
+
+arquivos.css = `body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #222;
+}
+
+header {
+    background: #111;
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+main {
+    width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 40px;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+}`;
+
+
+arquivos.js = `function mensagem() {
+    alert("Olá! 👋");
+}`;
+
+
+arquivos.json = `{
+    "nome": "Meu Projeto",
+    "versao": "1.0.0",
+    "editor": "MultiScript HTML Editor"
+}`;
+
+
+/* =========================================================
+   CARREGAR ARQUIVO
+========================================================= */
+
+function carregarArquivo() {
+
+    editor.value = arquivos[arquivoAtual];
+
+    atualizarLinhas();
 
     atualizarStatus();
+
+    if (arquivoAtual === "html") {
+        executar();
+    }
+
 }
 
 
-/* =====================================================
-   ATUALIZAÇÃO AUTOMÁTICA
-===================================================== */
+/* =========================================================
+   TROCAR ARQUIVO
+========================================================= */
 
-codigo.addEventListener("input", function() {
+function arquivo(tipo) {
 
-    executar();
+    arquivos[arquivoAtual] = editor.value;
+
+    arquivoAtual = tipo;
+
+    document
+        .querySelectorAll(".file")
+        .forEach(el => el.classList.remove("active"));
+
+    event.currentTarget.classList.add("active");
+
+    carregarArquivo();
+
+    log(
+        "Arquivo aberto: " +
+        arquivoAtual.toUpperCase(),
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   LINHAS
+========================================================= */
+
+function atualizarLinhas() {
+
+    const quantidade =
+        editor.value.split("\n").length;
+
+    let html = "";
+
+    for (let i = 1; i <= quantidade; i++) {
+        html += "<div>" + i + "</div>";
+    }
+
+    lineNumbers.innerHTML = html;
+}
+
+
+editor.addEventListener("scroll", function() {
+
+    lineNumbers.scrollTop =
+        editor.scrollTop;
 
 });
 
 
-/* =====================================================
+/* =========================================================
    STATUS
-===================================================== */
+========================================================= */
 
 function atualizarStatus() {
 
-    const texto = codigo.value;
+    const texto = editor.value;
 
-    const linhas = texto.split("\n").length;
+    const pos = editor.selectionStart;
 
-    document.getElementById("linhas").textContent =
-        "Linhas: " + linhas;
+    const antes = texto.substring(0, pos);
 
-    document.getElementById("caracteres").textContent =
-        "Caracteres: " + texto.length;
+    const linha =
+        antes.split("\n").length;
+
+    const coluna =
+        antes.length -
+        antes.lastIndexOf("\n");
+
+    document.getElementById(
+        "statusLine"
+    ).textContent =
+        "Ln " + linha +
+        ", Col " + coluna;
+
+    document.getElementById(
+        "statusChars"
+    ).textContent =
+        texto.length + " caracteres";
+
 }
 
 
-/* =====================================================
-   NOVO PROJETO
-===================================================== */
+editor.addEventListener("input", function() {
 
-function novoProjeto() {
+    arquivos[arquivoAtual] =
+        editor.value;
 
-    if (!confirm("Criar um novo projeto?")) {
-        return;
-    }
+    atualizarLinhas();
 
-    codigo.value =
-`<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
+    atualizarStatus();
 
-<title>Novo Projeto</title>
-
-<style>
-body {
-    font-family: Arial;
-    margin: 0;
-    padding: 40px;
-}
-</style>
-
-</head>
-
-<body>
-
-<h1>Novo Projeto</h1>
-
-<p>Comece seu site aqui.</p>
-
-</body>
-</html>`;
-
-    executar();
-}
-
-
-/* =====================================================
-   SALVAR
-===================================================== */
-
-function salvar() {
-
-    localStorage.setItem(
-        "multiscript_html",
-        codigo.value
-    );
-
-    alert("Projeto salvo no navegador.");
-}
-
-
-/* =====================================================
-   CARREGAR SALVO
-===================================================== */
-
-function carregarSalvo() {
-
-    const salvo =
-        localStorage.getItem("multiscript_html");
-
-    if (salvo) {
-
-        codigo.value = salvo;
-
+    if (arquivoAtual === "html") {
         executar();
     }
-}
+
+});
 
 
-/* =====================================================
-   EXPORTAR HTML
-===================================================== */
-
-function exportar() {
-
-    const blob = new Blob(
-        [codigo.value],
-        {
-            type: "text/html;charset=utf-8"
-        }
-    );
-
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = "index.html";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    URL.revokeObjectURL(url);
-}
+editor.addEventListener("keyup", atualizarStatus);
+editor.addEventListener("click", atualizarStatus);
 
 
-/* =====================================================
-   INSERIR ELEMENTOS
-===================================================== */
+/* =========================================================
+   TAB NO EDITOR
+========================================================= */
 
-function inserir(tipo) {
+editor.addEventListener("keydown", function(e) {
 
-    const exemplos = {
+    if (e.key === "Tab") {
 
-        h1:
-`<h1>Título</h1>`,
+        e.preventDefault();
 
-        p:
-`<p>Texto do parágrafo.</p>`,
+        const inicio = editor.selectionStart;
+        const fim = editor.selectionEnd;
 
-        div:
-`<div>
-    Conteúdo da div
-</div>`,
+        editor.value =
+            editor.value.substring(0, inicio) +
+            "    " +
+            editor.value.substring(fim);
 
-        a:
-`<a href="#">Meu link</a>`,
+        editor.selectionStart =
+            editor.selectionEnd =
+            inicio + 4;
 
-        img:
-`<img src="imagem.jpg" alt="Imagem">`,
+        arquivos[arquivoAtual] =
+            editor.value;
 
-        button:
-`<button>
-    Clique aqui
-</button>`
+        atualizarLinhas();
 
-    };
+        atualizarStatus();
 
-    const inicio = codigo.selectionStart;
-    const fim = codigo.selectionEnd;
-
-    const texto = codigo.value;
-
-    codigo.value =
-        texto.substring(0, inicio) +
-        exemplos[tipo] +
-        texto.substring(fim);
-
-    codigo.focus();
-
-    codigo.selectionStart =
-        codigo.selectionEnd =
-        inicio + exemplos[tipo].length;
-
-    executar();
-}
-
-
-/* =====================================================
-   LIMPAR
-===================================================== */
-
-function limpar() {
-
-    if (!confirm("Apagar todo o código?")) {
-        return;
     }
-
-    codigo.value = "";
-
-    executar();
-}
-
-
-/* =====================================================
-   FORMATAR CÓDIGO
-===================================================== */
-
-function formatarCodigo() {
-
-    let texto = codigo.value;
-
-    texto = texto
-        .replace(/></g, ">\n<")
-        .replace(/^\s+/gm, "");
-
-    codigo.value = texto;
-
-    executar();
-}
-
-
-/* =====================================================
-   MODELO V09
-===================================================== */
-
-function carregarV09() {
-
-codigo.value =
-`<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>ReciPet</title>
-
-<style>
-
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #eef8ef;
-    color: #173b1d;
-}
-
-header {
-    background: #16833a;
-    color: white;
-    padding: 40px;
-    text-align: center;
-}
-
-main {
-    width: 900px;
-    margin: 40px auto;
-    background: white;
-    padding: 35px;
-    border-radius: 10px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<header>
-
-<h1>ReciPet</h1>
-
-<p>Reciclagem e sustentabilidade</p>
-
-</header>
-
-<main>
-
-<h2>Materiais Aceitos</h2>
-
-<p>
-Conheça os materiais que podem ser recolhidos.
-</p>
-
-</main>
-
-</body>
-
-</html>`;
-
-executar();
-
-}
-
-
-/* =====================================================
-   MODELO V10
-===================================================== */
-
-function carregarV10() {
-
-codigo.value =
-`<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>RSK Computadores</title>
-
-<style>
-
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #f1f4f8;
-}
-
-header {
-    background: #111827;
-    color: white;
-    padding: 40px;
-    text-align: center;
-}
-
-main {
-    width: 900px;
-    margin: 40px auto;
-    background: white;
-    padding: 35px;
-    border-radius: 8px;
-}
-
-.servico {
-    padding: 15px;
-    border: 1px solid #ddd;
-    margin: 10px 0;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<header>
-
-<h1>RSK Computadores</h1>
-
-<p>Informática e assistência técnica</p>
-
-</header>
-
-<main>
-
-<h2>Nossos Serviços</h2>
-
-<div class="servico">
-Assistência técnica
-</div>
-
-<div class="servico">
-Computadores
-</div>
-
-<div class="servico">
-Notebooks
-</div>
-
-</main>
-
-</body>
-
-</html>`;
-
-executar();
-
-}
-
-
-/* =====================================================
-   MODELO V12
-===================================================== */
-
-function carregarV12() {
-
-codigo.value =
-`<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>ARTERUST — Escorregadores</title>
-
-<style>
-
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #f4f4f4;
-}
-
-header {
-    background: #222;
-    color: white;
-    padding: 45px;
-    text-align: center;
-}
-
-main {
-    width: 900px;
-    margin: 40px auto;
-    background: white;
-    padding: 35px;
-}
-
-.produto {
-    border: 1px solid #ddd;
-    padding: 25px;
-    margin-top: 20px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<header>
-
-<h1>ARTERUST</h1>
-
-<p>Escorregadores</p>
-
-</header>
-
-<main>
-
-<h2>Escorregadores</h2>
-
-<div class="produto">
-
-<h3>Escorregador</h3>
-
-<p>
-Conheça nossos modelos de escorregadores.
-</p>
-
-</div>
-
-</main>
-
-</body>
-
-</html>`;
-
-executar();
-
-}
-
-
-/* =====================================================
-   ATALHOS
-===================================================== */
-
-codigo.addEventListener("keydown", function(e) {
 
     if (e.ctrlKey && e.key === "s") {
 
         e.preventDefault();
 
-        salvar();
+        salvarProjeto();
 
     }
 
@@ -983,11 +1074,636 @@ codigo.addEventListener("keydown", function(e) {
 });
 
 
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
+/* =========================================================
+   EXECUTAR
+========================================================= */
 
-carregarSalvo();
+function executar() {
+
+    arquivos.html = editor.value;
+
+    const html =
+        arquivos.html
+        .replace(
+            "</head>",
+            "<style>" +
+            arquivos.css +
+            "</style></head>"
+        )
+        .replace(
+            "</body>",
+            "<script>" +
+            arquivos.js.replace(
+                /<\/script>/gi,
+                "<\\/script>"
+            ) +
+            "<\/script></body>"
+        );
+
+    preview.srcdoc = html;
+
+    log("Preview atualizado.", "success");
+
+}
+
+
+/* =========================================================
+   RECARREGAR
+========================================================= */
+
+function recarregarPreview() {
+    executar();
+}
+
+
+/* =========================================================
+   ABRIR PREVIEW
+========================================================= */
+
+function abrirPreview() {
+
+    const janela =
+        window.open("", "_blank");
+
+    if (!janela) {
+        alert("O navegador bloqueou a nova janela.");
+        return;
+    }
+
+    janela.document.write(
+        arquivos.html
+    );
+
+    janela.document.close();
+
+}
+
+
+/* =========================================================
+   SALVAR
+========================================================= */
+
+function salvarProjeto() {
+
+    arquivos[arquivoAtual] =
+        editor.value;
+
+    localStorage.setItem(
+        "MultiScriptProject",
+        JSON.stringify(arquivos)
+    );
+
+    log(
+        "✓ Projeto salvo no navegador.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   CARREGAR
+========================================================= */
+
+function carregarProjeto() {
+
+    const salvo =
+        localStorage.getItem(
+            "MultiScriptProject"
+        );
+
+    if (!salvo) return;
+
+    try {
+
+        arquivos =
+            JSON.parse(salvo);
+
+    } catch(e) {
+
+        console.error(e);
+
+    }
+
+}
+
+
+/* =========================================================
+   EXPORTAR
+========================================================= */
+
+function exportar() {
+
+    arquivos[arquivoAtual] =
+        editor.value;
+
+    const blob =
+        new Blob(
+            [arquivos.html],
+            {
+                type:
+                "text/html;charset=utf-8"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+    a.download = "index.html";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+    log(
+        "✓ index.html exportado.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   NOVO
+========================================================= */
+
+function novoProjeto() {
+
+    if (
+        !confirm(
+            "Criar um novo projeto?"
+        )
+    ) {
+        return;
+    }
+
+    arquivos.html =
+`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Novo Projeto</title>
+</head>
+
+<body>
+
+<h1>Novo Projeto</h1>
+
+<p>
+Comece seu site aqui.
+</p>
+
+</body>
+</html>`;
+
+    arquivos.css = "";
+    arquivos.js = "";
+    arquivos.json = "{}";
+
+    arquivoAtual = "html";
+
+    carregarArquivo();
+
+    log(
+        "Novo projeto criado.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   MODELO V09
+========================================================= */
+
+function modeloV09() {
+
+    arquivos.html =
+`<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>ReciPet</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ReciPet</h1>
+
+<p>
+Reciclagem, coleta e sustentabilidade
+</p>
+
+</header>
+
+<main>
+
+<h2>Materiais Aceitos</h2>
+
+<ul>
+
+<li>Papel</li>
+<li>Papelão</li>
+<li>Plástico</li>
+<li>Metal</li>
+<li>Vidro</li>
+
+</ul>
+
+<button>
+Solicitar Coleta
+</button>
+
+</main>
+
+</body>
+
+</html>`;
+
+    arquivos.css =
+`body {
+    margin: 0;
+    font-family: Arial;
+    background: #eef8ef;
+    color: #173b1d;
+}
+
+header {
+    background: #16833a;
+    color: white;
+    padding: 50px;
+    text-align: center;
+}
+
+main {
+    width: 800px;
+    margin: 40px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 10px;
+}
+
+button {
+    padding: 12px 22px;
+}`;
+
+    arquivos.js = "";
+
+    arquivoAtual = "html";
+
+    carregarArquivo();
+
+    log(
+        "Modelo V09 — ReciPet carregado.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   MODELO V10
+========================================================= */
+
+function modeloV10() {
+
+    arquivos.html =
+`<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>RSK Computadores</title>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>RSK Computadores</h1>
+
+<p>
+Informática e assistência técnica
+</p>
+
+</header>
+
+<main>
+
+<h2>Serviços</h2>
+
+<div class="card">
+Assistência Técnica
+</div>
+
+<div class="card">
+Computadores
+</div>
+
+<div class="card">
+Notebooks
+</div>
+
+<div class="card">
+Manutenção
+</div>
+
+</main>
+
+</body>
+
+</html>`;
+
+    arquivos.css =
+`body {
+    margin: 0;
+    font-family: Arial;
+    background: #eef1f5;
+}
+
+header {
+    background: #101827;
+    color: white;
+    padding: 50px;
+    text-align: center;
+}
+
+main {
+    width: 850px;
+    margin: 40px auto;
+    background: white;
+    padding: 35px;
+}
+
+.card {
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+}`;
+
+    arquivos.js = "";
+
+    arquivoAtual = "html";
+
+    carregarArquivo();
+
+    log(
+        "Modelo V10 — RSK Computadores carregado.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   MODELO V12
+========================================================= */
+
+function modeloV12() {
+
+    arquivos.html =
+`<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>ARTERUST — Escorregadores</title>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ARTERUST</h1>
+
+<p>
+Escorregadores
+</p>
+
+</header>
+
+<main>
+
+<h2>
+Nossos Escorregadores
+</h2>
+
+<section class="produto">
+
+<h3>
+Escorregador
+</h3>
+
+<p>
+Conheça nossos modelos.
+</p>
+
+<button>
+Solicitar informações
+</button>
+
+</section>
+
+</main>
+
+</body>
+
+</html>`;
+
+    arquivos.css =
+`body {
+    margin: 0;
+    font-family: Arial;
+    background: #f3f3f3;
+}
+
+header {
+    background: #222;
+    color: white;
+    padding: 50px;
+    text-align: center;
+}
+
+main {
+    width: 850px;
+    margin: 40px auto;
+    background: white;
+    padding: 40px;
+}
+
+.produto {
+    border: 1px solid #ddd;
+    padding: 25px;
+}
+
+button {
+    padding: 12px 20px;
+}`;
+
+    arquivos.js = "";
+
+    arquivoAtual = "html";
+
+    carregarArquivo();
+
+    log(
+        "Modelo V12 — ARTERUST carregado.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   LOG
+========================================================= */
+
+function log(texto, classe = "") {
+
+    const linha =
+        document.createElement("div");
+
+    linha.textContent = texto;
+
+    if (classe) {
+        linha.className = classe;
+    }
+
+    consoleBox.appendChild(linha);
+
+    consoleBox.scrollTop =
+        consoleBox.scrollHeight;
+
+}
+
+
+/* =========================================================
+   MODELOS
+========================================================= */
+
+function abrirModelos() {
+
+    abrirModal(
+        "Modelos MultiScript",
+        `
+        <p>
+        <b>V09</b> — ReciPet<br>
+        Modelo de sustentabilidade e reciclagem.
+        </p>
+
+        <p>
+        <b>V10</b> — RSK Computadores<br>
+        Modelo comercial de informática.
+        </p>
+
+        <p>
+        <b>V12</b> — ARTERUST<br>
+        Modelo comercial para produtos.
+        </p>
+        `
+    );
+
+}
+
+
+/* =========================================================
+   CRÉDITOS
+========================================================= */
+
+function abrirCreditos() {
+
+    abrirModal(
+        "Sobre o MultiScript HTML Editor",
+        `
+        <p>
+        <b>MultiScript HTML Editor</b>
+        </p>
+
+        <p>
+        Editor de desenvolvimento web
+        criado para uso pessoal e familiar.
+        </p>
+
+        <p>
+        <b>HTML</b> — estrutura<br>
+        <b>CSS</b> — aparência<br>
+        <b>JavaScript</b> — comportamento
+        </p>
+
+        <p>
+        Projetos e modelos:
+        MultiScript / Multipage Mel.
+        </p>
+
+        <p>
+        © MultiScript Studio
+        </p>
+        `
+    );
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function abrirModal(titulo, conteudo) {
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent = titulo;
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = conteudo;
+
+    document.getElementById(
+        "modal"
+    ).style.display = "flex";
+
+}
+
+
+function fecharModal() {
+
+    document.getElementById(
+        "modal"
+    ).style.display = "none";
+
+}
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+carregarProjeto();
+
+carregarArquivo();
+
+atualizarLinhas();
+
+atualizarStatus();
 
 executar();
 
