@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MultiScript — Modelos</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #202124;
+    color: #fff;
+}
+
+.topbar {
+    height: 58px;
+    background: #151515;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+}
+
+.logo {
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    color: #111;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.subtitle {
+    font-size: 11px;
+    color: #999;
+    margin-left: 5px;
+}
+
+.container {
+    width: 1100px;
+    margin: 30px auto;
+}
+
+h1 {
+    margin-bottom: 5px;
+}
+
+.description {
+    color: #aaa;
+    margin-bottom: 25px;
+}
+
+.models {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.card {
+    background: #292a2d;
+    border: 1px solid #3b3c40;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: .2s;
+}
+
+.card:hover {
+    border-color: #777;
+    transform: translateY(-2px);
+}
+
+.card-header {
+    height: 70px;
+    background: #18191b;
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+}
+
+.version {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.card-body {
+    padding: 18px;
+}
+
+.card h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.card p {
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 65px;
+}
+
+.url {
+    display: block;
+    background: #1d1e20;
+    border: 1px solid #38393c;
+    padding: 10px;
+    border-radius: 6px;
+    color: #ddd;
+    font-size: 12px;
+    margin: 12px 0;
+    word-break: break-all;
+}
+
+button {
+    width: 100%;
+    border: 0;
+    border-radius: 6px;
+    padding: 11px;
+    background: #fff;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ddd;
+}
+
+.footer {
+    margin-top: 35px;
+    padding: 18px;
+    border-top: 1px solid #333;
+    color: #777;
+    font-size: 12px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="logo">MS</div>
+
+    <div>
+        <div class="title">MultiScript Studio</div>
+        <div class="subtitle">EDITOR DE PROJETOS HTML</div>
+    </div>
+</header>
+
+<main class="container">
+
+    <h1>Modelos e Projetos</h1>
+
+    <div class="description">
+        Projetos desenvolvidos e utilizados pela família.
+    </div>
+
+    <section class="models">
+
+        <!-- V09 -->
+        <article class="card">
+            <div class="card-header">
+                <div class="version">V09</div>
+            </div>
+
+            <div class="card-body">
+                <h2>ReciPet</h2>
+
+                <p>
+                    Projeto voltado à reciclagem, coleta,
+                    materiais aceitos e sustentabilidade.
+                </p>
+
+                <div class="url">
+                    recipet.pages.dev
+                </div>
+
+                <button onclick="abrir('https://recipet.pages.dev/')">
+                    Abrir projeto
+                </button>
+            </div>
+        </article>
+
+
+        <!-- V10 -->
+        <article class="card">
+            <div class="card-header">
+                <div class="version">V10</div>
+            </div>
+
+            <div class="card-body">
+                <h2>RSK Computadores</h2>
+
+                <p>
+                    Projeto comercial para informática,
+                    computadores, assistência técnica e serviços.
+                </p>
+
+                <div class="url">
+                    rskcomputadores.pages.dev
+                </div>
+
+                <button onclick="abrir('https://rskcomputadores.pages.dev/')">
+                    Abrir projeto
+                </button>
+            </div>
+        </article>
+
+
+        <!-- V12 -->
+        <article class="card">
+            <div class="card-header">
+                <div class="version">V12</div>
+            </div>
+
+            <div class="card-body">
+                <h2>ARTERUST — Escorregadores</h2>
+
+                <p>
+                    Projeto comercial da ARTERUST,
+                    com página específica para escorregadores.
+                </p>
+
+                <div class="url">
+                    arterust.pages.dev/escorregadores
+                </div>
+
+                <button onclick="abrir('https://arterust.pages.dev/escorregadores')">
+                    Abrir projeto
+                </button>
+            </div>
+        </article>
+
+    </section>
+
+    <div class="footer">
+        MultiScript Studio · Projetos internos · Uso pessoal e familiar
+    </div>
+
+</main>
+
+<script>
+function abrir(url) {
+    window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
