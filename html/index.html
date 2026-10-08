@@ -15,13 +15,12 @@
 html,
 body {
     margin: 0;
-    padding: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
     font-family: "Segoe UI", Arial, sans-serif;
     background: #111318;
-    color: #e8e8e8;
+    color: #e7eaf0;
 }
 
 button,
@@ -36,165 +35,166 @@ button {
 }
 
 .app {
-    display: grid;
-    grid-template-rows: 48px 42px 1fr 24px;
     width: 100vw;
     height: 100vh;
+    display: grid;
+    grid-template-rows: 48px 42px 1fr 24px;
 }
 
-/* TOPBAR */
+/* =========================================================
+   TOPBAR
+========================================================= */
 
 .topbar {
-    background: #181a20;
-    border-bottom: 1px solid #30333b;
     display: flex;
     align-items: center;
+    gap: 16px;
     padding: 0 16px;
-    gap: 18px;
+    background: #181a20;
+    border-bottom: 1px solid #30343d;
 }
 
 .logo {
-    font-weight: 700;
-    color: #fff;
     font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
-.logo span {
+.logo b {
     color: #4da3ff;
 }
 
 .version {
-    color: #777d89;
+    color: #707784;
     font-size: 11px;
 }
 
-.topmenu {
+.menu {
     display: flex;
-    gap: 4px;
+    gap: 3px;
 }
 
-.topmenu button {
-    background: transparent;
+.menu button {
     border: 0;
-    color: #bfc3cc;
+    background: transparent;
+    color: #aeb4bf;
     padding: 7px 10px;
     border-radius: 4px;
 }
 
-.topmenu button:hover {
-    background: #292d36;
-    color: white;
+.menu button:hover {
+    background: #292d35;
+    color: #fff;
 }
 
-.top-right {
+.project-title {
     margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    color: #858c99;
+    font-size: 11px;
 }
 
-.project-name {
-    color: #9ea4b1;
-    font-size: 12px;
-}
-
-/* TOOLBAR */
+/* =========================================================
+   TOOLBAR
+========================================================= */
 
 .toolbar {
-    background: #202329;
-    border-bottom: 1px solid #30333b;
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 5px 10px;
+    padding: 5px 9px;
+    background: #202329;
+    border-bottom: 1px solid #30343d;
 }
 
 .toolbar button {
     background: #292d35;
-    border: 1px solid #3a3e47;
-    color: #d8dbe1;
+    color: #dce0e7;
+    border: 1px solid #3a3f49;
     border-radius: 4px;
     padding: 6px 10px;
     font-size: 12px;
 }
 
 .toolbar button:hover {
-    background: #343944;
+    background: #353a44;
 }
 
-.toolbar .primary {
+.toolbar .blue {
     background: #1769aa;
-    border-color: #2585d0;
-    color: white;
+    border-color: #2586d2;
+    color: #fff;
 }
 
-.toolbar .primary:hover {
-    background: #1b7bc5;
+.toolbar-spacer {
+    flex: 1;
 }
 
-/* MAIN */
+/* =========================================================
+   MAIN
+========================================================= */
 
 .main {
     min-height: 0;
     display: grid;
-    grid-template-columns: 54px 250px minmax(450px, 1fr) 42%;
-    background: #111318;
+    grid-template-columns: 54px 250px minmax(500px, 1fr) 40%;
 }
 
-/* ACTIVITY BAR */
+/* =========================================================
+   ACTIVITY BAR
+========================================================= */
 
 .activity {
     background: #181a20;
-    border-right: 1px solid #30333b;
+    border-right: 1px solid #30343d;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .activity button {
     width: 54px;
     height: 52px;
-    background: transparent;
     border: 0;
     border-left: 2px solid transparent;
-    color: #7f8692;
-    font-size: 19px;
+    background: transparent;
+    color: #777f8c;
+    font-size: 18px;
 }
 
 .activity button:hover,
 .activity button.active {
-    color: white;
-    border-left-color: #4da3ff;
     background: #20232a;
+    color: #fff;
+    border-left-color: #4da3ff;
 }
 
-/* SIDEBAR */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
 .sidebar {
     min-width: 0;
+    overflow-y: auto;
     background: #191b21;
-    border-right: 1px solid #30333b;
-    overflow: auto;
+    border-right: 1px solid #30343d;
 }
 
-.sidebar-title {
+.sidebar-header {
     height: 40px;
     padding: 13px 14px 8px;
-    color: #aeb4bf;
+    color: #9da4b0;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: .5px;
 }
 
 .tree {
-    padding: 3px 8px 20px;
+    padding: 4px 8px 20px;
 }
 
 .tree-row {
     display: flex;
     align-items: center;
-    gap: 8px;
     height: 29px;
+    gap: 8px;
     padding: 0 8px;
     border-radius: 4px;
     color: #c6cad2;
@@ -207,17 +207,17 @@ button {
 }
 
 .tree-row.selected {
-    background: #2a3441;
+    background: #293543;
     color: #fff;
 }
 
 .tree-row.folder {
-    color: #ddd;
     font-weight: 600;
+    color: #dedfe3;
 }
 
-.tree-indent {
-    padding-left: 22px;
+.indent {
+    padding-left: 28px;
 }
 
 .file-icon {
@@ -225,161 +225,168 @@ button {
     text-align: center;
 }
 
-/* WORKSPACE */
+/* =========================================================
+   WORKSPACE
+========================================================= */
 
 .workspace {
     min-width: 0;
+    min-height: 0;
     display: grid;
     grid-template-rows: 37px 1fr 155px;
-    background: #111318;
+    background: #101216;
 }
 
 .tabs {
-    background: #191b20;
-    border-bottom: 1px solid #30333b;
     display: flex;
-    align-items: stretch;
     overflow-x: auto;
+    background: #191b20;
+    border-bottom: 1px solid #30343d;
 }
 
 .tab {
-    min-width: 125px;
-    max-width: 180px;
+    min-width: 135px;
+    max-width: 190px;
     padding: 10px 13px;
-    border-right: 1px solid #30333b;
-    color: #888f9c;
+    color: #858c98;
+    border-right: 1px solid #30343d;
     font-size: 12px;
-    cursor: pointer;
 }
 
 .tab.active {
-    background: #111318;
-    color: white;
+    color: #fff;
+    background: #101216;
     border-top: 2px solid #4da3ff;
     padding-top: 8px;
 }
 
-/* EDITOR */
+/* =========================================================
+   EDITOR
+========================================================= */
 
-.editor-area {
-    position: relative;
+.editor {
     min-height: 0;
-    background: #101216;
-}
-
-.editor-wrap {
     display: flex;
-    width: 100%;
-    height: 100%;
 }
 
-.lines {
-    width: 52px;
-    background: #15171c;
-    border-right: 1px solid #252831;
-    color: #555b67;
-    text-align: right;
+.line-numbers {
+    width: 54px;
+    flex-shrink: 0;
     padding: 12px 9px;
-    font: 13px/20px Consolas, monospace;
     overflow: hidden;
+    background: #15171c;
+    border-right: 1px solid #252931;
+    color: #535a66;
+    text-align: right;
+    font: 13px/20px Consolas, monospace;
     user-select: none;
 }
 
-#codeEditor {
-    width: calc(100% - 52px);
+#code {
+    width: calc(100% - 54px);
     height: 100%;
-    resize: none;
-    outline: none;
     border: 0;
+    outline: 0;
+    resize: none;
+    padding: 12px 14px;
     background: #101216;
     color: #d9dde5;
-    padding: 12px 14px;
-    font: 13px/20px Consolas, "Courier New", monospace;
-    tab-size: 4;
+    font: 13px/20px Consolas, monospace;
     white-space: pre;
     overflow: auto;
+    tab-size: 4;
 }
 
-/* TERMINAL */
+/* =========================================================
+   TERMINAL
+========================================================= */
 
 .terminal {
-    background: #0d0f12;
-    border-top: 1px solid #30333b;
     min-height: 0;
+    background: #0d0f12;
+    border-top: 1px solid #30343d;
 }
 
-.terminal-head {
+.terminal-header {
     height: 31px;
-    background: #181a1f;
-    border-bottom: 1px solid #30333b;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 18px;
     padding: 0 12px;
-    color: #9299a5;
+    background: #181a1f;
+    border-bottom: 1px solid #30343d;
+    color: #858c98;
     font-size: 11px;
 }
 
-.terminal-head .active {
-    color: white;
+.terminal-header .active {
+    color: #fff;
 }
 
-#terminalOutput {
-    padding: 8px 12px;
+#terminal {
     height: calc(100% - 31px);
-    overflow: auto;
+    padding: 8px 12px;
+    overflow-y: auto;
     font: 12px/18px Consolas, monospace;
-    color: #aeb5c0;
-}
-
-.log-ok {
-    color: #6edc8c;
 }
 
 .log-info {
     color: #65b9ff;
 }
 
-.log-warning {
-    color: #e7c85b;
+.log-ok {
+    color: #6edc8c;
 }
 
-/* PREVIEW */
+.log-warning {
+    color: #e3c95c;
+}
+
+.log-error {
+    color: #ef7272;
+}
+
+/* =========================================================
+   PREVIEW
+========================================================= */
 
 .preview {
     min-width: 0;
-    background: #d7d7d7;
-    border-left: 1px solid #30333b;
+    min-height: 0;
     display: grid;
     grid-template-rows: 37px 1fr;
+    background: #ddd;
+    border-left: 1px solid #30343d;
 }
 
-.preview-head {
-    background: #191b20;
-    color: #9298a3;
-    border-bottom: 1px solid #30333b;
+.preview-header {
     display: flex;
     align-items: center;
     padding: 0 12px;
+    background: #191b20;
+    border-bottom: 1px solid #30343d;
+    color: #9299a5;
     font-size: 11px;
 }
 
-#previewFrame {
+#preview {
     width: 100%;
     height: 100%;
     border: 0;
-    background: white;
+    background: #fff;
 }
 
-/* STATUS */
+/* =========================================================
+   STATUS
+========================================================= */
 
-.status {
-    background: #1769aa;
-    color: white;
+.statusbar {
     display: flex;
     align-items: center;
     gap: 18px;
     padding: 0 10px;
+    background: #1769aa;
+    color: #fff;
     font-size: 10px;
 }
 
@@ -387,36 +394,38 @@ button {
     margin-left: auto;
 }
 
-/* MODAL */
+/* =========================================================
+   MODAL
+========================================================= */
 
-.modal-overlay {
+.modal-bg {
     position: fixed;
     inset: 0;
-    z-index: 9999;
-    background: rgba(0,0,0,.72);
+    z-index: 10000;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: rgba(0,0,0,.72);
 }
 
 .modal {
-    width: 620px;
-    max-height: 85vh;
+    width: 700px;
+    max-height: 88vh;
     overflow: auto;
     background: #1b1e24;
-    border: 1px solid #3b404a;
+    border: 1px solid #3d424c;
     border-radius: 8px;
-    box-shadow: 0 25px 80px rgba(0,0,0,.5);
+    box-shadow: 0 30px 100px rgba(0,0,0,.55);
 }
 
-.modal-head {
-    padding: 16px 18px;
-    border-bottom: 1px solid #343841;
+.modal-header {
     display: flex;
     align-items: center;
+    padding: 15px 18px;
+    border-bottom: 1px solid #343841;
 }
 
-.modal-head h2 {
+.modal-header h2 {
     margin: 0;
     font-size: 15px;
 }
@@ -425,38 +434,31 @@ button {
     margin-left: auto;
     border: 0;
     background: transparent;
-    color: #9298a3;
-    font-size: 18px;
+    color: #9097a3;
+    font-size: 19px;
 }
 
 .modal-body {
     padding: 18px;
 }
 
-.modal-foot {
-    padding: 12px 18px;
-    border-top: 1px solid #343841;
+.modal-footer {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 7px;
-    color: #b8bdc7;
-    font-size: 12px;
+    padding: 12px 18px;
+    border-top: 1px solid #343841;
 }
 
 .input,
 .select,
-.generator-textarea {
+.textarea {
     width: 100%;
-    background: #101216;
-    border: 1px solid #393e47;
-    color: #e7e9ed;
+    border: 1px solid #3b4049;
+    outline: 0;
     border-radius: 5px;
-    outline: none;
+    background: #101216;
+    color: #e8ebef;
 }
 
 .input,
@@ -465,8 +467,8 @@ button {
     padding: 0 10px;
 }
 
-.generator-textarea {
-    min-height: 300px;
+.textarea {
+    min-height: 320px;
     padding: 12px;
     resize: vertical;
     font: 13px/20px Consolas, monospace;
@@ -474,123 +476,95 @@ button {
 
 .input:focus,
 .select:focus,
-.generator-textarea:focus {
+.textarea:focus {
     border-color: #4da3ff;
 }
 
-.btn {
-    border: 1px solid #3c414b;
-    background: #292d35;
-    color: white;
-    padding: 8px 13px;
-    border-radius: 5px;
-}
-
-.btn:hover {
-    background: #353a45;
-}
-
-.btn.primary {
-    background: #1769aa;
-    border-color: #2785cf;
-}
-
-.btn.danger {
-    background: #762d35;
-    border-color: #9d3d48;
-}
-
-/* GENERATOR */
-
-.generator-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.plugin-list {
-    border: 1px solid #363b45;
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.plugin-item {
-    padding: 11px 12px;
-    border-bottom: 1px solid #30343c;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.plugin-item:last-child {
-    border-bottom: 0;
-}
-
-.plugin-item input {
-    width: 16px;
-    height: 16px;
-}
-
-.plugin-info strong {
+.label {
     display: block;
+    margin-bottom: 7px;
+    color: #b7bdc8;
     font-size: 12px;
 }
 
-.plugin-info small {
-    color: #7f8794;
-    font-size: 10px;
+.btn {
+    padding: 8px 13px;
+    border: 1px solid #3d424c;
+    border-radius: 5px;
+    background: #292d35;
+    color: #fff;
+}
+
+.btn:hover {
+    background: #353a44;
+}
+
+.btn.blue {
+    background: #1769aa;
+    border-color: #2786d1;
+}
+
+.btn.red {
+    background: #762f38;
+    border-color: #9c404b;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
 }
 
 .section-title {
+    margin: 15px 0 8px;
     color: #aeb4bf;
     font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .5px;
-    margin: 16px 0 8px;
 }
 
-/* PLUGINS */
+/* =========================================================
+   PLUGIN
+========================================================= */
 
-.plugin-card {
+.plugin-box {
     padding: 13px;
-    border: 1px solid #363b45;
-    border-radius: 6px;
     margin-bottom: 8px;
     background: #17191e;
+    border: 1px solid #363b45;
+    border-radius: 6px;
 }
 
-.plugin-card strong {
+.plugin-name {
     font-size: 13px;
+    font-weight: 600;
 }
 
-.plugin-card p {
-    color: #8f96a2;
-    font-size: 11px;
-    margin: 6px 0 10px;
-}
-
-.plugin-status {
+.plugin-path {
+    margin-top: 5px;
     color: #6edc8c;
-    font-size: 10px;
+    font: 10px Consolas, monospace;
 }
 
-/* SCROLL */
-
-::-webkit-scrollbar {
-    width: 9px;
-    height: 9px;
+.plugin-actions {
+    display: flex;
+    gap: 7px;
+    margin-top: 10px;
 }
 
-::-webkit-scrollbar-track {
-    background: #111318;
-}
+/* =========================================================
+   GENERATOR INFO
+========================================================= */
 
-::-webkit-scrollbar-thumb {
-    background: #363b45;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #464c58;
+.info {
+    padding: 10px 12px;
+    margin-top: 10px;
+    border-left: 3px solid #4da3ff;
+    background: #151a21;
+    color: #8e97a5;
+    font-size: 11px;
+    line-height: 17px;
 }
 </style>
 </head>
@@ -599,48 +573,61 @@ button {
 
 <div class="app">
 
-    <!-- TOPBAR -->
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
     <header class="topbar">
 
         <div class="logo">
-            MultiScript <span>HTML Editor</span>
+            MultiScript <b>HTML Editor</b>
         </div>
 
         <div class="version">
             V14.0.0
         </div>
 
-        <nav class="topmenu">
-            <button onclick="openPageGenerator()">Gerar Página</button>
-            <button onclick="openPlugins()">Plugins</button>
-            <button onclick="formatHTML()">Formatar</button>
-            <button onclick="saveProject()">Salvar</button>
-        </nav>
+        <div class="menu">
 
-        <div class="top-right">
-            <span class="project-name">
-                MEU-PROJETO
-            </span>
+            <button onclick="openGenerator()">
+                Gerador
+            </button>
+
+            <button onclick="openPluginManager()">
+                Plugins
+            </button>
+
+            <button onclick="formatHTML()">
+                Formatar
+            </button>
+
+            <button onclick="saveProject()">
+                Salvar
+            </button>
+
+        </div>
+
+        <div class="project-title">
+            MEU-PROJETO
         </div>
 
     </header>
 
-    <!-- TOOLBAR -->
+    <!-- =====================================================
+         TOOLBAR
+    ====================================================== -->
+
     <div class="toolbar">
 
-        <button onclick="newPage()">
+        <button onclick="openGenerator()">
             ＋ Nova Página
         </button>
 
-        <button onclick="openPageGenerator()">
-            ⚙ Gerador
-        </button>
-
-        <button onclick="openPlugins()">
+        <button onclick="openPluginManager()">
             🧩 Plugins
         </button>
 
-        <button onclick="runPreview()">
+        <button onclick="previewPage()">
             ▶ Preview
         </button>
 
@@ -648,11 +635,13 @@ button {
             💾 Salvar
         </button>
 
-        <button class="primary" onclick="exportZIP()">
+        <button
+            class="blue"
+            onclick="exportProject()">
             📦 Exportar ZIP
         </button>
 
-        <div style="flex:1"></div>
+        <div class="toolbar-spacer"></div>
 
         <button onclick="clearTerminal()">
             Limpar Terminal
@@ -660,37 +649,41 @@ button {
 
     </div>
 
-    <!-- MAIN -->
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
     <main class="main">
 
         <!-- ACTIVITY -->
+
         <aside class="activity">
 
             <button
                 class="active"
-                title="Explorador"
-                onclick="showExplorer()">
+                title="Arquivos">
                 📁
             </button>
 
             <button
-                title="Gerador"
-                onclick="openPageGenerator()">
+                onclick="openGenerator()"
+                title="Gerador">
                 ＋
             </button>
 
             <button
-                title="Plugins"
-                onclick="openPlugins()">
+                onclick="openPluginManager()"
+                title="Plugins">
                 🧩
             </button>
 
         </aside>
 
         <!-- SIDEBAR -->
+
         <aside class="sidebar">
 
-            <div class="sidebar-title">
+            <div class="sidebar-header">
                 EXPLORADOR
             </div>
 
@@ -700,14 +693,14 @@ button {
                     📂 MEU-PROJETO
                 </div>
 
-                <div class="tree-row folder tree-indent">
+                <div class="tree-row folder indent">
                     📂 PUBLIC
                 </div>
 
                 <div id="fileTree"></div>
 
-                <div class="tree-row folder tree-indent">
-                    📂 plugins
+                <div class="tree-row folder indent">
+                    📂 PLUGINS DO USUÁRIO
                 </div>
 
                 <div id="pluginTree"></div>
@@ -716,38 +709,36 @@ button {
 
         </aside>
 
-        <!-- WORKSPACE -->
+        <!-- EDITOR -->
+
         <section class="workspace">
 
             <div
-                class="tabs"
-                id="tabs">
+                id="tabs"
+                class="tabs">
             </div>
 
-            <div class="editor-area">
+            <div class="editor">
 
-                <div class="editor-wrap">
-
-                    <div
-                        class="lines"
-                        id="lineNumbers">
-                    </div>
-
-                    <textarea
-                        id="codeEditor"
-                        spellcheck="false"
-                        oninput="editorChanged()"
-                        onscroll="syncLines()"
-                        onkeydown="handleEditorKey(event)">
-                    </textarea>
-
+                <div
+                    id="lineNumbers"
+                    class="line-numbers">
                 </div>
+
+                <textarea
+                    id="code"
+                    spellcheck="false"
+                    oninput="editorInput()"
+                    onscroll="syncScroll()"
+                    onkeydown="editorKey(event)">
+                </textarea>
 
             </div>
 
             <div class="terminal">
 
-                <div class="terminal-head">
+                <div class="terminal-header">
+
                     <span class="active">
                         TERMINAL
                     </span>
@@ -755,24 +746,26 @@ button {
                     <span>
                         OUTPUT
                     </span>
+
                 </div>
 
-                <div id="terminalOutput"></div>
+                <div id="terminal"></div>
 
             </div>
 
         </section>
 
         <!-- PREVIEW -->
+
         <section class="preview">
 
-            <div class="preview-head">
-                PREVIEW — index.html
+            <div class="preview-header">
+                PREVIEW
             </div>
 
             <iframe
-                id="previewFrame"
-                sandbox="allow-scripts allow-forms allow-modals">
+                id="preview"
+                sandbox="allow-scripts allow-forms">
             </iframe>
 
         </section>
@@ -780,9 +773,10 @@ button {
     </main>
 
     <!-- STATUS -->
-    <footer class="status">
 
-        <span id="statusMessage">
+    <footer class="statusbar">
+
+        <span id="status">
             Pronto
         </span>
 
@@ -802,70 +796,117 @@ button {
 
 </div>
 
+<!-- INPUT OCULTO PARA PHP -->
+
+<input
+    type="file"
+    id="phpInput"
+    accept=".php"
+    multiple
+    hidden
+>
+
 <script>
 "use strict";
 
-/*
-===========================================================
-MULTISCRIPT HTML EDITOR V14
-===========================================================
-*/
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
 
-const PROJECT_KEY = "multiscript_v14_project";
+const STORAGE_KEY =
+    "multiscript_html_editor_v14";
+
+let currentFile =
+    "index.html";
+
+let dirty =
+    false;
+
+
+/* =========================================================
+   PROJETO INICIAL
+========================================================= */
 
 let project = {
-    name: "MEU-PROJETO",
+
+    name:
+        "MEU-PROJETO",
 
     files: {
 
-        "index.html": `<!DOCTYPE html>
+        "index.html":
+`<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Meu Site</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
 <body>
 
-    <header class="site-header">
-        <h1>Meu Site</h1>
+    <header>
+
+        <h1>
+            Meu Site
+        </h1>
 
         <nav>
-            <a href="index.html">Início</a>
+
+            <a href="index.html">
+                Início
+            </a>
+
         </nav>
+
     </header>
 
     <main>
 
-        <section class="hero">
-            <h2>Bem-vindo!</h2>
-
-            <p>
-                Esta página foi criada pelo MultiScript HTML Editor V14.
-            </p>
-        </section>
-
         <section>
-            <h2>Sobre o projeto</h2>
+
+            <h2>
+                Bem-vindo
+            </h2>
 
             <p>
-                Use o Gerador de Páginas para criar novas páginas HTML.
+                Esta página foi criada
+                pelo MultiScript HTML Editor V14.
             </p>
+
         </section>
 
     </main>
 
     <footer>
-        <p>Meu Site</p>
+
+        <p>
+            Meu Site
+        </p>
+
     </footer>
 
     <script src="script.js"><\/script>
+
 </body>
+
 </html>`,
 
-        "style.css": `* {
+        "style.css":
+`* {
     box-sizing: border-box;
 }
 
@@ -876,228 +917,110 @@ body {
     color: #222;
 }
 
-.site-header {
+header {
+    padding: 25px;
     background: #111827;
     color: white;
-    padding: 25px;
 }
 
-.site-header nav a {
+header a {
     color: white;
 }
 
 main {
-    max-width: 1000px;
+    width: 1000px;
     margin: auto;
     padding: 50px 25px;
 }
 
-.hero {
+section {
+    padding: 35px;
     background: white;
-    padding: 50px;
-    border-radius: 12px;
-    margin-bottom: 30px;
+    border-radius: 10px;
 }
 
 footer {
+    padding: 25px;
     background: #111827;
     color: white;
     text-align: center;
-    padding: 25px;
 }`,
 
-        "script.js": `console.log("MultiScript V14 iniciado.");
-
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("Página carregada.");
-});`
+        "script.js":
+`console.log(
+    "MultiScript V14 iniciado."
+);`
     },
 
     plugins: {}
+
 };
 
-let currentFile = "index.html";
-let dirty = false;
 
 /* =========================================================
-   PLUGINS
+   INICIALIZAÇÃO
 ========================================================= */
 
-const pluginLibrary = {
-
-    contato: {
-        name: "Formulário de Contato",
-        description: "Processa formulários através de PHP.",
-        file: "contato.php",
-
-        php: `<?php
-
-/*
-    MultiScript V14
-    Plugin: Formulário de Contato
-*/
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    exit('Método não permitido.');
-}
-
-$nome = trim($_POST['nome'] ?? '');
-$email = trim($_POST['email'] ?? '');
-$mensagem = trim($_POST['mensagem'] ?? '');
-
-if ($nome === '' || $email === '' || $mensagem === '') {
-    exit('Preencha todos os campos.');
-}
-
-$destino = 'seuemail@exemplo.com';
-
-$assunto = 'Novo contato pelo site';
-
-$corpo =
-    "Nome: " . $nome . "\\n" .
-    "E-mail: " . $email . "\\n\\n" .
-    "Mensagem:\\n" . $mensagem;
-
-$headers =
-    "From: " . $email . "\\r\\n" .
-    "Reply-To: " . $email . "\\r\\n";
-
-mail($destino, $assunto, $corpo, $headers);
-
-echo 'Mensagem enviada com sucesso.';
-?>`
-    },
-
-    antispam: {
-        name: "Anti-Spam",
-        description: "Filtro básico contra envios automatizados.",
-        file: "anti-spam.php",
-
-        php: `<?php
-
-/*
-    MultiScript V14
-    Plugin: Anti-Spam
-*/
-
-session_start();
-
-$tempoMinimo = 3;
-
-if (!isset($_SESSION['multiscript_inicio'])) {
-    $_SESSION['multiscript_inicio'] = time();
-}
-
-if (
-    time() - $_SESSION['multiscript_inicio']
-    < $tempoMinimo
-) {
-    http_response_code(429);
-    exit('Envio muito rápido. Tente novamente.');
-}
-
-?>`
-    },
-
-    whatsapp: {
-        name: "WhatsApp",
-        description: "Gera links e integração básica com WhatsApp.",
-        file: "whatsapp.php",
-
-        php: `<?php
-
-/*
-    MultiScript V14
-    Plugin: WhatsApp
-*/
-
-$numero = preg_replace(
-    '/[^0-9]/',
-    '',
-    $_GET['numero'] ?? ''
+window.addEventListener(
+    "load",
+    init
 );
-
-$mensagem = $_GET['mensagem'] ?? '';
-
-if ($numero === '') {
-    exit('Número não informado.');
-}
-
-$url =
-    'https://wa.me/' .
-    $numero .
-    '?text=' .
-    urlencode($mensagem);
-
-header('Location: ' . $url);
-
-exit;
-?>`
-    },
-
-    seo: {
-        name: "SEO Básico",
-        description: "Arquivo PHP para informações básicas de SEO.",
-        file: "seo.php",
-
-        php: `<?php
-
-/*
-    MultiScript V14
-    Plugin: SEO Básico
-*/
-
-$siteTitle = 'Meu Site';
-
-$description =
-    'Descrição do meu site.';
-
-$keywords =
-    'site, empresa, serviços';
-
-?>`
-    }
-};
-
-/* =========================================================
-   INIT
-========================================================= */
 
 function init() {
 
     loadProject();
 
-    renderFileTree();
-    renderPluginTree();
+    renderFiles();
 
-    openFile(currentFile);
+    renderPlugins();
 
-    updateLineNumbers();
-
-    runPreview();
+    openFile(
+        currentFile
+    );
 
     log(
-        "MultiScript V14 iniciado.",
+        "MultiScript HTML Editor V14 iniciado.",
         "ok"
     );
 
     log(
-        "Projeto carregado com " +
-        Object.keys(project.files).length +
-        " arquivo(s).",
+        "Os plugins PHP pertencem ao usuário.",
         "info"
     );
+
+    previewPage();
 }
 
+
 /* =========================================================
-   PROJECT
+   STORAGE
 ========================================================= */
+
+function saveProject() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(project)
+    );
+
+    dirty = false;
+
+    setStatus(
+        "Projeto salvo."
+    );
+
+    log(
+        "Projeto salvo localmente.",
+        "ok"
+    );
+}
 
 function loadProject() {
 
     const saved =
-        localStorage.getItem(PROJECT_KEY);
+        localStorage.getItem(
+            STORAGE_KEY
+        );
 
     if (!saved) {
         return;
@@ -1112,184 +1035,256 @@ function loadProject() {
             data &&
             data.files
         ) {
-            project = data;
 
-            if (!project.plugins) {
-                project.plugins = {};
+            project =
+                data;
+
+            if (
+                !project.plugins
+            ) {
+
+                project.plugins =
+                    {};
             }
 
             log(
-                "Projeto restaurado do armazenamento local.",
+                "Projeto restaurado.",
                 "ok"
             );
         }
 
     } catch (error) {
 
-        console.error(error);
-
         log(
-            "Não foi possível restaurar o projeto.",
-            "warning"
+            "Erro ao restaurar projeto.",
+            "error"
         );
     }
 }
 
-function saveProject() {
-
-    localStorage.setItem(
-        PROJECT_KEY,
-        JSON.stringify(project)
-    );
-
-    dirty = false;
-
-    updateStatus("Projeto salvo.");
-
-    log(
-        "Projeto salvo no armazenamento local.",
-        "ok"
-    );
-}
 
 /* =========================================================
-   FILE TREE
+   ARQUIVOS
 ========================================================= */
 
-function renderFileTree() {
+function renderFiles() {
 
     const tree =
-        document.getElementById("fileTree");
+        document.getElementById(
+            "fileTree"
+        );
 
-    tree.innerHTML = "";
+    tree.innerHTML =
+        "";
 
-    Object.keys(project.files)
-        .forEach(function (file) {
+    Object.keys(
+        project.files
+    ).forEach(
+        function(file) {
 
             const row =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             row.className =
-                "tree-row tree-indent";
+                "tree-row indent";
 
-            if (file === currentFile) {
-                row.classList.add("selected");
+            if (
+                file === currentFile
+            ) {
+
+                row.classList.add(
+                    "selected"
+                );
             }
 
-            let icon = "📄";
+            let icon =
+                "📄";
 
-            if (file.endsWith(".html")) {
-                icon = "🌐";
+            if (
+                file.endsWith(
+                    ".html"
+                )
+            ) {
+
+                icon =
+                    "🌐";
             }
 
-            if (file.endsWith(".css")) {
-                icon = "🎨";
+            else if (
+                file.endsWith(
+                    ".css"
+                )
+            ) {
+
+                icon =
+                    "🎨";
             }
 
-            if (file.endsWith(".js")) {
-                icon = "📜";
+            else if (
+                file.endsWith(
+                    ".js"
+                )
+            ) {
+
+                icon =
+                    "📜";
+            }
+
+            else if (
+                file.endsWith(
+                    ".php"
+                )
+            ) {
+
+                icon =
+                    "🐘";
             }
 
             row.innerHTML =
-                `<span class="file-icon">${icon}</span>
-                 <span>${escapeHTML(file)}</span>`;
+                `
+                <span class="file-icon">
+                    ${icon}
+                </span>
+
+                <span>
+                    ${escapeHTML(file)}
+                </span>
+                `;
 
             row.onclick =
-                function () {
-                    openFile(file);
+                function() {
+
+                    openFile(
+                        file
+                    );
                 };
 
-            tree.appendChild(row);
-        });
+            tree.appendChild(
+                row
+            );
+        }
+    );
 }
 
-function renderPluginTree() {
-
-    const tree =
-        document.getElementById("pluginTree");
-
-    tree.innerHTML = "";
-
-    Object.keys(project.plugins)
-        .forEach(function (key) {
-
-            const plugin =
-                pluginLibrary[key];
-
-            if (!plugin) {
-                return;
-            }
-
-            const row =
-                document.createElement("div");
-
-            row.className =
-                "tree-row tree-indent";
-
-            row.innerHTML =
-                `<span class="file-icon">🐘</span>
-                 <span>${escapeHTML(plugin.file)}</span>`;
-
-            row.onclick =
-                function () {
-
-                    const path =
-                        "plugins/" +
-                        plugin.file;
-
-                    if (!project.files[path]) {
-
-                        project.files[path] =
-                            plugin.php;
-
-                    }
-
-                    openFile(path);
-                };
-
-            tree.appendChild(row);
-        });
-}
 
 /* =========================================================
-   EDITOR
+   PLUGINS DO USUÁRIO
 ========================================================= */
 
-function openFile(file) {
+function renderPlugins() {
 
-    if (!project.files.hasOwnProperty(file)) {
+    const tree =
+        document.getElementById(
+            "pluginTree"
+        );
+
+    tree.innerHTML =
+        "";
+
+    Object.keys(
+        project.plugins
+    ).forEach(
+        function(path) {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "tree-row indent";
+
+            row.innerHTML =
+                `
+                <span class="file-icon">
+                    🐘
+                </span>
+
+                <span>
+                    ${escapeHTML(path)}
+                </span>
+                `;
+
+            row.onclick =
+                function() {
+
+                    openFile(
+                        path
+                    );
+                };
+
+            tree.appendChild(
+                row
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   ABRIR ARQUIVO
+========================================================= */
+
+function openFile(
+    file
+) {
+
+    if (
+        !project.files.hasOwnProperty(
+            file
+        )
+    ) {
+
         return;
     }
 
-    currentFile = file;
+    currentFile =
+        file;
 
     document.getElementById(
-        "codeEditor"
-    ).value = project.files[file];
+        "code"
+    ).value =
+        project.files[file];
 
     renderTabs();
-    renderFileTree();
-    updateLineNumbers();
-    syncLines();
 
-    updateStatus(
-        "Editando " + file
+    renderFiles();
+
+    renderPlugins();
+
+    updateLines();
+
+    syncScroll();
+
+    setStatus(
+        "Editando " +
+        file
     );
 
-    if (file === "index.html") {
-        runPreview();
+    if (
+        file === "index.html"
+    ) {
+
+        previewPage();
     }
 }
 
 function renderTabs() {
 
     const tabs =
-        document.getElementById("tabs");
+        document.getElementById(
+            "tabs"
+        );
 
-    tabs.innerHTML = "";
+    tabs.innerHTML =
+        "";
 
     const tab =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     tab.className =
         "tab active";
@@ -1297,69 +1292,92 @@ function renderTabs() {
     tab.textContent =
         currentFile;
 
-    tabs.appendChild(tab);
+    tabs.appendChild(
+        tab
+    );
 }
 
-function editorChanged() {
 
-    project.files[currentFile] =
+/* =========================================================
+   EDITOR
+========================================================= */
+
+function editorInput() {
+
+    project.files[
+        currentFile
+    ] =
         document.getElementById(
-            "codeEditor"
+            "code"
         ).value;
 
-    dirty = true;
+    dirty =
+        true;
 
-    updateLineNumbers();
+    updateLines();
 
-    updateStatus(
+    setStatus(
         "Alterações não salvas"
     );
 
-    if (currentFile === "index.html") {
-        runPreview();
+    if (
+        currentFile === "index.html"
+    ) {
+
+        previewPage();
     }
 }
 
-function updateLineNumbers() {
+function updateLines() {
 
-    const code =
+    const value =
         document.getElementById(
-            "codeEditor"
+            "code"
         ).value;
 
-    const total =
+    const count =
         Math.max(
             1,
-            code.split("\n").length
+            value.split("\n").length
         );
 
-    let html = "";
+    let html =
+        "";
 
-    for (let i = 1; i <= total; i++) {
-        html += i + "<br>";
+    for (
+        let i = 1;
+        i <= count;
+        i++
+    ) {
+
+        html +=
+            i +
+            "<br>";
     }
 
     document.getElementById(
         "lineNumbers"
-    ).innerHTML = html;
+    ).innerHTML =
+        html;
 }
 
-function syncLines() {
-
-    const editor =
-        document.getElementById(
-            "codeEditor"
-        );
+function syncScroll() {
 
     document.getElementById(
         "lineNumbers"
     ).scrollTop =
-        editor.scrollTop;
+        document.getElementById(
+            "code"
+        ).scrollTop;
 }
 
-function handleEditorKey(event) {
+function editorKey(
+    event
+) {
 
-    if (event.key === "Tab") {
+    if (
+        event.key === "Tab"
+    ) {
 
         event.preventDefault();
 
@@ -1378,13 +1396,15 @@ function handleEditorKey(event) {
                 start
             ) +
             "    " +
-            editor.value.substring(end);
+            editor.value.substring(
+                end
+            );
 
         editor.selectionStart =
             editor.selectionEnd =
             start + 4;
 
-        editorChanged();
+        editorInput();
     }
 
     if (
@@ -1398,37 +1418,31 @@ function handleEditorKey(event) {
     }
 }
 
-/* =========================================================
-   NEW PAGE
-========================================================= */
-
-function newPage() {
-
-    openPageGenerator();
-}
 
 /* =========================================================
-   PAGE GENERATOR
+   GERADOR DE PÁGINAS
 ========================================================= */
 
-function openPageGenerator() {
+function openGenerator() {
 
     openModal(
+
         "Gerador de Páginas",
+
         `
-        <div class="generator-grid">
+        <div class="grid">
 
             <div>
 
-                <label class="form-label">
+                <label class="label">
                     Nome do arquivo
                 </label>
 
                 <input
-                    id="generatorFilename"
+                    id="pageName"
                     class="input"
                     value="nova-pagina.html"
-                    placeholder="exemplo.html"
+                    placeholder="pagina.html"
                 >
 
                 <div class="section-title">
@@ -1436,9 +1450,9 @@ function openPageGenerator() {
                 </div>
 
                 <textarea
-                    id="generatorContent"
-                    class="generator-textarea"
-                    placeholder="Digite o HTML que será colocado na nova página..."
+                    id="pageContent"
+                    class="textarea"
+                    placeholder="Digite o conteúdo HTML da nova página..."
                 ></textarea>
 
             </div>
@@ -1446,69 +1460,30 @@ function openPageGenerator() {
             <div>
 
                 <div class="section-title">
-                    Plugins PHP
+                    Plugins PHP do usuário
                 </div>
 
-                <div class="plugin-list">
-
-                    ${generatorPlugin(
-                        "contato",
-                        "Formulário de Contato"
-                    )}
-
-                    ${generatorPlugin(
-                        "antispam",
-                        "Anti-Spam"
-                    )}
-
-                    ${generatorPlugin(
-                        "whatsapp",
-                        "WhatsApp"
-                    )}
-
-                    ${generatorPlugin(
-                        "seo",
-                        "SEO Básico"
-                    )}
-
+                <div
+                    id="generatorPlugins">
                 </div>
 
-                <div class="section-title">
-                    Modelo
+                <div class="info">
+
+                    Os arquivos PHP não são fornecidos
+                    pelo MultiScript.
+
+                    <br><br>
+
+                    Eles são plugins adicionados
+                    pelo próprio usuário.
+
                 </div>
-
-                <select
-                    id="generatorTemplate"
-                    class="select"
-                    onchange="applyGeneratorTemplate()"
-                >
-
-                    <option value="">
-                        Personalizado
-                    </option>
-
-                    <option value="blank">
-                        Página em branco
-                    </option>
-
-                    <option value="business">
-                        Empresa
-                    </option>
-
-                    <option value="contact">
-                        Contato
-                    </option>
-
-                    <option value="landing">
-                        Landing Page
-                    </option>
-
-                </select>
 
             </div>
 
         </div>
         `,
+
         `
         <button
             class="btn"
@@ -1517,287 +1492,226 @@ function openPageGenerator() {
         </button>
 
         <button
-            class="btn primary"
+            class="btn blue"
             onclick="generatePage()">
             Gerar Página
         </button>
         `
     );
+
+    renderGeneratorPlugins();
 }
 
-function generatorPlugin(
-    id,
-    name
-) {
+function renderGeneratorPlugins() {
 
-    const checked =
-        project.plugins[id]
-            ? "checked"
-            : "";
-
-    return `
-        <label class="plugin-item">
-
-            <input
-                type="checkbox"
-                id="plugin_${id}"
-                ${checked}
-            >
-
-            <span class="plugin-info">
-
-                <strong>
-                    ${name}
-                </strong>
-
-                <small>
-                    ${pluginLibrary[id].file}
-                </small>
-
-            </span>
-
-        </label>
-    `;
-}
-
-function applyGeneratorTemplate() {
-
-    const type =
+    const box =
         document.getElementById(
-            "generatorTemplate"
-        ).value;
-
-    const textarea =
-        document.getElementById(
-            "generatorContent"
+            "generatorPlugins"
         );
 
-    if (type === "blank") {
-
-        textarea.value =
-            `<h1>Nova Página</h1>
-
-<p>
-    Conteúdo da nova página.
-</p>`;
-
+    if (!box) {
+        return;
     }
 
-    if (type === "business") {
+    const plugins =
+        Object.keys(
+            project.plugins
+        );
 
-        textarea.value =
-            `<section>
-    <h1>Sobre Nossa Empresa</h1>
+    if (
+        plugins.length === 0
+    ) {
 
-    <p>
-        Conheça nossa empresa,
-        nossos serviços e nossa história.
-    </p>
-</section>
+        box.innerHTML =
+            `
+            <p style="color:#777f8c;font-size:12px">
+                Nenhum plugin PHP instalado.
+            </p>
+            `;
 
-<section>
-    <h2>Nossos Serviços</h2>
-
-    <ul>
-        <li>Serviço 01</li>
-        <li>Serviço 02</li>
-        <li>Serviço 03</li>
-    </ul>
-</section>`;
-
+        return;
     }
 
-    if (type === "contact") {
+    box.innerHTML =
+        "";
 
-        textarea.value =
-            `<h1>Entre em Contato</h1>
+    plugins.forEach(
+        function(path) {
 
-<form
-    action="plugins/contato.php"
-    method="POST"
->
+            const item =
+                document.createElement(
+                    "label"
+                );
 
-    <input
-        type="text"
-        name="nome"
-        placeholder="Seu nome"
-        required
-    >
+            item.style.display =
+                "flex";
 
-    <input
-        type="email"
-        name="email"
-        placeholder="Seu e-mail"
-        required
-    >
+            item.style.alignItems =
+                "center";
 
-    <textarea
-        name="mensagem"
-        placeholder="Sua mensagem"
-        required
-    ></textarea>
+            item.style.gap =
+                "8px";
 
-    <button type="submit">
-        Enviar
-    </button>
+            item.style.marginBottom =
+                "9px";
 
-</form>`;
+            item.style.color =
+                "#c8ccd4";
 
-        document.getElementById(
-            "plugin_contato"
-        ).checked = true;
-    }
+            item.style.fontSize =
+                "12px";
 
-    if (type === "landing") {
+            item.innerHTML =
+                `
+                <input
+                    type="checkbox"
+                    value="${escapeAttribute(path)}"
+                >
 
-        textarea.value =
-            `<section>
-    <h1>Uma solução para você</h1>
+                🐘
+                ${escapeHTML(path)}
+                `;
 
-    <p>
-        Apresente seu produto,
-        serviço ou projeto.
-    </p>
-
-    <a href="#contato">
-        Quero saber mais
-    </a>
-</section>
-
-<section>
-    <h2>Por que escolher?</h2>
-
-    <p>
-        Qualidade, atendimento
-        e profissionalismo.
-    </p>
-</section>
-
-<section id="contato">
-    <h2>Fale conosco</h2>
-
-    <p>
-        Entre em contato.
-    </p>
-</section>`;
-    }
+            box.appendChild(
+                item
+            );
+        }
+    );
 }
 
 function generatePage() {
 
     let filename =
         document.getElementById(
-            "generatorFilename"
+            "pageName"
         ).value.trim();
 
-    let content =
+    const content =
         document.getElementById(
-            "generatorContent"
+            "pageContent"
         ).value;
 
     if (!filename) {
-        alert("Digite o nome do arquivo.");
+
+        alert(
+            "Digite o nome da página."
+        );
+
         return;
     }
 
     filename =
         filename
-            .replace(/\\/g, "")
-            .replace(/\//g, "")
-            .trim();
+            .replace(
+                /[\\\/:*?"<>|]/g,
+                ""
+            );
 
-    if (!filename.toLowerCase().endsWith(".html")) {
-        filename += ".html";
+    if (
+        !filename
+            .toLowerCase()
+            .endsWith(
+                ".html"
+            )
+    ) {
+
+        filename +=
+            ".html";
     }
 
-    if (filename === "index.html") {
+    if (
+        project.files[
+            filename
+        ]
+    ) {
 
         if (
             !confirm(
-                "index.html já é a página principal. Deseja substituir?"
+                "Essa página já existe. Substituir?"
             )
         ) {
+
             return;
         }
     }
 
-    const pluginsToInstall = [];
+    const selectedPlugins =
+        [];
 
-    [
-        "contato",
-        "antispam",
-        "whatsapp",
-        "seo"
-    ].forEach(function (id) {
+    document
+        .querySelectorAll(
+            "#generatorPlugins input[type=checkbox]:checked"
+        )
+        .forEach(
+            function(input) {
 
-        const checkbox =
-            document.getElementById(
-                "plugin_" + id
-            );
-
-        if (
-            checkbox &&
-            checkbox.checked
-        ) {
-            pluginsToInstall.push(id);
-        }
-    });
-
-    pluginsToInstall.forEach(
-        installPlugin
-    );
-
-    const html =
-        buildHTMLPage(
-            filename,
-            content,
-            pluginsToInstall
+                selectedPlugins.push(
+                    input.value
+                );
+            }
         );
 
-    project.files[filename] =
+    const html =
+        createHTMLPage(
+            filename,
+            content,
+            selectedPlugins
+        );
+
+    project.files[
+        filename
+    ] =
         html;
 
-    currentFile = filename;
+    currentFile =
+        filename;
 
     closeModal();
 
-    renderFileTree();
-    renderPluginTree();
-    openFile(filename);
+    renderFiles();
+
+    openFile(
+        filename
+    );
 
     saveProject();
 
     log(
-        "Página criada: " +
+        "Página gerada: " +
         filename,
         "ok"
     );
 
-    log(
-        "Plugins selecionados: " +
-        (
-            pluginsToInstall.length
-                ? pluginsToInstall.join(", ")
-                : "nenhum"
-        ),
-        "info"
-    );
+    if (
+        selectedPlugins.length
+    ) {
+
+        log(
+            "Plugins associados: " +
+            selectedPlugins.join(
+                ", "
+            ),
+            "info"
+        );
+    }
 }
 
-function buildHTMLPage(
+function createHTMLPage(
     filename,
     content,
     plugins
 ) {
 
-    let title =
+    const title =
         filename
-            .replace(".html", "")
-            .replace(/[-_]/g, " ");
-
-    title =
-        title.charAt(0).toUpperCase() +
-        title.slice(1);
+            .replace(
+                /\.html$/i,
+                ""
+            )
+            .replace(
+                /[-_]/g,
+                " "
+            );
 
     return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -1811,13 +1725,10 @@ function buildHTMLPage(
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="description"
-        content="${escapeAttribute(title)}"
-    >
-
     <title>
-        ${escapeHTML(title)}
+        ${escapeHTML(
+            title
+        )}
     </title>
 
     <link
@@ -1829,35 +1740,11 @@ function buildHTMLPage(
 
 <body>
 
-    <header class="site-header">
-
-        <h1>
-            ${escapeHTML(title)}
-        </h1>
-
-        <nav>
-
-            <a href="index.html">
-                Início
-            </a>
-
-        </nav>
-
-    </header>
-
     <main>
 
 ${content}
 
     </main>
-
-    <footer>
-
-        <p>
-            Página gerada pelo MultiScript HTML Editor V14.
-        </p>
-
-    </footer>
 
     <script src="script.js"><\/script>
 
@@ -1866,166 +1753,183 @@ ${content}
 </html>`;
 }
 
+
 /* =========================================================
-   PLUGIN INSTALLATION
+   IMPORTAR PHP DO USUÁRIO
 ========================================================= */
 
-function installPlugin(id) {
+function openPHPImporter() {
 
-    const plugin =
-        pluginLibrary[id];
-
-    if (!plugin) {
-        return;
-    }
-
-    project.plugins[id] =
-        true;
-
-    project.files[
-        "plugins/" + plugin.file
-    ] =
-        plugin.php;
-
-    log(
-        "Plugin instalado: " +
-        plugin.name,
-        "ok"
-    );
+    document.getElementById(
+        "phpInput"
+    ).click();
 }
 
-function uninstallPlugin(id) {
+document.getElementById(
+    "phpInput"
+).addEventListener(
+    "change",
+    importPHPFiles
+);
 
-    const plugin =
-        pluginLibrary[id];
+async function importPHPFiles(
+    event
+) {
 
-    if (!plugin) {
+    const files =
+        Array.from(
+            event.target.files
+        );
+
+    if (
+        files.length === 0
+    ) {
+
         return;
     }
 
-    delete project.plugins[id];
+    for (
+        const file of files
+    ) {
 
-    delete project.files[
-        "plugins/" + plugin.file
-    ];
+        if (
+            !file.name
+                .toLowerCase()
+                .endsWith(
+                    ".php"
+                )
+        ) {
 
-    renderPluginTree();
-    renderFileTree();
+            continue;
+        }
+
+        const content =
+            await file.text();
+
+        const path =
+            "plugins/" +
+            file.name;
+
+        project.files[
+            path
+        ] =
+            content;
+
+        project.plugins[
+            path
+        ] =
+            true;
+
+        log(
+            "Plugin PHP importado: " +
+            path,
+            "ok"
+        );
+    }
+
+    renderFiles();
+
+    renderPlugins();
 
     saveProject();
 
-    log(
-        "Plugin removido: " +
-        plugin.name,
-        "warning"
-    );
+    event.target.value =
+        "";
 }
 
+
 /* =========================================================
-   PLUGIN MANAGER
+   GERENCIADOR DE PLUGINS
 ========================================================= */
 
-function openPlugins() {
+function openPluginManager() {
 
-    let installed = "";
-    let available = "";
+    let content =
+        `
+        <div style="display:flex;gap:8px;margin-bottom:15px">
 
-    Object.keys(pluginLibrary)
-        .forEach(function (id) {
+            <button
+                class="btn blue"
+                onclick="openPHPImporter(); closeModal()">
+                ＋ Adicionar PHP
+            </button>
 
-            const plugin =
-                pluginLibrary[id];
+        </div>
+        `;
 
-            const isInstalled =
-                !!project.plugins[id];
+    const plugins =
+        Object.keys(
+            project.plugins
+        );
 
-            if (isInstalled) {
+    if (
+        plugins.length === 0
+    ) {
 
-                installed += `
-                    <div class="plugin-card">
+        content +=
+            `
+            <div class="info">
 
-                        <strong>
-                            ${escapeHTML(plugin.name)}
-                        </strong>
+                Nenhum plugin PHP foi adicionado.
 
-                        <p>
-                            ${escapeHTML(plugin.description)}
-                        </p>
+                <br><br>
 
-                        <div class="plugin-status">
-                            ✓ INSTALADO —
-                            ${escapeHTML(plugin.file)}
+                Clique em
+                <b>Adicionar PHP</b>
+                para importar um arquivo
+                .php do seu computador.
+
+            </div>
+            `;
+
+    } else {
+
+        plugins.forEach(
+            function(path) {
+
+                content +=
+                    `
+                    <div class="plugin-box">
+
+                        <div class="plugin-name">
+                            🐘
+                            ${escapeHTML(path)}
                         </div>
 
-                        <br>
-
-                        <button
-                            class="btn danger"
-                            onclick="uninstallPlugin('${id}'); openPlugins();"
-                        >
-                            Desinstalar
-                        </button>
-
-                    </div>
-                `;
-
-            } else {
-
-                available += `
-                    <div class="plugin-card">
-
-                        <strong>
-                            ${escapeHTML(plugin.name)}
-                        </strong>
-
-                        <p>
-                            ${escapeHTML(plugin.description)}
-                        </p>
-
-                        <div>
-                            <small>
-                                ${escapeHTML(plugin.file)}
-                            </small>
+                        <div class="plugin-path">
+                            plugins/${escapeHTML(
+                                path.replace(
+                                    "plugins/",
+                                    ""
+                                )
+                            )}
                         </div>
 
-                        <br>
+                        <div class="plugin-actions">
 
-                        <button
-                            class="btn primary"
-                            onclick="installFromManager('${id}')"
-                        >
-                            Instalar
-                        </button>
+                            <button
+                                class="btn"
+                                onclick="openFile('${escapeJS(path)}'); closeModal()">
+                                Abrir
+                            </button>
+
+                            <button
+                                class="btn red"
+                                onclick="removePlugin('${escapeJS(path)}')">
+                                Remover
+                            </button>
+
+                        </div>
 
                     </div>
-                `;
+                    `;
             }
-
-        });
+        );
+    }
 
     openModal(
-        "Gerenciador de Plugins PHP",
-        `
-        <div class="section-title">
-            Plugins Instalados
-        </div>
-
-        ${installed || `
-            <p style="color:#7f8794">
-                Nenhum plugin instalado.
-            </p>
-        `}
-
-        <div class="section-title">
-            Biblioteca de Plugins
-        </div>
-
-        ${available || `
-            <p style="color:#7f8794">
-                Todos os plugins estão instalados.
-            </p>
-        `}
-        `,
+        "Plugins PHP do Usuário",
+        content,
         `
         <button
             class="btn"
@@ -2036,130 +1940,160 @@ function openPlugins() {
     );
 }
 
-function installFromManager(id) {
+function removePlugin(
+    path
+) {
 
-    installPlugin(id);
+    if (
+        !confirm(
+            "Remover o plugin " +
+            path +
+            "?"
+        )
+    ) {
 
-    renderPluginTree();
-    renderFileTree();
+        return;
+    }
+
+    delete project.plugins[
+        path
+    ];
+
+    delete project.files[
+        path
+    ];
+
+    if (
+        currentFile === path
+    ) {
+
+        currentFile =
+            "index.html";
+    }
 
     saveProject();
 
-    openPlugins();
+    renderFiles();
+
+    renderPlugins();
+
+    openPluginManager();
+
+    log(
+        "Plugin removido: " +
+        path,
+        "warning"
+    );
 }
+
 
 /* =========================================================
    PREVIEW
 ========================================================= */
 
-function runPreview() {
+function previewPage() {
 
     const html =
-        project.files["index.html"];
+        project.files[
+            "index.html"
+        ];
 
     if (!html) {
         return;
     }
 
-    const frame =
-        document.getElementById(
-            "previewFrame"
-        );
-
-    const css =
-        project.files["style.css"] || "";
-
-    const js =
-        project.files["script.js"] || "";
-
     let output =
         html;
 
+    const css =
+        project.files[
+            "style.css"
+        ] || "";
+
+    const js =
+        project.files[
+            "script.js"
+        ] || "";
+
     if (
-        !/<link[^>]+href=["']style\.css["']/i
+        !/<link[^>]+style\.css/i
             .test(output)
     ) {
 
         output =
             output.replace(
                 "</head>",
-                "<style>\n" +
-                css +
-                "\n</style>\n</head>"
+                `
+                <style>
+                ${css}
+                </style>
+
+                </head>
+                `
             );
     }
 
     const safeJS =
         js.replace(
             /<\/script/gi,
-            "<" + "/script"
+            "<" +
+            "/script"
         );
 
-    if (
-        !/<script[^>]+src=["']script\.js["']/i
-            .test(output)
-    ) {
+    output =
+        output.replace(
+            /<script[^>]+script\.js[^>]*><\/script>/i,
+            `
+            <script>
+            ${safeJS}
+            <` +
+            `/script>
+            `
+        );
 
-        output =
-            output.replace(
-                "</body>",
-                "<script>\n" +
-                safeJS +
-                "\n<" +
-                "/script>\n</body>"
-            );
-
-    } else {
-
-        output =
-            output.replace(
-                /<script[^>]+src=["']script\.js["'][^>]*><\/script>/i,
-                "<script>\n" +
-                safeJS +
-                "\n<" +
-                "/script>"
-            );
-    }
-
-    frame.srcdoc =
+    document.getElementById(
+        "preview"
+    ).srcdoc =
         output;
 
-    updateStatus(
+    setStatus(
         "Preview atualizado."
     );
 }
 
+
 /* =========================================================
-   FORMAT
+   FORMATADOR
 ========================================================= */
 
 function formatHTML() {
 
     if (
-        !currentFile.endsWith(".html")
+        !currentFile
+            .toLowerCase()
+            .endsWith(
+                ".html"
+            )
     ) {
 
         alert(
-            "O formatador foi criado para arquivos HTML."
+            "O formatador é para arquivos HTML."
         );
 
         return;
     }
 
-    let html =
+    const editor =
         document.getElementById(
-            "codeEditor"
-        ).value;
+            "code"
+        );
 
-    html =
-        simpleFormatHTML(html);
+    editor.value =
+        basicHTMLFormat(
+            editor.value
+        );
 
-    document.getElementById(
-        "codeEditor"
-    ).value =
-        html;
-
-    editorChanged();
+    editorInput();
 
     log(
         "HTML formatado.",
@@ -2167,17 +2101,25 @@ function formatHTML() {
     );
 }
 
-function simpleFormatHTML(html) {
+function basicHTMLFormat(
+    html
+) {
 
     html =
         html
-            .replace(/>\s*</g, ">\n<")
+            .replace(
+                />\s*</g,
+                ">\n<"
+            )
             .trim();
 
     const lines =
-        html.split("\n");
+        html.split(
+            "\n"
+        );
 
-    let depth = 0;
+    let depth =
+        0;
 
     const voidTags = [
         "area",
@@ -2196,66 +2138,83 @@ function simpleFormatHTML(html) {
         "wbr"
     ];
 
-    return lines.map(function (line) {
+    return lines.map(
+        function(line) {
 
-        line =
-            line.trim();
+            line =
+                line.trim();
 
-        if (!line) {
-            return "";
-        }
-
-        if (
-            /^<\/[^>]+>/.test(line)
-        ) {
-            depth =
-                Math.max(
-                    0,
-                    depth - 1
-                );
-        }
-
-        const result =
-            "    ".repeat(depth) +
-            line;
-
-        const opening =
-            line.match(
-                /^<([a-zA-Z0-9]+)(?:\s|>)/ 
-            );
-
-        const closing =
-            /<\/[a-zA-Z0-9]+>/.test(line);
-
-        if (
-            opening &&
-            !closing &&
-            !line.startsWith("<!")
-        ) {
-
-            const tag =
-                opening[1].toLowerCase();
+            if (!line) {
+                return "";
+            }
 
             if (
-                !voidTags.includes(tag)
+                /^<\//.test(
+                    line
+                )
             ) {
-                depth++;
+
+                depth =
+                    Math.max(
+                        0,
+                        depth - 1
+                    );
             }
+
+            const result =
+                "    ".repeat(
+                    depth
+                ) +
+                line;
+
+            const match =
+                line.match(
+                    /^<([a-zA-Z0-9]+)(?:\s|>)/
+                );
+
+            const hasClose =
+                /<\/[a-zA-Z0-9]+>/
+                    .test(
+                        line
+                    );
+
+            if (
+                match &&
+                !hasClose
+            ) {
+
+                const tag =
+                    match[1]
+                        .toLowerCase();
+
+                if (
+                    !voidTags.includes(
+                        tag
+                    )
+                ) {
+
+                    depth++;
+                }
+            }
+
+            return result;
+
         }
-
-        return result;
-
-    }).join("\n");
+    ).join(
+        "\n"
+    );
 }
 
+
 /* =========================================================
-   ZIP
+   EXPORTAÇÃO ZIP
 ========================================================= */
 
-async function exportZIP() {
+function exportProject() {
 
     if (
-        typeof JSZip === "undefined"
+        typeof JSZip ===
+        "undefined"
     ) {
 
         alert(
@@ -2266,73 +2225,57 @@ async function exportZIP() {
     }
 
     /*
-        SEMPRE pergunta o crédito.
+       IMPORTANTE:
+       Sempre pergunta o crédito.
     */
 
-    openCreditModal();
+    openCreditDialog();
 }
 
-function openCreditModal() {
-
-    const previous =
-        localStorage.getItem(
-            "multiscript_credit"
-        ) || "none";
+function openCreditDialog() {
 
     openModal(
-        "Exportar Projeto ZIP",
+
+        "Exportar Projeto",
+
         `
         <p style="color:#aeb4bf">
-            Antes de gerar o ZIP, escolha o crédito
-            que será incluído no projeto.
+            Escolha o crédito que será incluído
+            antes de gerar o ZIP.
         </p>
 
-        <label class="form-label">
+        <label class="label">
             Crédito
         </label>
 
         <select
-            id="creditSelect"
+            id="credit"
             class="select"
         >
 
-            <option
-                value="none"
-                ${previous === "none" ? "selected" : ""}
-            >
+            <option value="none">
                 Sem crédito
             </option>
 
-            <option
-                value="multipage"
-                ${previous === "multipage" ? "selected" : ""}
-            >
+            <option value="multipage">
                 Multipage Mel
             </option>
 
-            <option
-                value="corretores"
-                ${previous === "corretores" ? "selected" : ""}
-            >
+            <option value="corretores">
                 Apenas Corretores
             </option>
 
-            <option
-                value="homemsite"
-                ${previous === "homemsite" ? "selected" : ""}
-            >
+            <option value="homemsite">
                 HomemSite
             </option>
 
-            <option
-                value="parana"
-                ${previous === "parana" ? "selected" : ""}
-            >
+            <option value="parana">
                 HomemSite Paraná
             </option>
 
         </select>
         `,
+
         `
         <button
             class="btn"
@@ -2341,58 +2284,57 @@ function openCreditModal() {
         </button>
 
         <button
-            class="btn primary"
-            onclick="confirmExportZIP()">
+            class="btn blue"
+            onclick="confirmExport()">
             Gerar ZIP
         </button>
         `
     );
 }
 
-async function confirmExportZIP() {
+async function confirmExport() {
 
     const credit =
         document.getElementById(
-            "creditSelect"
+            "credit"
         ).value;
-
-    localStorage.setItem(
-        "multiscript_credit",
-        credit
-    );
 
     closeModal();
 
     const zip =
         new JSZip();
 
-    const exportedFiles = {};
-
-    Object.keys(project.files)
-        .forEach(function (file) {
+    Object.keys(
+        project.files
+    ).forEach(
+        function(path) {
 
             let content =
-                project.files[file];
+                project.files[
+                    path
+                ];
 
             if (
-                file.endsWith(".html")
+                path
+                    .toLowerCase()
+                    .endsWith(
+                        ".html"
+                    )
             ) {
 
                 content =
-                    insertCredit(
+                    applyCredit(
                         content,
                         credit
                     );
             }
 
-            exportedFiles[file] =
-                content;
-
             zip.file(
-                file,
+                path,
                 content
             );
-        });
+        }
+    );
 
     const blob =
         await zip.generateAsync({
@@ -2400,45 +2342,55 @@ async function confirmExportZIP() {
         });
 
     const url =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+            blob
+        );
 
     const link =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
-    link.href = url;
+    link.href =
+        url;
 
     link.download =
         project.name +
         ".zip";
 
-    document.body.appendChild(link);
+    document.body.appendChild(
+        link
+    );
 
     link.click();
 
     link.remove();
 
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(
+        url
+    );
 
     log(
-        "ZIP exportado com sucesso.",
+        "Projeto exportado para ZIP.",
         "ok"
     );
 
-    updateStatus(
+    setStatus(
         "ZIP exportado."
     );
 }
 
+
 /* =========================================================
-   CREDITS
+   CRÉDITOS
 ========================================================= */
 
-function insertCredit(
+function applyCredit(
     html,
     credit
 ) {
 
-    const begin =
+    const start =
         "<!-- MULTISCRIPT CREDITOS INICIO -->";
 
     const end =
@@ -2447,7 +2399,7 @@ function insertCredit(
     html =
         html.replace(
             new RegExp(
-                begin +
+                start +
                 "[\\s\\S]*?" +
                 end,
                 "gi"
@@ -2455,51 +2407,71 @@ function insertCredit(
             ""
         );
 
-    if (credit === "none") {
+    if (
+        credit === "none"
+    ) {
+
         return html;
     }
 
     const credits = {
 
         multipage: {
-            name: "Multipage Mel",
-            url: "https://multipagemel.pages.dev/"
+            name:
+                "Multipage Mel",
+            url:
+                "https://multipagemel.pages.dev/"
         },
 
         corretores: {
-            name: "Apenas Corretores",
-            url: "https://apenascorretores.pages.dev/"
+            name:
+                "Apenas Corretores",
+            url:
+                "https://apenascorretores.pages.dev/"
         },
 
         homemsite: {
-            name: "HomemSite",
-            url: "https://homemsite.pages.dev/"
+            name:
+                "HomemSite",
+            url:
+                "https://homemsite.pages.dev/"
         },
 
         parana: {
-            name: "HomemSite Paraná",
-            url: "https://homemsite.pages.dev/parana/"
+            name:
+                "HomemSite Paraná",
+            url:
+                "https://homemsite.pages.dev/parana/"
         }
 
     };
 
     const selected =
-        credits[credit];
+        credits[
+            credit
+        ];
 
     if (!selected) {
         return html;
     }
 
-    const block = `
-
+    const block =
+`
 <!-- MULTISCRIPT CREDITOS INICIO -->
 
-<footer class="multiscript-credit">
+<footer
+    class="multiscript-credit"
+    style="
+        padding:25px;
+        text-align:center;
+        font-family:Arial,sans-serif;
+    "
+>
 
     <p>
-        Este site garante a segurança na coleta
-        e tratamento de dados, em conformidade
-        com a LGPD.
+        Este site garante a segurança
+        na coleta e tratamento de dados,
+        em conformidade com a LGPD.
     </p>
 
     <p>
@@ -2507,6 +2479,7 @@ function insertCredit(
     </p>
 
     <p>
+
         <a
             href="${selected.url}"
             target="_blank"
@@ -2514,6 +2487,7 @@ function insertCredit(
         >
             ${selected.name}
         </a>
+
     </p>
 
 </footer>
@@ -2529,6 +2503,7 @@ function insertCredit(
     );
 }
 
+
 /* =========================================================
    MODAL
 ========================================================= */
@@ -2541,45 +2516,52 @@ function openModal(
 
     closeModal();
 
-    const overlay =
-        document.createElement("div");
+    const bg =
+        document.createElement(
+            "div"
+        );
 
-    overlay.className =
-        "modal-overlay";
+    bg.className =
+        "modal-bg";
 
-    overlay.id =
-        "modalOverlay";
+    bg.id =
+        "modalBg";
 
-    overlay.innerHTML = `
-        <div class="modal">
+    bg.innerHTML =
+`
+<div class="modal">
 
-            <div class="modal-head">
+    <div class="modal-header">
 
-                <h2>
-                    ${title}
-                </h2>
+        <h2>
+            ${title}
+        </h2>
 
-                <button
-                    class="modal-close"
-                    onclick="closeModal()">
-                    ×
-                </button>
+        <button
+            class="modal-close"
+            onclick="closeModal()">
+            ×
+        </button>
 
-            </div>
+    </div>
 
-            <div class="modal-body">
-                ${body}
-            </div>
+    <div class="modal-body">
 
-            <div class="modal-foot">
-                ${footer || ""}
-            </div>
+        ${body}
 
-        </div>
-    `;
+    </div>
+
+    <div class="modal-footer">
+
+        ${footer || ""}
+
+    </div>
+
+</div>
+`;
 
     document.body.appendChild(
-        overlay
+        bg
     );
 }
 
@@ -2587,13 +2569,14 @@ function closeModal() {
 
     const modal =
         document.getElementById(
-            "modalOverlay"
+            "modalBg"
         );
 
     if (modal) {
         modal.remove();
     }
 }
+
 
 /* =========================================================
    TERMINAL
@@ -2606,28 +2589,30 @@ function log(
 
     const terminal =
         document.getElementById(
-            "terminalOutput"
+            "terminal"
         );
 
     const line =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     line.className =
-        "log-" + type;
-
-    const time =
-        new Date()
-            .toLocaleTimeString(
-                "pt-BR"
-            );
+        "log-" +
+        type;
 
     line.textContent =
         "[" +
-        time +
+        new Date()
+            .toLocaleTimeString(
+                "pt-BR"
+            ) +
         "] " +
         message;
 
-    terminal.appendChild(line);
+    terminal.appendChild(
+        line
+    );
 
     terminal.scrollTop =
         terminal.scrollHeight;
@@ -2636,8 +2621,9 @@ function log(
 function clearTerminal() {
 
     document.getElementById(
-        "terminalOutput"
-    ).innerHTML = "";
+        "terminal"
+    ).innerHTML =
+        "";
 
     log(
         "Terminal limpo.",
@@ -2645,58 +2631,90 @@ function clearTerminal() {
     );
 }
 
+
 /* =========================================================
-   UI
+   STATUS
 ========================================================= */
 
-function updateStatus(
+function setStatus(
     message
 ) {
 
     document.getElementById(
-        "statusMessage"
+        "status"
     ).textContent =
         message;
 }
 
-function showExplorer() {
-
-    updateStatus(
-        "Explorador de arquivos"
-    );
-}
 
 /* =========================================================
-   HELPERS
+   ESCAPES
 ========================================================= */
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
 
-function escapeAttribute(value) {
+function escapeAttribute(
+    value
+) {
 
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/"/g, "&quot;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        );
 }
 
-/* =========================================================
-   START
-========================================================= */
+function escapeJS(
+    value
+) {
 
-window.addEventListener(
-    "load",
-    init
-);
+    return String(value)
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+        .replace(
+            /'/g,
+            "\\'"
+        );
+}
 </script>
 
 </body>
