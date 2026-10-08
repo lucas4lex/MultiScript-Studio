@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
 
 <title>MultiScript Studio</title>
@@ -24,30 +26,33 @@ body{
 body{
     min-width:1100px;
     background:#101318;
-    color:#e6e9ef;
+    color:#e7ebf2;
     font-family:"Segoe UI",Arial,sans-serif;
 }
 
 
-/* ==============================
-   APP
-============================== */
+/* ==================================================
+   APLICATIVO
+================================================== */
 
 .app{
     width:100%;
     height:100vh;
+
     display:flex;
     flex-direction:column;
 }
 
 
-/* ==============================
-   TITLEBAR
-============================== */
+/* ==================================================
+   BARRA DE TÍTULO
+================================================== */
 
 .titlebar{
     height:48px;
+
     background:#181b21;
+
     border-bottom:1px solid #292e37;
 
     display:flex;
@@ -60,6 +65,7 @@ body{
 .brand{
     display:flex;
     align-items:center;
+
     gap:10px;
 
     font-size:15px;
@@ -67,38 +73,37 @@ body{
 }
 
 .brand-icon{
-    width:27px;
-    height:27px;
+    width:28px;
+    height:28px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    border-radius:6px;
-
     background:#2563eb;
 
-    font-size:14px;
+    border-radius:6px;
+
+    color:white;
+
+    font-size:12px;
+    font-weight:bold;
 }
 
 .brand span{
-    color:#8b95a7;
+    color:#858e9e;
     font-weight:400;
 }
 
-.window-controls{
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    color:#7d8797;
-    font-size:12px;
+.window-info{
+    color:#747e8e;
+    font-size:11px;
 }
 
 
-/* ==============================
-   TOOLBAR
-============================== */
+/* ==================================================
+   TOOLBAR PRINCIPAL
+================================================== */
 
 .toolbar{
     height:52px;
@@ -115,30 +120,20 @@ body{
     gap:5px;
 }
 
-.tool-group{
-    display:flex;
-    align-items:center;
-    gap:4px;
-}
-
-.separator{
-    width:1px;
-    height:26px;
-    background:#363c47;
-    margin:0 8px;
-}
-
 .tool{
     height:32px;
 
     padding:0 11px;
 
     border:1px solid transparent;
+
     border-radius:5px;
 
     background:transparent;
 
     color:#cbd1db;
+
+    font-family:inherit;
 
     font-size:13px;
 
@@ -148,6 +143,10 @@ body{
 .tool:hover{
     background:#2b3039;
     border-color:#3b424d;
+}
+
+.tool:active{
+    background:#343b46;
 }
 
 .tool.primary{
@@ -164,14 +163,23 @@ body{
 }
 
 .tool.danger:hover{
-    background:#422127;
-    color:#ff9b9b;
+    color:#ff9a9a;
+    background:#402228;
+}
+
+.separator{
+    width:1px;
+    height:26px;
+
+    background:#363c47;
+
+    margin:0 7px;
 }
 
 
-/* ==============================
-   DOCUMENT BAR
-============================== */
+/* ==================================================
+   ABA DO DOCUMENTO
+================================================== */
 
 .documentbar{
     height:42px;
@@ -182,8 +190,6 @@ body{
 
     display:flex;
     align-items:center;
-
-    padding:0 14px;
 }
 
 .document-tab{
@@ -194,7 +200,7 @@ body{
     display:flex;
     align-items:center;
 
-    gap:8px;
+    gap:9px;
 
     background:#101318;
 
@@ -207,6 +213,7 @@ body{
 
 .document-tab::before{
     content:"";
+
     width:7px;
     height:7px;
 
@@ -216,9 +223,9 @@ body{
 }
 
 
-/* ==============================
-   MAIN
-============================== */
+/* ==================================================
+   ÁREA PRINCIPAL
+================================================== */
 
 .main{
     flex:1;
@@ -229,53 +236,53 @@ body{
 }
 
 
-/* ==============================
+/* ==================================================
    SIDEBAR
-============================== */
+================================================== */
 
 .sidebar{
     width:230px;
+
+    flex-shrink:0;
 
     background:#171a20;
 
     border-right:1px solid #292e37;
 
     padding:14px;
-
-    flex-shrink:0;
 }
 
 .sidebar-title{
     color:#7f8999;
 
     font-size:11px;
-    font-weight:700;
-
-    text-transform:uppercase;
+    font-weight:bold;
 
     letter-spacing:.7px;
 
-    margin-bottom:12px;
+    text-transform:uppercase;
+
+    margin-bottom:11px;
 }
 
 .info-box{
-    border:1px solid #2d333d;
-
     background:#1d2128;
+
+    border:1px solid #2d333d;
 
     border-radius:6px;
 
-    padding:12px;
+    padding:11px;
 
-    margin-bottom:10px;
+    margin-bottom:9px;
 }
 
 .info-label{
     color:#747e8e;
 
-    font-size:11px;
+    font-size:10px;
 
-    margin-bottom:5px;
+    margin-bottom:4px;
 }
 
 .info-value{
@@ -287,7 +294,11 @@ body{
 .side-action{
     width:100%;
 
+    padding:9px;
+
     border:0;
+
+    border-radius:5px;
 
     background:transparent;
 
@@ -295,13 +306,11 @@ body{
 
     text-align:left;
 
-    padding:9px;
-
-    border-radius:5px;
-
-    cursor:pointer;
+    font-family:inherit;
 
     font-size:13px;
+
+    cursor:pointer;
 }
 
 .side-action:hover{
@@ -310,9 +319,9 @@ body{
 }
 
 
-/* ==============================
+/* ==================================================
    WORKSPACE
-============================== */
+================================================== */
 
 .workspace{
     flex:1;
@@ -324,9 +333,9 @@ body{
 }
 
 
-/* ==============================
-   FIND BAR
-============================== */
+/* ==================================================
+   LOCALIZAR / SUBSTITUIR
+================================================== */
 
 .findbar{
     height:45px;
@@ -343,17 +352,11 @@ body{
     padding:0 10px;
 }
 
-.find-input{
-    width:210px;
-}
-
-.replace-input{
-    width:210px;
-}
-
 .find-input,
 .replace-input{
     height:29px;
+
+    width:210px;
 
     background:#101318;
 
@@ -368,6 +371,8 @@ body{
     outline:none;
 
     font-family:inherit;
+
+    font-size:12px;
 }
 
 .find-input:focus,
@@ -398,11 +403,76 @@ body{
 }
 
 
-/* ==============================
-   EDITOR
-============================== */
+/* ==================================================
+   BARRA DE FORMATAÇÃO
+================================================== */
 
-.editor{
+.formatbar{
+    height:44px;
+
+    background:#20242b;
+
+    border-bottom:1px solid #303640;
+
+    display:flex;
+    align-items:center;
+
+    gap:3px;
+
+    padding:0 10px;
+}
+
+.format-button{
+    min-width:34px;
+
+    height:30px;
+
+    padding:0 9px;
+
+    border:1px solid transparent;
+
+    border-radius:5px;
+
+    background:transparent;
+
+    color:#dce2eb;
+
+    font-family:inherit;
+
+    font-size:13px;
+
+    cursor:pointer;
+}
+
+.format-button:hover{
+    background:#2b3039;
+
+    border-color:#3b424d;
+}
+
+.format-button.active{
+    background:#344c70;
+
+    border-color:#4c6d9c;
+
+    color:white;
+}
+
+.format-separator{
+    width:1px;
+    height:24px;
+
+    background:#363c47;
+
+    margin:0 7px;
+}
+
+
+/* ==================================================
+   EDITOR
+================================================== */
+
+.editor-area{
     flex:1;
 
     display:flex;
@@ -410,12 +480,16 @@ body{
     min-height:0;
 
     background:#101318;
+
+    overflow:hidden;
 }
 
 .line-numbers{
     width:55px;
 
-    padding-top:20px;
+    flex-shrink:0;
+
+    padding-top:25px;
 
     background:#15181e;
 
@@ -431,51 +505,87 @@ body{
 
     font-size:14px;
 
-    line-height:1.65;
+    line-height:1.7;
 
     user-select:none;
 
     overflow:hidden;
 }
 
-textarea{
+
+/*
+    PÁGINA DE EDIÇÃO
+*/
+
+.document-editor{
     flex:1;
 
-    width:100%;
-    height:100%;
+    overflow:auto;
 
-    resize:none;
-
-    border:0;
-    outline:0;
-
-    padding:20px;
+    padding:35px 55px 100px 45px;
 
     background:#101318;
 
     color:#e7ebf2;
 
-    font-family:Consolas,"Courier New",monospace;
+    font-family:"Segoe UI",Arial,sans-serif;
 
     font-size:15px;
 
-    line-height:1.65;
+    line-height:1.7;
 
-    tab-size:4;
+    outline:none;
 
-    white-space:pre;
-
-    overflow:auto;
+    white-space:normal;
 }
 
-textarea::selection{
-    background:#264f78;
+.document-editor:focus{
+    outline:none;
+}
+
+.document-editor:empty::before{
+    content:"Comece a escrever...";
+
+    color:#555e6d;
+
+    pointer-events:none;
+}
+
+.document-editor p{
+    margin:0 0 8px 0;
+}
+
+.document-editor h1{
+    font-size:30px;
+    margin:0 0 15px 0;
+}
+
+.document-editor h2{
+    font-size:24px;
+    margin:0 0 13px 0;
+}
+
+.document-editor h3{
+    font-size:19px;
+    margin:0 0 11px 0;
+}
+
+.document-editor ul,
+.document-editor ol{
+    padding-left:35px;
+
+    margin-top:8px;
+    margin-bottom:8px;
+}
+
+.document-editor li{
+    margin-bottom:3px;
 }
 
 
-/* ==============================
+/* ==================================================
    STATUS BAR
-============================== */
+================================================== */
 
 .statusbar{
     height:28px;
@@ -495,17 +605,17 @@ textarea::selection{
     font-size:11px;
 }
 
-.status-left,
-.status-right{
+.status-group{
     display:flex;
     align-items:center;
+
     gap:18px;
 }
 
 
-/* ==============================
+/* ==================================================
    MODAL
-============================== */
+================================================== */
 
 .modal-overlay{
     position:fixed;
@@ -564,7 +674,8 @@ textarea::selection{
     font-size:12px;
 }
 
-.modal-content input{
+.modal-content input,
+.modal-content select{
     width:100%;
 
     height:36px;
@@ -582,9 +693,12 @@ textarea::selection{
     padding:0 10px;
 
     outline:none;
+
+    font-family:inherit;
 }
 
-.modal-content input:focus{
+.modal-content input:focus,
+.modal-content select:focus{
     border-color:#4b82e8;
 }
 
@@ -623,9 +737,9 @@ textarea::selection{
 }
 
 
-/* ==============================
+/* ==================================================
    SCROLLBAR
-============================== */
+================================================== */
 
 ::-webkit-scrollbar{
     width:10px;
@@ -638,6 +752,7 @@ textarea::selection{
 
 ::-webkit-scrollbar-thumb{
     background:#363c47;
+
     border-radius:5px;
 }
 
@@ -646,17 +761,19 @@ textarea::selection{
 }
 
 </style>
+
 </head>
 
 
 <body>
 
+
 <div class="app">
 
 
-<!-- =================================
+<!-- ==================================================
      TITLEBAR
-================================= -->
+================================================== -->
 
 <div class="titlebar">
 
@@ -667,87 +784,99 @@ textarea::selection{
         </div>
 
         MultiScript
-        <span>Studio</span>
+
+        <span>
+            Studio
+        </span>
 
     </div>
 
-    <div class="window-controls">
 
-        DOCUMENTO DE TEXTO
-
+    <div class="window-info">
+        EDITOR DE DOCUMENTOS
     </div>
 
 </div>
 
 
-<!-- =================================
+<!-- ==================================================
      TOOLBAR
-================================= -->
+================================================== -->
 
 <div class="toolbar">
 
-    <div class="tool-group">
 
-        <button class="tool" onclick="undo()">
-            ↶ Desfazer
-        </button>
-
-        <button class="tool" onclick="redo()">
-            ↷ Refazer
-        </button>
-
-    </div>
+    <button
+        class="tool"
+        onclick="undo()"
+    >
+        ↶ Desfazer
+    </button>
 
 
-    <div class="separator"></div>
-
-
-    <div class="tool-group">
-
-        <button class="tool" onclick="copyText()">
-            Copiar
-        </button>
-
-        <button class="tool" onclick="selectAll()">
-            Selecionar
-        </button>
-
-    </div>
+    <button
+        class="tool"
+        onclick="redo()"
+    >
+        ↷ Refazer
+    </button>
 
 
     <div class="separator"></div>
 
 
-    <div class="tool-group">
+    <button
+        class="tool"
+        onclick="selectAll()"
+    >
+        Selecionar tudo
+    </button>
 
-        <button class="tool" onclick="saveText()">
-            💾 Salvar
-        </button>
 
-        <button class="tool" onclick="loadText()">
-            Abrir
-        </button>
-
-    </div>
+    <button
+        class="tool"
+        onclick="copyText()"
+    >
+        Copiar
+    </button>
 
 
     <div class="separator"></div>
 
 
-    <div class="tool-group">
+    <button
+        class="tool"
+        onclick="saveText()"
+    >
+        💾 Salvar
+    </button>
 
-        <button class="tool" onclick="printDocument()">
-            🖨 Imprimir
-        </button>
 
-        <button
-            class="tool primary"
-            onclick="openPDFModal()"
-        >
-            📄 Gerar PDF
-        </button>
+    <button
+        class="tool"
+        onclick="loadText()"
+    >
+        Abrir
+    </button>
 
-    </div>
+
+    <div class="separator"></div>
+
+
+    <button
+        class="tool"
+        onclick="printDocument()"
+    >
+        🖨 Imprimir
+    </button>
+
+
+    <button
+        class="tool primary"
+        onclick="openPDFModal()"
+    >
+        📄 Gerar PDF
+    </button>
 
 
     <div style="flex:1"></div>
@@ -763,9 +892,9 @@ textarea::selection{
 </div>
 
 
-<!-- =================================
+<!-- ==================================================
      DOCUMENT BAR
-================================= -->
+================================================== -->
 
 <div class="documentbar">
 
@@ -780,18 +909,19 @@ textarea::selection{
 </div>
 
 
-<!-- =================================
+<!-- ==================================================
      MAIN
-================================= -->
+================================================== -->
 
 <div class="main">
 
 
-<!-- =================================
+<!-- ==================================================
      SIDEBAR
-================================= -->
+================================================== -->
 
 <aside class="sidebar">
+
 
     <div class="sidebar-title">
         Documento
@@ -859,7 +989,10 @@ textarea::selection{
     </div>
 
 
-    <div class="sidebar-title" style="margin-top:25px">
+    <div
+        class="sidebar-title"
+        style="margin-top:25px"
+    >
         Inserir
     </div>
 
@@ -887,19 +1020,23 @@ textarea::selection{
         ─ Quebra de página
     </button>
 
+
 </aside>
 
 
-<!-- =================================
+<!-- ==================================================
      WORKSPACE
-================================= -->
+================================================== -->
 
 <section class="workspace">
 
 
-<!-- FIND -->
+<!-- ==================================================
+     FIND BAR
+================================================== -->
 
 <div class="findbar">
+
 
     <input
         class="find-input"
@@ -907,11 +1044,13 @@ textarea::selection{
         placeholder="Localizar..."
     >
 
+
     <input
         class="replace-input"
         id="replace"
         placeholder="Substituir por..."
     >
+
 
     <button
         class="find-btn"
@@ -920,12 +1059,14 @@ textarea::selection{
         Localizar
     </button>
 
+
     <button
         class="find-btn"
         onclick="replaceText()"
     >
         Substituir
     </button>
+
 
     <button
         class="find-btn"
@@ -934,12 +1075,86 @@ textarea::selection{
         Substituir tudo
     </button>
 
+
 </div>
 
 
-<!-- EDITOR -->
+<!-- ==================================================
+     FORMATAÇÃO
+================================================== -->
 
-<div class="editor">
+<div class="formatbar">
+
+
+    <button
+        class="format-button"
+        onclick="formatar('bold')"
+        title="Negrito"
+    >
+        <b>B</b>
+    </button>
+
+
+    <button
+        class="format-button"
+        onclick="formatar('italic')"
+        title="Itálico"
+    >
+        <i>I</i>
+    </button>
+
+
+    <button
+        class="format-button"
+        onclick="formatar('underline')"
+        title="Sublinhado"
+    >
+        <u>U</u>
+    </button>
+
+
+    <div class="format-separator"></div>
+
+
+    <button
+        class="format-button"
+        onclick="listaNumerada()"
+        title="Lista numerada"
+    >
+        1.
+    </button>
+
+
+    <button
+        class="format-button"
+        onclick="listaMarcadores()"
+        title="Lista com marcadores"
+    >
+        •
+    </button>
+
+
+    <div class="format-separator"></div>
+
+
+    <button
+        class="format-button"
+        onclick="ordenarAZ()"
+        title="Ordenar A-Z"
+    >
+        A-Z
+    </button>
+
+
+</div>
+
+
+<!-- ==================================================
+     EDITOR
+================================================== -->
+
+<div class="editor-area">
+
 
     <div
         class="line-numbers"
@@ -948,27 +1163,32 @@ textarea::selection{
         1
     </div>
 
-    <textarea
+
+    <div
         id="editor"
-        spellcheck="false"
-        placeholder="Comece a escrever..."
-    ></textarea>
+        class="document-editor"
+        contenteditable="true"
+        spellcheck="true"
+    ></div>
+
 
 </div>
 
 
 </section>
 
+
 </div>
 
 
-<!-- =================================
-     STATUS BAR
-================================= -->
+<!-- ==================================================
+     STATUS
+================================================== -->
 
 <div class="statusbar">
 
-    <div class="status-left">
+
+    <div class="status-group">
 
         <span>
             MultiScript Studio
@@ -985,7 +1205,7 @@ textarea::selection{
     </div>
 
 
-    <div class="status-right">
+    <div class="status-group">
 
         <span id="cursorPosition">
             Ln 1, Col 1
@@ -1003,29 +1223,31 @@ textarea::selection{
 </div>
 
 
-<!-- =================================
-     PDF MODAL
-================================= -->
+<!-- ==================================================
+     MODAL PDF
+================================================== -->
 
 <div
     class="modal-overlay"
     id="pdfModal"
 >
 
+
 <div class="modal">
 
+
     <div class="modal-header">
-
         Gerar documento PDF
-
     </div>
 
 
     <div class="modal-content">
 
+
         <label>
             Título do documento
         </label>
+
 
         <input
             type="text"
@@ -1038,16 +1260,52 @@ textarea::selection{
             Nome do arquivo
         </label>
 
+
         <input
             type="text"
             id="pdfFilename"
             value="documento"
         >
 
+
+        <label>
+            Tamanho da fonte
+        </label>
+
+
+        <select id="pdfFontSize">
+
+            <option value="10">
+                10 pt
+            </option>
+
+            <option value="11">
+                11 pt
+            </option>
+
+            <option
+                value="12"
+                selected
+            >
+                12 pt
+            </option>
+
+            <option value="14">
+                14 pt
+            </option>
+
+            <option value="16">
+                16 pt
+            </option>
+
+        </select>
+
+
     </div>
 
 
     <div class="modal-footer">
+
 
         <button
             class="modal-btn"
@@ -1056,6 +1314,7 @@ textarea::selection{
             Cancelar
         </button>
 
+
         <button
             class="modal-btn primary"
             onclick="generatePDF()"
@@ -1063,18 +1322,21 @@ textarea::selection{
             Gerar PDF
         </button>
 
+
     </div>
 
+
 </div>
+
 
 </div>
 
 
 <script>
 
-/* =================================
+/* ==================================================
    ELEMENTOS
-================================= */
+================================================== */
 
 const editor =
     document.getElementById("editor");
@@ -1083,11 +1345,12 @@ const lineNumbers =
     document.getElementById("lineNumbers");
 
 
-/* =================================
+/* ==================================================
    HISTÓRICO
-================================= */
+================================================== */
 
 let history = [""];
+
 let historyIndex = 0;
 
 let changingHistory = false;
@@ -1098,9 +1361,14 @@ function saveHistory(){
     if(changingHistory)
         return;
 
+
+    const content =
+        editor.innerHTML;
+
+
     if(
         history[historyIndex]
-        !== editor.value
+        !== content
     ){
 
         history =
@@ -1109,9 +1377,11 @@ function saveHistory(){
                 historyIndex + 1
             );
 
+
         history.push(
-            editor.value
+            content
         );
+
 
         historyIndex++;
 
@@ -1120,19 +1390,227 @@ function saveHistory(){
 }
 
 
-/* =================================
+/* ==================================================
+   FORMATAÇÃO
+================================================== */
+
+function formatar(command){
+
+    editor.focus();
+
+
+    document.execCommand(
+        command,
+        false,
+        null
+    );
+
+
+    saveHistory();
+
+    updateStats();
+
+}
+
+
+/* ==================================================
+   LISTA NUMERADA
+================================================== */
+
+function listaNumerada(){
+
+    editor.focus();
+
+
+    document.execCommand(
+        "insertOrderedList",
+        false,
+        null
+    );
+
+
+    saveHistory();
+
+    updateStats();
+
+}
+
+
+/* ==================================================
+   LISTA COM MARCADORES
+================================================== */
+
+function listaMarcadores(){
+
+    editor.focus();
+
+
+    document.execCommand(
+        "insertUnorderedList",
+        false,
+        null
+    );
+
+
+    saveHistory();
+
+    updateStats();
+
+}
+
+
+/* ==================================================
+   ORDENAR A-Z
+================================================== */
+
+function ordenarAZ(){
+
+    const selection =
+        window.getSelection();
+
+
+    if(
+        !selection.rangeCount
+    ){
+
+        alert(
+            "Selecione as linhas que deseja ordenar."
+        );
+
+        return;
+
+    }
+
+
+    const range =
+        selection.getRangeAt(0);
+
+
+    const fragment =
+        range.cloneContents();
+
+
+    const elements =
+        Array.from(
+            fragment.children
+        );
+
+
+    if(elements.length < 2){
+
+        /*
+            Tenta ordenar parágrafos
+            dentro da seleção.
+        */
+
+        const paragraphs =
+            Array.from(
+                editor.querySelectorAll(
+                    "p"
+                )
+            );
+
+
+        if(paragraphs.length < 2){
+
+            alert(
+                "É necessário ter pelo menos duas linhas."
+            );
+
+            return;
+
+        }
+
+
+        paragraphs.sort(
+            function(a,b){
+
+                return a.innerText
+                    .trim()
+                    .localeCompare(
+                        b.innerText.trim(),
+                        "pt-BR",
+                        {
+                            sensitivity:"base"
+                        }
+                    );
+
+            }
+        );
+
+
+        paragraphs.forEach(
+            function(paragraph){
+
+                editor.appendChild(
+                    paragraph
+                );
+
+            }
+        );
+
+    }else{
+
+        elements.sort(
+            function(a,b){
+
+                return a.innerText
+                    .trim()
+                    .localeCompare(
+                        b.innerText.trim(),
+                        "pt-BR",
+                        {
+                            sensitivity:"base"
+                        }
+                    );
+
+            }
+        );
+
+
+        elements.forEach(
+            function(element){
+
+                fragment.appendChild(
+                    element
+                );
+
+            }
+        );
+
+
+        range.deleteContents();
+
+        range.insertNode(
+            fragment
+        );
+
+    }
+
+
+    saveHistory();
+
+    updateStats();
+
+}
+
+
+/* ==================================================
    ESTATÍSTICAS
-================================= */
+================================================== */
 
 function updateStats(){
 
     const text =
-        editor.value;
+        editor.innerText;
+
 
     document.getElementById(
         "characters"
     ).textContent =
-        text.length.toLocaleString("pt-BR");
+        text.length.toLocaleString(
+            "pt-BR"
+        );
 
 
     const words =
@@ -1140,46 +1618,64 @@ function updateStats(){
         ? text.trim().split(/\s+/).length
         : 0;
 
+
     document.getElementById(
         "words"
     ).textContent =
-        words.toLocaleString("pt-BR");
+        words.toLocaleString(
+            "pt-BR"
+        );
 
 
-    const lineCount =
+    const lines =
         text
         ? text.split("\n").length
         : 1;
 
+
     document.getElementById(
         "lines"
     ).textContent =
-        lineCount;
+        lines;
 
 
     updateLineNumbers();
 
+    updateCursor();
+
 }
 
 
-/* =================================
-   LINHAS
-================================= */
+/* ==================================================
+   NÚMEROS DAS LINHAS
+================================================== */
 
 function updateLineNumbers(){
 
+    const text =
+        editor.innerText;
+
+
     const count =
-        editor.value
-        ? editor.value.split("\n").length
+        text
+        ? text.split("\n").length
         : 1;
+
 
     let html = "";
 
-    for(let i=1;i<=count;i++){
 
-        html += i + "<br>";
+    for(
+        let i = 1;
+        i <= count;
+        i++
+    ){
+
+        html +=
+            i + "<br>";
 
     }
+
 
     lineNumbers.innerHTML =
         html;
@@ -1187,9 +1683,9 @@ function updateLineNumbers(){
 }
 
 
-/* =================================
-   SINCRONIZAR SCROLL
-================================= */
+/* ==================================================
+   SCROLL
+================================================== */
 
 editor.addEventListener(
     "scroll",
@@ -1202,26 +1698,109 @@ editor.addEventListener(
 );
 
 
-/* =================================
+/* ==================================================
+   INPUT
+================================================== */
+
+editor.addEventListener(
+    "input",
+    function(){
+
+        saveHistory();
+
+        updateStats();
+
+    }
+);
+
+
+/* ==================================================
    CURSOR
-================================= */
+================================================== */
 
 function updateCursor(){
 
-    const position =
-        editor.selectionStart;
+    const selection =
+        window.getSelection();
+
+
+    if(
+        !selection.rangeCount
+    )
+        return;
+
+
+    const range =
+        selection.getRangeAt(0);
+
+
+    if(
+        !editor.contains(
+            range.startContainer
+        )
+    )
+        return;
+
+
+    let node =
+        range.startContainer;
+
+
+    let offset =
+        range.startOffset;
+
+
+    while(
+        node &&
+        node !== editor
+    ){
+
+        if(
+            node.previousSibling
+        ){
+
+            let sibling =
+                node.previousSibling;
+
+
+            while(
+                sibling.lastChild
+            ){
+
+                sibling =
+                    sibling.lastChild;
+
+            }
+
+
+            offset +=
+                sibling.textContent
+                .length;
+
+        }
+
+
+        node =
+            node.parentNode;
+
+    }
+
 
     const before =
-        editor.value.substring(
+        editor.innerText
+        .substring(
             0,
-            position
+            offset
         );
+
 
     const rows =
         before.split("\n");
 
+
     const line =
         rows.length;
+
 
     const column =
         rows[rows.length - 1].length + 1;
@@ -1245,52 +1824,43 @@ editor.addEventListener(
     updateCursor
 );
 
-
-/* =================================
-   INPUT
-================================= */
-
 editor.addEventListener(
-    "input",
-    function(){
-
-        saveHistory();
-
-        updateStats();
-
-        updateCursor();
-
-    }
+    "mouseup",
+    updateCursor
 );
 
 
-/* =================================
+/* ==================================================
    UNDO
-================================= */
+================================================== */
 
 function undo(){
 
     if(historyIndex <= 0)
         return;
 
+
     historyIndex--;
+
 
     changingHistory = true;
 
-    editor.value =
+
+    editor.innerHTML =
         history[historyIndex];
+
 
     changingHistory = false;
 
+
     updateStats();
-    updateCursor();
 
 }
 
 
-/* =================================
+/* ==================================================
    REDO
-================================= */
+================================================== */
 
 function redo(){
 
@@ -1300,64 +1870,104 @@ function redo(){
     )
         return;
 
+
     historyIndex++;
+
 
     changingHistory = true;
 
-    editor.value =
+
+    editor.innerHTML =
         history[historyIndex];
+
 
     changingHistory = false;
 
+
     updateStats();
-    updateCursor();
 
 }
 
 
-/* =================================
+/* ==================================================
    SELECIONAR
-================================= */
+================================================== */
 
 function selectAll(){
 
     editor.focus();
 
-    editor.select();
 
-}
+    const range =
+        document.createRange();
 
 
-/* =================================
-   COPIAR
-================================= */
+    range.selectNodeContents(
+        editor
+    );
 
-function copyText(){
 
-    navigator.clipboard.writeText(
-        editor.value
+    const selection =
+        window.getSelection();
+
+
+    selection.removeAllRanges();
+
+    selection.addRange(
+        range
     );
 
 }
 
 
-/* =================================
+/* ==================================================
+   COPIAR
+================================================== */
+
+function copyText(){
+
+    const selection =
+        window.getSelection();
+
+
+    if(
+        selection.toString()
+    ){
+
+        navigator.clipboard.writeText(
+            selection.toString()
+        );
+
+    }else{
+
+        navigator.clipboard.writeText(
+            editor.innerText
+        );
+
+    }
+
+}
+
+
+/* ==================================================
    DATA
-================================= */
+================================================== */
 
 function insertDate(){
 
     insertText(
         new Date()
-        .toLocaleDateString("pt-BR")
+        .toLocaleDateString(
+            "pt-BR"
+        )
     );
 
 }
 
 
-/* =================================
+/* ==================================================
    HORA
-================================= */
+================================================== */
 
 function insertTime(){
 
@@ -1375,53 +1985,95 @@ function insertTime(){
 }
 
 
-/* =================================
+/* ==================================================
    INSERIR TEXTO
-================================= */
+================================================== */
 
 function insertText(text){
 
-    const start =
-        editor.selectionStart;
-
-    const end =
-        editor.selectionEnd;
+    editor.focus();
 
 
-    editor.setRangeText(
-        text,
-        start,
-        end,
-        "end"
+    document.execCommand(
+        "insertText",
+        false,
+        text
     );
+
 
     saveHistory();
 
     updateStats();
 
-    updateCursor();
-
-    editor.focus();
-
 }
 
 
-/* =================================
+/* ==================================================
    QUEBRA DE PÁGINA
-================================= */
+================================================== */
 
 function insertPageBreak(){
 
-    insertText(
-        "\n\n──────────── QUEBRA DE PÁGINA ────────────\n\n"
-    );
+    editor.focus();
+
+
+    const pageBreak =
+        document.createElement(
+            "div"
+        );
+
+
+    pageBreak.style.cssText = `
+        border-top:2px dashed #596273;
+        margin:25px 0;
+        height:1px;
+    `;
+
+
+    pageBreak.innerHTML =
+        "<br>";
+
+
+    const selection =
+        window.getSelection();
+
+
+    if(
+        selection.rangeCount
+    ){
+
+        const range =
+            selection.getRangeAt(0);
+
+        range.deleteContents();
+
+        range.insertNode(
+            pageBreak
+        );
+
+        range.setStartAfter(
+            pageBreak
+        );
+
+        range.collapse(true);
+
+        selection.removeAllRanges();
+
+        selection.addRange(
+            range
+        );
+
+    }
+
+
+    saveHistory();
 
 }
 
 
-/* =================================
+/* ==================================================
    FIND
-================================= */
+================================================== */
 
 function findText(){
 
@@ -1430,57 +2082,31 @@ function findText(){
             "find"
         ).value;
 
+
     if(!search)
         return;
 
 
-    const start =
-        editor.selectionEnd;
-
-
-    let position =
-        editor.value.indexOf(
-            search,
-            start
+    const found =
+        window.find(
+            search
         );
 
 
-    if(position === -1){
-
-        position =
-            editor.value.indexOf(
-                search
-            );
-
-    }
-
-
-    if(position === -1){
+    if(!found){
 
         alert(
             "Texto não encontrado."
         );
 
-        return;
-
     }
-
-
-    editor.focus();
-
-    editor.setSelectionRange(
-        position,
-        position + search.length
-    );
-
-    updateCursor();
 
 }
 
 
-/* =================================
+/* ==================================================
    REPLACE
-================================= */
+================================================== */
 
 function replaceText(){
 
@@ -1499,30 +2125,29 @@ function replaceText(){
         return;
 
 
-    const selected =
-        editor.value.substring(
-            editor.selectionStart,
-            editor.selectionEnd
-        );
+    const selection =
+        window.getSelection();
 
 
-    if(selected === search){
+    if(
+        selection.toString() === search
+    ){
 
-        editor.setRangeText(
-            replacement,
-            editor.selectionStart,
-            editor.selectionEnd,
-            "end"
+        document.execCommand(
+            "insertText",
+            false,
+            replacement
         );
 
     }else{
 
-        const position =
-            editor.value.indexOf(
+        const found =
+            window.find(
                 search
             );
 
-        if(position === -1){
+
+        if(!found){
 
             alert(
                 "Texto não encontrado."
@@ -1532,11 +2157,11 @@ function replaceText(){
 
         }
 
-        editor.setRangeText(
-            replacement,
-            position,
-            position + search.length,
-            "end"
+
+        document.execCommand(
+            "insertText",
+            false,
+            replacement
         );
 
     }
@@ -1546,14 +2171,12 @@ function replaceText(){
 
     updateStats();
 
-    updateCursor();
-
 }
 
 
-/* =================================
+/* ==================================================
    REPLACE ALL
-================================= */
+================================================== */
 
 function replaceAllText(){
 
@@ -1572,32 +2195,57 @@ function replaceAllText(){
         return;
 
 
-    editor.value =
-        editor.value.split(
-            search
-        ).join(
-            replacement
+    const walker =
+        document.createTreeWalker(
+            editor,
+            NodeFilter.SHOW_TEXT
         );
+
+
+    const nodes = [];
+
+
+    while(
+        walker.nextNode()
+    ){
+
+        nodes.push(
+            walker.currentNode
+        );
+
+    }
+
+
+    nodes.forEach(
+        function(node){
+
+            node.nodeValue =
+                node.nodeValue.split(
+                    search
+                ).join(
+                    replacement
+                );
+
+        }
+    );
 
 
     saveHistory();
 
     updateStats();
 
-    updateCursor();
-
 }
 
 
-/* =================================
+/* ==================================================
    SALVAR
-================================= */
+================================================== */
 
 function saveText(){
 
     localStorage.setItem(
-        "multiscript_document",
-        editor.value
+        "multiscript_html",
+        editor.innerHTML
     );
 
 
@@ -1622,15 +2270,15 @@ function saveText(){
 }
 
 
-/* =================================
+/* ==================================================
    ABRIR
-================================= */
+================================================== */
 
 function loadText(){
 
     const saved =
         localStorage.getItem(
-            "multiscript_document"
+            "multiscript_html"
         );
 
 
@@ -1645,7 +2293,7 @@ function loadText(){
     }
 
 
-    editor.value =
+    editor.innerHTML =
         saved;
 
 
@@ -1653,18 +2301,18 @@ function loadText(){
 
     updateStats();
 
-    updateCursor();
-
 }
 
 
-/* =================================
+/* ==================================================
    LIMPAR
-================================= */
+================================================== */
 
 function clearDocument(){
 
-    if(!editor.value)
+    if(
+        !editor.innerText.trim()
+    )
         return;
 
 
@@ -1674,26 +2322,26 @@ function clearDocument(){
         )
     ){
 
-        editor.value = "";
+        editor.innerHTML = "";
 
         saveHistory();
 
         updateStats();
-
-        updateCursor();
 
     }
 
 }
 
 
-/* =================================
+/* ==================================================
    MODAL PDF
-================================= */
+================================================== */
 
 function openPDFModal(){
 
-    if(!editor.value.trim()){
+    if(
+        !editor.innerText.trim()
+    ){
 
         alert(
             "O documento está vazio."
@@ -1728,19 +2376,11 @@ function closePDFModal(){
 }
 
 
-/* =================================
-   GERAR PDF
-================================= */
+/* ==================================================
+   PDF
+================================================== */
 
 function generatePDF(){
-
-    const text =
-        editor.value;
-
-
-    if(!text.trim())
-        return;
-
 
     const {
         jsPDF
@@ -1762,10 +2402,17 @@ function generatePDF(){
 
 
     filename =
-        filename
-        .replace(
+        filename.replace(
             /\.pdf$/i,
             ""
+        );
+
+
+    const fontSize =
+        Number(
+            document.getElementById(
+                "pdfFontSize"
+            ).value
         );
 
 
@@ -1780,25 +2427,36 @@ function generatePDF(){
     const pageWidth =
         pdf.internal.pageSize.getWidth();
 
+
     const pageHeight =
         pdf.internal.pageSize.getHeight();
 
 
     const margin = 20;
 
-    const contentWidth =
+
+    const usableWidth =
         pageWidth -
         margin * 2;
 
 
-    /* CABEÇALHO */
+    /* TÍTULO */
 
     pdf.setFont(
         "helvetica",
         "bold"
     );
 
+
     pdf.setFontSize(18);
+
+
+    pdf.setTextColor(
+        30,
+        30,
+        30
+    );
+
 
     pdf.text(
         title,
@@ -1808,10 +2466,11 @@ function generatePDF(){
 
 
     pdf.setDrawColor(
-        180,
-        180,
-        180
+        190,
+        190,
+        190
     );
+
 
     pdf.line(
         margin,
@@ -1821,53 +2480,334 @@ function generatePDF(){
     );
 
 
-    /* TEXTO */
-
-    pdf.setFont(
-        "helvetica",
-        "normal"
-    );
-
-    pdf.setFontSize(11);
-
-
-    const lines =
-        pdf.splitTextToSize(
-            text,
-            contentWidth
-        );
-
+    /*
+        Percorre os elementos HTML
+    */
 
     let y =
         margin + 15;
 
 
-    const lineHeight = 5.5;
+    function ensureSpace(height){
+
+        if(
+            y + height >
+            pageHeight - margin
+        ){
+
+            pdf.addPage();
+
+            y = margin;
+
+        }
+
+    }
 
 
-    lines.forEach(
-        function(line){
+    function writeText(
+        text,
+        style
+    ){
+
+        if(!text)
+            return;
+
+
+        let fontStyle =
+            "normal";
+
+
+        if(
+            style.bold &&
+            style.italic
+        ){
+
+            fontStyle =
+                "bolditalic";
+
+        }else if(
+            style.bold
+        ){
+
+            fontStyle =
+                "bold";
+
+        }else if(
+            style.italic
+        ){
+
+            fontStyle =
+                "italic";
+
+        }
+
+
+        pdf.setFont(
+            "helvetica",
+            fontStyle
+        );
+
+
+        pdf.setFontSize(
+            fontSize
+        );
+
+
+        pdf.setTextColor(
+            30,
+            30,
+            30
+        );
+
+
+        const lines =
+            pdf.splitTextToSize(
+                text,
+                usableWidth
+            );
+
+
+        const lineHeight =
+            fontSize * 0.45;
+
+
+        lines.forEach(
+            function(line){
+
+                ensureSpace(
+                    lineHeight
+                );
+
+
+                pdf.text(
+                    line,
+                    margin,
+                    y
+                );
+
+
+                y +=
+                    lineHeight;
+
+            }
+        );
+
+    }
+
+
+    function processNode(
+        node,
+        style = {
+            bold:false,
+            italic:false,
+            underline:false
+        }
+    ){
+
+        if(
+            node.nodeType ===
+            Node.TEXT_NODE
+        ){
+
+            writeText(
+                node.nodeValue,
+                style
+            );
+
+            return;
+
+        }
+
+
+        if(
+            node.nodeType !==
+            Node.ELEMENT_NODE
+        )
+            return;
+
+
+        const tag =
+            node.tagName.toLowerCase();
+
+
+        const newStyle = {
+            bold:
+                style.bold ||
+                tag === "b" ||
+                tag === "strong",
+
+            italic:
+                style.italic ||
+                tag === "i" ||
+                tag === "em",
+
+            underline:
+                style.underline ||
+                tag === "u"
+        };
+
+
+        if(
+            tag === "br"
+        ){
+
+            y += fontSize * 0.45;
+
+            return;
+
+        }
+
+
+        if(
+            tag === "p" ||
+            tag === "div" ||
+            /^h[1-6]$/.test(tag)
+        ){
 
             if(
-                y + lineHeight >
-                pageHeight - margin
+                /^h[1-6]$/.test(tag)
             ){
 
-                pdf.addPage();
+                pdf.setFont(
+                    "helvetica",
+                    "bold"
+                );
 
-                y = margin;
+                pdf.setFontSize(
+                    tag === "h1"
+                    ? 18
+                    : tag === "h2"
+                    ? 16
+                    : 14
+                );
 
             }
 
 
-            pdf.text(
-                line,
-                margin,
-                y
+            Array.from(
+                node.childNodes
+            ).forEach(
+                function(child){
+
+                    processNode(
+                        child,
+                        newStyle
+                    );
+
+                }
             );
 
 
-            y += lineHeight;
+            y +=
+                fontSize * 0.35;
+
+
+            return;
+
+        }
+
+
+        if(
+            tag === "ul" ||
+            tag === "ol"
+        ){
+
+            const items =
+                Array.from(
+                    node.children
+                );
+
+
+            items.forEach(
+                function(item,index){
+
+                    const prefix =
+                        tag === "ol"
+                        ? `${index + 1}. `
+                        : "• ";
+
+
+                    pdf.setFont(
+                        "helvetica",
+                        newStyle.bold
+                        ? "bold"
+                        : "normal"
+                    );
+
+
+                    pdf.setFontSize(
+                        fontSize
+                    );
+
+
+                    const text =
+                        item.innerText
+                        .trim();
+
+
+                    const lines =
+                        pdf.splitTextToSize(
+                            prefix + text,
+                            usableWidth - 8
+                        );
+
+
+                    lines.forEach(
+                        function(line){
+
+                            ensureSpace(
+                                fontSize * .45
+                            );
+
+
+                            pdf.text(
+                                line,
+                                margin + 5,
+                                y
+                            );
+
+
+                            y +=
+                                fontSize * .45;
+
+                        }
+                    );
+
+                }
+            );
+
+
+            y +=
+                fontSize * .3;
+
+
+            return;
+
+        }
+
+
+        Array.from(
+            node.childNodes
+        ).forEach(
+            function(child){
+
+                processNode(
+                    child,
+                    newStyle
+                );
+
+            }
+        );
+
+    }
+
+
+    Array.from(
+        editor.childNodes
+    ).forEach(
+        function(node){
+
+            processNode(node);
 
         }
     );
@@ -1887,13 +2827,22 @@ function generatePDF(){
 
         pdf.setPage(i);
 
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+
         pdf.setFontSize(8);
+
 
         pdf.setTextColor(
             120,
             120,
             120
         );
+
 
         pdf.text(
             `${title} · Página ${i} de ${pages}`,
@@ -1917,13 +2866,15 @@ function generatePDF(){
 }
 
 
-/* =================================
+/* ==================================================
    IMPRESSÃO
-================================= */
+================================================== */
 
 function printDocument(){
 
-    if(!editor.value.trim())
+    if(
+        !editor.innerText.trim()
+    )
         return;
 
 
@@ -1935,6 +2886,7 @@ function printDocument(){
 
 
     printWindow.document.write(`
+
 <!DOCTYPE html>
 
 <html>
@@ -1943,7 +2895,7 @@ function printDocument(){
 
 <meta charset="UTF-8">
 
-<title>Documento</title>
+<title>MultiScript</title>
 
 <style>
 
@@ -1956,7 +2908,10 @@ body{
     font-family:Arial,sans-serif;
     font-size:12pt;
     line-height:1.6;
-    white-space:pre-wrap;
+}
+
+p{
+    margin:0 0 8px 0;
 }
 
 </style>
@@ -1965,11 +2920,12 @@ body{
 
 <body>
 
-${escapeHTML(editor.value)}
+${editor.innerHTML}
 
 </body>
 
 </html>
+
 `);
 
 
@@ -1982,50 +2938,25 @@ ${escapeHTML(editor.value)}
 }
 
 
-/* =================================
-   ESCAPE HTML
-================================= */
-
-function escapeHTML(text){
-
-    return text
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* =================================
-   TAB NO EDITOR
-================================= */
+/* ==================================================
+   TECLA TAB
+================================================== */
 
 editor.addEventListener(
     "keydown",
     function(event){
 
-        if(event.key === "Tab"){
+        if(
+            event.key === "Tab"
+        ){
 
             event.preventDefault();
 
-            insertText("    ");
+            document.execCommand(
+                "insertText",
+                false,
+                "    "
+            );
 
         }
 
@@ -2033,13 +2964,14 @@ editor.addEventListener(
 );
 
 
-/* =================================
+/* ==================================================
    ATALHOS
-================================= */
+================================================== */
 
 document.addEventListener(
     "keydown",
     function(event){
+
 
         /* CTRL + S */
 
@@ -2087,6 +3019,48 @@ document.addEventListener(
         }
 
 
+        /* CTRL + B */
+
+        if(
+            event.ctrlKey &&
+            event.key.toLowerCase() === "b"
+        ){
+
+            event.preventDefault();
+
+            formatar("bold");
+
+        }
+
+
+        /* CTRL + I */
+
+        if(
+            event.ctrlKey &&
+            event.key.toLowerCase() === "i"
+        ){
+
+            event.preventDefault();
+
+            formatar("italic");
+
+        }
+
+
+        /* CTRL + U */
+
+        if(
+            event.ctrlKey &&
+            event.key.toLowerCase() === "u"
+        ){
+
+            event.preventDefault();
+
+            formatar("underline");
+
+        }
+
+
         /* CTRL + Z */
 
         if(
@@ -2120,9 +3094,9 @@ document.addEventListener(
 );
 
 
-/* =================================
+/* ==================================================
    INICIALIZAÇÃO
-================================= */
+================================================== */
 
 updateStats();
 
@@ -2130,5 +3104,7 @@ updateCursor();
 
 </script>
 
+
 </body>
+
 </html>
