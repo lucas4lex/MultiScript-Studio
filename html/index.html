@@ -4,541 +4,257 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MultiScript HTML Editor V14</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;height:100%;overflow:hidden;font-family:Segoe UI,Arial,sans-serif;background:#0b1118;color:#dbe5ef}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-button,.input{border:1px solid #2b3949;background:#151e28;color:#dbe5ef;border-radius:7px}
-button{padding:8px 11px}
-button:hover{background:#1d2a38}
-.primary{background:#2374d8;border-color:#3989ec;color:white}
-.danger{background:#6b2828;border-color:#a53b3b}
-.app{height:100%;display:grid;grid-template-rows:54px 1fr}
-.top{display:flex;align-items:center;gap:5px;padding:7px 9px;background:#0d141c;border-bottom:1px solid #263342;overflow:auto;white-space:nowrap}
-.logo{font-weight:800;color:#fff;padding:0 10px}.logo i{color:#4da0ff;font-style:normal}
-.top .spacer{flex:1}
-.layout{min-height:0;display:grid;grid-template-columns:245px 1fr 280px}
-.left,.right{background:#111922;overflow:auto}.left{border-right:1px solid #263342}.right{border-left:1px solid #263342}
-.project{padding:14px;font-weight:800;border-bottom:1px solid #263342}
-.group{padding:13px 12px 6px;color:#718196;font-size:10px;font-weight:800;letter-spacing:.12em}
-.file{display:flex;gap:8px;align-items:center;padding:7px 12px;border-left:3px solid transparent;color:#aab7c6;font-size:12px;cursor:pointer}
-.file:hover{background:#18232f;color:white}.file.active{background:#172b40;border-left-color:#3188ed;color:white}.file.lock{color:#687789}
-.center{min-width:0;min-height:0;display:flex;flex-direction:column}
-.crumb{height:38px;display:flex;align-items:center;padding:0 13px;border-bottom:1px solid #263342;color:#7e8da0;font-size:12px}
-.view{display:none;flex:1;min-height:0;overflow:auto}.view.on{display:block}
-.editor{display:flex;flex:1;min-height:0;background:#0b1016}
-.lines{width:45px;overflow:hidden;text-align:right;padding:14px 8px;color:#4f5e70;background:#090d12;border-right:1px solid #202b37;font:13px/1.6 Consolas,monospace;user-select:none}
-#code{flex:1;border:0;outline:0;resize:none;background:#0b1016;color:#d9e4ef;padding:14px;font:13px/1.6 Consolas,monospace;tab-size:2}
-.tabs{height:37px;display:flex;overflow:auto;border-bottom:1px solid #263342;background:#0e151d}
-.tab{padding:9px 12px;border-right:1px solid #263342;color:#8190a2;font-size:12px;white-space:nowrap;cursor:pointer}.tab.on{background:#151f2a;color:#fff}
-.status{height:26px;padding:5px 10px;background:#090e13;border-top:1px solid #263342;color:#68788a;font-size:11px}
-.home{padding:24px}.hero{padding:25px;border:1px solid #2a394a;border-radius:14px;background:linear-gradient(135deg,#17273a,#111923)}
-.hero h1{margin:0 0 8px;font-size:28px}.hero p{max-width:800px;color:#9aaabc;line-height:1.6}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:16px}
-.card{border:1px solid #293847;border-radius:10px;background:#131d27;padding:15px}.card h3{margin:0 0 7px;font-size:14px}.muted{color:#8392a4;font-size:12px;line-height:1.55}
-.gen{padding:22px}.gen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:18px}.gen-card{border:1px solid #293847;background:#131d27;border-radius:11px;padding:17px;cursor:pointer}.gen-card:hover{border-color:#3885d8}
-.row{display:flex;align-items:center;gap:9px;padding:10px;border-bottom:1px solid #24303c}.grow{flex:1;min-width:0}.tag{font-size:10px;background:#263b54;color:#9dc9ff;border-radius:5px;padding:3px 6px}
-input,select,textarea{width:100%;padding:9px;background:#0b1219;border:1px solid #2b3949;color:#e4edf5;border-radius:7px;outline:0}label{display:block;margin:10px 0 5px;color:#94a4b6;font-size:12px}
-.modalbg{position:fixed;inset:0;z-index:50;background:#000b;display:none;align-items:center;justify-content:center}.modalbg.open{display:flex}
-.modal{width:min(720px,94vw);max-height:90vh;overflow:auto;background:#121a24;border:1px solid #354457;border-radius:12px;padding:18px;box-shadow:0 20px 60px #000}
-.modal h2{margin:0 0 14px;font-size:18px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
-.preview{width:100%;height:65vh;border:0;background:white}
-.image-grid{padding:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.thumb{height:130px;background:white;display:flex;align-items:center;justify-content:center;border-radius:7px;overflow:hidden}.thumb img{max-width:100%;max-height:100%}
-.svg-modal{width:min(1200px,97vw);height:min(90vh,850px);padding:0;overflow:hidden;display:grid;grid-template-rows:48px 1fr}
-.svg-head{display:flex;gap:5px;align-items:center;padding:7px 9px;border-bottom:1px solid #263342}.svg-head .spacer{flex:1}
-.svg-body{min-height:0;display:grid;grid-template-columns:150px 1fr 210px}.svg-tools,.layers{background:#111922;padding:9px;overflow:auto}.svg-tools button{display:block;width:100%;margin-bottom:6px;text-align:left}.canvas{min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;overflow:auto;background:#252e39;padding:20px}.canvas svg{background:white;box-shadow:0 12px 35px #0008;max-width:none}.layer{display:flex;gap:5px;padding:7px;border-bottom:1px solid #24303c;font-size:11px}.layer span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.code-svg{display:none;width:100%;height:100%;resize:none;border:0;border-radius:0}
-@media(max-width:900px){.layout{grid-template-columns:210px 1fr}.right{display:none}.svg-body{grid-template-columns:115px 1fr 170px}}
-@media(max-width:650px){.layout{grid-template-columns:1fr}.left{display:none}.svg-body{grid-template-columns:95px 1fr}.layers{display:none}.top{gap:2px}}
+:root{--bg:#0b0f14;--panel:#111720;--panel2:#151d28;--line:#263242;--text:#e7edf5;--muted:#8d9bad;--accent:#4da3ff;--danger:#ff6262;--ok:#52d68b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif;height:100vh;overflow:hidden}
+button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:#182231;color:var(--text);border-radius:7px;padding:8px 11px}button:hover{background:#202d3e}button.primary{background:#1769aa;border-color:#2588d2}button.danger{background:#65252c;border-color:#87343d}
+.top{height:58px;background:#0f151e;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:8px 12px}.brand{font-weight:800;margin-right:10px;white-space:nowrap}.brand b{color:var(--accent)}
+.nav{display:flex;gap:5px;flex:1}.nav button.active{background:#1d4263;border-color:#327fb9}
+.layout{height:calc(100vh - 58px);display:grid;grid-template-columns:250px 1fr;min-width:900px}.side{background:#0f151d;border-right:1px solid var(--line);overflow:auto;padding:12px}.workspace{min-width:0;display:flex;flex-direction:column}
+.section-title{font-size:11px;color:#6f7e90;font-weight:800;letter-spacing:.12em;margin:16px 5px 7px}.tree button{width:100%;text-align:left;background:transparent;border:0;padding:7px 8px;color:#bdc9d7}.tree button:hover{background:#18222e}.tree button.active{background:#183451;color:#fff}.lock{color:#e2b84b}.crumb{height:40px;border-bottom:1px solid var(--line);padding:11px 15px;color:var(--muted);background:#101720}.view{display:none;flex:1;min-height:0;overflow:auto}.view.active{display:block}.editor{height:100%;display:grid;grid-template-rows:40px 1fr}.editorbar{display:flex;gap:7px;align-items:center;padding:6px 9px;border-bottom:1px solid var(--line);background:#111821}.editorbar span{color:var(--muted);margin-right:auto}.codewrap{position:relative;height:100%;overflow:hidden}.code{width:100%;height:100%;resize:none;border:0;outline:0;background:#090d12;color:#d8e1eb;padding:15px 18px;font:13px/1.6 Consolas,Monaco,monospace;tab-size:2}
+.panel{padding:22px;max-width:1200px;margin:auto}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:17px}.card h3{margin:0 0 8px}.card p{color:var(--muted);line-height:1.5}.field{display:flex;flex-direction:column;gap:6px;margin:10px 0}.field label{color:#b8c4d1;font-size:12px}.field input,.field select,.field textarea{background:#0b1118;border:1px solid var(--line);color:#fff;border-radius:7px;padding:9px;outline:0}.field textarea{min-height:110px;resize:vertical}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.list{display:grid;gap:8px}.row{display:flex;align-items:center;gap:10px;padding:11px;background:#101822;border:1px solid var(--line);border-radius:8px}.row .grow{flex:1}.small{font-size:12px;color:var(--muted)}.tag{display:inline-block;padding:3px 7px;border:1px solid var(--line);border-radius:20px;font-size:11px;color:#aebbd0}
+.modal-bg{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:50}.modal-bg.open{display:flex}.modal{width:min(720px,92vw);max-height:90vh;overflow:auto;background:#121a24;border:1px solid #304052;border-radius:12px;box-shadow:0 25px 80px #000;padding:20px}.modal h2{margin-top:0}.toast{position:fixed;right:18px;bottom:18px;background:#172333;border:1px solid #35506d;padding:11px 15px;border-radius:8px;display:none;z-index:100}.toast.show{display:block}
+.image-editor{height:100%;display:grid;grid-template-columns:180px 1fr 220px;min-height:0}.tools,.layers{background:#101720;padding:10px;border-color:var(--line);border-style:solid}.tools{border-width:0 1px 0 0}.layers{border-width:0 0 0 1px;overflow:auto}.tools button{display:block;width:100%;margin-bottom:7px}.canvasarea{display:flex;flex-direction:column;min-width:0;background:#0a0e13}.canvasbar{padding:8px;border-bottom:1px solid var(--line);display:flex;gap:6px;flex-wrap:wrap}.canvasbox{flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;padding:25px;background:repeating-conic-gradient(#151b22 0 25%,#11161c 0 50%) 50%/24px 24px}.canvasbox svg{background:white;box-shadow:0 10px 40px #0008;max-width:90%;max-height:80%}.layer{padding:7px;border:1px solid var(--line);margin-bottom:5px;border-radius:6px;background:#141d28}.layer button{padding:2px 5px;float:right}.code-svg{width:100%;height:100%;background:#090d12;color:#d8e1eb;border:0;padding:15px;font:13px Consolas,monospace}
+@media(max-width:1000px){.layout{grid-template-columns:210px 1fr}.image-editor{grid-template-columns:145px 1fr 180px}}
 </style>
 </head>
 <body>
-<div class="app">
 <header class="top">
-  <div class="logo">MultiScript <i>V14</i></div>
-  <button data-view="home" class="nav on">⌂ Início</button>
-  <button data-view="editorView" class="nav">▣ Editor</button>
-  <button data-view="generatorView" class="nav">＋ Geradores</button>
-  <button data-view="imagesView" class="nav">🖼 Imagens</button>
-  <button data-view="pluginsView" class="nav">🔌 Plugins</button>
-  <button data-view="pagesView" class="nav">☷ Páginas</button>
-  <span class="spacer"></span>
-  <button id="newBtn">＋ Novo</button>
-  <button id="openBtn">📂 Abrir Projeto</button>
-  <button id="saveBtn">💾 Salvar</button>
-  <button id="previewBtn">▶ Preview</button>
-  <button id="zipBtn" class="primary">📦 ZIP</button>
+  <div class="brand">MultiScript <b>V14</b></div>
+  <div class="nav">
+    <button data-view="editor" class="active">🖥 Editor</button>
+    <button data-view="generators">⚙️ Geradores</button>
+    <button data-view="images">🖼 Imagens</button>
+    <button data-view="plugins">🔌 Plugins</button>
+    <button data-view="preview">👁 Preview</button>
+  </div>
+  <button id="newBtn">＋ Novo</button><button id="openBtn">📂 Abrir</button><button id="saveBtn" class="primary">Salvar</button><button id="zipBtn">📦 ZIP</button>
 </header>
-
 <div class="layout">
-<aside class="left">
-  <div class="project" id="projectName">MEU-PROJETO</div>
-  <div class="group">PÁGINAS</div><div id="filesPages"></div>
-  <div class="group">IMAGENS</div><div id="filesImages"></div>
-  <div class="group">ESTILOS / SCRIPTS</div><div id="filesAssets"></div>
-  <div class="group">PLUGINS PHP</div><div id="filesPlugins"></div>
-  <div class="group">SISTEMA</div><div id="filesSystem"></div>
+<aside class="side">
+  <div class="section-title">PROJETO</div><div class="tree" id="projectTree"></div>
+  <div class="section-title">PÁGINAS</div><div class="tree" id="pageTree"></div>
+  <div class="section-title">IMAGENS</div><div class="tree" id="imageTree"></div>
+  <div class="section-title">ARQUIVOS</div><div class="tree" id="assetTree"></div>
+  <div class="section-title">PLUGINS PHP</div><div class="tree" id="pluginTree"></div>
+  <div class="section-title">SISTEMA</div><div class="tree"><button>🔒 multiscript.json</button></div>
 </aside>
+<main class="workspace">
+  <div class="crumb" id="crumb">Projeto / index.html</div>
 
-<main class="center">
-  <div class="crumb" id="crumb">MultiScript / Início</div>
-
-  <section id="home" class="view on">
-    <div class="home">
-      <div class="hero">
-        <h1>MultiScript HTML Editor V14</h1>
-        <p>Editor de projetos HTML com geradores de páginas, editor visual de SVG, plugins PHP próprios, preview e exportação ZIP.</p>
-        <div class="actions"><button class="primary" id="homeNew">＋ Criar projeto</button><button id="homeOpen">📂 Abrir projeto antigo</button><button id="homeGen">＋ Gerar página</button></div>
-      </div>
-      <div class="cards">
-        <div class="card"><h3 id="countPages">0</h3><div class="muted">Páginas registradas</div></div>
-        <div class="card"><h3 id="countImages">0</h3><div class="muted">SVGs editáveis</div></div>
-        <div class="card"><h3 id="countPlugins">0</h3><div class="muted">Plugins PHP próprios</div></div>
-        <div class="card"><h3>🔒</h3><div class="muted">multiscript.json protegido</div></div>
-      </div>
+  <section id="view-editor" class="view active">
+    <div class="editor">
+      <div class="editorbar"><span id="fileLabel">index.html</span><button id="formatBtn">Formatar</button><button id="previewBtn">Preview</button></div>
+      <div class="codewrap"><textarea id="code" class="code" spellcheck="false"></textarea></div>
     </div>
   </section>
 
-  <section id="editorView" class="view">
-    <div class="tabs" id="tabs"></div>
-    <div class="editor"><div class="lines" id="lines">1</div><textarea id="code" spellcheck="false"></textarea></div>
-    <div class="status"><span id="status">Nenhum arquivo</span></div>
-  </section>
-
-  <section id="generatorView" class="view">
-    <div class="gen">
-      <div class="hero"><h1>Geradores</h1><p>Menu, categorias, institucional, subpáginas e sitemap. O conteúdo manual das páginas-pai é preservado através de marcadores internos.</p></div>
-      <div class="gen-grid">
-        <div class="gen-card" id="genMenu"><b>☰ Menu</b><div class="muted">index.html, categorias.html e institucional.html</div></div>
-        <div class="gen-card" id="genCat"><b>▦ Categorias</b><div class="muted">Somente páginas de categoria.</div></div>
-        <div class="gen-card" id="genInst"><b>▤ Institucional</b><div class="muted">Somente páginas institucionais.</div></div>
-        <div class="gen-card" id="genSub"><b>↳ Subpágina</b><div class="muted">Filha de categoria ou institucional.</div></div>
-        <div class="gen-card" id="genMap"><b>◎ Sitemap</b><div class="muted">Mapa XML de todas as páginas.</div></div>
+  <section id="view-generators" class="view">
+    <div class="panel">
+      <h1>Geradores</h1><p class="small">Crie páginas sem destruir o conteúdo que você já editou.</p>
+      <div class="grid">
+        <div class="card"><h3>📌 Menu</h3><p>Gera index.html, categorias.html e institucional.html.</p><button class="primary" onclick="openGenerator('menu')">Abrir gerador</button></div>
+        <div class="card"><h3>🏷 Categorias</h3><p>Cria somente páginas de categorias.</p><button onclick="openGenerator('category')">Nova categoria</button></div>
+        <div class="card"><h3>🏢 Institucional</h3><p>Cria somente páginas institucionais.</p><button onclick="openGenerator('institutional')">Nova institucional</button></div>
+        <div class="card"><h3>📄 Subpágina</h3><p>Cria páginas vinculadas a uma categoria ou institucional.</p><button onclick="openGenerator('subpage')">Nova subpágina</button></div>
+        <div class="card"><h3>🗺 Sitemap</h3><p>Gera sitemap.xml usando todas as páginas cadastradas.</p><button onclick="openGenerator('sitemap')">Gerar sitemap</button></div>
       </div>
+      <h2 style="margin-top:30px">Páginas geradas</h2><div id="pageManager" class="list"></div>
     </div>
   </section>
 
-  <section id="imagesView" class="view">
-    <div class="gen"><div class="hero"><h1>Imagens</h1><p>Os SVGs permanecem vetoriais e editáveis. Abra uma imagem para usar seleção, formas, texto, pincel, camadas, duplicação, undo/redo e exportação PNG.</p><div class="actions"><button id="newSvg">＋ Novo SVG</button><button id="importImg">🖼 Importar imagem</button></div></div></div>
-    <div class="image-grid" id="imageGrid"></div>
-  </section>
-
-  <section id="pluginsView" class="view">
-    <div class="gen"><div class="hero"><h1>Plugins PHP</h1><p>Não existem plugins PHP fixos no MultiScript. Esta área contém somente os arquivos <b>.php</b> que você adicionou.</p><div class="actions"><button id="addPhp">＋ Adicionar PHP</button></div></div></div>
-    <div id="pluginList" style="padding:22px"></div>
-  </section>
-
-  <section id="pagesView" class="view">
-    <div class="gen"><div class="hero"><h1>Páginas</h1><p>Gerencie as páginas e suas relações.</p></div></div>
-    <div id="pageList" style="padding:22px"></div>
-  </section>
-</main>
-
-<aside class="right">
-  <div class="group">ARQUIVO ATUAL</div>
-  <div style="padding:12px" id="info" class="muted">Abra um arquivo pelo Explorer.</div>
-  <div class="group">ATALHOS</div>
-  <div style="padding:12px;display:grid;gap:6px">
-    <button id="quickGen">＋ Gerar página</button>
-    <button id="quickImages">🖼 Imagens</button>
-    <button id="quickPlugins">🔌 Plugins</button>
-  </div>
-</aside>
-</div>
-</div>
-
-<input id="folderInput" type="file" webkitdirectory directory multiple hidden>
-<input id="phpInput" type="file" accept=".php" multiple hidden>
-<input id="imgInput" type="file" accept="image/*,.svg" multiple hidden>
-
-<div class="modalbg" id="modalBg"><div class="modal" id="modal"></div></div>
-
-<div class="modalbg" id="svgBg">
-  <div class="modal svg-modal">
-    <div class="svg-head"><b>🎨 Image Editor</b><button id="svgUndo">↶</button><button id="svgRedo">↷</button><button id="svgPng">PNG</button><button id="svgSave" class="primary">💾 Salvar</button><span class="spacer"></span><button id="svgClose">×</button></div>
-    <div class="svg-body">
-      <div class="svg-tools">
-        <button data-tool="select">↖ Seleção</button><button data-tool="rect">▭ Retângulo</button><button data-tool="circle">○ Círculo</button><button data-tool="text">T Texto</button><button data-tool="path">✎ Pincel</button><button id="svgImage">🖼 Imagem</button>
-        <label>Preenchimento</label><input id="fill" type="color" value="#2f81f7">
-        <label>Contorno</label><input id="stroke" type="color" value="#111827">
-        <label>Espessura</label><input id="strokeWidth" type="number" value="2" min="0" max="50">
-        <button id="svgDelete">🗑 Excluir</button><button id="svgDuplicate">⧉ Duplicar</button><button id="svgCode">‹/› Código SVG</button>
+  <section id="view-images" class="view">
+    <div class="image-editor">
+      <aside class="tools">
+        <b>🎨 Ferramentas</b><hr>
+        <button onclick="svgTool('select')">↖ Seleção</button>
+        <button onclick="svgTool('rect')">▭ Retângulo</button>
+        <button onclick="svgTool('circle')">○ Círculo</button>
+        <button onclick="svgTool('text')">T Texto</button>
+        <button onclick="svgTool('pen')">✎ Pincel</button>
+        <button onclick="importSvgImage()">🖼 Imagem</button>
+        <button onclick="duplicateSvg()">⧉ Duplicar</button>
+        <button class="danger" onclick="deleteSvg()">🗑 Excluir</button>
+        <button onclick="undoSvg()">↶ Desfazer</button>
+        <button onclick="redoSvg()">↷ Refazer</button>
+      </aside>
+      <div class="canvasarea">
+        <div class="canvasbar"><b id="svgName">logo.svg</b><button onclick="saveSvg()">Salvar SVG</button><button onclick="exportPng()">PNG</button><button onclick="toggleSvgCode()">Código SVG</button><label>Zoom <input id="zoom" type="range" min="25" max="200" value="100" oninput="setZoom(this.value)"></label></div>
+        <div class="canvasbox" id="svgCanvas"></div>
       </div>
-      <div class="canvas" id="canvasWrap"><svg id="svgCanvas" xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600"></svg><textarea id="svgCodeArea" class="code-svg"></textarea></div>
-      <div class="layers"><b>CAMADAS</b><div id="layerList"></div></div>
+      <aside class="layers"><b>CAMADAS</b><div id="layers"></div><hr><div class="field"><label>Preenchimento</label><input id="fill" type="color" value="#1769aa" onchange="applySvgStyle()"></div><div class="field"><label>Traço</label><input id="stroke" type="color" value="#111111" onchange="applySvgStyle()"></div></aside>
     </div>
-  </div>
-</div>
+  </section>
+
+  <section id="view-plugins" class="view"><div class="panel"><h1>🔌 Plugins PHP</h1><p class="small">O MultiScript não fornece plugins PHP prontos. Você controla os seus arquivos.</p><input type="file" id="phpInput" accept=".php" multiple hidden><button class="primary" onclick="document.getElementById('phpInput').click()">＋ Importar PHP</button><div id="pluginManager" class="list" style="margin-top:18px"></div></div></section>
+
+  <section id="view-preview" class="view"><iframe id="previewFrame" style="width:100%;height:100%;border:0;background:white"></iframe></section>
+</main></div>
+
+<input type="file" id="folderInput" webkitdirectory directory multiple hidden>
+<input type="file" id="jsonInput" accept=".json" hidden>
+<div id="modalBg" class="modal-bg"><div class="modal" id="modal"></div></div><div id="toast" class="toast"></div>
 
 <script>
-'use strict';
-
-const LS='multiscript_v14_project';
-const PROTECTED='multiscript.json';
-const BS_HEAD='<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">';
-const BS_SCRIPT='<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"><\\/script>';
+"use strict";
+const BOOT_CSS='<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">';
+const BOOT_JS='<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"><\/script>';
+const KEY="multiscript-v14-project";
 
 let project;
-let currentFile='index.html';
-let tabs=[];
-let svg={path:null,tool:'select',selected:null,undo:[],redo:[],drawing:null};
+let currentFile="index.html";
+let currentView="editor";
+let svgState={file:"",svg:null,selected:null,tool:"select",undo:[],redo:[],scale:1};
+let drag=null;
 
-const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const escAttr=s=>esc(s);
-const slugify=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'pagina';
-
-function showView(id){
-  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
-  $(id).classList.add('on');
-  document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('on',x.dataset.view===id));
-  const names={home:'Início',editorView:'Editor',generatorView:'Geradores',imagesView:'Imagens',pluginsView:'Plugins',pagesView:'Páginas'};
-  $('crumb').textContent='MultiScript / '+names[id];
-  render();
-}
-
-document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>showView(b.dataset.view));
-$('homeNew').onclick=$('newBtn').onclick=newProject;
-$('homeOpen').onclick=$('openBtn').onclick=()=>openFolder();
-$('homeGen').onclick=$('quickGen').onclick=()=>showView('generatorView');
-$('quickImages').onclick=()=>showView('imagesView');
-$('quickPlugins').onclick=()=>showView('pluginsView');
-$('saveBtn').onclick=save;
-$('previewBtn').onclick=()=>preview('index.html');
-$('zipBtn').onclick=exportZip;
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function slugify(s){return String(s).normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"pagina";}
+function toast(s){const e=document.getElementById("toast");e.textContent=s;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2200);}
+function showModal(html){document.getElementById("modal").innerHTML=html;document.getElementById("modalBg").classList.add("open");}
+function closeModal(){document.getElementById("modalBg").classList.remove("open");}
+document.getElementById("modalBg").addEventListener("click",e=>{if(e.target.id==="modalBg")closeModal();});
 
 function defaultSvg(name){
-  const isFav=name==='favicon.svg';
-  const w=isFav?256:1200,h=isFav?256:600;
-  return '<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><rect width="100%" height="100%" fill="#f1f5f9"/><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="'+(isFav?34:52)+'" fill="#64748b">'+esc(name)+'</text></svg>';
+  const wh=name==="favicon.svg"?'256" height="256"':'1200" height="600"';
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="'+wh+'" viewBox="0 0 '+(name==="favicon.svg"?"256 256":"1200 600")+'"><rect width="100%" height="100%" fill="#e9eef5"/><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="'+(name==="favicon.svg"?"36":"64")+'" fill="#1769aa">'+esc(name.replace(".svg","").replaceAll("_"," "))+'</text></svg>';
+}
+function makeProject(name="MEU-PROJETO"){
+  const p={name,files:{},plugins:{},pages:{},protectedFiles:["multiscript.json"]};
+  ["index.html","categorias.html","institucional.html","style.css","script.js"].forEach(f=>p.files[f]="");
+  p.files["images/logo.svg"]=defaultSvg("logo.svg");p.files["images/favicon.svg"]=defaultSvg("favicon.svg");
+  for(let i=1;i<=8;i++)p.files["images/vitrine_0"+i+".svg"]=defaultSvg("vitrine_0"+i+".svg");
+  p.pages={
+    "index.html":{type:"menu",name:"Início",slug:"",url:"/"},
+    "categorias.html":{type:"menu",name:"Categorias",slug:"categorias",url:"/categorias"},
+    "institucional.html":{type:"menu",name:"Institucional",slug:"institucional",url:"/institucional"}
+  };
+  buildBasePages(p);updateMeta(p);return p;
 }
 function footer(){
-return '<footer class="site-footer"><div class="footer-container"><div class="footer-brand"><img src="images/logo.svg" class="footer-logo" alt="Logo"><p>Experiência digital criada com MultiScript HTML Editor.</p></div><div class="footer-column"><h3>Navegação</h3><a href="index.html">Início</a><a href="categorias.html">Categorias</a><a href="institucional.html">Institucional</a></div><div class="footer-column"><h3>Projeto</h3><a href="categorias.html">Vitrines</a><a href="institucional.html">Sobre</a></div><div class="footer-column"><h3>Atendimento</h3><p>Estamos à disposição para atender você.</p><a class="footer-button" href="institucional.html">Saiba mais</a></div></div><div class="footer-bottom"><span>© 2026 Todos os direitos reservados.</span><span>Desenvolvido com MultiScript HTML Editor</span></div></footer>';
+ return '<footer style="background:#101827;color:#cbd5e1;margin-top:70px;padding:45px 0 20px"><div class="container"><div class="row g-4"><div class="col-md-5"><img src="images/logo.svg" style="max-width:170px;max-height:70px"><p class="mt-3">Informação, serviços e soluções digitais.</p></div><div class="col-md-2"><h5>Navegação</h5><a class="d-block text-light text-decoration-none mb-2" href="index.html">Início</a><a class="d-block text-light text-decoration-none mb-2" href="categorias.html">Categorias</a><a class="d-block text-light text-decoration-none mb-2" href="institucional.html">Institucional</a></div><div class="col-md-2"><h5>Institucional</h5><a class="d-block text-light text-decoration-none mb-2" href="institucional.html">Sobre nós</a></div><div class="col-md-3"><h5>Atendimento</h5><p>Estamos à disposição.</p></div></div><hr><div class="d-flex justify-content-between flex-wrap gap-2 small"><span>© 2026 Todos os direitos reservados.</span><span>Desenvolvido com MultiScript HTML Editor V14</span></div></div></footer>';
 }
-function shell(title,body){
-return '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title>'+BS_HEAD+'<link rel="stylesheet" href="style.css"></head><body><nav class="navbar navbar-expand-lg bg-dark navbar-dark"><div class="container"><a class="navbar-brand fw-bold" href="index.html"><img src="images/logo.svg" style="height:38px;max-width:150px" alt="Logo"></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#mainNav"><span class="navbar-toggler-icon"></span></button><div id="mainNav" class="collapse navbar-collapse"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="index.html">Início</a></li><li class="nav-item"><a class="nav-link" href="categorias.html">Categorias</a></li><li class="nav-item"><a class="nav-link" href="institucional.html">Institucional</a></li></ul></div></div></nav>'+body+footer()+BS_SCRIPT+'<script src="script.js"><\\/script></body></html>';
+function pageShell(title,body){
+ return '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title>'+BOOT_CSS+'<link rel="stylesheet" href="style.css"></head><body><nav class="navbar navbar-expand-lg bg-dark navbar-dark"><div class="container"><a class="navbar-brand" href="index.html"><img src="images/logo.svg" style="height:38px;max-width:150px"></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button><div id="nav" class="collapse navbar-collapse"><div class="navbar-nav ms-auto"><a class="nav-link" href="index.html">Início</a><a class="nav-link" href="categorias.html">Categorias</a><a class="nav-link" href="institucional.html">Institucional</a></div></div></div></nav><main>'+body+'</main>'+footer() + BOOT_JS + '<script src="script.js"><\/script></body></html>';
 }
-function makeProject(name){
-  const p={name:name||'MEU-PROJETO',files:{},plugins:{},pages:{
-    'index.html':{type:'menu',name:'Início',slug:'',url:'/'},
-    'categorias.html':{type:'menu',name:'Categorias',slug:'categorias',url:'/categorias'},
-    'institucional.html':{type:'menu',name:'Institucional',slug:'institucional',url:'/institucional'}
-  },protectedFiles:[PROTECTED]};
-  p.files['index.html']=makeIndex(p);
-  p.files['categorias.html']=makeCategories();
-  p.files['institucional.html']=makeInstitutional();
-  p.files['style.css']=baseCss();
-  p.files['script.js']='document.addEventListener("DOMContentLoaded",()=>{});';
-  p.files['images/logo.svg']=defaultSvg('logo.svg');
-  p.files['images/favicon.svg']=defaultSvg('favicon.svg');
-  for(let i=1;i<=8;i++)p.files['images/vitrine_'+String(i).padStart(2,'0')+'.svg']=defaultSvg('vitrine_'+String(i).padStart(2,'0')+'.svg');
-  p.files['sitemap.xml']=sitemap(p,'https://seusite.com.br');
-  syncMeta(p);
-  return p;
+function buildBasePages(p){
+ const cards=[];for(let i=1;i<=8;i++)cards.push('<div class="col-md-6 col-lg-3"><div class="card h-100 shadow-sm"><img src="images/vitrine_0'+i+'.svg" class="card-img-top" alt="Vitrine '+i+'"><div class="card-body"><h5 class="card-title">Vitrine '+i+'</h5><a href="#" class="btn btn-primary">Ver página</a></div></div></div>');
+ p.files["index.html"]=pageShell("Início",'<section class="py-5 bg-light"><div class="container py-4"><div class="row align-items-center g-4"><div class="col-lg-7"><span class="badge text-bg-primary">MultiScript V14</span><h1 class="display-4 fw-bold mt-3">Seu site começa aqui.</h1><p class="lead">Uma estrutura responsiva pronta para você editar e publicar.</p></div><div class="col-lg-5"><img src="images/vitrine_01.svg" class="img-fluid rounded-4 shadow"></div></div></div></section><section class="py-5"><div class="container"><h2 class="mb-4">Vitrines</h2><div class="row g-4">'+cards.join("")+'</div></div></section>');
+ p.files["categorias.html"]=pageShell("Categorias",'<section class="py-5"><div class="container"><h1>Categorias</h1><div id="categories" class="row g-4"><!-- MULTISCRIPT:CATEGORIES:START --><!-- MULTISCRIPT:CATEGORIES:END --></div></div></section>');
+ p.files["institucional.html"]=pageShell("Institucional",'<section class="py-5"><div class="container"><h1>Institucional</h1><div id="institutional" class="row g-4"><!-- MULTISCRIPT:INSTITUTIONAL:START --><!-- MULTISCRIPT:INSTITUTIONAL:END --></div></div></section>');
+ p.files["style.css"]="body{min-height:100vh}a{text-decoration:none}.card{border:0}";
+ p.files["script.js"]="document.addEventListener('DOMContentLoaded',()=>{});";
+ updateParentLists(p);
 }
-function syncMeta(p){
-  p.files[PROTECTED]=JSON.stringify({multiscript:{version:'14.0.0',generator:'MultiScript HTML Editor',type:'html-project'},project:{name:p.name,pages:p.pages,protectedFiles:[PROTECTED]},files:Object.keys(p.files).filter(x=>x!==PROTECTED),plugins:Object.keys(p.plugins||{})},null,2);
+function replaceBlock(html,start,end,content){
+ const a=html.indexOf(start),b=html.indexOf(end);
+ if(a<0||b<a)return html;
+ return html.slice(0,a+start.length)+content+html.slice(b);
 }
-function save(){
-  syncMeta(project);
-  localStorage.setItem(LS,JSON.stringify(project));
-  render();
-}
-function load(){
-  try{
-    const x=JSON.parse(localStorage.getItem(LS));
-    if(x&&x.files){project=x;project.protectedFiles=[PROTECTED];if(!project.pages)project.pages={};if(!project.plugins)project.plugins={};syncMeta(project);return true;}
-  }catch(e){}
-  return false;
-}
-function baseCss(){
-return '.site-footer{margin-top:70px;background:#111827;color:#d1d5db}.footer-container{max-width:1200px;margin:auto;padding:55px 25px;display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:45px}.footer-brand{max-width:330px}.footer-logo{width:170px;margin-bottom:20px}.footer-brand p,.footer-column p{color:#9ca3af;line-height:1.7}.footer-column{display:flex;flex-direction:column;gap:11px}.footer-column h3{color:#fff;font-size:15px}.footer-column a{color:#9ca3af;text-decoration:none}.footer-column a:hover{color:#fff}.footer-button{width:max-content;padding:10px 15px;border-radius:7px;background:#2563eb;color:#fff!important;font-weight:bold}.footer-bottom{border-top:1px solid #273244;max-width:1200px;margin:auto;padding:18px 25px;display:flex;justify-content:space-between;font-size:12px;color:#6b7280}@media(max-width:700px){.footer-container{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:8px}}';
-}
-function makeIndex(p){
-  let cards='';
-  for(let i=1;i<=8;i++){
-    const n=String(i).padStart(2,'0');
-    cards+='<div class="col"><div class="card h-100 shadow-sm"><img src="images/vitrine_'+n+'.svg" class="card-img-top" alt="Vitrine '+i+'"><div class="card-body"><h2 class="h5">Vitrine '+i+'</h2><p class="text-secondary">Apresente seu conteúdo nesta vitrine.</p><a href="categorias.html" class="btn btn-primary">Ver detalhes</a></div></div></div>';
-  }
-  return shell('Início','<header class="py-5 bg-light"><div class="container py-4"><div class="row align-items-center"><div class="col-lg-7"><span class="badge text-bg-primary mb-3">MULTISCRIPT V14</span><h1 class="display-5 fw-bold">Sua vitrine digital</h1><p class="lead text-secondary">Página inicial responsiva com oito vitrines SVG editáveis.</p></div><div class="col-lg-5"><img src="images/vitrine_01.svg" class="img-fluid rounded shadow" alt="Vitrine principal"></div></div></div></header><main class="container py-5"><h2 class="mb-4">Vitrines</h2><div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">'+cards+'</div></main>');
-}
-function marker(type,content){return '<!-- MULTISCRIPT:'+type+':START -->'+content+'<!-- MULTISCRIPT:'+type+':END -->';}
-function replaceMarker(text,type,content){
-  const start='<!-- MULTISCRIPT:'+type+':START -->';
-  const end='<!-- MULTISCRIPT:'+type+':END -->';
-  const a=text.indexOf(start),b=text.indexOf(end);
-  if(a<0||b<a)return text;
-  return text.slice(0,a)+marker(type,content)+text.slice(b+end.length);
-}
-function makeCategories(){return shell('Categorias','<main class="container py-5"><h1>Categorias</h1><p class="lead text-secondary">Páginas de categorias geradas pelo MultiScript.</p>'+marker('CATEGORIES','<div class="alert alert-secondary">Nenhuma categoria criada ainda.</div>')+'</main>');}
-function makeInstitutional(){return shell('Institucional','<main class="container py-5"><h1>Institucional</h1><p class="lead text-secondary">Páginas institucionais geradas pelo MultiScript.</p>'+marker('INSTITUTIONAL','<div class="alert alert-secondary">Nenhuma página institucional criada ainda.</div>')+'</main>');}
-function makeCategory(name){return shell(name,'<main class="container py-5"><span class="badge text-bg-primary">Categoria</span><h1 class="display-6 fw-bold mt-2">'+esc(name)+'</h1><p class="lead text-secondary">Página de categoria criada pelo MultiScript.</p>'+marker('CHILDREN','<div class="alert alert-secondary">Nenhuma subpágina cadastrada.</div>')+'</main>');}
-function makeInstitutional(name){return shell(name,'<main class="container py-5"><span class="badge text-bg-dark">Institucional</span><h1 class="display-6 fw-bold mt-2">'+esc(name)+'</h1><p class="lead text-secondary">Página institucional criada pelo MultiScript.</p>'+marker('CHILDREN','<div class="alert alert-secondary">Nenhuma subpágina cadastrada.</div>')+'</main>');}
-function makeSub(name,parent){return shell(name,'<main class="container py-5"><span class="badge text-bg-secondary">'+esc(parent)+'</span><h1 class="display-6 fw-bold mt-2">'+esc(name)+'</h1><p class="lead text-secondary">Subpágina criada pelo MultiScript.</p><div class="card shadow-sm"><div class="card-body"><p>Edite este conteúdo no Editor.</p></div></div></main>');}
-function sitemap(p,base){
-  base=String(base).replace(/\/+$/,'');
-  let out='<?xml version="1.0" encoding="UTF-8"?>\\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n';
-  Object.values(p.pages).forEach(x=>{out+='  <url><loc>'+xml(base+x.url)+'</loc></url>\\n';});
-  return out+'</urlset>';
-}
-function xml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');}
-
-function render(){
-  $('projectName').textContent=project.name;
-  renderExplorer();renderTabs();updateEditor();renderImages();renderPlugins();renderPages();
-  $('countPages').textContent=Object.keys(project.pages).length;
-  $('countImages').textContent=Object.keys(project.files).filter(x=>x.startsWith('images/')&&x.endsWith('.svg')).length;
-  $('countPlugins').textContent=Object.keys(project.files).filter(x=>x.startsWith('plugins/')&&x.endsWith('.php')).length;
-}
-function fileItem(path,icon){
-  const locked=path===PROTECTED;
-  return '<div class="file '+(path===currentFile?'active ':'')+(locked?'lock':'')+'" data-file="'+escAttr(path)+'"><span>'+icon+'</span><span>'+esc(path)+'</span></div>';
-}
-function renderExplorer(){
-  $('filesPages').innerHTML=Object.keys(project.files).filter(x=>x.endsWith('.html')).map(x=>fileItem(x,'▣')).join('');
-  $('filesImages').innerHTML=Object.keys(project.files).filter(x=>x.startsWith('images/')&&x.endsWith('.svg')).map(x=>fileItem(x,'🖼')).join('');
-  $('filesAssets').innerHTML=Object.keys(project.files).filter(x=>['style.css','script.js','sitemap.xml'].includes(x)).map(x=>fileItem(x,x==='sitemap.xml'?'◎':'</>')).join('');
-  const php=Object.keys(project.files).filter(x=>x.startsWith('plugins/')&&x.endsWith('.php'));
-  $('filesPlugins').innerHTML=php.length?php.map(x=>fileItem(x,'🔌')).join(''):'<div class="file" style="cursor:default;color:#536273">Nenhum plugin</div>';
-  $('filesSystem').innerHTML=fileItem(PROTECTED,'🔒');
-  document.querySelectorAll('[data-file]').forEach(el=>el.onclick=()=>openFile(el.dataset.file));
-}
-function renderTabs(){
-  $('tabs').innerHTML=tabs.map(x=>'<div class="tab '+(x===currentFile?'on':'')+'" data-tab="'+escAttr(x)+'">'+esc(x)+' <span data-close="'+escAttr(x)+'">×</span></div>').join('');
-  document.querySelectorAll('[data-tab]').forEach(el=>el.onclick=e=>{if(e.target.dataset.close)closeTab(e.target.dataset.close);else openFile(el.dataset.tab);});
-}
-function openFile(path){
-  if(path===PROTECTED){modal('<h2>🔒 Arquivo protegido</h2><p class="muted"><b>multiscript.json</b> é um arquivo interno do MultiScript e não pode ser editado manualmente. Ele é atualizado automaticamente.</p><div class="actions"><button onclick="closeModal()">Fechar</button></div>');return;}
-  if(!(path in project.files))return;
-  currentFile=path;if(!tabs.includes(path))tabs.push(path);showView('editorView');
-  $('info').innerHTML='<b>'+esc(path)+'</b><p class="muted">'+(path.endsWith('.svg')?'SVG vetorial. Use a aba Imagens para editar visualmente.':'Arquivo editável.')+'</p>';
-}
-function closeTab(path){tabs=tabs.filter(x=>x!==path);if(currentFile===path)currentFile=tabs[tabs.length-1]||'index.html';render();}
-function updateEditor(){
-  const value=project.files[currentFile]||'';
-  $('code').value=value;
-  $('status').textContent=currentFile+' · '+value.length.toLocaleString('pt-BR')+' caracteres';
-  $('lines').textContent=Array.from({length:(value.match(/\n/g)||[]).length+1},(_,i)=>i+1).join('\n');
-}
-$('code').addEventListener('input',()=>{
-  if(currentFile===PROTECTED)return;
-  project.files[currentFile]=$('code').value;
-  $('lines').textContent=Array.from({length:($('code').value.match(/\n/g)||[]).length+1},(_,i)=>i+1).join('\n');
-  $('status').textContent=currentFile+' · '+$('code').value.length.toLocaleString('pt-BR')+' caracteres';
-  syncMeta(project);
-});
-$('code').addEventListener('scroll',()=>{$('lines').scrollTop=$('code').scrollTop;});
-$('code').addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const p=e.target.selectionStart;e.target.setRangeText('  ',p,e.target.selectionEnd,'end');}});
-
-function modal(html){$('modal').innerHTML=html;$('modalBg').classList.add('open');}
-function closeModal(){$('modalBg').classList.remove('open');}
-
-function newProject(){
-  const name=prompt('Nome do projeto:','MEU-PROJETO');
-  if(!name)return;
-  project=makeProject(name.trim());currentFile='index.html';tabs=['index.html'];save();showView('editorView');
-}
-
-function generator(type){
-  if(type==='menu'){modal('<h2>☰ Gerar Menu</h2><p class="muted">Cria ou restaura as três páginas principais.</p><div class="actions"><button class="primary" id="doMenu">Gerar</button><button onclick="closeModal()">Cancelar</button></div>');$('doMenu').onclick=()=>{project.files['index.html']=makeIndex(project);project.files['categorias.html']=makeCategories();project.files['institucional.html']=makeInstitutional();save();closeModal();};return;}
-  if(type==='category')formPage('Categoria');
-  if(type==='institutional')formPage('Institucional');
-  if(type==='subpage')formSub();
-  if(type==='sitemap')formSitemap();
-}
-function formPage(type){
-  modal('<h2>＋ Nova página '+type+'</h2><label>Nome</label><input id="fName" placeholder="'+(type==='Categoria'?'Seguros para Veículos':'Quem Somos')+'"><label>Slug</label><input id="fSlug" placeholder="exemplo-da-pagina"><div class="actions"><button class="primary" id="createPage">Gerar</button><button onclick="closeModal()">Cancelar</button></div>');
-  $('createPage').onclick=()=>{
-    const name=$('fName').value.trim(),slug=slugify($('fSlug').value||name),file=slug+'.html';
-    if(!name)return alert('Informe o nome.');
-    if(project.files[file])return alert('Essa página já existe.');
-    project.files[file]=type==='Categoria'?makeCategory(name):makeInstitutional(name);
-    project.pages[file]={type:type==='Categoria'?'category':'institutional',name,slug,url:'/'+slug};
-    refreshParents();save();closeModal();openFile(file);
-  };
-}
-function formSub(){
-  const parents=Object.entries(project.pages).filter(([f,x])=>x.type==='category'||x.type==='institutional');
-  modal('<h2>↳ Nova Subpágina</h2><label>Nome</label><input id="sName" placeholder="Seguro Auto"><label>Slug</label><input id="sSlug" placeholder="seguro-auto"><label>Página pai</label><select id="sParent">'+parents.map(([f,x])=>'<option value="'+escAttr(f)+'">'+esc(x.name)+' — '+esc(x.type)+'</option>').join('')+'</select><div class="actions"><button class="primary" id="createSub">Gerar</button><button onclick="closeModal()">Cancelar</button></div>');
-  $('createSub').onclick=()=>{
-    const name=$('sName').value.trim(),slug=slugify($('sSlug').value||name),parent=$('sParent').value,file=slug+'.html';
-    if(!name||!parent)return alert('Preencha os campos.');if(project.files[file])return alert('Essa página já existe.');
-    project.files[file]=makeSub(name,project.pages[parent].name);
-    project.pages[file]={type:'subpage',name,slug,url:'/'+slug,parent,parentType:project.pages[parent].type};
-    refreshParents();save();closeModal();openFile(file);
-  };
-}
-function formSitemap(){
-  modal('<h2>◎ Gerar Sitemap</h2><label>URL base</label><input id="baseUrl" value="https://seusite.com.br"><p class="muted">Informe o domínio final do projeto. O MultiScript não conhece o endereço de publicação automaticamente.</p><div class="actions"><button class="primary" id="makeMap">Gerar sitemap.xml</button><button onclick="closeModal()">Cancelar</button></div>');
-  $('makeMap').onclick=()=>{const b=$('baseUrl').value.trim();if(!b)return alert('Informe a URL.');project.files['sitemap.xml']=sitemap(project,b);save();closeModal();openFile('sitemap.xml');};
-}
-function refreshParents(){
-  let cats=Object.values(project.pages).filter(x=>x.type==='category');
-  let inst=Object.values(project.pages).filter(x=>x.type==='institutional');
-  const catHtml=cats.length?'<div class="row row-cols-1 row-cols-md-3 g-4">'+cats.map(x=>'<div class="col"><div class="card h-100"><div class="card-body"><span class="badge text-bg-primary">Categoria</span><h2 class="h5 mt-2">'+esc(x.name)+'</h2><a class="btn btn-outline-primary" href="'+escAttr(x.slug)+'.html">Abrir</a></div></div></div>').join('')+'</div>':'<div class="alert alert-secondary">Nenhuma categoria criada ainda.</div>';
-  const instHtml=inst.length?'<div class="row row-cols-1 row-cols-md-3 g-4">'+inst.map(x=>'<div class="col"><div class="card h-100"><div class="card-body"><span class="badge text-bg-dark">Institucional</span><h2 class="h5 mt-2">'+esc(x.name)+'</h2><a class="btn btn-outline-dark" href="'+escAttr(x.slug)+'.html">Abrir</a></div></div></div>').join('')+'</div>':'<div class="alert alert-secondary">Nenhuma página institucional criada ainda.</div>';
-  if(project.files['categorias.html'])project.files['categorias.html']=replaceMarker(project.files['categorias.html'],'CATEGORIES',catHtml);
-  if(project.files['institucional.html'])project.files['institucional.html']=replaceMarker(project.files['institucional.html'],'INSTITUTIONAL',instHtml);
-  Object.entries(project.pages).filter(([f,x])=>x.type==='category'||x.type==='institutional').forEach(([f,x])=>{
-    const ch=Object.values(project.pages).filter(y=>y.parent===f);
-    const html=ch.length?'<div class="row row-cols-1 row-cols-md-3 g-4">'+ch.map(y=>'<div class="col"><div class="card h-100"><div class="card-body"><h2 class="h5">'+esc(y.name)+'</h2><p class="text-secondary">Subpágina</p><a class="btn btn-primary" href="'+escAttr(y.slug)+'.html">Ver página</a></div></div></div>').join('')+'</div>':'<div class="alert alert-secondary">Nenhuma subpágina cadastrada.</div>';
-    if(project.files[f])project.files[f]=replaceMarker(project.files[f],'CHILDREN',html);
-  });
-}
-function deletePage(file){
-  if(!confirm('Excluir '+file+'?'))return;
-  const parent=project.pages[file]?.parent;delete project.pages[file];delete project.files[file];
-  if(parent&&project.files[parent])refreshParents();refreshParents();save();
-  if(currentFile===file)openFile('index.html');
-}
-
-$('genMenu').onclick=()=>generator('menu');$('genCat').onclick=()=>generator('category');$('genInst').onclick=()=>generator('institutional');$('genSub').onclick=()=>generator('subpage');$('genMap').onclick=()=>generator('sitemap');
-
-function renderPages(){
-  $('pageList').innerHTML=Object.entries(project.pages).map(([f,x])=>'<div class="row"><span class="tag">'+esc(x.type)+'</span><div class="grow"><b>'+esc(x.name)+'</b><div class="muted">'+esc(f)+' · '+esc(x.url)+(x.parent?' · pai: '+esc(x.parent):'')+'</div></div><button data-edit-page="'+escAttr(f)+'">Editar</button>'+(!['index.html','categorias.html','institucional.html'].includes(f)?'<button class="danger" data-del-page="'+escAttr(f)+'">Excluir</button>':'')+'</div>').join('');
-  document.querySelectorAll('[data-edit-page]').forEach(b=>b.onclick=()=>openFile(b.dataset.editPage));
-  document.querySelectorAll('[data-del-page]').forEach(b=>b.onclick=()=>deletePage(b.dataset.delPage));
-}
-function renderImages(){
-  const files=Object.keys(project.files).filter(x=>x.startsWith('images/')&&x.endsWith('.svg'));
-  $('imageGrid').innerHTML=files.map(f=>'<div class="card"><div class="thumb"><img src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(project.files[f])+'"></div><div style="margin-top:9px"><b>'+esc(f.split('/').pop())+'</b><div class="actions"><button data-svg="'+escAttr(f)+'">🎨 Editar</button><button data-code="'+escAttr(f)+'">Código</button></div></div></div>').join('');
-  document.querySelectorAll('[data-svg]').forEach(b=>b.onclick=()=>openSvg(b.dataset.svg));
-  document.querySelectorAll('[data-code]').forEach(b=>b.onclick=()=>openFile(b.dataset.code));
-}
-$('newSvg').onclick=()=>{const n=prompt('Nome do SVG:','nova-imagem.svg');if(!n)return;const f='images/'+(n.toLowerCase().endsWith('.svg')?n:n+'.svg');if(project.files[f])return alert('Já existe.');project.files[f]=defaultSvg(n);save();openSvg(f);};
-$('importImg').onclick=()=>$('imgInput').click();
-$('imgInput').onchange=async e=>{
-  for(const f of e.target.files){
-    const name=f.name.replace(/\.[^.]+$/,'')+'.svg',path='images/'+name;
-    if(f.type==='image/svg+xml'||f.name.toLowerCase().endsWith('.svg'))project.files[path]=await f.text();
-    else{const data=await readData(f);project.files[path]='<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600"><image href="'+data+'" width="1200" height="600" preserveAspectRatio="xMidYMid meet"/></svg>';}
-  }
-  save();e.target.value='';
-};
-function readData(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});}
-
-function renderPlugins(){
- const files=Object.keys(project.files).filter(x=>x.startsWith('plugins/')&&x.endsWith('.php'));
- $('pluginList').innerHTML=files.length?files.map(f=>'<div class="row"><span>🔌</span><div class="grow"><b>'+esc(f.split('/').pop())+'</b><div class="muted">'+esc(f)+'</div></div><button data-open-plugin="'+escAttr(f)+'">Editar</button><button class="danger" data-del-plugin="'+escAttr(f)+'">Excluir</button></div>').join(''):'<div class="card muted">Nenhum plugin PHP adicionado.</div>';
- document.querySelectorAll('[data-open-plugin]').forEach(b=>b.onclick=()=>openFile(b.dataset.openPlugin));
- document.querySelectorAll('[data-del-plugin]').forEach(b=>b.onclick=()=>{const f=b.dataset.delPlugin;if(confirm('Excluir '+f+'?')){delete project.files[f];delete project.plugins[f];save();}});
-}
-$('addPhp').onclick=()=>$('phpInput').click();
-$('phpInput').onchange=async e=>{for(const f of e.target.files){const path='plugins/'+f.name;project.files[path]=await f.text();project.plugins[path]=true;}save();e.target.value='';};
-
-function openFolder(){$('folderInput').click();}
-$('folderInput').onchange=async e=>{try{await importFolder([...e.target.files]);}catch(err){alert('Erro ao abrir projeto: '+err.message);}e.target.value='';};
-function relative(file){let p=(file.webkitRelativePath||file.name).replace(/\\/g,'/');const a=p.split('/');return a.length>1?a.slice(1).join('/'):a[0];}
-async function importFolder(files){
- const jf=files.find(f=>relative(f).toLowerCase()===PROTECTED);
- if(!jf){alert('Projeto inválido: multiscript.json não encontrado.');return;}
- let meta;try{meta=JSON.parse(await jf.text());}catch(e){alert('multiscript.json inválido.');return;}
- const p={name:meta.project?.name||meta.multiscript?.project||'PROJETO-IMPORTADO',files:{},plugins:{},pages:meta.project?.pages||{},protectedFiles:[PROTECTED]};
- for(const f of files){const path=relative(f);if(!path||path==='multiscript.js')continue;p.files[path]=path===PROTECTED?await f.text():await f.text();if(path.startsWith('plugins/')&&path.endsWith('.php'))p.plugins[path]=true;}
- if(!p.pages||!Object.keys(p.pages).length){
-   p.pages={};
-   Object.keys(p.files).filter(x=>x.endsWith('.html')).forEach(f=>{const s=f.replace(/\.html$/,'');p.pages[f]={type:f==='index.html'?'menu':'custom',name:s==='index'?'Início':s,slug:s==='index'?'':s,url:s==='index'?'/':'/'+s};});
+function updateParentLists(p){
+ let cats="",inst="";
+ for(const [file,x] of Object.entries(p.pages)){
+   if(x.type==="category")cats+='<div class="col-md-6"><div class="card h-100 p-4 shadow-sm"><h3>'+esc(x.name)+'</h3><p>'+esc(x.description||"")+'</p><a class="btn btn-primary" href="'+esc(file)+'">Acessar</a></div></div>';
+   if(x.type==="institutional")inst+='<div class="col-md-6"><div class="card h-100 p-4 shadow-sm"><h3>'+esc(x.name)+'</h3><p>'+esc(x.description||"")+'</p><a class="btn btn-primary" href="'+esc(file)+'">Acessar</a></div></div>';
  }
- project=p;syncMeta(project);currentFile='index.html';tabs=['index.html'];save();showView('editorView');alert('Projeto aberto. O antigo multiscript.js foi ignorado e o multiscript.json foi atualizado para V14.');
+ p.files["categorias.html"]=replaceBlock(p.files["categorias.html"],"<!-- MULTISCRIPT:CATEGORIES:START -->","<!-- MULTISCRIPT:CATEGORIES:END -->",cats);
+ p.files["institucional.html"]=replaceBlock(p.files["institucional.html"],"<!-- MULTISCRIPT:INSTITUTIONAL:START -->","<!-- MULTISCRIPT:INSTITUTIONAL:END -->",inst);
 }
-
-async function ensureZip(){
- if(window.JSZip)return;
- await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});
+function updateMeta(p){
+ const meta={multiscript:{version:"14.0.0",generator:"MultiScript HTML Editor",project:p.name,type:"html-project"},project:{name:p.name,pages:p.pages,protectedFiles:["multiscript.json"]},files:Object.keys(p.files).filter(x=>x!=="multiscript.json"&&x!=="multiscript.js"),plugins:Object.keys(p.plugins||{})};
+ p.files["multiscript.json"]=JSON.stringify(meta,null,2);
 }
-function creditDialog(){
- return new Promise(resolve=>{
-   modal('<h2>📦 Crédito do ZIP</h2><p class="muted">Escolha o crédito para as páginas HTML exportadas.</p><div class="actions"><button data-credit="">Sem crédito</button><button data-credit="Multipage Mel — Criação de Sites | https://multipagemel.pages.dev/">Multipage Mel</button><button data-credit="Apenas Corretores | https://apenascorretores.pages.dev/">Apenas Corretores</button><button data-credit="HomemSite | https://homemsite.pages.dev/">HomemSite</button><button data-credit="HomemSite Paraná | https://homemsite.pages.dev/parana/">HomemSite Paraná</button></div>');
-   document.querySelectorAll('[data-credit]').forEach(b=>b.onclick=()=>{closeModal();resolve(b.dataset.credit);});
- });
+function saveLocal(){updateMeta(project);localStorage.setItem(KEY,JSON.stringify(project));renderTree();toast("Projeto salvo");}
+function loadLocal(){try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x){project=x;return true}}catch(e){}return false}
+function ensure(){if(!project)project=makeProject();if(!project.files)project.files={};if(!project.plugins)project.plugins={};if(!project.pages)project.pages={};project.protectedFiles=["multiscript.json"];for(const f of ["index.html","categorias.html","institucional.html","style.css","script.js"])if(!(f in project.files))project.files[f]="";if(!project.files["images/logo.svg"])project.files["images/logo.svg"]=defaultSvg("logo.svg");updateMeta(project);}
+function renderTree(){
+ const pt=document.getElementById("pageTree"),it=document.getElementById("imageTree"),at=document.getElementById("assetTree"),pl=document.getElementById("pluginTree");
+ pt.innerHTML="";it.innerHTML="";at.innerHTML="";pl.innerHTML="";
+ for(const [f,x] of Object.entries(project.pages))addTree(pt,f,x.name||f);
+ for(const f of Object.keys(project.files).filter(f=>f.startsWith("images/")))addTree(it,f,f.slice(7));
+ for(const f of Object.keys(project.files).filter(f=>!f.startsWith("images/")&&!f.endsWith(".php")&&!f.includes("multiscript")))addTree(at,f,f);
+ for(const f of Object.keys(project.plugins||{}))addTree(pl,f,f);
+ document.getElementById("projectTree").innerHTML='<button>📁 '+esc(project.name)+'</button>';
 }
-function addCredit(html,credit){
-  html=html.replace(/<!-- MULTISCRIPT CREDITOS INICIO -->[\s\S]*?<!-- MULTISCRIPT CREDITOS FIM -->/g,'');
-  if(!credit)return html;
-  const block='<footer style="padding:20px;text-align:center;font:12px Arial;color:#777;border-top:1px solid #ddd"><p>Este site garante a segurança na coleta e tratamento de dados, em conformidade com a LGPD.</p><p>© V14.0.0 by MultiScript HTML Editor</p><p>'+esc(credit)+'</p></footer>';
-  return html.replace(/<\/body>/i,block+'</body>');
+function addTree(parent,file,label){const b=document.createElement("button");b.textContent=(file==="multiscript.json"?"🔒 ":"📄 ")+label;b.onclick=()=>openFile(file);parent.appendChild(b);}
+function openFile(file){
+ if(file==="multiscript.json"){showModal('<h2>🔒 Arquivo protegido</h2><p><code>multiscript.json</code> é um arquivo interno do MultiScript e não pode ser editado manualmente.</p><button class="primary" onclick="closeModal()">Entendi</button>');return}
+ if(file.startsWith("images/")&&file.endsWith(".svg")){openSvg(file);showView("images");return}
+ currentFile=file;document.getElementById("code").value=project.files[file]||"";document.getElementById("fileLabel").textContent=file;document.getElementById("crumb").textContent=project.name+" / "+file;showView("editor");}
+function showView(name){
+ currentView=name;document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));document.getElementById("view-"+name).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===name));
+ if(name==="generators")renderPageManager();if(name==="plugins")renderPlugins();
 }
-async function exportZip(){
- try{
-  const credit=await creditDialog();await ensureZip();syncMeta(project);
-  const zip=new JSZip(),root=zip.folder(project.name);
-  Object.entries(project.files).forEach(([path,data])=>root.file(path,path.endsWith('.html')&&path!==PROTECTED?addCredit(data,credit):data));
-  const blob=await zip.generateAsync({type:'blob'}),a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);a.download=project.name+'.zip';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
- }catch(e){alert('Erro ao exportar ZIP: '+e.message);}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>showView(b.dataset.view));
+document.getElementById("code").addEventListener("input",()=>{if(project.protectedFiles.includes(currentFile))return;project.files[currentFile]=document.getElementById("code").value;});
+document.getElementById("saveBtn").onclick=saveLocal;
+document.getElementById("formatBtn").onclick=()=>{let s=document.getElementById("code").value.replace(/></g,">\n<");document.getElementById("code").value=s;project.files[currentFile]=s;toast("HTML formatado");};
+document.getElementById("previewBtn").onclick=preview;
+function preview(){const html=project.files[currentFile]||project.files["index.html"];document.getElementById("previewFrame").srcdoc=html;showView("preview");}
+document.getElementById("newBtn").onclick=()=>{showModal('<h2>Novo projeto</h2><div class="field"><label>Nome</label><input id="newName" value="MEU-PROJETO"></div><div class="actions"><button class="primary" onclick="createNew()">Criar</button><button onclick="closeModal()">Cancelar</button></div>');};
+function createNew(){project=makeProject(document.getElementById("newName").value.trim()||"MEU-PROJETO");currentFile="index.html";closeModal();saveLocal();openFile(currentFile);}
+document.getElementById("openBtn").onclick=()=>showModal('<h2>📂 Abrir Projeto</h2><p>O modo recomendado importa a pasta completa e reconstrói o projeto usando o <code>multiscript.json</code>.</p><div class="actions"><button class="primary" onclick="closeModal();document.getElementById(\'folderInput\').click()">📁 Abrir pasta</button><button onclick="closeModal();document.getElementById(\'jsonInput\').click()">📄 Abrir multiscript.json</button></div>');
+document.getElementById("folderInput").addEventListener("change",async e=>{await importFolder([...e.target.files]);e.target.value=""});
+document.getElementById("jsonInput").addEventListener("change",async e=>{const f=e.target.files[0];if(f)await importJson(f);e.target.value=""});
+function rel(f){const p=(f.webkitRelativePath||f.name).split("/");if(p.length>1)p.shift();return p.join("/");}
+async function importFolder(files){
+ const jf=files.find(f=>rel(f).toLowerCase()==="multiscript.json");if(!jf)return alert("Projeto inválido: multiscript.json não encontrado.");
+ let meta;try{meta=JSON.parse(await jf.text())}catch(e){return alert("multiscript.json inválido.");}
+ const p={name:meta.project?.name||meta.multiscript?.project||"PROJETO-IMPORTADO",files:{},plugins:{},pages:meta.project?.pages||{},protectedFiles:["multiscript.json"]};
+ for(const f of files){const path=rel(f);if(!path||path==="multiscript.js")continue;p.files[path]=await f.text();if(path.toLowerCase().startsWith("plugins/")&&path.toLowerCase().endsWith(".php"))p.plugins[path]=true;}
+ project=p;ensure();inferPages();updateMeta(project);saveLocal();currentFile=project.files["index.html"]?"index.html":Object.keys(project.files)[0];openFile(currentFile);toast("Projeto importado");}
+async function importJson(f){let m;try{m=JSON.parse(await f.text())}catch(e){return alert("JSON inválido.");}project=makeProject(m.project?.name||m.multiscript?.project||"PROJETO-IMPORTADO");project.pages=m.project?.pages||project.pages;updateMeta(project);saveLocal();closeModal();alert("O JSON contém metadados, mas não os conteúdos dos arquivos. Use Abrir Projeto → Abrir pasta para restaurar o projeto completo.");}
+function inferPages(){for(const f of Object.keys(project.files)){if(!f.endsWith(".html")||project.pages[f])continue;const name=f.replace(".html","").replaceAll("-"," ");project.pages[f]={type:"subpage",name:name.replace(/\\b\\w/g,c=>c.toUpperCase()),slug:f.replace(".html",""),url:"/"+f.replace(".html","")};}}
+function openGenerator(type){
+ const parents=Object.entries(project.pages).filter(([f,x])=>type==="subpage"&&(x.type==="category"||x.type==="institutional")).map(([f,x])=>'<option value="'+esc(f)+'">'+esc(x.name)+" ("+esc(x.type)+")</option>").join("");
+ let title="",body="";
+ if(type==="menu"){title="Gerador de Menu";body='<p>As três páginas principais já existem. Você pode recriá-las com segurança.</p><button class="primary" onclick="buildBasePages(project);updateMeta(project);saveLocal();closeModal();openFile(\'index.html\')">Regenerar páginas base</button>';}
+ if(type==="category"||type==="institutional"){const label=type==="category"?"Categoria":"Institucional";title="Nova "+label;body='<div class="field"><label>Nome</label><input id="gName"></div><div class="field"><label>Descrição</label><textarea id="gDesc"></textarea></div><div class="actions"><button class="primary" onclick="generatePage(\''+type+'\')">Gerar</button><button onclick="closeModal()">Cancelar</button></div>';}
+ if(type==="subpage"){title="Nova Subpágina";body='<div class="field"><label>Página-pai</label><select id="gParent">'+parents+'</select></div><div class="field"><label>Nome</label><input id="gName"></div><div class="field"><label>Descrição</label><textarea id="gDesc"></textarea></div><div class="actions"><button class="primary" onclick="generatePage(\'subpage\')">Gerar</button><button onclick="closeModal()">Cancelar</button></div>';}
+ if(type==="sitemap"){title="Gerar Sitemap";body='<div class="field"><label>URL base</label><input id="siteBase" placeholder="https://exemplo.com.br"></div><button class="primary" onclick="generateSitemap()">Gerar sitemap.xml</button>';}
+ showModal("<h2>"+title+"</h2>"+body);
 }
-
-/* SVG EDITOR */
-function openSvg(path){
-  svg.path=path;svg.tool='select';svg.selected=null;svg.undo=[];svg.redo=[];
-  const parsed=new DOMParser().parseFromString(project.files[path],'image/svg+xml');
-  if(parsed.querySelector('parsererror'))return alert('SVG inválido.');
-  const node=parsed.documentElement;node.id='svgCanvas';
-  $('svgCanvas').replaceWith(node);
-  bindSvg();
-  $('svgBg').classList.add('open');
-  refreshLayers();
-}
-function closeSvg(){$('svgBg').classList.remove('open');}
-$('svgClose').onclick=closeSvg;
-document.querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>{svg.tool=b.dataset.tool;});
-function svgSnapshot(){svg.undo.push($('svgCanvas').outerHTML);if(svg.undo.length>40)svg.undo.shift();svg.redo=[];}
-function bindSvg(){
- const s=$('svgCanvas');
- s.onmousedown=svgMouseDown;
- s.onclick=e=>{
-   if(svg.tool==='text'&&e.target===s){
-     const text=prompt('Texto:','Novo texto');if(!text)return;
-     svgSnapshot();const pt=svgPoint(e);const t=document.createElementNS('http://www.w3.org/2000/svg','text');
-     t.setAttribute('x',pt.x);t.setAttribute('y',pt.y);t.setAttribute('font-family','Arial');t.setAttribute('font-size','32');t.setAttribute('fill',$('fill').value);t.textContent=text;s.appendChild(t);refreshLayers();
-   }
- };
-}
-function svgPoint(e){
- const s=$('svgCanvas'),r=s.getBoundingClientRect(),vb=s.viewBox.baseVal;
- const w=vb.width||Number(s.getAttribute('width'))||1200,h=vb.height||Number(s.getAttribute('height'))||600;
- return{x:(e.clientX-r.left)*w/r.width,y:(e.clientY-r.top)*h/r.height};
-}
-function svgMouseDown(e){
- const s=$('svgCanvas');
- if(svg.tool==='select'){if(e.target!==s)svg.selected=e.target;refreshLayers();return;}
- const p=svgPoint(e);svgSnapshot();
- if(svg.tool==='rect'){const el=document.createElementNS('http://www.w3.org/2000/svg','rect');el.setAttribute('x',p.x);el.setAttribute('y',p.y);el.setAttribute('width',180);el.setAttribute('height',100);styleShape(el);s.appendChild(el);svg.selected=el;}
- if(svg.tool==='circle'){const el=document.createElementNS('http://www.w3.org/2000/svg','circle');el.setAttribute('cx',p.x);el.setAttribute('cy',p.y);el.setAttribute('r',60);styleShape(el);s.appendChild(el);svg.selected=el;}
- if(svg.tool==='path'){const el=document.createElementNS('http://www.w3.org/2000/svg','path');el.setAttribute('d','M '+p.x+' '+p.y);el.setAttribute('fill','none');el.setAttribute('stroke',$('stroke').value);el.setAttribute('stroke-width',$('strokeWidth').value);el.setAttribute('stroke-linecap','round');s.appendChild(el);svg.selected=el;svg.drawing=el;}
- refreshLayers();
-}
-function styleShape(el){el.setAttribute('fill',$('fill').value);el.setAttribute('stroke',$('stroke').value);el.setAttribute('stroke-width',$('strokeWidth').value);}
-function refreshLayers(){
- const s=$('svgCanvas');if(!s)return;
- $('layerList').innerHTML=[...s.children].map((el,i)=>'<div class="layer"><span>'+el.tagName+' '+(i+1)+'</span><button data-layer="'+i+'">●</button></div>').join('');
- document.querySelectorAll('[data-layer]').forEach(b=>b.onclick=()=>{svg.selected=s.children[Number(b.dataset.layer)];});
-}
-$('svgDelete').onclick=()=>{if(!svg.selected)return;svgSnapshot();svg.selected.remove();svg.selected=null;refreshLayers();};
-$('svgDuplicate').onclick=()=>{if(!svg.selected)return;svgSnapshot();const n=svg.selected.cloneNode(true);const t=(n.getAttribute('transform')||'')+' translate(20 20)';n.setAttribute('transform',t.trim());$('svgCanvas').appendChild(n);svg.selected=n;refreshLayers();};
-$('svgUndo').onclick=()=>{if(!svg.undo.length)return;svg.redo.push($('svgCanvas').outerHTML);restoreSvg(svg.undo.pop());};
-$('svgRedo').onclick=()=>{if(!svg.redo.length)return;svg.undo.push($('svgCanvas').outerHTML);restoreSvg(svg.redo.pop());};
-function restoreSvg(html){const node=new DOMParser().parseFromString(html,'image/svg+xml').documentElement;node.id='svgCanvas';$('svgCanvas').replaceWith(node);bindSvg();refreshLayers();}
-$('svgSave').onclick=()=>{project.files[svg.path]=new XMLSerializer().serializeToString($('svgCanvas'));save();renderImages();};
-$('svgCode').onclick=()=>{
- const area=$('svgCodeArea'),canvas=$('svgCanvas');
- if(area.style.display==='block'){try{restoreSvg(area.value);area.style.display='none';$('canvasWrap').querySelector('#svgCanvas').style.display='block';}catch(e){alert('SVG inválido.');}}
- else{area.value=new XMLSerializer().serializeToString(canvas);canvas.style.display='none';area.style.display='block';}
-};
-$('svgPng').onclick=()=>{
- const s=$('svgCanvas'),raw=new XMLSerializer().serializeToString(s),img=new Image();
- img.onload=()=>{const c=document.createElement('canvas');const w=Number(s.getAttribute('width'))||1200,h=Number(s.getAttribute('height'))||600;c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0);const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download=svg.path.split('/').pop().replace(/\.svg$/i,'.png');a.click();};
- img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(raw);
-};
-$('svgImage').onclick=()=>{
- const input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=async()=>{const f=input.files[0];if(!f)return;svgSnapshot();const im=document.createElementNS('http://www.w3.org/2000/svg','image');im.setAttribute('href',await readData(f));im.setAttribute('x','50');im.setAttribute('y','50');im.setAttribute('width','300');im.setAttribute('height','200');$('svgCanvas').appendChild(im);refreshLayers();};input.click();
-};
-
-window.addEventListener('beforeunload',()=>{if(project)save();});
-
-if(!load()){project=makeProject('MEU-PROJETO');tabs=['index.html'];save();}
-else{if(project.files['multiscript.js'])delete project.files['multiscript.js'];syncMeta(project);tabs=['index.html'];}
-render();
+function uniqueFile(slug){let f=slug+".html",n=2;while(project.files[f])f=slug+"-"+n+++".html";return f;}
+function generatePage(type){
+ const name=document.getElementById("gName").value.trim();if(!name)return alert("Informe o nome.");
+ const desc=document.getElementById("gDesc").value.trim();const slug=slugify(name);const file=uniqueFile(slug);
+ let parent=null;if(type==="subpage"){parent=document.getElementById("gParent").value;if(!parent)return alert("Crie primeiro uma categoria ou institucional.");}
+ project.pages[file]={type,name,slug,url:"/"+slug,description:desc};if(parent){project.pages[file].parent=parent;project.pages[file].parentType=project.pages[parent]?.type;}
+ project.files[file]=pageShell(name,'<section class="py-5"><div class="container"><span class="badge text-bg-secondary">'+esc(type)+'</span><h1 class="display-5 fw-bold mt-3">'+esc(name)+'</h1><p class="lead">'+esc(desc)+'</p><div class="mt-4"><p>Edite esta página no Editor.</p></div></div></section>');
+ updateParentLists(project);updateMeta(project);saveLocal();closeModal();openFile(file);toast("Página criada");}
+function generateSitemap(){
+ const base=(document.getElementById("siteBase").value.trim()||"https://example.com").replace(/\\/$/,"");let urls=Object.values(project.pages).map(x=>base+(x.url||"/"));project.files["sitemap.xml"]='<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls.map(u=>"<url><loc>"+esc(u)+"</loc></url>").join("")+"</urlset>";updateMeta(project);saveLocal();closeModal();openFile("sitemap.xml");}
+function renderPageManager(){const e=document.getElementById("pageManager");e.innerHTML="";for(const [f,x] of Object.entries(project.pages)){const r=document.createElement("div");r.className="row";r.innerHTML='<div class="grow"><b>'+esc(x.name)+'</b><div class="small">'+esc(f)+' · '+esc(x.type)+' · '+esc(x.url||"")+'</div></div><button onclick="openFile('+JSON.stringify(f)+')">Editar</button><button onclick="previewPage('+JSON.stringify(f)+')">Ver</button><button class="danger" onclick="removePage('+JSON.stringify(f)+')">Excluir</button>';e.appendChild(r);}}
+function previewPage(f){document.getElementById("previewFrame").srcdoc=project.files[f]||"";showView("preview");}
+function removePage(f){if(["index.html","categorias.html","institucional.html"].includes(f))return alert("As páginas do Menu não podem ser excluídas.");if(!confirm("Excluir "+f+"?"))return;delete project.files[f];delete project.pages[f];updateParentLists(project);saveLocal();renderPageManager();}
+document.getElementById("phpInput").addEventListener("change",async e=>{for(const f of e.target.files){const path="plugins/"+f.name;project.files[path]=await f.text();project.plugins[path]=true;}updateMeta(project);saveLocal();e.target.value=""});
+function renderPlugins(){const e=document.getElementById("pluginManager");e.innerHTML="";for(const f of Object.keys(project.plugins||{})){const r=document.createElement("div");r.className="row";r.innerHTML='<div class="grow"><b>🔌 '+esc(f)+'</b><div class="small">PHP do usuário</div></div><button onclick="openFile('+JSON.stringify(f)+')">Editar</button><button class="danger" onclick="delete project.plugins['+JSON.stringify(f)+'];delete project.files['+JSON.stringify(f)+'];saveLocal();renderPlugins()">Excluir</button>';e.appendChild(r);}}
+function openSvg(file){svgState.file=file;svgState.undo=[];svgState.redo=[];svgState.selected=null;svgState.tool="select";svgState.svg=new DOMParser().parseFromString(project.files[file]||defaultSvg(file),"image/svg+xml").documentElement;document.getElementById("svgName").textContent=file;renderSvg();}
+function renderSvg(){const box=document.getElementById("svgCanvas");box.innerHTML="";const s=svgState.svg.cloneNode(true);s.removeAttribute("style");s.style.width=(svgState.scale*100)+"%";s.style.maxWidth="none";s.style.maxHeight="none";s.addEventListener("mousedown",svgMouseDown);box.appendChild(s);document.getElementById("layers").innerHTML=[...s.children].map((x,i)=>'<div class="layer">'+esc(x.tagName.toLowerCase())+' #'+(i+1)+'</div>').join("");}
+function svgTool(t){svgState.tool=t;toast("Ferramenta: "+t);}
+function snapshot(){svgState.undo.push(new XMLSerializer().serializeToString(svgState.svg));svgState.redo=[];}
+function svgMouseDown(e){if(e.target===svgState.svg&&svgState.tool==="select")return;const t=svgState.tool,s=svgState.svg,pt=s.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const p=pt.matrixTransform(s.getScreenCTM().inverse());snapshot();
+ if(t==="rect"){const n=document.createElementNS("http://www.w3.org/2000/svg","rect");n.setAttribute("x",p.x-60);n.setAttribute("y",p.y-35);n.setAttribute("width",120);n.setAttribute("height",70);n.setAttribute("fill",document.getElementById("fill").value);s.appendChild(n);svgState.selected=n;renderSvg();}
+ else if(t==="circle"){const n=document.createElementNS("http://www.w3.org/2000/svg","circle");n.setAttribute("cx",p.x);n.setAttribute("cy",p.y);n.setAttribute("r",45);n.setAttribute("fill",document.getElementById("fill").value);s.appendChild(n);svgState.selected=n;renderSvg();}
+ else if(t==="text"){const n=document.createElementNS("http://www.w3.org/2000/svg","text");n.setAttribute("x",p.x);n.setAttribute("y",p.y);n.setAttribute("font-size","42");n.setAttribute("font-family","Arial");n.setAttribute("fill",document.getElementById("fill").value);n.textContent="Texto";s.appendChild(n);svgState.selected=n;renderSvg();}
+ else if(t==="pen"){const n=document.createElementNS("http://www.w3.org/2000/svg","path");n.setAttribute("d","M "+p.x+" "+p.y);n.setAttribute("fill","none");n.setAttribute("stroke",document.getElementById("stroke").value);n.setAttribute("stroke-width","5");s.appendChild(n);svgState.selected=n;drag={n,last:p};s.addEventListener("mousemove",drawMove);s.addEventListener("mouseup",drawUp,{once:true});}}
+function drawMove(e){if(!drag)return;const s=svgState.svg,pt=s.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const p=pt.matrixTransform(s.getScreenCTM().inverse());drag.n.setAttribute("d",drag.n.getAttribute("d")+" L "+p.x+" "+p.y);renderSvg();}
+function drawUp(){drag=null;}
+function deleteSvg(){if(!svgState.selected)return; snapshot();svgState.selected.remove();svgState.selected=null;renderSvg();}
+function duplicateSvg(){if(!svgState.selected)return;snapshot();const n=svgState.selected.cloneNode(true);n.setAttribute("transform","translate(20 20)");svgState.svg.appendChild(n);svgState.selected=n;renderSvg();}
+function applySvgStyle(){if(!svgState.selected)return;snapshot();svgState.selected.setAttribute("fill",document.getElementById("fill").value);svgState.selected.setAttribute("stroke",document.getElementById("stroke").value);renderSvg();}
+function undoSvg(){if(!svgState.undo.length)return;svgState.redo.push(new XMLSerializer().serializeToString(svgState.svg));svgState.svg=new DOMParser().parseFromString(svgState.undo.pop(),"image/svg+xml").documentElement;renderSvg();}
+function redoSvg(){if(!svgState.redo.length)return;svgState.undo.push(new XMLSerializer().serializeToString(svgState.svg));svgState.svg=new DOMParser().parseFromString(svgState.redo.pop(),"image/svg+xml").documentElement;renderSvg();}
+function setZoom(v){svgState.scale=Number(v)/100;renderSvg();}
+function saveSvg(){if(!svgState.svg)return;project.files[svgState.file]=new XMLSerializer().serializeToString(svgState.svg);updateMeta(project);saveLocal();toast("SVG salvo");}
+function toggleSvgCode(){if(!svgState.svg)return;showModal('<h2>&lt;/&gt; Código SVG</h2><textarea id="svgCode" class="code-svg" style="height:450px">'+esc(new XMLSerializer().serializeToString(svgState.svg))+'</textarea><div class="actions"><button class="primary" onclick="applySvgCode()">Aplicar</button><button onclick="closeModal()">Fechar</button></div>');}
+function applySvgCode(){try{const s=new DOMParser().parseFromString(document.getElementById("svgCode").value,"image/svg+xml").documentElement;if(s.tagName.toLowerCase()!=="svg")throw 0;svgState.svg=s;closeModal();renderSvg();}catch(e){alert("SVG inválido.");}}
+function importSvgImage(){const i=document.createElement("input");i.type="file";i.accept="image/*";i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{snapshot();const im=document.createElementNS("http://www.w3.org/2000/svg","image");im.setAttribute("href",r.result);im.setAttribute("x","50");im.setAttribute("y","50");im.setAttribute("width","300");im.setAttribute("height","200");svgState.svg.appendChild(im);svgState.selected=im;renderSvg()};r.readAsDataURL(f)};i.click();}
+function exportPng(){if(!svgState.svg)return;const xml=new XMLSerializer().serializeToString(svgState.svg);const blob=new Blob([xml],{type:"image/svg+xml"}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{const c=document.createElement("canvas");c.width=svgState.svg.viewBox.baseVal.width||1200;c.height=svgState.svg.viewBox.baseVal.height||600;const x=c.getContext("2d");x.drawImage(img,0,0);const a=document.createElement("a");a.download=svgState.file.replace(".svg",".png");a.href=c.toDataURL("image/png");a.click();URL.revokeObjectURL(url)};img.src=url;}
+function creditModal(){showModal('<h2>📦 Exportar ZIP</h2><p>Escolha o crédito que será incluído nas páginas HTML.</p><div class="grid"><button onclick="exportZip(\'\')">Sem crédito</button><button onclick="exportZip(\'Multipage Mel\',\'https://multipagemel.pages.dev/\')">Multipage Mel</button><button onclick="exportZip(\'Apenas Corretores\',\'https://apenascorretores.pages.dev/\')">Apenas Corretores</button><button onclick="exportZip(\'HomemSite\',\'https://homemsite.pages.dev/\')">HomemSite</button><button onclick="exportZip(\'HomemSite Paraná\',\'https://homemsite.pages.dev/parana/\')">HomemSite Paraná</button></div>');}
+document.getElementById("zipBtn").onclick=creditModal;
+function exportZip(name,url){closeModal();updateMeta(project);const z=new JSZip();for(const [f,c] of Object.entries(project.files)){if(f==="multiscript.json")z.file(f,c);else if(f.endsWith(".html")&&name){const block='<footer style="padding:20px;text-align:center;font:12px Arial;color:#777"><p>Este site garante a segurança na coleta e tratamento de dados, em conformidade com a LGPD.</p><p>© V14.0.0 by MultiScript HTML Editor</p><p><a href="'+url+'" target="_blank" rel="noopener">'+esc(name)+'</a></p></footer>';z.file(f,c.replace(/<!-- MULTISCRIPT CREDITOS INICIO -->[\\s\\S]*?<!-- MULTISCRIPT CREDITOS FIM -->/g,"")+block)}else z.file(f,c)}z.generateAsync({type:"blob"}).then(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=slugify(project.name)+".zip";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast("ZIP exportado");});}
+ensure();if(loadLocal())ensure();renderTree();openFile("index.html");
 </script>
 </body>
 </html>
