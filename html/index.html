@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>MultiScript HTML Editor V14</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MultiScript HTML Editor V14</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
@@ -14,1171 +14,764 @@
 
 html,
 body {
+    margin: 0;
+    padding: 0;
     width: 100%;
     height: 100%;
-    margin: 0;
-}
-
-body {
-    min-width: 1250px;
     overflow: hidden;
-    background: #0b0f14;
-    color: #dce3eb;
     font-family: "Segoe UI", Arial, sans-serif;
+    background: #111318;
+    color: #e8e8e8;
 }
 
-/* =========================================================
-   APLICAÇÃO
-========================================================= */
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
 
-#app {
-    width: 100%;
+button {
+    cursor: pointer;
+}
+
+.app {
+    display: grid;
+    grid-template-rows: 48px 42px 1fr 24px;
+    width: 100vw;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
-/* =========================================================
-   TOPO
-========================================================= */
+/* TOPBAR */
 
 .topbar {
-    height: 48px;
-    flex-shrink: 0;
+    background: #181a20;
+    border-bottom: 1px solid #30333b;
     display: flex;
     align-items: center;
-    background: #11161d;
-    border-bottom: 1px solid #29323d;
+    padding: 0 16px;
+    gap: 18px;
 }
 
 .logo {
-    width: 52px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #171e27;
-    border-right: 1px solid #29323d;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 900;
+    font-weight: 700;
+    color: #fff;
+    font-size: 15px;
 }
 
-.brand {
-    padding-left: 14px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #f1f4f7;
+.logo span {
+    color: #4da3ff;
 }
 
 .version {
-    margin-left: 8px;
-    padding: 3px 7px;
-    border: 1px solid #384451;
-    border-radius: 3px;
-    color: #83909e;
-    font-size: 9px;
-}
-
-.top-menu {
-    height: 100%;
-    display: flex;
-    margin-left: 25px;
-}
-
-.top-menu button {
-    height: 100%;
-    padding: 0 13px;
-    border: 0;
-    background: transparent;
-    color: #8793a1;
-    cursor: pointer;
+    color: #777d89;
     font-size: 11px;
 }
 
-.top-menu button:hover {
-    background: #1b232d;
-    color: white;
+.topmenu {
+    display: flex;
+    gap: 4px;
 }
 
-.top-space {
-    flex: 1;
+.topmenu button {
+    background: transparent;
+    border: 0;
+    color: #bfc3cc;
+    padding: 7px 10px;
+    border-radius: 4px;
+}
+
+.topmenu button:hover {
+    background: #292d36;
+    color: white;
 }
 
 .top-right {
-    height: 100%;
+    margin-left: auto;
     display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.top-right button {
-    width: 44px;
-    height: 100%;
-    border: 0;
-    border-left: 1px solid #29323d;
-    background: transparent;
-    color: #758291;
-    cursor: pointer;
+.project-name {
+    color: #9ea4b1;
+    font-size: 12px;
 }
 
-.top-right button:hover {
-    background: #1b232d;
-    color: white;
-}
-
-/* =========================================================
-   BARRA DE FERRAMENTAS
-========================================================= */
+/* TOOLBAR */
 
 .toolbar {
-    height: 44px;
-    flex-shrink: 0;
+    background: #202329;
+    border-bottom: 1px solid #30333b;
     display: flex;
     align-items: center;
-    padding: 0 10px;
-    background: #151b23;
-    border-bottom: 1px solid #29323d;
+    gap: 6px;
+    padding: 5px 10px;
 }
 
-.tool-group {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding-right: 12px;
-    margin-right: 12px;
-    border-right: 1px solid #2a333e;
-}
-
-.tool-group:last-child {
-    border-right: 0;
-}
-
-.tool {
-    height: 29px;
-    padding: 0 10px;
-    border: 1px solid transparent;
+.toolbar button {
+    background: #292d35;
+    border: 1px solid #3a3e47;
+    color: #d8dbe1;
     border-radius: 4px;
-    background: transparent;
-    color: #929eac;
-    cursor: pointer;
-    font-size: 10px;
+    padding: 6px 10px;
+    font-size: 12px;
 }
 
-.tool:hover {
-    background: #202933;
-    border-color: #34404d;
+.toolbar button:hover {
+    background: #343944;
+}
+
+.toolbar .primary {
+    background: #1769aa;
+    border-color: #2585d0;
     color: white;
 }
 
-.tool.blue {
-    background: #176db4;
-    color: white;
+.toolbar .primary:hover {
+    background: #1b7bc5;
 }
 
-.tool.blue:hover {
-    background: #2180cf;
-}
-
-.tool.export {
-    background: #26303b;
-    color: #e2e8ee;
-}
-
-/* =========================================================
-   ÁREA PRINCIPAL
-========================================================= */
+/* MAIN */
 
 .main {
-    flex: 1;
     min-height: 0;
-    display: flex;
+    display: grid;
+    grid-template-columns: 54px 250px minmax(450px, 1fr) 42%;
+    background: #111318;
 }
 
-/* =========================================================
-   BARRA LATERAL DE ÍCONES
-========================================================= */
+/* ACTIVITY BAR */
 
 .activity {
-    width: 48px;
-    flex-shrink: 0;
+    background: #181a20;
+    border-right: 1px solid #30333b;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #0e1319;
-    border-right: 1px solid #29323d;
 }
 
 .activity button {
-    width: 48px;
-    height: 48px;
+    width: 54px;
+    height: 52px;
+    background: transparent;
     border: 0;
     border-left: 2px solid transparent;
-    background: transparent;
-    color: #65717f;
-    cursor: pointer;
-    font-size: 16px;
+    color: #7f8692;
+    font-size: 19px;
 }
 
 .activity button:hover,
 .activity button.active {
-    background: #171e27;
     color: white;
+    border-left-color: #4da3ff;
+    background: #20232a;
 }
 
-.activity button.active {
-    border-left-color: #4ca0f2;
-}
+/* SIDEBAR */
 
-.activity-space {
-    flex: 1;
-}
-
-/* =========================================================
-   EXPLORADOR
-========================================================= */
-
-.explorer {
-    width: 245px;
-    flex-shrink: 0;
-    background: #121820;
-    border-right: 1px solid #29323d;
-    overflow-y: auto;
-}
-
-.explorer-title {
-    height: 39px;
-    display: flex;
-    align-items: center;
-    padding: 0 13px;
-    color: #7f8b99;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.explorer-title-buttons {
-    margin-left: auto;
-    display: flex;
-    gap: 3px;
-}
-
-.explorer-title-buttons button {
-    border: 0;
-    background: transparent;
-    color: #687584;
-    cursor: pointer;
-}
-
-.explorer-title-buttons button:hover {
-    color: white;
-}
-
-.root {
-    padding: 8px 13px;
-    color: #d0d7df;
-    font-size: 11px;
-    font-weight: bold;
-}
-
-.folder {
-    padding: 8px 13px;
-    color: #778493;
-    font-size: 10px;
-    font-weight: bold;
-}
-
-.file {
-    height: 31px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding-left: 29px;
-    color: #8996a4;
-    cursor: pointer;
-    font-size: 11px;
-}
-
-.file:hover {
-    background: #1a222c;
-    color: white;
-}
-
-.file.active {
-    background: #202a36;
-    color: white;
-}
-
-.html-icon {
-    color: #f07479;
-}
-
-.css-icon {
-    color: #5aa9ff;
-}
-
-.js-icon {
-    color: #e3c65c;
-}
-
-.json-icon {
-    color: #b68bff;
-}
-
-.divider {
-    height: 1px;
-    margin: 12px 0;
-    background: #29323d;
-}
-
-.side-option {
-    padding: 9px 14px;
-    color: #7d8997;
-    cursor: pointer;
-    font-size: 10px;
-}
-
-.side-option:hover {
-    background: #1a222c;
-    color: white;
-}
-
-/* =========================================================
-   EDITOR
-========================================================= */
-
-.editor {
-    flex: 1;
-    min-width: 500px;
-    display: flex;
-    flex-direction: column;
-    background: #0d1117;
-}
-
-.editor-tabs {
-    height: 39px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: stretch;
-    background: #11161d;
-    border-bottom: 1px solid #29323d;
-}
-
-.editor-tab {
-    min-width: 150px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 12px;
-    background: #0d1117;
-    border-top: 2px solid #4ca0f2;
-    border-right: 1px solid #29323d;
-    color: #dce4ec;
-    font-size: 11px;
-}
-
-.tab-unsaved {
-    margin-left: auto;
-    color: #798593;
-}
-
-.editor-tools {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 10px;
-    gap: 8px;
-}
-
-.editor-tools button {
-    border: 0;
-    background: transparent;
-    color: #657280;
-    cursor: pointer;
-    font-size: 10px;
-}
-
-.editor-tools button:hover {
-    color: white;
-}
-
-.code-wrapper {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-}
-
-.line-numbers {
-    width: 56px;
-    flex-shrink: 0;
-    overflow: hidden;
-    padding-top: 14px;
-    background: #0a0e13;
-    color: #46515d;
-    text-align: right;
-    font: 12px/20px Consolas, monospace;
-    user-select: none;
-}
-
-.line-numbers div {
-    height: 20px;
-    padding-right: 12px;
-}
-
-#code {
-    flex: 1;
+.sidebar {
     min-width: 0;
-    resize: none;
-    outline: none;
-    border: 0;
-    padding: 14px 18px;
-    background: #0d1117;
-    color: #d7dee7;
-    font: 12px/20px Consolas, "Courier New", monospace;
-    white-space: pre;
-    tab-size: 4;
+    background: #191b21;
+    border-right: 1px solid #30333b;
     overflow: auto;
 }
 
-/* =========================================================
-   PAINEL INFERIOR
-========================================================= */
-
-.bottom {
-    height: 145px;
-    flex-shrink: 0;
-    background: #10151b;
-    border-top: 1px solid #29323d;
+.sidebar-title {
+    height: 40px;
+    padding: 13px 14px 8px;
+    color: #aeb4bf;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .5px;
 }
 
-.bottom-tabs {
-    height: 34px;
+.tree {
+    padding: 3px 8px 20px;
+}
+
+.tree-row {
     display: flex;
     align-items: center;
-    gap: 22px;
-    padding: 0 13px;
-    border-bottom: 1px solid #29323d;
-}
-
-.bottom-tabs span {
-    color: #667381;
-    font-size: 9px;
-    letter-spacing: .7px;
-}
-
-.bottom-tabs span.active {
-    color: white;
-}
-
-.terminal {
-    height: calc(100% - 34px);
-    padding: 8px 13px;
-    overflow-y: auto;
-    font: 10px/1.7 Consolas, monospace;
-    color: #65727f;
-}
-
-.log-success {
-    color: #55b777;
-}
-
-.log-error {
-    color: #e16a6a;
-}
-
-.log-info {
-    color: #629ed0;
-}
-
-/* =========================================================
-   PREVIEW
-========================================================= */
-
-.preview {
-    width: 450px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    background: #11161d;
-    border-left: 1px solid #29323d;
-}
-
-.preview-header {
-    height: 39px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    padding: 0 11px;
-    border-bottom: 1px solid #29323d;
-}
-
-.preview-title {
-    color: #7f8b98;
-    font-size: 10px;
-    letter-spacing: 1px;
-}
-
-.preview-actions {
-    margin-left: auto;
-    display: flex;
     gap: 8px;
+    height: 29px;
+    padding: 0 8px;
+    border-radius: 4px;
+    color: #c6cad2;
+    font-size: 12px;
+    user-select: none;
 }
 
-.preview-actions button {
-    border: 0;
-    background: transparent;
-    color: #687583;
+.tree-row:hover {
+    background: #252931;
+}
+
+.tree-row.selected {
+    background: #2a3441;
+    color: #fff;
+}
+
+.tree-row.folder {
+    color: #ddd;
+    font-weight: 600;
+}
+
+.tree-indent {
+    padding-left: 22px;
+}
+
+.file-icon {
+    width: 15px;
+    text-align: center;
+}
+
+/* WORKSPACE */
+
+.workspace {
+    min-width: 0;
+    display: grid;
+    grid-template-rows: 37px 1fr 155px;
+    background: #111318;
+}
+
+.tabs {
+    background: #191b20;
+    border-bottom: 1px solid #30333b;
+    display: flex;
+    align-items: stretch;
+    overflow-x: auto;
+}
+
+.tab {
+    min-width: 125px;
+    max-width: 180px;
+    padding: 10px 13px;
+    border-right: 1px solid #30333b;
+    color: #888f9c;
+    font-size: 12px;
     cursor: pointer;
 }
 
-.preview-actions button:hover {
+.tab.active {
+    background: #111318;
+    color: white;
+    border-top: 2px solid #4da3ff;
+    padding-top: 8px;
+}
+
+/* EDITOR */
+
+.editor-area {
+    position: relative;
+    min-height: 0;
+    background: #101216;
+}
+
+.editor-wrap {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.lines {
+    width: 52px;
+    background: #15171c;
+    border-right: 1px solid #252831;
+    color: #555b67;
+    text-align: right;
+    padding: 12px 9px;
+    font: 13px/20px Consolas, monospace;
+    overflow: hidden;
+    user-select: none;
+}
+
+#codeEditor {
+    width: calc(100% - 52px);
+    height: 100%;
+    resize: none;
+    outline: none;
+    border: 0;
+    background: #101216;
+    color: #d9dde5;
+    padding: 12px 14px;
+    font: 13px/20px Consolas, "Courier New", monospace;
+    tab-size: 4;
+    white-space: pre;
+    overflow: auto;
+}
+
+/* TERMINAL */
+
+.terminal {
+    background: #0d0f12;
+    border-top: 1px solid #30333b;
+    min-height: 0;
+}
+
+.terminal-head {
+    height: 31px;
+    background: #181a1f;
+    border-bottom: 1px solid #30333b;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 0 12px;
+    color: #9299a5;
+    font-size: 11px;
+}
+
+.terminal-head .active {
     color: white;
 }
 
-.browser {
-    height: 32px;
-    flex-shrink: 0;
+#terminalOutput {
+    padding: 8px 12px;
+    height: calc(100% - 31px);
+    overflow: auto;
+    font: 12px/18px Consolas, monospace;
+    color: #aeb5c0;
+}
+
+.log-ok {
+    color: #6edc8c;
+}
+
+.log-info {
+    color: #65b9ff;
+}
+
+.log-warning {
+    color: #e7c85b;
+}
+
+/* PREVIEW */
+
+.preview {
+    min-width: 0;
+    background: #d7d7d7;
+    border-left: 1px solid #30333b;
+    display: grid;
+    grid-template-rows: 37px 1fr;
+}
+
+.preview-head {
+    background: #191b20;
+    color: #9298a3;
+    border-bottom: 1px solid #30333b;
     display: flex;
     align-items: center;
-    padding: 0 8px;
-    background: #171d25;
-    border-bottom: 1px solid #29323d;
+    padding: 0 12px;
+    font-size: 11px;
 }
 
-.browser-dot {
-    width: 7px;
-    height: 7px;
-    margin-right: 4px;
-    border-radius: 50%;
-    background: #424c58;
-}
-
-.browser-url {
-    flex: 1;
-    margin-left: 7px;
-    padding: 5px 8px;
-    border-radius: 3px;
-    background: #0d1218;
-    color: #606c79;
-    font-size: 9px;
-}
-
-#preview {
-    flex: 1;
+#previewFrame {
     width: 100%;
+    height: 100%;
     border: 0;
     background: white;
 }
 
-/* =========================================================
-   STATUS
-========================================================= */
+/* STATUS */
 
-.statusbar {
-    height: 25px;
-    flex-shrink: 0;
+.status {
+    background: #1769aa;
+    color: white;
     display: flex;
     align-items: center;
+    gap: 18px;
     padding: 0 10px;
-    background: #176da6;
-    color: white;
     font-size: 10px;
 }
 
-.status-left {
-    flex: 1;
-}
-
 .status-right {
-    display: flex;
-    gap: 18px;
+    margin-left: auto;
 }
 
-/* =========================================================
-   MODAL
-========================================================= */
+/* MODAL */
 
 .modal-overlay {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    display: none;
+    background: rgba(0,0,0,.72);
+    display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,.72);
 }
 
 .modal {
-    width: 590px;
-    max-height: 80vh;
+    width: 620px;
+    max-height: 85vh;
     overflow: auto;
-    background: #171d25;
-    border: 1px solid #36414e;
-    border-radius: 7px;
-    box-shadow: 0 30px 100px rgba(0,0,0,.8);
+    background: #1b1e24;
+    border: 1px solid #3b404a;
+    border-radius: 8px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.5);
 }
 
-.modal-title {
+.modal-head {
     padding: 16px 18px;
-    border-bottom: 1px solid #2b3540;
-    color: white;
-    font-size: 13px;
-    font-weight: bold;
+    border-bottom: 1px solid #343841;
+    display: flex;
+    align-items: center;
+}
+
+.modal-head h2 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.modal-close {
+    margin-left: auto;
+    border: 0;
+    background: transparent;
+    color: #9298a3;
+    font-size: 18px;
 }
 
 .modal-body {
     padding: 18px;
 }
 
-.modal-footer {
-    padding: 12px 15px;
-    border-top: 1px solid #2b3540;
-    text-align: right;
-}
-
-.modal-footer button {
-    padding: 8px 14px;
-    border: 1px solid #3a4653;
-    border-radius: 4px;
-    background: #252e39;
-    color: #d4dce4;
-    cursor: pointer;
-    font-size: 10px;
-}
-
-.modal-footer button:hover {
-    background: #313c49;
-}
-
-.modal-footer .confirm {
-    margin-left: 5px;
-    background: #176db4;
-    border-color: #3289d7;
-    color: white;
-}
-
-/* =========================================================
-   GERADOR
-========================================================= */
-
-.generator-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.generator-card {
-    padding: 16px;
-    border: 1px solid #303b47;
-    border-radius: 5px;
-    background: #11171e;
-    cursor: pointer;
-}
-
-.generator-card:hover {
-    background: #1b232d;
-    border-color: #4b5a69;
-}
-
-.generator-card strong {
-    display: block;
-    margin-bottom: 7px;
-    color: #e2e8ee;
-    font-size: 11px;
-}
-
-.generator-card span {
-    color: #758290;
-    font-size: 9px;
-    line-height: 1.5;
-}
-
-/* =========================================================
-   FORMULÁRIOS
-========================================================= */
-
-.notice {
-    margin-bottom: 15px;
-    padding: 12px;
-    border-left: 3px solid #4b9cf0;
-    background: #111820;
-    color: #8c98a5;
-    font-size: 10px;
-    line-height: 1.7;
+.modal-foot {
+    padding: 12px 18px;
+    border-top: 1px solid #343841;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
 }
 
 .form-label {
     display: block;
-    margin-bottom: 6px;
-    color: #8a96a4;
-    font-size: 10px;
+    margin-bottom: 7px;
+    color: #b8bdc7;
+    font-size: 12px;
 }
 
-.form-select {
+.input,
+.select,
+.generator-textarea {
     width: 100%;
-    padding: 10px;
+    background: #101216;
+    border: 1px solid #393e47;
+    color: #e7e9ed;
+    border-radius: 5px;
     outline: none;
-    border: 1px solid #394551;
-    border-radius: 4px;
-    background: #0e1319;
-    color: #d9e1e9;
+}
+
+.input,
+.select {
+    height: 38px;
+    padding: 0 10px;
+}
+
+.generator-textarea {
+    min-height: 300px;
+    padding: 12px;
+    resize: vertical;
+    font: 13px/20px Consolas, monospace;
+}
+
+.input:focus,
+.select:focus,
+.generator-textarea:focus {
+    border-color: #4da3ff;
+}
+
+.btn {
+    border: 1px solid #3c414b;
+    background: #292d35;
+    color: white;
+    padding: 8px 13px;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #353a45;
+}
+
+.btn.primary {
+    background: #1769aa;
+    border-color: #2785cf;
+}
+
+.btn.danger {
+    background: #762d35;
+    border-color: #9d3d48;
+}
+
+/* GENERATOR */
+
+.generator-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.plugin-list {
+    border: 1px solid #363b45;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.plugin-item {
+    padding: 11px 12px;
+    border-bottom: 1px solid #30343c;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plugin-item:last-child {
+    border-bottom: 0;
+}
+
+.plugin-item input {
+    width: 16px;
+    height: 16px;
+}
+
+.plugin-info strong {
+    display: block;
+    font-size: 12px;
+}
+
+.plugin-info small {
+    color: #7f8794;
     font-size: 10px;
 }
 
-.form-select:focus {
-    border-color: #4b9cf0;
+.section-title {
+    color: #aeb4bf;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin: 16px 0 8px;
 }
 
-.credit-preview {
-    margin-top: 15px;
+/* PLUGINS */
+
+.plugin-card {
     padding: 13px;
-    border: 1px solid #2c3742;
-    border-radius: 4px;
-    background: #10151b;
-    color: #8996a3;
-    font-size: 10px;
-    line-height: 1.7;
+    border: 1px solid #363b45;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background: #17191e;
 }
 
-/* =========================================================
-   SCROLLBARS
-========================================================= */
+.plugin-card strong {
+    font-size: 13px;
+}
+
+.plugin-card p {
+    color: #8f96a2;
+    font-size: 11px;
+    margin: 6px 0 10px;
+}
+
+.plugin-status {
+    color: #6edc8c;
+    font-size: 10px;
+}
+
+/* SCROLL */
 
 ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #0b0f14;
+    background: #111318;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #303b47;
+    background: #363b45;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #3d4b5a;
+    background: #464c58;
 }
 </style>
 </head>
 
 <body>
 
-<div id="app">
+<div class="app">
 
-    <!-- =================================================
-         TOPO
-    ================================================== -->
-
+    <!-- TOPBAR -->
     <header class="topbar">
 
         <div class="logo">
-            MS
-        </div>
-
-        <div class="brand">
-            MultiScript HTML Editor
+            MultiScript <span>HTML Editor</span>
         </div>
 
         <div class="version">
             V14.0.0
         </div>
 
-        <nav class="top-menu">
-
-            <button onclick="newProject()">
-                Arquivo
-            </button>
-
-            <button onclick="openPageGenerator()">
-                Página
-            </button>
-
-            <button onclick="openCredits()">
-                Créditos
-            </button>
-
-            <button onclick="openAbout()">
-                Ajuda
-            </button>
-
+        <nav class="topmenu">
+            <button onclick="openPageGenerator()">Gerar Página</button>
+            <button onclick="openPlugins()">Plugins</button>
+            <button onclick="formatHTML()">Formatar</button>
+            <button onclick="saveProject()">Salvar</button>
         </nav>
 
-        <div class="top-space"></div>
-
         <div class="top-right">
-
-            <button>—</button>
-            <button>□</button>
-            <button>×</button>
-
+            <span class="project-name">
+                MEU-PROJETO
+            </span>
         </div>
 
     </header>
 
-
-    <!-- =================================================
-         TOOLBAR
-    ================================================== -->
-
+    <!-- TOOLBAR -->
     <div class="toolbar">
 
-        <div class="tool-group">
+        <button onclick="newPage()">
+            ＋ Nova Página
+        </button>
 
-            <button
-                class="tool"
-                onclick="newProject()">
-                ＋ Novo
-            </button>
+        <button onclick="openPageGenerator()">
+            ⚙ Gerador
+        </button>
 
-            <button
-                class="tool"
-                onclick="saveProject()">
-                💾 Salvar
-            </button>
+        <button onclick="openPlugins()">
+            🧩 Plugins
+        </button>
 
-        </div>
+        <button onclick="runPreview()">
+            ▶ Preview
+        </button>
 
+        <button onclick="saveProject()">
+            💾 Salvar
+        </button>
 
-        <div class="tool-group">
+        <button class="primary" onclick="exportZIP()">
+            📦 Exportar ZIP
+        </button>
 
-            <button
-                class="tool blue"
-                onclick="runPreview()">
-                ▶ Executar
-            </button>
+        <div style="flex:1"></div>
 
-            <button
-                class="tool"
-                onclick="openBrowserPreview()">
-                ↗ Preview
-            </button>
-
-        </div>
-
-
-        <div class="tool-group">
-
-            <button
-                class="tool"
-                onclick="formatCurrentHTML()">
-                ✨ Formatar
-            </button>
-
-            <button
-                class="tool"
-                onclick="insertCredits()">
-                © Crédito
-            </button>
-
-        </div>
-
-
-        <div class="tool-group">
-
-            <button
-                class="tool export"
-                onclick="exportZIP()">
-                📦 Exportar ZIP
-            </button>
-
-        </div>
+        <button onclick="clearTerminal()">
+            Limpar Terminal
+        </button>
 
     </div>
 
-
-    <!-- =================================================
-         ÁREA PRINCIPAL
-    ================================================== -->
-
+    <!-- MAIN -->
     <main class="main">
 
-
-        <!-- ATIVIDADE -->
-
+        <!-- ACTIVITY -->
         <aside class="activity">
 
-            <button class="active">
-                ▦
+            <button
+                class="active"
+                title="Explorador"
+                onclick="showExplorer()">
+                📁
             </button>
 
-            <button>
-                ⌕
-            </button>
-
-            <button onclick="openPageGenerator()">
-                ⊞
-            </button>
-
-            <div class="activity-space"></div>
-
-            <button onclick="openAbout()">
-                ?
-            </button>
-
-        </aside>
-
-
-        <!-- EXPLORADOR -->
-
-        <aside class="explorer">
-
-            <div class="explorer-title">
-
-                EXPLORADOR
-
-                <div class="explorer-title-buttons">
-
-                    <button onclick="newProject()">
-                        +
-                    </button>
-
-                    <button onclick="saveProject()">
-                        ↓
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="root">
-                ▾ MEU-PROJETO
-            </div>
-
-
-            <div class="folder">
-                ▾ PUBLIC
-            </div>
-
-
-            <div
-                class="file active"
-                data-file="html"
-                onclick="selectFile('html', this)">
-
-                <span class="html-icon">
-                    ◈
-                </span>
-
-                index.html
-
-            </div>
-
-
-            <div
-                class="file"
-                data-file="css"
-                onclick="selectFile('css', this)">
-
-                <span class="css-icon">
-                    ◈
-                </span>
-
-                style.css
-
-            </div>
-
-
-            <div
-                class="file"
-                data-file="js"
-                onclick="selectFile('js', this)">
-
-                <span class="js-icon">
-                    ◈
-                </span>
-
-                script.js
-
-            </div>
-
-
-            <div
-                class="file"
-                data-file="json"
-                onclick="selectFile('json', this)">
-
-                <span class="json-icon">
-                    ◈
-                </span>
-
-                projeto.json
-
-            </div>
-
-
-            <div class="divider"></div>
-
-
-            <div class="folder">
-                FERRAMENTAS
-            </div>
-
-
-            <div
-                class="side-option"
+            <button
+                title="Gerador"
                 onclick="openPageGenerator()">
+                ＋
+            </button>
 
-                ＋ Gerador de páginas
+            <button
+                title="Plugins"
+                onclick="openPlugins()">
+                🧩
+            </button>
 
+        </aside>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="sidebar-title">
+                EXPLORADOR
             </div>
 
+            <div class="tree">
 
-            <div
-                class="side-option"
-                onclick="openCredits()">
+                <div class="tree-row folder">
+                    📂 MEU-PROJETO
+                </div>
 
-                © Gerenciar créditos
+                <div class="tree-row folder tree-indent">
+                    📂 PUBLIC
+                </div>
 
-            </div>
+                <div id="fileTree"></div>
 
+                <div class="tree-row folder tree-indent">
+                    📂 plugins
+                </div>
 
-            <div
-                class="side-option"
-                onclick="formatCurrentHTML()">
-
-                ✨ Formatar HTML
+                <div id="pluginTree"></div>
 
             </div>
 
         </aside>
 
+        <!-- WORKSPACE -->
+        <section class="workspace">
 
-        <!-- EDITOR -->
+            <div
+                class="tabs"
+                id="tabs">
+            </div>
 
-        <section class="editor">
+            <div class="editor-area">
 
-            <div class="editor-tabs">
+                <div class="editor-wrap">
 
-                <div class="editor-tab">
+                    <div
+                        class="lines"
+                        id="lineNumbers">
+                    </div>
 
-                    <span
-                        id="tabIcon"
-                        class="html-icon">
-                        ◈
-                    </span>
-
-                    <span id="tabName">
-                        index.html
-                    </span>
-
-                    <span
-                        class="tab-unsaved"
-                        id="unsaved">
-                        ●
-                    </span>
-
-                </div>
-
-
-                <div class="editor-tools">
-
-                    <button onclick="selectAllCode()">
-                        Selecionar tudo
-                    </button>
-
-                    <button onclick="copyCode()">
-                        Copiar
-                    </button>
+                    <textarea
+                        id="codeEditor"
+                        spellcheck="false"
+                        oninput="editorChanged()"
+                        onscroll="syncLines()"
+                        onkeydown="handleEditorKey(event)">
+                    </textarea>
 
                 </div>
 
             </div>
 
+            <div class="terminal">
 
-            <div class="code-wrapper">
-
-                <div
-                    class="line-numbers"
-                    id="lineNumbers">
-                </div>
-
-
-                <textarea
-                    id="code"
-                    spellcheck="false"
-                    autocomplete="off"
-                    autocorrect="off"
-                    autocapitalize="off"></textarea>
-
-            </div>
-
-
-            <div class="bottom">
-
-                <div class="bottom-tabs">
-
+                <div class="terminal-head">
                     <span class="active">
                         TERMINAL
                     </span>
 
                     <span>
-                        PROBLEMAS
+                        OUTPUT
                     </span>
-
-                    <span>
-                        SAÍDA
-                    </span>
-
                 </div>
 
-
-                <div
-                    class="terminal"
-                    id="terminal">
-
-                    <div>
-                        MultiScript HTML Editor V14.0.0
-                    </div>
-
-                </div>
+                <div id="terminalOutput"></div>
 
             </div>
 
         </section>
 
-
         <!-- PREVIEW -->
-
         <section class="preview">
 
-            <div class="preview-header">
-
-                <span class="preview-title">
-                    PREVIEW
-                </span>
-
-                <div class="preview-actions">
-
-                    <button onclick="runPreview()">
-                        ↻
-                    </button>
-
-                    <button onclick="openBrowserPreview()">
-                        ↗
-                    </button>
-
-                </div>
-
+            <div class="preview-head">
+                PREVIEW — index.html
             </div>
-
-
-            <div class="browser">
-
-                <span class="browser-dot"></span>
-                <span class="browser-dot"></span>
-                <span class="browser-dot"></span>
-
-                <div class="browser-url">
-                    multiscript://preview/index.html
-                </div>
-
-            </div>
-
 
             <iframe
-                id="preview"
+                id="previewFrame"
                 sandbox="allow-scripts allow-forms allow-modals">
             </iframe>
 
@@ -1186,114 +779,1027 @@ body {
 
     </main>
 
+    <!-- STATUS -->
+    <footer class="status">
 
-    <!-- =================================================
-         STATUS
-    ================================================== -->
+        <span id="statusMessage">
+            Pronto
+        </span>
 
-    <footer class="statusbar">
+        <span>
+            UTF-8
+        </span>
 
-        <div class="status-left">
-            MultiScript HTML Editor V14
-        </div>
+        <span>
+            HTML
+        </span>
 
-        <div class="status-right">
-
-            <span id="statusLanguage">
-                HTML
-            </span>
-
-            <span id="statusPosition">
-                Ln 1, Col 1
-            </span>
-
-            <span id="statusChars">
-                0 caracteres
-            </span>
-
-            <span>
-                UTF-8
-            </span>
-
-        </div>
+        <span class="status-right">
+            MultiScript V14
+        </span>
 
     </footer>
 
 </div>
 
-
-<!-- =====================================================
-     MODAL
-====================================================== -->
-
-<div
-    class="modal-overlay"
-    id="modal">
-
-    <div class="modal">
-
-        <div
-            class="modal-title"
-            id="modalTitle">
-        </div>
-
-        <div
-            class="modal-body"
-            id="modalBody">
-        </div>
-
-        <div class="modal-footer">
-
-            <button onclick="closeModal()">
-                Cancelar
-            </button>
-
-            <button
-                class="confirm"
-                id="modalConfirm"
-                style="display:none">
-
-                Confirmar
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
 <script>
+"use strict";
+
+/*
+===========================================================
+MULTISCRIPT HTML EDITOR V14
+===========================================================
+*/
+
+const PROJECT_KEY = "multiscript_v14_project";
+
+let project = {
+    name: "MEU-PROJETO",
+
+    files: {
+
+        "index.html": `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <h1>Meu Site</h1>
+
+        <nav>
+            <a href="index.html">Início</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <h2>Bem-vindo!</h2>
+
+            <p>
+                Esta página foi criada pelo MultiScript HTML Editor V14.
+            </p>
+        </section>
+
+        <section>
+            <h2>Sobre o projeto</h2>
+
+            <p>
+                Use o Gerador de Páginas para criar novas páginas HTML.
+            </p>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Meu Site</p>
+    </footer>
+
+    <script src="script.js"><\/script>
+</body>
+</html>`,
+
+        "style.css": `* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
+
+.site-header {
+    background: #111827;
+    color: white;
+    padding: 25px;
+}
+
+.site-header nav a {
+    color: white;
+}
+
+main {
+    max-width: 1000px;
+    margin: auto;
+    padding: 50px 25px;
+}
+
+.hero {
+    background: white;
+    padding: 50px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+footer {
+    background: #111827;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}`,
+
+        "script.js": `console.log("MultiScript V14 iniciado.");
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Página carregada.");
+});`
+    },
+
+    plugins: {}
+};
+
+let currentFile = "index.html";
+let dirty = false;
 
 /* =========================================================
-   ESTADO DO EDITOR
+   PLUGINS
 ========================================================= */
 
-const codeEditor =
-    document.getElementById("code");
+const pluginLibrary = {
 
-const preview =
-    document.getElementById("preview");
+    contato: {
+        name: "Formulário de Contato",
+        description: "Processa formulários através de PHP.",
+        file: "contato.php",
 
-const lineNumbers =
-    document.getElementById("lineNumbers");
+        php: `<?php
 
-const terminal =
-    document.getElementById("terminal");
+/*
+    MultiScript V14
+    Plugin: Formulário de Contato
+*/
 
-let currentFile = "html";
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    exit('Método não permitido.');
+}
 
-let modalAction = null;
+$nome = trim($_POST['nome'] ?? '');
+$email = trim($_POST['email'] ?? '');
+$mensagem = trim($_POST['mensagem'] ?? '');
 
+if ($nome === '' || $email === '' || $mensagem === '') {
+    exit('Preencha todos os campos.');
+}
+
+$destino = 'seuemail@exemplo.com';
+
+$assunto = 'Novo contato pelo site';
+
+$corpo =
+    "Nome: " . $nome . "\\n" .
+    "E-mail: " . $email . "\\n\\n" .
+    "Mensagem:\\n" . $mensagem;
+
+$headers =
+    "From: " . $email . "\\r\\n" .
+    "Reply-To: " . $email . "\\r\\n";
+
+mail($destino, $assunto, $corpo, $headers);
+
+echo 'Mensagem enviada com sucesso.';
+?>`
+    },
+
+    antispam: {
+        name: "Anti-Spam",
+        description: "Filtro básico contra envios automatizados.",
+        file: "anti-spam.php",
+
+        php: `<?php
+
+/*
+    MultiScript V14
+    Plugin: Anti-Spam
+*/
+
+session_start();
+
+$tempoMinimo = 3;
+
+if (!isset($_SESSION['multiscript_inicio'])) {
+    $_SESSION['multiscript_inicio'] = time();
+}
+
+if (
+    time() - $_SESSION['multiscript_inicio']
+    < $tempoMinimo
+) {
+    http_response_code(429);
+    exit('Envio muito rápido. Tente novamente.');
+}
+
+?>`
+    },
+
+    whatsapp: {
+        name: "WhatsApp",
+        description: "Gera links e integração básica com WhatsApp.",
+        file: "whatsapp.php",
+
+        php: `<?php
+
+/*
+    MultiScript V14
+    Plugin: WhatsApp
+*/
+
+$numero = preg_replace(
+    '/[^0-9]/',
+    '',
+    $_GET['numero'] ?? ''
+);
+
+$mensagem = $_GET['mensagem'] ?? '';
+
+if ($numero === '') {
+    exit('Número não informado.');
+}
+
+$url =
+    'https://wa.me/' .
+    $numero .
+    '?text=' .
+    urlencode($mensagem);
+
+header('Location: ' . $url);
+
+exit;
+?>`
+    },
+
+    seo: {
+        name: "SEO Básico",
+        description: "Arquivo PHP para informações básicas de SEO.",
+        file: "seo.php",
+
+        php: `<?php
+
+/*
+    MultiScript V14
+    Plugin: SEO Básico
+*/
+
+$siteTitle = 'Meu Site';
+
+$description =
+    'Descrição do meu site.';
+
+$keywords =
+    'site, empresa, serviços';
+
+?>`
+    }
+};
 
 /* =========================================================
-   ARQUIVOS BASE
+   INIT
 ========================================================= */
 
-let files = {
+function init() {
 
-html: `<!DOCTYPE html>
+    loadProject();
+
+    renderFileTree();
+    renderPluginTree();
+
+    openFile(currentFile);
+
+    updateLineNumbers();
+
+    runPreview();
+
+    log(
+        "MultiScript V14 iniciado.",
+        "ok"
+    );
+
+    log(
+        "Projeto carregado com " +
+        Object.keys(project.files).length +
+        " arquivo(s).",
+        "info"
+    );
+}
+
+/* =========================================================
+   PROJECT
+========================================================= */
+
+function loadProject() {
+
+    const saved =
+        localStorage.getItem(PROJECT_KEY);
+
+    if (!saved) {
+        return;
+    }
+
+    try {
+
+        const data =
+            JSON.parse(saved);
+
+        if (
+            data &&
+            data.files
+        ) {
+            project = data;
+
+            if (!project.plugins) {
+                project.plugins = {};
+            }
+
+            log(
+                "Projeto restaurado do armazenamento local.",
+                "ok"
+            );
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        log(
+            "Não foi possível restaurar o projeto.",
+            "warning"
+        );
+    }
+}
+
+function saveProject() {
+
+    localStorage.setItem(
+        PROJECT_KEY,
+        JSON.stringify(project)
+    );
+
+    dirty = false;
+
+    updateStatus("Projeto salvo.");
+
+    log(
+        "Projeto salvo no armazenamento local.",
+        "ok"
+    );
+}
+
+/* =========================================================
+   FILE TREE
+========================================================= */
+
+function renderFileTree() {
+
+    const tree =
+        document.getElementById("fileTree");
+
+    tree.innerHTML = "";
+
+    Object.keys(project.files)
+        .forEach(function (file) {
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "tree-row tree-indent";
+
+            if (file === currentFile) {
+                row.classList.add("selected");
+            }
+
+            let icon = "📄";
+
+            if (file.endsWith(".html")) {
+                icon = "🌐";
+            }
+
+            if (file.endsWith(".css")) {
+                icon = "🎨";
+            }
+
+            if (file.endsWith(".js")) {
+                icon = "📜";
+            }
+
+            row.innerHTML =
+                `<span class="file-icon">${icon}</span>
+                 <span>${escapeHTML(file)}</span>`;
+
+            row.onclick =
+                function () {
+                    openFile(file);
+                };
+
+            tree.appendChild(row);
+        });
+}
+
+function renderPluginTree() {
+
+    const tree =
+        document.getElementById("pluginTree");
+
+    tree.innerHTML = "";
+
+    Object.keys(project.plugins)
+        .forEach(function (key) {
+
+            const plugin =
+                pluginLibrary[key];
+
+            if (!plugin) {
+                return;
+            }
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "tree-row tree-indent";
+
+            row.innerHTML =
+                `<span class="file-icon">🐘</span>
+                 <span>${escapeHTML(plugin.file)}</span>`;
+
+            row.onclick =
+                function () {
+
+                    const path =
+                        "plugins/" +
+                        plugin.file;
+
+                    if (!project.files[path]) {
+
+                        project.files[path] =
+                            plugin.php;
+
+                    }
+
+                    openFile(path);
+                };
+
+            tree.appendChild(row);
+        });
+}
+
+/* =========================================================
+   EDITOR
+========================================================= */
+
+function openFile(file) {
+
+    if (!project.files.hasOwnProperty(file)) {
+        return;
+    }
+
+    currentFile = file;
+
+    document.getElementById(
+        "codeEditor"
+    ).value = project.files[file];
+
+    renderTabs();
+    renderFileTree();
+    updateLineNumbers();
+    syncLines();
+
+    updateStatus(
+        "Editando " + file
+    );
+
+    if (file === "index.html") {
+        runPreview();
+    }
+}
+
+function renderTabs() {
+
+    const tabs =
+        document.getElementById("tabs");
+
+    tabs.innerHTML = "";
+
+    const tab =
+        document.createElement("div");
+
+    tab.className =
+        "tab active";
+
+    tab.textContent =
+        currentFile;
+
+    tabs.appendChild(tab);
+}
+
+function editorChanged() {
+
+    project.files[currentFile] =
+        document.getElementById(
+            "codeEditor"
+        ).value;
+
+    dirty = true;
+
+    updateLineNumbers();
+
+    updateStatus(
+        "Alterações não salvas"
+    );
+
+    if (currentFile === "index.html") {
+        runPreview();
+    }
+}
+
+function updateLineNumbers() {
+
+    const code =
+        document.getElementById(
+            "codeEditor"
+        ).value;
+
+    const total =
+        Math.max(
+            1,
+            code.split("\n").length
+        );
+
+    let html = "";
+
+    for (let i = 1; i <= total; i++) {
+        html += i + "<br>";
+    }
+
+    document.getElementById(
+        "lineNumbers"
+    ).innerHTML = html;
+}
+
+function syncLines() {
+
+    const editor =
+        document.getElementById(
+            "codeEditor"
+        );
+
+    document.getElementById(
+        "lineNumbers"
+    ).scrollTop =
+        editor.scrollTop;
+}
+
+function handleEditorKey(event) {
+
+    if (event.key === "Tab") {
+
+        event.preventDefault();
+
+        const editor =
+            event.target;
+
+        const start =
+            editor.selectionStart;
+
+        const end =
+            editor.selectionEnd;
+
+        editor.value =
+            editor.value.substring(
+                0,
+                start
+            ) +
+            "    " +
+            editor.value.substring(end);
+
+        editor.selectionStart =
+            editor.selectionEnd =
+            start + 4;
+
+        editorChanged();
+    }
+
+    if (
+        event.ctrlKey &&
+        event.key.toLowerCase() === "s"
+    ) {
+
+        event.preventDefault();
+
+        saveProject();
+    }
+}
+
+/* =========================================================
+   NEW PAGE
+========================================================= */
+
+function newPage() {
+
+    openPageGenerator();
+}
+
+/* =========================================================
+   PAGE GENERATOR
+========================================================= */
+
+function openPageGenerator() {
+
+    openModal(
+        "Gerador de Páginas",
+        `
+        <div class="generator-grid">
+
+            <div>
+
+                <label class="form-label">
+                    Nome do arquivo
+                </label>
+
+                <input
+                    id="generatorFilename"
+                    class="input"
+                    value="nova-pagina.html"
+                    placeholder="exemplo.html"
+                >
+
+                <div class="section-title">
+                    Conteúdo da página
+                </div>
+
+                <textarea
+                    id="generatorContent"
+                    class="generator-textarea"
+                    placeholder="Digite o HTML que será colocado na nova página..."
+                ></textarea>
+
+            </div>
+
+            <div>
+
+                <div class="section-title">
+                    Plugins PHP
+                </div>
+
+                <div class="plugin-list">
+
+                    ${generatorPlugin(
+                        "contato",
+                        "Formulário de Contato"
+                    )}
+
+                    ${generatorPlugin(
+                        "antispam",
+                        "Anti-Spam"
+                    )}
+
+                    ${generatorPlugin(
+                        "whatsapp",
+                        "WhatsApp"
+                    )}
+
+                    ${generatorPlugin(
+                        "seo",
+                        "SEO Básico"
+                    )}
+
+                </div>
+
+                <div class="section-title">
+                    Modelo
+                </div>
+
+                <select
+                    id="generatorTemplate"
+                    class="select"
+                    onchange="applyGeneratorTemplate()"
+                >
+
+                    <option value="">
+                        Personalizado
+                    </option>
+
+                    <option value="blank">
+                        Página em branco
+                    </option>
+
+                    <option value="business">
+                        Empresa
+                    </option>
+
+                    <option value="contact">
+                        Contato
+                    </option>
+
+                    <option value="landing">
+                        Landing Page
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+        `,
+        `
+        <button
+            class="btn"
+            onclick="closeModal()">
+            Cancelar
+        </button>
+
+        <button
+            class="btn primary"
+            onclick="generatePage()">
+            Gerar Página
+        </button>
+        `
+    );
+}
+
+function generatorPlugin(
+    id,
+    name
+) {
+
+    const checked =
+        project.plugins[id]
+            ? "checked"
+            : "";
+
+    return `
+        <label class="plugin-item">
+
+            <input
+                type="checkbox"
+                id="plugin_${id}"
+                ${checked}
+            >
+
+            <span class="plugin-info">
+
+                <strong>
+                    ${name}
+                </strong>
+
+                <small>
+                    ${pluginLibrary[id].file}
+                </small>
+
+            </span>
+
+        </label>
+    `;
+}
+
+function applyGeneratorTemplate() {
+
+    const type =
+        document.getElementById(
+            "generatorTemplate"
+        ).value;
+
+    const textarea =
+        document.getElementById(
+            "generatorContent"
+        );
+
+    if (type === "blank") {
+
+        textarea.value =
+            `<h1>Nova Página</h1>
+
+<p>
+    Conteúdo da nova página.
+</p>`;
+
+    }
+
+    if (type === "business") {
+
+        textarea.value =
+            `<section>
+    <h1>Sobre Nossa Empresa</h1>
+
+    <p>
+        Conheça nossa empresa,
+        nossos serviços e nossa história.
+    </p>
+</section>
+
+<section>
+    <h2>Nossos Serviços</h2>
+
+    <ul>
+        <li>Serviço 01</li>
+        <li>Serviço 02</li>
+        <li>Serviço 03</li>
+    </ul>
+</section>`;
+
+    }
+
+    if (type === "contact") {
+
+        textarea.value =
+            `<h1>Entre em Contato</h1>
+
+<form
+    action="plugins/contato.php"
+    method="POST"
+>
+
+    <input
+        type="text"
+        name="nome"
+        placeholder="Seu nome"
+        required
+    >
+
+    <input
+        type="email"
+        name="email"
+        placeholder="Seu e-mail"
+        required
+    >
+
+    <textarea
+        name="mensagem"
+        placeholder="Sua mensagem"
+        required
+    ></textarea>
+
+    <button type="submit">
+        Enviar
+    </button>
+
+</form>`;
+
+        document.getElementById(
+            "plugin_contato"
+        ).checked = true;
+    }
+
+    if (type === "landing") {
+
+        textarea.value =
+            `<section>
+    <h1>Uma solução para você</h1>
+
+    <p>
+        Apresente seu produto,
+        serviço ou projeto.
+    </p>
+
+    <a href="#contato">
+        Quero saber mais
+    </a>
+</section>
+
+<section>
+    <h2>Por que escolher?</h2>
+
+    <p>
+        Qualidade, atendimento
+        e profissionalismo.
+    </p>
+</section>
+
+<section id="contato">
+    <h2>Fale conosco</h2>
+
+    <p>
+        Entre em contato.
+    </p>
+</section>`;
+    }
+}
+
+function generatePage() {
+
+    let filename =
+        document.getElementById(
+            "generatorFilename"
+        ).value.trim();
+
+    let content =
+        document.getElementById(
+            "generatorContent"
+        ).value;
+
+    if (!filename) {
+        alert("Digite o nome do arquivo.");
+        return;
+    }
+
+    filename =
+        filename
+            .replace(/\\/g, "")
+            .replace(/\//g, "")
+            .trim();
+
+    if (!filename.toLowerCase().endsWith(".html")) {
+        filename += ".html";
+    }
+
+    if (filename === "index.html") {
+
+        if (
+            !confirm(
+                "index.html já é a página principal. Deseja substituir?"
+            )
+        ) {
+            return;
+        }
+    }
+
+    const pluginsToInstall = [];
+
+    [
+        "contato",
+        "antispam",
+        "whatsapp",
+        "seo"
+    ].forEach(function (id) {
+
+        const checkbox =
+            document.getElementById(
+                "plugin_" + id
+            );
+
+        if (
+            checkbox &&
+            checkbox.checked
+        ) {
+            pluginsToInstall.push(id);
+        }
+    });
+
+    pluginsToInstall.forEach(
+        installPlugin
+    );
+
+    const html =
+        buildHTMLPage(
+            filename,
+            content,
+            pluginsToInstall
+        );
+
+    project.files[filename] =
+        html;
+
+    currentFile = filename;
+
+    closeModal();
+
+    renderFileTree();
+    renderPluginTree();
+    openFile(filename);
+
+    saveProject();
+
+    log(
+        "Página criada: " +
+        filename,
+        "ok"
+    );
+
+    log(
+        "Plugins selecionados: " +
+        (
+            pluginsToInstall.length
+                ? pluginsToInstall.join(", ")
+                : "nenhum"
+        ),
+        "info"
+    );
+}
+
+function buildHTMLPage(
+    filename,
+    content,
+    plugins
+) {
+
+    let title =
+        filename
+            .replace(".html", "")
+            .replace(/[-_]/g, " ");
+
+    title =
+        title.charAt(0).toUpperCase() +
+        title.slice(1);
+
+    return `<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -1302,9 +1808,22 @@ html: `<!DOCTYPE html>
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0">
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Minha Empresa</title>
+    <meta
+        name="description"
+        content="${escapeAttribute(title)}"
+    >
+
+    <title>
+        ${escapeHTML(title)}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
@@ -1312,1824 +1831,675 @@ html: `<!DOCTYPE html>
 
     <header class="site-header">
 
-        <div class="container">
+        <h1>
+            ${escapeHTML(title)}
+        </h1>
 
-            <div class="logo">
-                Minha Empresa
-            </div>
+        <nav>
 
-            <nav>
+            <a href="index.html">
+                Início
+            </a>
 
-                <a href="#inicio">
-                    Início
-                </a>
-
-                <a href="#servicos">
-                    Serviços
-                </a>
-
-                <a href="#sobre">
-                    Quem Somos
-                </a>
-
-                <a href="#contato">
-                    Contato
-                </a>
-
-            </nav>
-
-        </div>
+        </nav>
 
     </header>
 
-
     <main>
 
-        <section
-            id="inicio"
-            class="hero">
-
-            <div class="container">
-
-                <span class="eyebrow">
-                    BEM-VINDO AO NOSSO SITE
-                </span>
-
-                <h1>
-                    Sua empresa,
-                    sua presença digital.
-                </h1>
-
-                <p>
-                    Uma página profissional criada
-                    para apresentar sua empresa,
-                    seus serviços e seus diferenciais.
-                </p>
-
-                <a
-                    class="button"
-                    href="#contato">
-
-                    Fale Conosco
-
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <section
-            id="servicos"
-            class="section">
-
-            <div class="container">
-
-                <div class="section-title">
-
-                    <span>
-                        O QUE FAZEMOS
-                    </span>
-
-                    <h2>
-                        Nossos Serviços
-                    </h2>
-
-                </div>
-
-
-                <div class="cards">
-
-                    <article class="card">
-
-                        <div class="card-icon">
-                            01
-                        </div>
-
-                        <h3>
-                            Serviço Principal
-                        </h3>
-
-                        <p>
-                            Apresente aqui o principal
-                            serviço oferecido pela empresa.
-                        </p>
-
-                    </article>
-
-
-                    <article class="card">
-
-                        <div class="card-icon">
-                            02
-                        </div>
-
-                        <h3>
-                            Atendimento
-                        </h3>
-
-                        <p>
-                            Mostre aos seus clientes
-                            como sua empresa trabalha.
-                        </p>
-
-                    </article>
-
-
-                    <article class="card">
-
-                        <div class="card-icon">
-                            03
-                        </div>
-
-                        <h3>
-                            Soluções
-                        </h3>
-
-                        <p>
-                            Destaque soluções,
-                            produtos ou diferenciais.
-                        </p>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <section
-            id="sobre"
-            class="about">
-
-            <div class="container">
-
-                <div>
-
-                    <span class="eyebrow">
-                        SOBRE A EMPRESA
-                    </span>
-
-                    <h2>
-                        Quem Somos
-                    </h2>
-
-                    <p>
-                        Escreva aqui a história,
-                        missão, visão e valores
-                        da sua empresa.
-                    </p>
-
-                    <p>
-                        Este conteúdo pode ser
-                        completamente alterado
-                        diretamente pelo editor.
-                    </p>
-
-                </div>
-
-                <div class="about-box">
-
-                    <strong>
-                        V14
-                    </strong>
-
-                    <span>
-                        MultiScript HTML Editor
-                    </span>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <section
-            id="contato"
-            class="contact">
-
-            <div class="container">
-
-                <div>
-
-                    <span class="eyebrow">
-                        ENTRE EM CONTATO
-                    </span>
-
-                    <h2>
-                        Vamos conversar?
-                    </h2>
-
-                    <p>
-                        Utilize este espaço para
-                        colocar telefone, WhatsApp,
-                        e-mail, endereço ou formulário.
-                    </p>
-
-                </div>
-
-
-                <form>
-
-                    <input
-                        type="text"
-                        placeholder="Seu nome">
-
-                    <input
-                        type="email"
-                        placeholder="Seu e-mail">
-
-                    <textarea
-                        placeholder="Sua mensagem"></textarea>
-
-                    <button
-                        type="button">
-
-                        Enviar Mensagem
-
-                    </button>
-
-                </form>
-
-            </div>
-
-        </section>
+${content}
 
     </main>
 
-
     <footer>
 
-        <div class="container">
-
-            <strong>
-                Minha Empresa
-            </strong>
-
-            <span>
-                Todos os direitos reservados.
-            </span>
-
-        </div>
+        <p>
+            Página gerada pelo MultiScript HTML Editor V14.
+        </p>
 
     </footer>
 
+    <script src="script.js"><\/script>
+
 </body>
 
-</html>`,
-
-css: `* {
-    box-sizing: border-box;
+</html>`;
 }
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #1d232a;
-    background: #ffffff;
-}
-
-.container {
-    width: 1000px;
-    margin: 0 auto;
-}
-
-.site-header {
-    height: 72px;
-    background: #111827;
-    color: white;
-}
-
-.site-header .container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-nav {
-    display: flex;
-    gap: 25px;
-}
-
-nav a {
-    color: #dce3eb;
-    text-decoration: none;
-    font-size: 13px;
-}
-
-nav a:hover {
-    color: white;
-}
-
-.hero {
-    padding: 110px 0;
-    background: #eef3f8;
-}
-
-.eyebrow {
-    font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    color: #367db9;
-}
-
-.hero h1 {
-    width: 700px;
-    margin: 18px 0;
-    font-size: 54px;
-    line-height: 1.05;
-}
-
-.hero p {
-    width: 650px;
-    color: #596573;
-    font-size: 17px;
-    line-height: 1.7;
-}
-
-.button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 14px 23px;
-    background: #176db4;
-    color: white;
-    text-decoration: none;
-    font-size: 13px;
-}
-
-.section {
-    padding: 90px 0;
-}
-
-.section-title {
-    margin-bottom: 35px;
-}
-
-.section-title h2,
-.about h2,
-.contact h2 {
-    margin: 10px 0;
-    font-size: 35px;
-}
-
-.cards {
-    display: flex;
-    gap: 20px;
-}
-
-.card {
-    flex: 1;
-    min-height: 230px;
-    padding: 28px;
-    border: 1px solid #dce2e8;
-    background: white;
-}
-
-.card-icon {
-    margin-bottom: 20px;
-    color: #367db9;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.card h3 {
-    font-size: 19px;
-}
-
-.card p,
-.about p,
-.contact p {
-    color: #65717e;
-    line-height: 1.7;
-}
-
-.about {
-    padding: 90px 0;
-    background: #f3f6f9;
-}
-
-.about .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.about .container > div:first-child {
-    width: 600px;
-}
-
-.about-box {
-    width: 230px;
-    height: 230px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: #111827;
-    color: white;
-}
-
-.about-box strong {
-    font-size: 55px;
-}
-
-.about-box span {
-    margin-top: 8px;
-    color: #aeb8c3;
-    font-size: 11px;
-}
-
-.contact {
-    padding: 90px 0;
-}
-
-.contact .container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.contact .container > div {
-    width: 440px;
-}
-
-form {
-    width: 420px;
-}
-
-input,
-textarea {
-    width: 100%;
-    margin-bottom: 12px;
-    padding: 13px;
-    border: 1px solid #ccd4dc;
-    outline: none;
-    font-family: Arial, sans-serif;
-}
-
-textarea {
-    height: 130px;
-    resize: vertical;
-}
-
-form button {
-    padding: 13px 20px;
-    border: 0;
-    background: #176db4;
-    color: white;
-    cursor: pointer;
-}
-
-footer {
-    padding: 28px 0;
-    background: #111827;
-    color: white;
-}
-
-footer .container {
-    display: flex;
-    justify-content: space-between;
-}
-
-footer span {
-    color: #8793a0;
-    font-size: 11px;
-}`,
-
-js: `console.log("MultiScript HTML Editor V14 iniciado.");
-
-document.querySelectorAll("nav a").forEach(function(link) {
-
-    link.addEventListener("click", function() {
-
-        console.log(
-            "Navegação:",
-            link.textContent.trim()
-        );
-
-    });
-
-});`,
-
-json: `{
-    "editor": "MultiScript HTML Editor",
-    "version": "V14.0.0",
-    "project": "Minha Empresa",
-    "language": "pt-BR"
-}`
-
-};
-
 
 /* =========================================================
-   CRÉDITOS
+   PLUGIN INSTALLATION
 ========================================================= */
 
-const credits = {
+function installPlugin(id) {
 
-    none: {
-        name: "Sem crédito",
-        url: ""
-    },
+    const plugin =
+        pluginLibrary[id];
 
-    multipage: {
-        name: "Multipage Mel - Criação de Sites",
-        url: "https://multipagemel.pages.dev/"
-    },
-
-    corretores: {
-        name: "Apenas Corretores - Criação de Sites para Corretores de Seguro",
-        url: "https://apenascorretores.pages.dev/"
-    },
-
-    homemsite: {
-        name: "Homem Site - Criação de Sites com Bootstrap",
-        url: "https://homemsite.pages.dev/"
-    },
-
-    parana: {
-        name: "CRIAÇÃO DE SITE NO PARANÁ",
-        url: "https://homemsite.pages.dev/parana/",
-        title: "CRIAÇÃO DE SITE NO PARANÁ"
+    if (!plugin) {
+        return;
     }
 
-};
+    project.plugins[id] =
+        true;
 
+    project.files[
+        "plugins/" + plugin.file
+    ] =
+        plugin.php;
 
-/* =========================================================
-   INICIALIZAÇÃO
-========================================================= */
-
-loadSavedProject();
-loadCurrentFile();
-updateLineNumbers();
-updateStatus();
-runPreview();
-
-log(
-    "✓ MultiScript HTML Editor V14 carregado.",
-    "success"
-);
-
-log(
-    "✓ Página-base carregada.",
-    "success"
-);
-
-
-/* =========================================================
-   ARQUIVOS
-========================================================= */
-
-function fileName(type) {
-
-    if (type === "html") {
-        return "index.html";
-    }
-
-    if (type === "css") {
-        return "style.css";
-    }
-
-    if (type === "js") {
-        return "script.js";
-    }
-
-    return "projeto.json";
-
+    log(
+        "Plugin instalado: " +
+        plugin.name,
+        "ok"
+    );
 }
 
+function uninstallPlugin(id) {
 
-function selectFile(type, element) {
+    const plugin =
+        pluginLibrary[id];
 
-    files[currentFile] =
-        codeEditor.value;
+    if (!plugin) {
+        return;
+    }
 
-    currentFile =
-        type;
+    delete project.plugins[id];
 
-    document
-        .querySelectorAll(".file")
-        .forEach(function(item) {
+    delete project.files[
+        "plugins/" + plugin.file
+    ];
 
-            item.classList.remove("active");
+    renderPluginTree();
+    renderFileTree();
+
+    saveProject();
+
+    log(
+        "Plugin removido: " +
+        plugin.name,
+        "warning"
+    );
+}
+
+/* =========================================================
+   PLUGIN MANAGER
+========================================================= */
+
+function openPlugins() {
+
+    let installed = "";
+    let available = "";
+
+    Object.keys(pluginLibrary)
+        .forEach(function (id) {
+
+            const plugin =
+                pluginLibrary[id];
+
+            const isInstalled =
+                !!project.plugins[id];
+
+            if (isInstalled) {
+
+                installed += `
+                    <div class="plugin-card">
+
+                        <strong>
+                            ${escapeHTML(plugin.name)}
+                        </strong>
+
+                        <p>
+                            ${escapeHTML(plugin.description)}
+                        </p>
+
+                        <div class="plugin-status">
+                            ✓ INSTALADO —
+                            ${escapeHTML(plugin.file)}
+                        </div>
+
+                        <br>
+
+                        <button
+                            class="btn danger"
+                            onclick="uninstallPlugin('${id}'); openPlugins();"
+                        >
+                            Desinstalar
+                        </button>
+
+                    </div>
+                `;
+
+            } else {
+
+                available += `
+                    <div class="plugin-card">
+
+                        <strong>
+                            ${escapeHTML(plugin.name)}
+                        </strong>
+
+                        <p>
+                            ${escapeHTML(plugin.description)}
+                        </p>
+
+                        <div>
+                            <small>
+                                ${escapeHTML(plugin.file)}
+                            </small>
+                        </div>
+
+                        <br>
+
+                        <button
+                            class="btn primary"
+                            onclick="installFromManager('${id}')"
+                        >
+                            Instalar
+                        </button>
+
+                    </div>
+                `;
+            }
 
         });
 
-    element.classList.add("active");
+    openModal(
+        "Gerenciador de Plugins PHP",
+        `
+        <div class="section-title">
+            Plugins Instalados
+        </div>
 
-    document.getElementById("tabName").textContent =
-        fileName(type);
+        ${installed || `
+            <p style="color:#7f8794">
+                Nenhum plugin instalado.
+            </p>
+        `}
 
+        <div class="section-title">
+            Biblioteca de Plugins
+        </div>
 
-    const icon =
-        document.getElementById("tabIcon");
-
-    icon.className = "";
-
-    if (type === "html") {
-        icon.classList.add("html-icon");
-    }
-
-    if (type === "css") {
-        icon.classList.add("css-icon");
-    }
-
-    if (type === "js") {
-        icon.classList.add("js-icon");
-    }
-
-    if (type === "json") {
-        icon.classList.add("json-icon");
-    }
-
-
-    document.getElementById(
-        "statusLanguage"
-    ).textContent =
-        type.toUpperCase();
-
-    loadCurrentFile();
-
+        ${available || `
+            <p style="color:#7f8794">
+                Todos os plugins estão instalados.
+            </p>
+        `}
+        `,
+        `
+        <button
+            class="btn"
+            onclick="closeModal()">
+            Fechar
+        </button>
+        `
+    );
 }
 
+function installFromManager(id) {
 
-function loadCurrentFile() {
+    installPlugin(id);
 
-    codeEditor.value =
-        files[currentFile] || "";
+    renderPluginTree();
+    renderFileTree();
 
-    updateLineNumbers();
-    updateStatus();
+    saveProject();
 
+    openPlugins();
 }
-
-
-codeEditor.addEventListener(
-    "input",
-    function() {
-
-        files[currentFile] =
-            codeEditor.value;
-
-        document.getElementById(
-            "unsaved"
-        ).style.color =
-            "#d3a64d";
-
-        updateLineNumbers();
-        updateStatus();
-
-        if (
-            currentFile === "html" ||
-            currentFile === "css" ||
-            currentFile === "js"
-        ) {
-
-            runPreview();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   LINHAS
-========================================================= */
-
-function updateLineNumbers() {
-
-    const count =
-        Math.max(
-            1,
-            codeEditor.value.split("\n").length
-        );
-
-    let output = "";
-
-    for (
-        let i = 1;
-        i <= count;
-        i++
-    ) {
-
-        output +=
-            "<div>" +
-            i +
-            "</div>";
-
-    }
-
-    lineNumbers.innerHTML =
-        output;
-
-    lineNumbers.scrollTop =
-        codeEditor.scrollTop;
-
-}
-
-
-codeEditor.addEventListener(
-    "scroll",
-    function() {
-
-        lineNumbers.scrollTop =
-            codeEditor.scrollTop;
-
-    }
-);
-
-
-/* =========================================================
-   POSIÇÃO
-========================================================= */
-
-function updateStatus() {
-
-    const text =
-        codeEditor.value;
-
-    const position =
-        codeEditor.selectionStart;
-
-    const before =
-        text.substring(
-            0,
-            position
-        );
-
-    const line =
-        before.split("\n").length;
-
-    const lastBreak =
-        before.lastIndexOf("\n");
-
-    const column =
-        position -
-        (
-            lastBreak === -1
-                ? 0
-                : lastBreak + 1
-        ) +
-        1;
-
-
-    document.getElementById(
-        "statusPosition"
-    ).textContent =
-        "Ln " +
-        line +
-        ", Col " +
-        column;
-
-
-    document.getElementById(
-        "statusChars"
-    ).textContent =
-        text.length +
-        " caracteres";
-
-}
-
-
-codeEditor.addEventListener(
-    "keyup",
-    updateStatus
-);
-
-codeEditor.addEventListener(
-    "click",
-    updateStatus
-);
-
-
-/* =========================================================
-   TAB / ATALHOS
-========================================================= */
-
-codeEditor.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key === "Tab"
-        ) {
-
-            event.preventDefault();
-
-            const start =
-                codeEditor.selectionStart;
-
-            const end =
-                codeEditor.selectionEnd;
-
-            codeEditor.value =
-                codeEditor.value.substring(
-                    0,
-                    start
-                ) +
-                "    " +
-                codeEditor.value.substring(
-                    end
-                );
-
-            codeEditor.selectionStart =
-                codeEditor.selectionEnd =
-                    start + 4;
-
-            files[currentFile] =
-                codeEditor.value;
-
-            updateLineNumbers();
-            updateStatus();
-
-        }
-
-
-        if (
-            event.ctrlKey &&
-            event.key.toLowerCase() === "s"
-        ) {
-
-            event.preventDefault();
-
-            saveProject();
-
-        }
-
-
-        if (
-            event.ctrlKey &&
-            event.key === "Enter"
-        ) {
-
-            event.preventDefault();
-
-            runPreview();
-
-        }
-
-    }
-);
-
 
 /* =========================================================
    PREVIEW
 ========================================================= */
 
-function buildPreviewDocument() {
+function runPreview() {
 
-    let html =
-        files.html;
+    const html =
+        project.files["index.html"];
 
+    if (!html) {
+        return;
+    }
+
+    const frame =
+        document.getElementById(
+            "previewFrame"
+        );
 
     const css =
-        files.css.trim();
+        project.files["style.css"] || "";
 
     const js =
-        files.js.trim();
+        project.files["script.js"] || "";
 
+    let output =
+        html;
 
-    if (css) {
+    if (
+        !/<link[^>]+href=["']style\.css["']/i
+            .test(output)
+    ) {
 
-        html =
-            html.replace(
+        output =
+            output.replace(
                 "</head>",
                 "<style>\n" +
                 css +
                 "\n</style>\n</head>"
             );
-
     }
 
+    const safeJS =
+        js.replace(
+            /<\/script/gi,
+            "<" + "/script"
+        );
 
-    if (js) {
+    if (
+        !/<script[^>]+src=["']script\.js["']/i
+            .test(output)
+    ) {
 
-        const safeJS =
-            js.replace(
-                /<\/script/gi,
-                "<" + "/script"
-            );
-
-        html =
-            html.replace(
+        output =
+            output.replace(
                 "</body>",
                 "<script>\n" +
                 safeJS +
-                "\n<" + "/script>\n</body>"
+                "\n<" +
+                "/script>\n</body>"
             );
 
+    } else {
+
+        output =
+            output.replace(
+                /<script[^>]+src=["']script\.js["'][^>]*><\/script>/i,
+                "<script>\n" +
+                safeJS +
+                "\n<" +
+                "/script>"
+            );
     }
 
+    frame.srcdoc =
+        output;
 
-    return html;
-
-}
-
-
-function runPreview() {
-
-    files[currentFile] =
-        codeEditor.value;
-
-    preview.srcdoc =
-        buildPreviewDocument();
-
-    document.getElementById(
-        "unsaved"
-    ).style.color =
-        "#d3a64d";
-
-    log(
-        "✓ Preview atualizado.",
-        "success"
+    updateStatus(
+        "Preview atualizado."
     );
-
 }
-
-
-function openBrowserPreview() {
-
-    const newWindow =
-        window.open(
-            "",
-            "_blank"
-        );
-
-    if (!newWindow) {
-
-        alert(
-            "O navegador bloqueou a nova janela."
-        );
-
-        return;
-
-    }
-
-    newWindow.document.open();
-
-    newWindow.document.write(
-        buildPreviewDocument()
-    );
-
-    newWindow.document.close();
-
-}
-
 
 /* =========================================================
-   SALVAR
+   FORMAT
 ========================================================= */
 
-function saveProject() {
-
-    files[currentFile] =
-        codeEditor.value;
-
-    localStorage.setItem(
-        "MultiScriptV14Project",
-        JSON.stringify(files)
-    );
-
-    document.getElementById(
-        "unsaved"
-    ).style.color =
-        "#596573";
-
-    log(
-        "✓ Projeto salvo no navegador.",
-        "success"
-    );
-
-}
-
-
-function loadSavedProject() {
-
-    const saved =
-        localStorage.getItem(
-            "MultiScriptV14Project"
-        );
-
-    if (!saved) {
-        return;
-    }
-
-    try {
-
-        const parsed =
-            JSON.parse(saved);
-
-        if (
-            parsed &&
-            typeof parsed === "object"
-        ) {
-
-            files =
-                Object.assign(
-                    files,
-                    parsed
-                );
-
-        }
-
-        log(
-            "✓ Projeto anterior recuperado.",
-            "info"
-        );
-
-    } catch(error) {
-
-        log(
-            "Não foi possível recuperar o projeto anterior.",
-            "error"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   NOVO PROJETO
-========================================================= */
-
-function newProject() {
-
-    const answer =
-        confirm(
-            "Criar um novo projeto?\n\nO conteúdo atual continuará salvo apenas se você já tiver utilizado Salvar."
-        );
-
-    if (!answer) {
-        return;
-    }
-
-
-    files = {
-
-html: `<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <title>Novo Projeto</title>
-
-</head>
-
-<body>
-
-    <h1>
-        Novo Projeto
-    </h1>
-
-    <p>
-        Comece a desenvolver sua página.
-    </p>
-
-</body>
-
-</html>`,
-
-css: `body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}`,
-
-js: `console.log("Novo projeto.");`,
-
-json: `{
-    "editor": "MultiScript HTML Editor",
-    "version": "V14.0.0"
-}`
-
-    };
-
-
-    currentFile =
-        "html";
-
-    refreshExplorer();
-
-    loadCurrentFile();
-
-    runPreview();
-
-    log(
-        "✓ Novo projeto criado.",
-        "success"
-    );
-
-}
-
-
-function refreshExplorer() {
-
-    document
-        .querySelectorAll(".file")
-        .forEach(function(item) {
-
-            item.classList.remove("active");
-
-        });
-
-
-    const htmlFile =
-        document.querySelector(
-            '.file[data-file="html"]'
-        );
-
-    if (htmlFile) {
-        htmlFile.classList.add("active");
-    }
-
-
-    document.getElementById(
-        "tabName"
-    ).textContent =
-        "index.html";
-
-
-    document.getElementById(
-        "tabIcon"
-    ).className =
-        "html-icon";
-
-
-    document.getElementById(
-        "statusLanguage"
-    ).textContent =
-        "HTML";
-
-}
-
-
-/* =========================================================
-   FORMATAR HTML
-========================================================= */
-
-function formatCurrentHTML() {
+function formatHTML() {
 
     if (
-        currentFile !== "html"
+        !currentFile.endsWith(".html")
     ) {
 
         alert(
-            "Abra o index.html para formatar HTML."
+            "O formatador foi criado para arquivos HTML."
         );
 
         return;
-
     }
 
+    let html =
+        document.getElementById(
+            "codeEditor"
+        ).value;
 
-    let source =
-        codeEditor.value
-            .replace(
-                />\s+</g,
-                "><"
-            )
-            .replace(
-                /></g,
-                ">\n<"
-            );
+    html =
+        simpleFormatHTML(html);
 
+    document.getElementById(
+        "codeEditor"
+    ).value =
+        html;
 
-    const input =
-        source.split("\n");
+    editorChanged();
 
-    const output = [];
+    log(
+        "HTML formatado.",
+        "ok"
+    );
+}
 
-    let level = 0;
+function simpleFormatHTML(html) {
 
+    html =
+        html
+            .replace(/>\s*</g, ">\n<")
+            .trim();
 
-    input.forEach(function(line) {
+    const lines =
+        html.split("\n");
 
-        const clean =
+    let depth = 0;
+
+    const voidTags = [
+        "area",
+        "base",
+        "br",
+        "col",
+        "embed",
+        "hr",
+        "img",
+        "input",
+        "link",
+        "meta",
+        "param",
+        "source",
+        "track",
+        "wbr"
+    ];
+
+    return lines.map(function (line) {
+
+        line =
             line.trim();
 
-        if (!clean) {
-            return;
+        if (!line) {
+            return "";
         }
-
 
         if (
-            /^<\/[^>]+>/.test(clean)
+            /^<\/[^>]+>/.test(line)
         ) {
-
-            level =
+            depth =
                 Math.max(
                     0,
-                    level - 1
+                    depth - 1
                 );
-
         }
 
-
-        output.push(
-            "    ".repeat(level) +
-            clean
-        );
-
+        const result =
+            "    ".repeat(depth) +
+            line;
 
         const opening =
-            /^<([a-zA-Z][^\/\s>]*)[^>]*>$/
-                .test(clean);
+            line.match(
+                /^<([a-zA-Z0-9]+)(?:\s|>)/ 
+            );
 
         const closing =
-            /<\/[^>]+>$/
-                .test(clean);
-
-        const selfClosing =
-            /\/>$/.test(clean);
-
-        const voidElement =
-            /^<(meta|link|img|input|br|hr|area|base|embed|source|track|wbr)\b/i
-                .test(clean);
-
+            /<\/[a-zA-Z0-9]+>/.test(line);
 
         if (
             opening &&
             !closing &&
-            !selfClosing &&
-            !voidElement
+            !line.startsWith("<!")
         ) {
 
-            level++;
+            const tag =
+                opening[1].toLowerCase();
 
+            if (
+                !voidTags.includes(tag)
+            ) {
+                depth++;
+            }
         }
 
-    });
+        return result;
 
-
-    codeEditor.value =
-        output.join("\n");
-
-    files.html =
-        codeEditor.value;
-
-    updateLineNumbers();
-    updateStatus();
-    runPreview();
-
-    log(
-        "✓ HTML formatado.",
-        "success"
-    );
-
+    }).join("\n");
 }
-
 
 /* =========================================================
-   SELECIONAR / COPIAR
+   ZIP
 ========================================================= */
 
-function selectAllCode() {
+async function exportZIP() {
 
-    codeEditor.focus();
+    if (
+        typeof JSZip === "undefined"
+    ) {
 
-    codeEditor.select();
-
-}
-
-
-async function copyCode() {
-
-    try {
-
-        await navigator.clipboard.writeText(
-            codeEditor.value
+        alert(
+            "A biblioteca ZIP não foi carregada."
         );
 
-        log(
-            "✓ Código copiado.",
-            "success"
-        );
-
-    } catch(error) {
-
-        codeEditor.select();
-
-        document.execCommand(
-            "copy"
-        );
-
-        log(
-            "✓ Código copiado.",
-            "success"
-        );
-
+        return;
     }
 
+    /*
+        SEMPRE pergunta o crédito.
+    */
+
+    openCreditModal();
 }
 
+function openCreditModal() {
 
-/* =========================================================
-   GERADOR DE PÁGINAS
-========================================================= */
-
-function openPageGenerator() {
+    const previous =
+        localStorage.getItem(
+            "multiscript_credit"
+        ) || "none";
 
     openModal(
-        "Gerador de Páginas V14",
+        "Exportar Projeto ZIP",
         `
+        <p style="color:#aeb4bf">
+            Antes de gerar o ZIP, escolha o crédito
+            que será incluído no projeto.
+        </p>
 
-        <div class="notice">
+        <label class="form-label">
+            Crédito
+        </label>
 
-            Selecione uma página-base.
-            O conteúdo será colocado diretamente
-            no editor e poderá ser completamente
-            modificado.
+        <select
+            id="creditSelect"
+            class="select"
+        >
 
-        </div>
+            <option
+                value="none"
+                ${previous === "none" ? "selected" : ""}
+            >
+                Sem crédito
+            </option>
 
+            <option
+                value="multipage"
+                ${previous === "multipage" ? "selected" : ""}
+            >
+                Multipage Mel
+            </option>
 
-        <div class="generator-grid">
+            <option
+                value="corretores"
+                ${previous === "corretores" ? "selected" : ""}
+            >
+                Apenas Corretores
+            </option>
 
-            <div
-                class="generator-card"
-                onclick="generatePage('blank')">
+            <option
+                value="homemsite"
+                ${previous === "homemsite" ? "selected" : ""}
+            >
+                HomemSite
+            </option>
 
-                <strong>
-                    Página em Branco
-                </strong>
+            <option
+                value="parana"
+                ${previous === "parana" ? "selected" : ""}
+            >
+                HomemSite Paraná
+            </option>
 
-                <span>
-                    HTML limpo para começar um projeto.
-                </span>
+        </select>
+        `,
+        `
+        <button
+            class="btn"
+            onclick="closeModal()">
+            Cancelar
+        </button>
 
-            </div>
-
-
-            <div
-                class="generator-card"
-                onclick="generatePage('business')">
-
-                <strong>
-                    Página Empresarial
-                </strong>
-
-                <span>
-                    Home, serviços, empresa e contato.
-                </span>
-
-            </div>
-
-
-            <div
-                class="generator-card"
-                onclick="generatePage('landing')">
-
-                <strong>
-                    Landing Page
-                </strong>
-
-                <span>
-                    Página de apresentação e conversão.
-                </span>
-
-            </div>
-
-
-            <div
-                class="generator-card"
-                onclick="generatePage('contact')">
-
-                <strong>
-                    Página de Contato
-                </strong>
-
-                <span>
-                    Página com formulário de contato.
-                </span>
-
-            </div>
-
-        </div>
-
+        <button
+            class="btn primary"
+            onclick="confirmExportZIP()">
+            Gerar ZIP
+        </button>
         `
     );
-
 }
 
+async function confirmExportZIP() {
 
-function generatePage(type) {
+    const credit =
+        document.getElementById(
+            "creditSelect"
+        ).value;
+
+    localStorage.setItem(
+        "multiscript_credit",
+        credit
+    );
 
     closeModal();
 
+    const zip =
+        new JSZip();
 
-    if (
-        type === "blank"
-    ) {
+    const exportedFiles = {};
 
-        files.html =
-`<!DOCTYPE html>
-<html lang="pt-BR">
+    Object.keys(project.files)
+        .forEach(function (file) {
 
-<head>
+            let content =
+                project.files[file];
 
-    <meta charset="UTF-8">
+            if (
+                file.endsWith(".html")
+            ) {
 
-    <title>Nova Página</title>
+                content =
+                    insertCredit(
+                        content,
+                        credit
+                    );
+            }
 
-</head>
+            exportedFiles[file] =
+                content;
 
-<body>
+            zip.file(
+                file,
+                content
+            );
+        });
 
-    <h1>
-        Nova Página
-    </h1>
+    const blob =
+        await zip.generateAsync({
+            type: "blob"
+        });
 
-</body>
+    const url =
+        URL.createObjectURL(blob);
 
-</html>`;
+    const link =
+        document.createElement("a");
 
-        files.css =
-`body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}`;
+    link.href = url;
 
-        files.js =
-`console.log("Nova página.");`;
+    link.download =
+        project.name +
+        ".zip";
 
-    }
+    document.body.appendChild(link);
 
+    link.click();
 
-    if (
-        type === "business"
-    ) {
+    link.remove();
 
-        files.html =
-`<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <title>Empresa</title>
-
-</head>
-
-<body>
-
-    <header>
-
-        <h1>
-            Nome da Empresa
-        </h1>
-
-        <p>
-            Soluções profissionais.
-        </p>
-
-    </header>
-
-
-    <main>
-
-        <section>
-
-            <h2>
-                Quem Somos
-            </h2>
-
-            <p>
-                Conte a história da empresa.
-            </p>
-
-        </section>
-
-
-        <section>
-
-            <h2>
-                Serviços
-            </h2>
-
-            <p>
-                Apresente seus serviços.
-            </p>
-
-        </section>
-
-
-        <section>
-
-            <h2>
-                Contato
-            </h2>
-
-            <p>
-                Coloque suas informações.
-            </p>
-
-        </section>
-
-    </main>
-
-</body>
-
-</html>`;
-
-        files.css =
-`body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #222;
-}
-
-header {
-    padding: 80px 30px;
-    text-align: center;
-    background: #111827;
-    color: white;
-}
-
-main {
-    width: 900px;
-    margin: auto;
-    padding: 60px 0;
-}
-
-section {
-    margin-bottom: 50px;
-}`;
-
-        files.js = "";
-
-    }
-
-
-    if (
-        type === "landing"
-    ) {
-
-        files.html =
-`<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <title>Landing Page</title>
-
-</head>
-
-<body>
-
-    <section class="landing">
-
-        <div>
-
-            <span>
-                UMA NOVA EXPERIÊNCIA
-            </span>
-
-            <h1>
-                Seu projeto começa aqui.
-            </h1>
-
-            <p>
-                Apresente seu produto,
-                serviço ou empresa.
-            </p>
-
-            <a href="#inicio">
-                Começar agora
-            </a>
-
-        </div>
-
-    </section>
-
-</body>
-
-</html>`;
-
-        files.css =
-`body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
-.landing {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: #111827;
-    color: white;
-}
-
-.landing div {
-    width: 700px;
-}
-
-.landing h1 {
-    font-size: 52px;
-}
-
-.landing p {
-    color: #aeb8c3;
-    font-size: 18px;
-}
-
-.landing a {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 14px 24px;
-    background: white;
-    color: #111827;
-    text-decoration: none;
-}`;
-
-        files.js = "";
-
-    }
-
-
-    if (
-        type === "contact"
-    ) {
-
-        files.html =
-`<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <title>Contato</title>
-
-</head>
-
-<body>
-
-    <main>
-
-        <h1>
-            Entre em contato
-        </h1>
-
-        <form>
-
-            <label>
-                Nome
-            </label>
-
-            <input
-                type="text">
-
-            <label>
-                E-mail
-            </label>
-
-            <input
-                type="email">
-
-            <label>
-                Mensagem
-            </label>
-
-            <textarea></textarea>
-
-            <button
-                type="button">
-
-                Enviar
-
-            </button>
-
-        </form>
-
-    </main>
-
-</body>
-
-</html>`;
-
-        files.css =
-`body {
-    margin: 0;
-    padding: 60px;
-    font-family: Arial, sans-serif;
-    background: #f1f3f5;
-}
-
-main {
-    width: 600px;
-    margin: auto;
-    padding: 40px;
-    background: white;
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-}
-
-input,
-textarea {
-    width: 100%;
-    padding: 11px;
-    border: 1px solid #ccd4dc;
-}
-
-textarea {
-    height: 140px;
-}
-
-button {
-    margin-top: 20px;
-    padding: 11px 20px;
-}`;
-
-        files.js = "";
-
-    }
-
-
-    currentFile =
-        "html";
-
-    refreshExplorer();
-    loadCurrentFile();
-    runPreview();
+    URL.revokeObjectURL(url);
 
     log(
-        "✓ Nova página gerada.",
-        "success"
+        "ZIP exportado com sucesso.",
+        "ok"
     );
 
+    updateStatus(
+        "ZIP exportado."
+    );
 }
-
 
 /* =========================================================
-   CRÉDITOS
+   CREDITS
 ========================================================= */
 
-function removeOldCredits(html) {
+function insertCredit(
+    html,
+    credit
+) {
 
-    return html.replace(
-        /<!-- MULTISCRIPT CREDITOS INICIO -->[\s\S]*?<!-- MULTISCRIPT CREDITOS FIM -->/gi,
-        ""
-    );
+    const begin =
+        "<!-- MULTISCRIPT CREDITOS INICIO -->";
 
-}
+    const end =
+        "<!-- MULTISCRIPT CREDITOS FIM -->";
 
+    html =
+        html.replace(
+            new RegExp(
+                begin +
+                "[\\s\\S]*?" +
+                end,
+                "gi"
+            ),
+            ""
+        );
 
-function createCreditHTML(type) {
-
-    if (
-        !type ||
-        type === "none"
-    ) {
-
-        return "";
-
+    if (credit === "none") {
+        return html;
     }
 
+    const credits = {
 
-    const credit =
-        credits[type];
+        multipage: {
+            name: "Multipage Mel",
+            url: "https://multipagemel.pages.dev/"
+        },
 
+        corretores: {
+            name: "Apenas Corretores",
+            url: "https://apenascorretores.pages.dev/"
+        },
 
-    return `<!-- MULTISCRIPT CREDITOS INICIO -->
+        homemsite: {
+            name: "HomemSite",
+            url: "https://homemsite.pages.dev/"
+        },
 
-<footer
-    class="multiscript-credit"
-    style="
-        padding:25px;
-        text-align:center;
-        font-family:Arial,sans-serif;
-        font-size:11px;
-        color:#777;
-        background:#f5f5f5;
-    ">
+        parana: {
+            name: "HomemSite Paraná",
+            url: "https://homemsite.pages.dev/parana/"
+        }
+
+    };
+
+    const selected =
+        credits[credit];
+
+    if (!selected) {
+        return html;
+    }
+
+    const block = `
+
+<!-- MULTISCRIPT CREDITOS INICIO -->
+
+<footer class="multiscript-credit">
 
     <p>
         Este site garante a segurança na coleta
-        e tratamento de dados, em conformidade com a LGPD.
+        e tratamento de dados, em conformidade
+        com a LGPD.
     </p>
 
     <p>
@@ -3137,515 +2507,27 @@ function createCreditHTML(type) {
     </p>
 
     <p>
-
         <a
-            href="${credit.url}"
+            href="${selected.url}"
             target="_blank"
-            rel="noopener noreferrer"
-            ${credit.title ? 'title="' + credit.title + '"' : ""}>
-
-            ${credit.name}
-
+            rel="noopener"
+        >
+            ${selected.name}
         </a>
-
     </p>
 
 </footer>
 
-<!-- MULTISCRIPT CREDITOS FIM -->`;
+<!-- MULTISCRIPT CREDITOS FIM -->
 
+`;
+
+    return html.replace(
+        /<\/body>/i,
+        block +
+        "</body>"
+    );
 }
-
-
-function insertCredits() {
-
-    openCreditModal(
-        "Inserir Crédito",
-        function(type) {
-
-            currentFile =
-                "html";
-
-            refreshExplorer();
-            loadCurrentFile();
-
-
-            let html =
-                removeOldCredits(
-                    codeEditor.value
-                );
-
-
-            const creditHTML =
-                createCreditHTML(
-                    type
-                );
-
-
-            if (creditHTML) {
-
-                if (
-                    html.includes(
-                        "</body>"
-                    )
-                ) {
-
-                    html =
-                        html.replace(
-                            "</body>",
-                            creditHTML +
-                            "\n</body>"
-                        );
-
-                } else {
-
-                    html +=
-                        "\n" +
-                        creditHTML;
-
-                }
-
-            }
-
-
-            codeEditor.value =
-                html;
-
-            files.html =
-                html;
-
-            updateLineNumbers();
-            updateStatus();
-            runPreview();
-
-            log(
-                type === "none"
-                    ? "✓ Crédito removido."
-                    : "✓ Crédito inserido.",
-                "success"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   MODAL DE CRÉDITOS
-========================================================= */
-
-function openCredits() {
-
-    openCreditModal(
-        "Gerenciar Créditos",
-        function(type) {
-
-            log(
-                "✓ Crédito configurado para o projeto.",
-                "success"
-            );
-
-        }
-    );
-
-}
-
-
-function openCreditModal(
-    title,
-    callback
-) {
-
-    const saved =
-        localStorage.getItem(
-            "MultiScriptV14Credit"
-        ) ||
-        "multipage";
-
-
-    openModal(
-        title,
-        `
-
-        <div class="notice">
-
-            Escolha qual crédito será utilizado
-            no projeto.
-
-        </div>
-
-
-        <label class="form-label">
-            Crédito
-        </label>
-
-
-        <select
-            class="form-select"
-            id="creditSelect">
-
-            <option value="none">
-                Sem crédito
-            </option>
-
-            <option value="multipage">
-                Multipage Mel - Criação de Sites
-            </option>
-
-            <option value="corretores">
-                Apenas Corretores - Criação de Sites para Corretores de Seguro
-            </option>
-
-            <option value="homemsite">
-                Homem Site - Criação de Sites com Bootstrap
-            </option>
-
-            <option value="parana">
-                CRIAÇÃO DE SITE NO PARANÁ
-            </option>
-
-        </select>
-
-
-        <div
-            class="credit-preview"
-            id="creditPreview">
-        </div>
-
-        `,
-        function() {
-
-            const type =
-                document.getElementById(
-                    "creditSelect"
-                ).value;
-
-            localStorage.setItem(
-                "MultiScriptV14Credit",
-                type
-            );
-
-            closeModal();
-
-            callback(type);
-
-        },
-        true
-    );
-
-
-    const select =
-        document.getElementById(
-            "creditSelect"
-        );
-
-
-    select.value =
-        saved;
-
-
-    updateCreditPreview();
-
-
-    select.addEventListener(
-        "change",
-        updateCreditPreview
-    );
-
-
-    function updateCreditPreview() {
-
-        const type =
-            select.value;
-
-        const box =
-            document.getElementById(
-                "creditPreview"
-            );
-
-
-        if (
-            type === "none"
-        ) {
-
-            box.innerHTML =
-                "<strong>Sem crédito.</strong>";
-
-            return;
-
-        }
-
-
-        const credit =
-            credits[type];
-
-
-        box.innerHTML =
-
-            "Este site garante a segurança na coleta " +
-            "e tratamento de dados, em conformidade com a LGPD." +
-
-            "<br><br>" +
-
-            "© V14.0.0 by Multipage SEO Editor" +
-
-            "<br><br>" +
-
-            "<strong>" +
-            credit.name +
-            "</strong>";
-
-    }
-
-}
-
-
-/* =========================================================
-   EXPORTAÇÃO ZIP
-========================================================= */
-
-async function exportZIP() {
-
-    files[currentFile] =
-        codeEditor.value;
-
-
-    if (
-        typeof JSZip === "undefined"
-    ) {
-
-        alert(
-            "O módulo de exportação ZIP não foi carregado. Verifique sua conexão com a internet e tente novamente."
-        );
-
-        return;
-
-    }
-
-
-    openCreditModal(
-        "Exportar projeto em ZIP",
-        async function(type) {
-
-            await createZIP(type);
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   CRIAR ZIP
-========================================================= */
-
-async function createZIP(
-    creditType
-) {
-
-    let html =
-        removeOldCredits(
-            files.html
-        );
-
-
-    const creditHTML =
-        createCreditHTML(
-            creditType
-        );
-
-
-    if (creditHTML) {
-
-        if (
-            html.includes(
-                "</body>"
-            )
-        ) {
-
-            html =
-                html.replace(
-                    "</body>",
-                    creditHTML +
-                    "\n</body>"
-                );
-
-        } else {
-
-            html +=
-                "\n" +
-                creditHTML;
-
-        }
-
-    }
-
-
-    if (
-        files.css.trim() &&
-        !/href=["']style\.css["']/i.test(html)
-    ) {
-
-        html =
-            html.replace(
-                "</head>",
-                '    <link rel="stylesheet" href="style.css">\n\n</head>'
-            );
-
-    }
-
-
-    if (
-        files.js.trim() &&
-        !/src=["']script\.js["']/i.test(html)
-    ) {
-
-        html =
-            html.replace(
-                "</body>",
-                '    <script src="script.js"></' + 'script>\n\n</body>'
-            );
-
-    }
-
-
-    const projectInfo = {
-
-        editor:
-            "MultiScript HTML Editor",
-
-        version:
-            "V14.0.0",
-
-        project:
-            "MEU-PROJETO",
-
-        credit:
-            creditType,
-
-        exportedAt:
-            new Date().toISOString(),
-
-        files: [
-            "index.html",
-            "style.css",
-            "script.js",
-            "projeto.json"
-        ]
-
-    };
-
-
-    const zip =
-        new JSZip();
-
-
-    const folder =
-        zip.folder(
-            "MEU-PROJETO"
-        );
-
-
-    folder.file(
-        "index.html",
-        html
-    );
-
-
-    folder.file(
-        "style.css",
-        files.css
-    );
-
-
-    folder.file(
-        "script.js",
-        files.js
-    );
-
-
-    folder.file(
-        "projeto.json",
-        JSON.stringify(
-            projectInfo,
-            null,
-            4
-        )
-    );
-
-
-    try {
-
-        const blob =
-            await zip.generateAsync({
-                type: "blob",
-                compression: "DEFLATE"
-            });
-
-
-        const url =
-            URL.createObjectURL(
-                blob
-            );
-
-
-        const link =
-            document.createElement(
-                "a"
-            );
-
-
-        link.href =
-            url;
-
-        link.download =
-            "MultiScript-V14-Projeto.zip";
-
-
-        document.body.appendChild(
-            link
-        );
-
-        link.click();
-
-        link.remove();
-
-
-        setTimeout(
-            function() {
-
-                URL.revokeObjectURL(
-                    url
-                );
-
-            },
-            1000
-        );
-
-
-        log(
-            "✓ Projeto ZIP exportado.",
-            "success"
-        );
-
-    } catch(error) {
-
-        console.error(error);
-
-        log(
-            "✕ Erro ao gerar o ZIP.",
-            "error"
-        );
-
-        alert(
-            "Não foi possível gerar o arquivo ZIP."
-        );
-
-    }
-
-}
-
 
 /* =========================================================
    MODAL
@@ -3653,166 +2535,168 @@ async function createZIP(
 
 function openModal(
     title,
-    content,
-    confirmFunction,
-    showConfirm
+    body,
+    footer
 ) {
 
-    const modal =
-        document.getElementById(
-            "modal"
-        );
+    closeModal();
 
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        title;
+    const overlay =
+        document.createElement("div");
 
+    overlay.className =
+        "modal-overlay";
 
-    document.getElementById(
-        "modalBody"
-    ).innerHTML =
-        content;
+    overlay.id =
+        "modalOverlay";
 
+    overlay.innerHTML = `
+        <div class="modal">
 
-    const button =
-        document.getElementById(
-            "modalConfirm"
-        );
+            <div class="modal-head">
 
+                <h2>
+                    ${title}
+                </h2>
 
-    button.style.display =
-        showConfirm
-            ? "inline-block"
-            : "none";
+                <button
+                    class="modal-close"
+                    onclick="closeModal()">
+                    ×
+                </button>
 
+            </div>
 
-    if (
-        showConfirm
-    ) {
+            <div class="modal-body">
+                ${body}
+            </div>
 
-        button.onclick =
-            confirmFunction;
+            <div class="modal-foot">
+                ${footer || ""}
+            </div>
 
-    }
+        </div>
+    `;
 
-
-    modal.style.display =
-        "flex";
-
+    document.body.appendChild(
+        overlay
+    );
 }
-
 
 function closeModal() {
 
-    document.getElementById(
-        "modal"
-    ).style.display =
-        "none";
+    const modal =
+        document.getElementById(
+            "modalOverlay"
+        );
 
+    if (modal) {
+        modal.remove();
+    }
 }
 
-
 /* =========================================================
-   SOBRE
-========================================================= */
-
-function openAbout() {
-
-    openModal(
-        "MultiScript HTML Editor V14",
-        `
-
-        <div class="notice">
-
-            <strong>
-                MultiScript HTML Editor V14.0.0
-            </strong>
-
-            <br><br>
-
-            Ambiente para criação,
-            edição, geração e exportação
-            de páginas HTML.
-
-        </div>
-
-
-        <p>
-            <strong>
-                Arquivos
-            </strong>
-            <br>
-            HTML · CSS · JavaScript · JSON
-        </p>
-
-
-        <p>
-            <strong>
-                Preview
-            </strong>
-            <br>
-            Execução da página diretamente
-            dentro do editor.
-        </p>
-
-
-        <p>
-            <strong>
-                Exportação
-            </strong>
-            <br>
-            Projeto completo em ZIP.
-        </p>
-
-        `,
-        null,
-        false
-    );
-
-}
-
-
-/* =========================================================
-   LOG
+   TERMINAL
 ========================================================= */
 
 function log(
     message,
-    type
+    type = "info"
 ) {
 
-    const item =
-        document.createElement(
-            "div"
+    const terminal =
+        document.getElementById(
+            "terminalOutput"
         );
 
+    const line =
+        document.createElement("div");
 
-    if (
-        type
-    ) {
+    line.className =
+        "log-" + type;
 
-        item.className =
-            "log-" +
-            type;
+    const time =
+        new Date()
+            .toLocaleTimeString(
+                "pt-BR"
+            );
 
-    }
-
-
-    item.textContent =
+    line.textContent =
+        "[" +
+        time +
+        "] " +
         message;
 
-
-    terminal.appendChild(
-        item
-    );
-
+    terminal.appendChild(line);
 
     terminal.scrollTop =
         terminal.scrollHeight;
-
 }
 
+function clearTerminal() {
+
+    document.getElementById(
+        "terminalOutput"
+    ).innerHTML = "";
+
+    log(
+        "Terminal limpo.",
+        "info"
+    );
+}
+
+/* =========================================================
+   UI
+========================================================= */
+
+function updateStatus(
+    message
+) {
+
+    document.getElementById(
+        "statusMessage"
+    ).textContent =
+        message;
+}
+
+function showExplorer() {
+
+    updateStatus(
+        "Explorador de arquivos"
+    );
+}
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function escapeAttribute(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+/* =========================================================
+   START
+========================================================= */
+
+window.addEventListener(
+    "load",
+    init
+);
 </script>
 
 </body>
