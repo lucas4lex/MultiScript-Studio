@@ -2,19 +2,31 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>MultiScript — Modelos</title>
+<title>MultiScript HTML Editor</title>
 
 <style>
 * {
     box-sizing: border-box;
 }
 
+html,
 body {
     margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
-    background: #202124;
+    background: #1e1e1e;
     color: #fff;
 }
+
+body {
+    min-width: 1100px;
+}
+
+/* =========================
+   TOPO
+========================= */
 
 .topbar {
     height: 58px;
@@ -22,7 +34,7 @@ body {
     border-bottom: 1px solid #333;
     display: flex;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 15px;
     gap: 12px;
 }
 
@@ -31,121 +43,234 @@ body {
     height: 36px;
     background: #fff;
     color: #111;
-    border-radius: 8px;
+    border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 16px;
+}
+
+.title-area {
+    flex: 1;
 }
 
 .title {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: bold;
 }
 
 .subtitle {
-    font-size: 11px;
-    color: #999;
-    margin-left: 5px;
+    font-size: 10px;
+    color: #888;
+    letter-spacing: 1px;
 }
 
-.container {
-    width: 1100px;
-    margin: 30px auto;
+.top-buttons {
+    display: flex;
+    gap: 6px;
 }
 
-h1 {
-    margin-bottom: 5px;
+.top-buttons button,
+.toolbar button {
+    border: 1px solid #3d3d3d;
+    background: #252525;
+    color: #ddd;
+    padding: 8px 11px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.description {
-    color: #aaa;
-    margin-bottom: 25px;
+.top-buttons button:hover,
+.toolbar button:hover {
+    background: #333;
 }
 
-.models {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-}
+/* =========================
+   TOOLBAR
+========================= */
 
-.card {
-    background: #292a2d;
-    border: 1px solid #3b3c40;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: .2s;
-}
-
-.card:hover {
-    border-color: #777;
-    transform: translateY(-2px);
-}
-
-.card-header {
-    height: 70px;
-    background: #18191b;
+.toolbar {
+    height: 46px;
+    background: #202020;
+    border-bottom: 1px solid #333;
     display: flex;
     align-items: center;
-    padding: 0 18px;
+    padding: 0 10px;
+    gap: 5px;
 }
 
-.version {
-    font-size: 14px;
-    color: #aaa;
+.toolbar .separator {
+    width: 1px;
+    height: 25px;
+    background: #444;
+    margin: 0 6px;
 }
 
-.card-body {
-    padding: 18px;
+.toolbar button.active {
+    background: #444;
 }
 
-.card h2 {
-    margin: 0 0 8px;
-    font-size: 20px;
+/* =========================
+   ÁREA PRINCIPAL
+========================= */
+
+.workspace {
+    height: calc(100vh - 104px);
+    display: flex;
 }
 
-.card p {
-    color: #aaa;
-    font-size: 14px;
-    line-height: 1.5;
-    min-height: 65px;
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 230px;
+    background: #181818;
+    border-right: 1px solid #333;
+    padding: 14px;
+    overflow-y: auto;
 }
 
-.url {
-    display: block;
-    background: #1d1e20;
-    border: 1px solid #38393c;
+.sidebar-title {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    margin: 8px 0;
+}
+
+.project {
+    background: #242424;
+    border: 1px solid #383838;
+    border-radius: 6px;
     padding: 10px;
-    border-radius: 6px;
-    color: #ddd;
-    font-size: 12px;
-    margin: 12px 0;
-    word-break: break-all;
+    margin-bottom: 7px;
+    cursor: pointer;
 }
 
-button {
+.project:hover {
+    background: #303030;
+}
+
+.project strong {
+    display: block;
+    font-size: 13px;
+}
+
+.project span {
+    color: #888;
+    font-size: 11px;
+}
+
+.new-project {
     width: 100%;
-    border: 0;
-    border-radius: 6px;
-    padding: 11px;
+    padding: 10px;
+    margin-bottom: 15px;
     background: #fff;
     color: #111;
+    border: 0;
+    border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
 }
 
-button:hover {
+/* =========================
+   EDITOR
+========================= */
+
+.editor-area {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    background: #111;
+}
+
+.panel-title {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    background: #1d1d1d;
+    border-bottom: 1px solid #333;
+    color: #aaa;
+    font-size: 12px;
+}
+
+#codigo {
+    flex: 1;
+    width: 100%;
+    resize: none;
+    border: 0;
+    outline: 0;
+    padding: 15px;
+    background: #101010;
+    color: #d4d4d4;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    tab-size: 4;
+}
+
+/* =========================
+   PREVIEW
+========================= */
+
+.preview-area {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
     background: #ddd;
 }
 
-.footer {
-    margin-top: 35px;
-    padding: 18px;
-    border-top: 1px solid #333;
-    color: #777;
+.preview-title {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    background: #1d1d1d;
+    border-bottom: 1px solid #333;
+    color: #aaa;
     font-size: 12px;
-    text-align: center;
+}
+
+.preview-frame {
+    flex: 1;
+    background: white;
+    padding: 0;
+}
+
+#preview {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: white;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.statusbar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 25px;
+    background: #151515;
+    border-top: 1px solid #333;
+    color: #888;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+}
+
+.status-left {
+    flex: 1;
+}
+
+.status-right {
+    display: flex;
+    gap: 18px;
 }
 </style>
 </head>
@@ -153,110 +278,719 @@ button:hover {
 <body>
 
 <header class="topbar">
+
     <div class="logo">MS</div>
 
-    <div>
-        <div class="title">MultiScript Studio</div>
-        <div class="subtitle">EDITOR DE PROJETOS HTML</div>
+    <div class="title-area">
+        <div class="title">MultiScript HTML Editor</div>
+        <div class="subtitle">EDITOR DE SITES · HTML / CSS / JAVASCRIPT</div>
     </div>
+
+    <div class="top-buttons">
+        <button onclick="novoProjeto()">Novo</button>
+        <button onclick="salvar()">Salvar</button>
+        <button onclick="exportar()">Exportar HTML</button>
+    </div>
+
 </header>
 
-<main class="container">
 
-    <h1>Modelos e Projetos</h1>
+<div class="toolbar">
 
-    <div class="description">
-        Projetos desenvolvidos e utilizados pela família.
-    </div>
+    <button onclick="executar()">▶ Executar</button>
 
-    <section class="models">
+    <div class="separator"></div>
 
-        <!-- V09 -->
-        <article class="card">
-            <div class="card-header">
-                <div class="version">V09</div>
-            </div>
+    <button onclick="inserir('h1')">&lt;H1&gt;</button>
+    <button onclick="inserir('p')">&lt;P&gt;</button>
+    <button onclick="inserir('div')">&lt;DIV&gt;</button>
+    <button onclick="inserir('a')">&lt;A&gt;</button>
+    <button onclick="inserir('img')">&lt;IMG&gt;</button>
+    <button onclick="inserir('button')">&lt;BUTTON&gt;</button>
 
-            <div class="card-body">
-                <h2>ReciPet</h2>
+    <div class="separator"></div>
 
-                <p>
-                    Projeto voltado à reciclagem, coleta,
-                    materiais aceitos e sustentabilidade.
-                </p>
+    <button onclick="formatarCodigo()">Formatar</button>
+    <button onclick="limpar()">Limpar</button>
 
-                <div class="url">
-                    recipet.pages.dev
-                </div>
-
-                <button onclick="abrir('https://recipet.pages.dev/')">
-                    Abrir projeto
-                </button>
-            </div>
-        </article>
+</div>
 
 
-        <!-- V10 -->
-        <article class="card">
-            <div class="card-header">
-                <div class="version">V10</div>
-            </div>
+<main class="workspace">
 
-            <div class="card-body">
-                <h2>RSK Computadores</h2>
+    <!-- =========================
+         PROJETOS
+    ========================== -->
 
-                <p>
-                    Projeto comercial para informática,
-                    computadores, assistência técnica e serviços.
-                </p>
+    <aside class="sidebar">
 
-                <div class="url">
-                    rskcomputadores.pages.dev
-                </div>
+        <button class="new-project" onclick="novoProjeto()">
+            + Novo projeto
+        </button>
 
-                <button onclick="abrir('https://rskcomputadores.pages.dev/')">
-                    Abrir projeto
-                </button>
-            </div>
-        </article>
+        <div class="sidebar-title">
+            Modelos
+        </div>
+
+        <div class="project" onclick="carregarV09()">
+            <strong>V09 — ReciPet</strong>
+            <span>Projeto de reciclagem</span>
+        </div>
+
+        <div class="project" onclick="carregarV10()">
+            <strong>V10 — RSK Computadores</strong>
+            <span>Informática</span>
+        </div>
+
+        <div class="project" onclick="carregarV12()">
+            <strong>V12 — ARTERUST</strong>
+            <span>Escorregadores</span>
+        </div>
+
+        <div class="sidebar-title">
+            Ferramentas
+        </div>
+
+        <div class="project" onclick="document.getElementById('codigo').focus()">
+            <strong>Editor HTML</strong>
+            <span>Código fonte</span>
+        </div>
+
+        <div class="project" onclick="executar()">
+            <strong>Preview</strong>
+            <span>Visualização em tempo real</span>
+        </div>
+
+    </aside>
 
 
-        <!-- V12 -->
-        <article class="card">
-            <div class="card-header">
-                <div class="version">V12</div>
-            </div>
+    <!-- =========================
+         CÓDIGO
+    ========================== -->
 
-            <div class="card-body">
-                <h2>ARTERUST — Escorregadores</h2>
+    <section class="editor-area">
 
-                <p>
-                    Projeto comercial da ARTERUST,
-                    com página específica para escorregadores.
-                </p>
+        <div class="panel-title">
+            index.html
+        </div>
 
-                <div class="url">
-                    arterust.pages.dev/escorregadores
-                </div>
+        <textarea id="codigo" spellcheck="false"><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
 
-                <button onclick="abrir('https://arterust.pages.dev/escorregadores')">
-                    Abrir projeto
-                </button>
-            </div>
-        </article>
+<title>Meu Site</title>
 
-    </section>
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f5f5f5;
+    color: #222;
+}
 
-    <div class="footer">
-        MultiScript Studio · Projetos internos · Uso pessoal e familiar
-    </div>
+header {
+    background: #111;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+main {
+    width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Meu Site</h1>
+    <p>Desenvolvido com MultiScript HTML Editor</p>
+</header>
+
+<main>
+
+    <h2>Olá!</h2>
+
+    <p>
+        Comece a editar seu HTML aqui.
+    </p>
+
+    <button>
+        Meu botão
+    </button>
 
 </main>
 
+</body>
+</html></textarea>
+
+    </section>
+
+
+    <!-- =========================
+         PREVIEW
+    ========================== -->
+
+    <section class="preview-area">
+
+        <div class="preview-title">
+            Preview · Página
+        </div>
+
+        <div class="preview-frame">
+            <iframe
+                id="preview"
+                sandbox="allow-scripts allow-forms allow-modals">
+            </iframe>
+        </div>
+
+    </section>
+
+</main>
+
+
+<div class="statusbar">
+
+    <div class="status-left">
+        MultiScript HTML Editor
+    </div>
+
+    <div class="status-right">
+        <span>HTML</span>
+        <span id="linhas">Linhas: 0</span>
+        <span id="caracteres">Caracteres: 0</span>
+        <span>UTF-8</span>
+    </div>
+
+</div>
+
+
 <script>
-function abrir(url) {
-    window.open(url, "_blank");
+
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const codigo = document.getElementById("codigo");
+const preview = document.getElementById("preview");
+
+
+/* =====================================================
+   PREVIEW
+===================================================== */
+
+function executar() {
+
+    preview.srcdoc = codigo.value;
+
+    atualizarStatus();
 }
+
+
+/* =====================================================
+   ATUALIZAÇÃO AUTOMÁTICA
+===================================================== */
+
+codigo.addEventListener("input", function() {
+
+    executar();
+
+});
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function atualizarStatus() {
+
+    const texto = codigo.value;
+
+    const linhas = texto.split("\n").length;
+
+    document.getElementById("linhas").textContent =
+        "Linhas: " + linhas;
+
+    document.getElementById("caracteres").textContent =
+        "Caracteres: " + texto.length;
+}
+
+
+/* =====================================================
+   NOVO PROJETO
+===================================================== */
+
+function novoProjeto() {
+
+    if (!confirm("Criar um novo projeto?")) {
+        return;
+    }
+
+    codigo.value =
+`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+
+<title>Novo Projeto</title>
+
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    padding: 40px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Novo Projeto</h1>
+
+<p>Comece seu site aqui.</p>
+
+</body>
+</html>`;
+
+    executar();
+}
+
+
+/* =====================================================
+   SALVAR
+===================================================== */
+
+function salvar() {
+
+    localStorage.setItem(
+        "multiscript_html",
+        codigo.value
+    );
+
+    alert("Projeto salvo no navegador.");
+}
+
+
+/* =====================================================
+   CARREGAR SALVO
+===================================================== */
+
+function carregarSalvo() {
+
+    const salvo =
+        localStorage.getItem("multiscript_html");
+
+    if (salvo) {
+
+        codigo.value = salvo;
+
+        executar();
+    }
+}
+
+
+/* =====================================================
+   EXPORTAR HTML
+===================================================== */
+
+function exportar() {
+
+    const blob = new Blob(
+        [codigo.value],
+        {
+            type: "text/html;charset=utf-8"
+        }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "index.html";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    URL.revokeObjectURL(url);
+}
+
+
+/* =====================================================
+   INSERIR ELEMENTOS
+===================================================== */
+
+function inserir(tipo) {
+
+    const exemplos = {
+
+        h1:
+`<h1>Título</h1>`,
+
+        p:
+`<p>Texto do parágrafo.</p>`,
+
+        div:
+`<div>
+    Conteúdo da div
+</div>`,
+
+        a:
+`<a href="#">Meu link</a>`,
+
+        img:
+`<img src="imagem.jpg" alt="Imagem">`,
+
+        button:
+`<button>
+    Clique aqui
+</button>`
+
+    };
+
+    const inicio = codigo.selectionStart;
+    const fim = codigo.selectionEnd;
+
+    const texto = codigo.value;
+
+    codigo.value =
+        texto.substring(0, inicio) +
+        exemplos[tipo] +
+        texto.substring(fim);
+
+    codigo.focus();
+
+    codigo.selectionStart =
+        codigo.selectionEnd =
+        inicio + exemplos[tipo].length;
+
+    executar();
+}
+
+
+/* =====================================================
+   LIMPAR
+===================================================== */
+
+function limpar() {
+
+    if (!confirm("Apagar todo o código?")) {
+        return;
+    }
+
+    codigo.value = "";
+
+    executar();
+}
+
+
+/* =====================================================
+   FORMATAR CÓDIGO
+===================================================== */
+
+function formatarCodigo() {
+
+    let texto = codigo.value;
+
+    texto = texto
+        .replace(/></g, ">\n<")
+        .replace(/^\s+/gm, "");
+
+    codigo.value = texto;
+
+    executar();
+}
+
+
+/* =====================================================
+   MODELO V09
+===================================================== */
+
+function carregarV09() {
+
+codigo.value =
+`<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>ReciPet</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #eef8ef;
+    color: #173b1d;
+}
+
+header {
+    background: #16833a;
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+main {
+    width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ReciPet</h1>
+
+<p>Reciclagem e sustentabilidade</p>
+
+</header>
+
+<main>
+
+<h2>Materiais Aceitos</h2>
+
+<p>
+Conheça os materiais que podem ser recolhidos.
+</p>
+
+</main>
+
+</body>
+
+</html>`;
+
+executar();
+
+}
+
+
+/* =====================================================
+   MODELO V10
+===================================================== */
+
+function carregarV10() {
+
+codigo.value =
+`<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>RSK Computadores</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f1f4f8;
+}
+
+header {
+    background: #111827;
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+main {
+    width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 8px;
+}
+
+.servico {
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>RSK Computadores</h1>
+
+<p>Informática e assistência técnica</p>
+
+</header>
+
+<main>
+
+<h2>Nossos Serviços</h2>
+
+<div class="servico">
+Assistência técnica
+</div>
+
+<div class="servico">
+Computadores
+</div>
+
+<div class="servico">
+Notebooks
+</div>
+
+</main>
+
+</body>
+
+</html>`;
+
+executar();
+
+}
+
+
+/* =====================================================
+   MODELO V12
+===================================================== */
+
+function carregarV12() {
+
+codigo.value =
+`<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>ARTERUST — Escorregadores</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f4f4f4;
+}
+
+header {
+    background: #222;
+    color: white;
+    padding: 45px;
+    text-align: center;
+}
+
+main {
+    width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 35px;
+}
+
+.produto {
+    border: 1px solid #ddd;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ARTERUST</h1>
+
+<p>Escorregadores</p>
+
+</header>
+
+<main>
+
+<h2>Escorregadores</h2>
+
+<div class="produto">
+
+<h3>Escorregador</h3>
+
+<p>
+Conheça nossos modelos de escorregadores.
+</p>
+
+</div>
+
+</main>
+
+</body>
+
+</html>`;
+
+executar();
+
+}
+
+
+/* =====================================================
+   ATALHOS
+===================================================== */
+
+codigo.addEventListener("keydown", function(e) {
+
+    if (e.ctrlKey && e.key === "s") {
+
+        e.preventDefault();
+
+        salvar();
+
+    }
+
+    if (e.ctrlKey && e.key === "Enter") {
+
+        e.preventDefault();
+
+        executar();
+
+    }
+
+});
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+carregarSalvo();
+
+executar();
+
 </script>
 
 </body>
