@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>MultiScript HTML Editor V14</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
@@ -19,18 +20,18 @@ body {
 }
 
 body {
-    min-width: 1200px;
+    min-width: 1250px;
     overflow: hidden;
-    background: #0d1117;
-    color: #d7dee8;
+    background: #0b0f14;
+    color: #dce3eb;
     font-family: "Segoe UI", Arial, sans-serif;
 }
 
 /* =========================================================
-   APP
+   APLICAÇÃO
 ========================================================= */
 
-.app {
+#app {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -38,577 +39,454 @@ body {
 }
 
 /* =========================================================
-   TITLEBAR
+   TOPO
 ========================================================= */
 
-.titlebar {
-    height: 46px;
+.topbar {
+    height: 48px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
-
     background: #11161d;
-    border-bottom: 1px solid #252d38;
+    border-bottom: 1px solid #29323d;
 }
 
-.app-logo {
-    width: 46px;
-    height: 46px;
-
+.logo {
+    width: 52px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background: #151b23;
-    border-right: 1px solid #252d38;
-
-    font-size: 13px;
+    background: #171e27;
+    border-right: 1px solid #29323d;
+    color: #ffffff;
+    font-size: 14px;
     font-weight: 900;
-    color: #fff;
 }
 
-.app-title {
+.brand {
     padding-left: 14px;
-
     font-size: 13px;
     font-weight: 600;
-
-    color: #e8edf3;
+    color: #f1f4f7;
 }
 
-.app-version {
+.version {
     margin-left: 8px;
-
-    padding: 3px 6px;
-
-    border: 1px solid #34404e;
+    padding: 3px 7px;
+    border: 1px solid #384451;
     border-radius: 3px;
-
-    color: #8290a0;
+    color: #83909e;
     font-size: 9px;
 }
 
-/* =========================================================
-   MENU
-========================================================= */
-
-.menu {
-    height: 46px;
-
+.top-menu {
+    height: 100%;
     display: flex;
-    align-items: center;
-
     margin-left: 25px;
 }
 
-.menu button {
-    height: 46px;
-
-    padding: 0 12px;
-
+.top-menu button {
+    height: 100%;
+    padding: 0 13px;
     border: 0;
     background: transparent;
-
-    color: #8995a4;
-
+    color: #8793a1;
     cursor: pointer;
-
     font-size: 11px;
 }
 
-.menu button:hover {
-    color: #fff;
-    background: #1a212b;
+.top-menu button:hover {
+    background: #1b232d;
+    color: white;
 }
 
-.title-space {
+.top-space {
     flex: 1;
 }
 
-.window-actions {
-    display: flex;
+.top-right {
     height: 100%;
+    display: flex;
 }
 
-.window-actions button {
-    width: 45px;
-
+.top-right button {
+    width: 44px;
+    height: 100%;
     border: 0;
-    border-left: 1px solid #252d38;
-
+    border-left: 1px solid #29323d;
     background: transparent;
-    color: #758190;
-
+    color: #758291;
     cursor: pointer;
 }
 
-.window-actions button:hover {
-    background: #1b222c;
-    color: #fff;
+.top-right button:hover {
+    background: #1b232d;
+    color: white;
 }
 
 /* =========================================================
-   TOOLBAR
+   BARRA DE FERRAMENTAS
 ========================================================= */
 
 .toolbar {
     height: 44px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
-
-    padding: 0 12px;
-
+    padding: 0 10px;
     background: #151b23;
-    border-bottom: 1px solid #252d38;
+    border-bottom: 1px solid #29323d;
 }
 
 .tool-group {
     display: flex;
     align-items: center;
     gap: 4px;
-
-    padding-right: 13px;
-    margin-right: 13px;
-
-    border-right: 1px solid #29313c;
+    padding-right: 12px;
+    margin-right: 12px;
+    border-right: 1px solid #2a333e;
 }
 
 .tool-group:last-child {
-    border: 0;
+    border-right: 0;
 }
 
 .tool {
-    height: 28px;
-
+    height: 29px;
     padding: 0 10px;
-
     border: 1px solid transparent;
     border-radius: 4px;
-
     background: transparent;
-
     color: #929eac;
-
     cursor: pointer;
-
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .tool:hover {
-    background: #202833;
-    border-color: #303b48;
-    color: #fff;
+    background: #202933;
+    border-color: #34404d;
+    color: white;
 }
 
-.tool.primary {
-    background: #1b75d0;
-    color: #fff;
+.tool.blue {
+    background: #176db4;
+    color: white;
 }
 
-.tool.primary:hover {
-    background: #2384e4;
+.tool.blue:hover {
+    background: #2180cf;
 }
 
 .tool.export {
-    background: #27303c;
-    color: #d9e2ec;
+    background: #26303b;
+    color: #e2e8ee;
 }
 
 /* =========================================================
-   MAIN
+   ÁREA PRINCIPAL
 ========================================================= */
 
 .main {
     flex: 1;
-
-    display: flex;
-
     min-height: 0;
+    display: flex;
 }
 
 /* =========================================================
-   ACTIVITY
+   BARRA LATERAL DE ÍCONES
 ========================================================= */
 
 .activity {
     width: 48px;
     flex-shrink: 0;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    background: #0f141a;
-    border-right: 1px solid #252d38;
+    background: #0e1319;
+    border-right: 1px solid #29323d;
 }
 
 .activity button {
     width: 48px;
     height: 48px;
-
     border: 0;
     border-left: 2px solid transparent;
-
     background: transparent;
-
-    color: #667281;
-
+    color: #65717f;
     cursor: pointer;
-
     font-size: 16px;
 }
 
 .activity button:hover,
 .activity button.active {
-    color: #fff;
     background: #171e27;
+    color: white;
 }
 
 .activity button.active {
-    border-left-color: #4d9ff7;
+    border-left-color: #4ca0f2;
 }
 
-.activity-spacer {
+.activity-space {
     flex: 1;
 }
 
 /* =========================================================
-   PROJECT PANEL
+   EXPLORADOR
 ========================================================= */
 
-.project-panel {
+.explorer {
     width: 245px;
     flex-shrink: 0;
-
-    display: flex;
-    flex-direction: column;
-
     background: #121820;
-    border-right: 1px solid #252d38;
+    border-right: 1px solid #29323d;
+    overflow-y: auto;
 }
 
-.panel-title {
-    height: 38px;
-
+.explorer-title {
+    height: 39px;
     display: flex;
     align-items: center;
-
-    padding: 0 12px;
-
+    padding: 0 13px;
     color: #7f8b99;
-
     font-size: 10px;
-    font-weight: 600;
-
+    font-weight: bold;
     letter-spacing: 1px;
 }
 
-.panel-title-actions {
+.explorer-title-buttons {
     margin-left: auto;
-
     display: flex;
     gap: 3px;
 }
 
-.panel-title-actions button {
+.explorer-title-buttons button {
     border: 0;
     background: transparent;
-
-    color: #657181;
-
+    color: #687584;
     cursor: pointer;
 }
 
-.panel-title-actions button:hover {
-    color: #fff;
+.explorer-title-buttons button:hover {
+    color: white;
 }
 
-.project-root {
-    padding: 9px 12px;
-
-    color: #cbd3dc;
-
+.root {
+    padding: 8px 13px;
+    color: #d0d7df;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: bold;
 }
 
-.tree-folder {
-    padding: 7px 12px;
-
-    color: #788594;
-
+.folder {
+    padding: 8px 13px;
+    color: #778493;
     font-size: 10px;
-    font-weight: 600;
+    font-weight: bold;
 }
 
-.tree-file {
+.file {
     height: 31px;
-
     display: flex;
     align-items: center;
-
-    padding-left: 28px;
-
-    gap: 7px;
-
-    color: #8e9aa8;
-
+    gap: 8px;
+    padding-left: 29px;
+    color: #8996a4;
     cursor: pointer;
-
     font-size: 11px;
 }
 
-.tree-file:hover {
+.file:hover {
     background: #1a222c;
-    color: #fff;
+    color: white;
 }
 
-.tree-file.active {
+.file.active {
     background: #202a36;
-    color: #fff;
+    color: white;
 }
 
-.file-html {
-    color: #f07178;
+.html-icon {
+    color: #f07479;
 }
 
-.file-css {
-    color: #5caeff;
+.css-icon {
+    color: #5aa9ff;
 }
 
-.file-js {
-    color: #e5c55b;
+.js-icon {
+    color: #e3c65c;
 }
 
-.file-json {
-    color: #b98cff;
+.json-icon {
+    color: #b68bff;
 }
 
-.sidebar-divider {
+.divider {
     height: 1px;
     margin: 12px 0;
-
-    background: #252d38;
+    background: #29323d;
 }
 
-.sidebar-tool {
-    padding: 8px 13px;
-
-    color: #7e8b99;
-
+.side-option {
+    padding: 9px 14px;
+    color: #7d8997;
     cursor: pointer;
-
     font-size: 10px;
 }
 
-.sidebar-tool:hover {
+.side-option:hover {
     background: #1a222c;
-    color: #fff;
+    color: white;
 }
 
 /* =========================================================
-   EDITOR AREA
+   EDITOR
 ========================================================= */
 
-.editor-area {
+.editor {
     flex: 1;
     min-width: 500px;
-
     display: flex;
     flex-direction: column;
-
     background: #0d1117;
 }
 
-/* =========================================================
-   EDITOR HEADER
-========================================================= */
-
-.editor-header {
-    height: 38px;
-
+.editor-tabs {
+    height: 39px;
+    flex-shrink: 0;
     display: flex;
-    align-items: center;
-
+    align-items: stretch;
     background: #11161d;
-    border-bottom: 1px solid #252d38;
+    border-bottom: 1px solid #29323d;
 }
 
 .editor-tab {
-    height: 38px;
-
-    min-width: 145px;
-
+    min-width: 150px;
     display: flex;
     align-items: center;
-
+    gap: 8px;
     padding: 0 12px;
-
-    gap: 7px;
-
     background: #0d1117;
-    border-right: 1px solid #252d38;
-    border-top: 1px solid #4d9ff7;
-
-    color: #dce4ed;
-
+    border-top: 2px solid #4ca0f2;
+    border-right: 1px solid #29323d;
+    color: #dce4ec;
     font-size: 11px;
 }
 
-.tab-dot {
+.tab-unsaved {
     margin-left: auto;
-
-    color: #7c8794;
+    color: #798593;
 }
 
-.editor-actions {
-    margin-left: auto;
-
-    padding-right: 10px;
-
-    display: flex;
-    gap: 5px;
-}
-
-.editor-actions button {
-    border: 0;
-
-    background: transparent;
-
-    color: #667382;
-
-    cursor: pointer;
-}
-
-.editor-actions button:hover {
-    color: #fff;
-}
-
-/* =========================================================
-   CODE
-========================================================= */
-
-.code-area {
+.editor-tools {
     flex: 1;
-
     display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    gap: 8px;
+}
 
+.editor-tools button {
+    border: 0;
+    background: transparent;
+    color: #657280;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.editor-tools button:hover {
+    color: white;
+}
+
+.code-wrapper {
+    flex: 1;
     min-height: 0;
+    display: flex;
 }
 
 .line-numbers {
-    width: 55px;
+    width: 56px;
     flex-shrink: 0;
-
-    padding-top: 14px;
-
     overflow: hidden;
-
-    background: #0b0f14;
-
-    color: #47515d;
-
+    padding-top: 14px;
+    background: #0a0e13;
+    color: #46515d;
     text-align: right;
-
     font: 12px/20px Consolas, monospace;
-
     user-select: none;
 }
 
 .line-numbers div {
     height: 20px;
-
     padding-right: 12px;
 }
 
-#editor {
+#code {
     flex: 1;
-
     min-width: 0;
-
     resize: none;
     outline: none;
-
-    padding: 14px 18px;
-
     border: 0;
-
+    padding: 14px 18px;
     background: #0d1117;
-
-    color: #d8dee7;
-
-    font: 12px/20px Consolas,
-          "Courier New",
-          monospace;
-
-    tab-size: 4;
-
+    color: #d7dee7;
+    font: 12px/20px Consolas, "Courier New", monospace;
     white-space: pre;
-
+    tab-size: 4;
     overflow: auto;
 }
 
 /* =========================================================
-   BOTTOM PANEL
+   PAINEL INFERIOR
 ========================================================= */
 
-.bottom-panel {
+.bottom {
     height: 145px;
     flex-shrink: 0;
-
-    background: #10151c;
-    border-top: 1px solid #252d38;
+    background: #10151b;
+    border-top: 1px solid #29323d;
 }
 
-.bottom-header {
+.bottom-tabs {
     height: 34px;
-
     display: flex;
     align-items: center;
-
-    padding: 0 13px;
-
     gap: 22px;
-
-    border-bottom: 1px solid #252d38;
+    padding: 0 13px;
+    border-bottom: 1px solid #29323d;
 }
 
-.bottom-tab {
-    color: #697684;
-
+.bottom-tabs span {
+    color: #667381;
     font-size: 9px;
     letter-spacing: .7px;
 }
 
-.bottom-tab.active {
-    color: #fff;
+.bottom-tabs span.active {
+    color: white;
 }
 
 .terminal {
     height: calc(100% - 34px);
-
     padding: 8px 13px;
-
-    overflow: auto;
-
-    color: #687582;
-
+    overflow-y: auto;
     font: 10px/1.7 Consolas, monospace;
+    color: #65727f;
 }
 
 .log-success {
-    color: #57b978;
-}
-
-.log-warning {
-    color: #d0a849;
+    color: #55b777;
 }
 
 .log-error {
-    color: #e26767;
+    color: #e16a6a;
+}
+
+.log-info {
+    color: #629ed0;
 }
 
 /* =========================================================
@@ -616,122 +494,93 @@ body {
 ========================================================= */
 
 .preview {
-    width: 435px;
+    width: 450px;
     flex-shrink: 0;
-
     display: flex;
     flex-direction: column;
-
     background: #11161d;
-    border-left: 1px solid #252d38;
+    border-left: 1px solid #29323d;
 }
 
-.preview-top {
-    height: 38px;
-
+.preview-header {
+    height: 39px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
-
-    padding: 0 10px;
-
-    border-bottom: 1px solid #252d38;
+    padding: 0 11px;
+    border-bottom: 1px solid #29323d;
 }
 
 .preview-title {
     color: #7f8b98;
-
     font-size: 10px;
     letter-spacing: 1px;
 }
 
-.preview-buttons {
+.preview-actions {
     margin-left: auto;
-
     display: flex;
-    gap: 4px;
+    gap: 8px;
 }
 
-.preview-buttons button {
+.preview-actions button {
     border: 0;
-
     background: transparent;
-
     color: #687583;
-
     cursor: pointer;
 }
 
-.preview-buttons button:hover {
-    color: #fff;
+.preview-actions button:hover {
+    color: white;
 }
 
-.browser-bar {
-    height: 31px;
-
+.browser {
+    height: 32px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
-
     padding: 0 8px;
-
     background: #171d25;
-    border-bottom: 1px solid #252d38;
+    border-bottom: 1px solid #29323d;
 }
 
 .browser-dot {
     width: 7px;
     height: 7px;
-
     margin-right: 4px;
-
     border-radius: 50%;
-
-    background: #414b57;
+    background: #424c58;
 }
 
-.browser-address {
+.browser-url {
     flex: 1;
-
     margin-left: 7px;
-
-    padding: 4px 8px;
-
+    padding: 5px 8px;
     border-radius: 3px;
-
-    background: #0e1319;
-
-    color: #5e6a77;
-
+    background: #0d1218;
+    color: #606c79;
     font-size: 9px;
 }
 
 #preview {
-    width: 100%;
-    height: 100%;
-
     flex: 1;
-
+    width: 100%;
     border: 0;
-
     background: white;
 }
 
 /* =========================================================
-   STATUSBAR
+   STATUS
 ========================================================= */
 
 .statusbar {
-    height: 24px;
+    height: 25px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
-
     padding: 0 10px;
-
-    background: #176aa4;
-
+    background: #176da6;
     color: white;
-
     font-size: 10px;
 }
 
@@ -748,371 +597,289 @@ body {
    MODAL
 ========================================================= */
 
-.modal-background {
+.modal-overlay {
     position: fixed;
-
     inset: 0;
-
-    z-index: 1000;
-
+    z-index: 9999;
     display: none;
-
     align-items: center;
     justify-content: center;
-
     background: rgba(0,0,0,.72);
 }
 
 .modal {
-    width: 570px;
-
+    width: 590px;
+    max-height: 80vh;
+    overflow: auto;
     background: #171d25;
-
-    border: 1px solid #34404d;
-
+    border: 1px solid #36414e;
     border-radius: 7px;
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.8);
+    box-shadow: 0 30px 100px rgba(0,0,0,.8);
 }
 
-.modal-head {
-    padding: 15px 17px;
-
-    border-bottom: 1px solid #2b3541;
-
-    color: #fff;
-
+.modal-title {
+    padding: 16px 18px;
+    border-bottom: 1px solid #2b3540;
+    color: white;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: bold;
 }
 
-.modal-content {
+.modal-body {
     padding: 18px;
 }
 
-.modal-foot {
+.modal-footer {
     padding: 12px 15px;
-
-    border-top: 1px solid #2b3541;
-
+    border-top: 1px solid #2b3540;
     text-align: right;
 }
 
-.modal-foot button {
+.modal-footer button {
     padding: 8px 14px;
-
-    border: 1px solid #394553;
+    border: 1px solid #3a4653;
     border-radius: 4px;
-
-    background: #242d38;
-
-    color: #ccd5df;
-
+    background: #252e39;
+    color: #d4dce4;
     cursor: pointer;
-
-    font-size: 11px;
+    font-size: 10px;
 }
 
-.modal-foot button:hover {
-    background: #303b48;
+.modal-footer button:hover {
+    background: #313c49;
 }
 
-.modal-foot .confirm {
-    background: #1b75d0;
-    border-color: #3287df;
+.modal-footer .confirm {
+    margin-left: 5px;
+    background: #176db4;
+    border-color: #3289d7;
     color: white;
 }
 
 /* =========================================================
-   FORM
-========================================================= */
-
-.form-title {
-    margin-bottom: 6px;
-
-    color: #8b97a5;
-
-    font-size: 10px;
-}
-
-.form-select {
-    width: 100%;
-
-    padding: 10px;
-
-    outline: none;
-
-    border: 1px solid #384452;
-    border-radius: 4px;
-
-    background: #0f141a;
-
-    color: #d7dee7;
-
-    font-size: 11px;
-}
-
-.form-select:focus {
-    border-color: #4d9ff7;
-}
-
-.credit-preview {
-    margin-top: 15px;
-
-    padding: 13px;
-
-    border: 1px solid #293440;
-
-    border-radius: 4px;
-
-    background: #10151b;
-
-    color: #8d99a6;
-
-    font-size: 10px;
-
-    line-height: 1.7;
-}
-
-.notice {
-    margin-bottom: 15px;
-
-    padding: 12px;
-
-    border-left: 3px solid #4d9ff7;
-
-    background: #111820;
-
-    color: #8996a4;
-
-    font-size: 10px;
-
-    line-height: 1.7;
-}
-
-/* =========================================================
-   GENERATOR CARDS
+   GERADOR
 ========================================================= */
 
 .generator-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
 .generator-card {
-    padding: 14px;
-
-    border: 1px solid #303b48;
+    padding: 16px;
+    border: 1px solid #303b47;
     border-radius: 5px;
-
     background: #11171e;
-
     cursor: pointer;
 }
 
 .generator-card:hover {
-    background: #1a222c;
-    border-color: #4a5868;
+    background: #1b232d;
+    border-color: #4b5a69;
 }
 
 .generator-card strong {
     display: block;
-
-    margin-bottom: 5px;
-
-    color: #e0e6ed;
-
+    margin-bottom: 7px;
+    color: #e2e8ee;
     font-size: 11px;
 }
 
 .generator-card span {
     color: #758290;
-
     font-size: 9px;
-
     line-height: 1.5;
+}
+
+/* =========================================================
+   FORMULÁRIOS
+========================================================= */
+
+.notice {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-left: 3px solid #4b9cf0;
+    background: #111820;
+    color: #8c98a5;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #8a96a4;
+    font-size: 10px;
+}
+
+.form-select {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #394551;
+    border-radius: 4px;
+    background: #0e1319;
+    color: #d9e1e9;
+    font-size: 10px;
+}
+
+.form-select:focus {
+    border-color: #4b9cf0;
+}
+
+.credit-preview {
+    margin-top: 15px;
+    padding: 13px;
+    border: 1px solid #2c3742;
+    border-radius: 4px;
+    background: #10151b;
+    color: #8996a3;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* =========================================================
+   SCROLLBARS
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0b0f14;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #303b47;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3d4b5a;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div id="app">
 
-<!-- =====================================================
-     TITLEBAR
-===================================================== -->
+    <!-- =================================================
+         TOPO
+    ================================================== -->
 
-<header class="titlebar">
+    <header class="topbar">
 
-    <div class="app-logo">
-        MS
-    </div>
+        <div class="logo">
+            MS
+        </div>
 
-    <div class="app-title">
-        MultiScript HTML Editor
-    </div>
+        <div class="brand">
+            MultiScript HTML Editor
+        </div>
 
-    <div class="app-version">
-        V14.0.0
-    </div>
+        <div class="version">
+            V14.0.0
+        </div>
 
-    <nav class="menu">
-
-        <button onclick="newProject()">
-            Arquivo
-        </button>
-
-        <button onclick="openGenerator()">
-            Página
-        </button>
-
-        <button onclick="openCredits()">
-            Créditos
-        </button>
-
-        <button onclick="openAbout()">
-            Ajuda
-        </button>
-
-    </nav>
-
-    <div class="title-space"></div>
-
-    <div class="window-actions">
-
-        <button>—</button>
-        <button>□</button>
-        <button>×</button>
-
-    </div>
-
-</header>
-
-
-<!-- =====================================================
-     TOOLBAR
-===================================================== -->
-
-<div class="toolbar">
-
-    <div class="tool-group">
-
-        <button
-            class="tool"
-            onclick="newProject()">
-            ＋ Novo
-        </button>
-
-        <button
-            class="tool"
-            onclick="saveProject()">
-            💾 Salvar
-        </button>
-
-    </div>
-
-
-    <div class="tool-group">
-
-        <button
-            class="tool"
-            onclick="runPreview()">
-            ▶ Executar
-        </button>
-
-        <button
-            class="tool"
-            onclick="openExternalPreview()">
-            ↗ Preview
-        </button>
-
-    </div>
-
-
-    <div class="tool-group">
-
-        <button
-            class="tool"
-            onclick="formatHTML()">
-            ✨ Formatar
-        </button>
-
-        <button
-            class="tool"
-            onclick="insertCredits()">
-            © Crédito
-        </button>
-
-    </div>
-
-
-    <div class="tool-group">
-
-        <button
-            class="tool export"
-            onclick="exportZIP()">
-            📦 Exportar ZIP
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
-<main class="main">
-
-
-<!-- ACTIVITY -->
-
-<aside class="activity">
-
-    <button class="active">
-        ▦
-    </button>
-
-    <button>
-        ⌕
-    </button>
-
-    <button onclick="openGenerator()">
-        ⊞
-    </button>
-
-    <div class="activity-spacer"></div>
-
-    <button onclick="openAbout()">
-        ?
-    </button>
-
-</aside>
-
-
-<!-- PROJECT PANEL -->
-
-<aside class="project-panel">
-
-    <div class="panel-title">
-
-        PROJETO
-
-        <div class="panel-title-actions">
+        <nav class="top-menu">
 
             <button onclick="newProject()">
-                +
+                Arquivo
             </button>
 
-            <button onclick="saveProject()">
-                ↓
+            <button onclick="openPageGenerator()">
+                Página
+            </button>
+
+            <button onclick="openCredits()">
+                Créditos
+            </button>
+
+            <button onclick="openAbout()">
+                Ajuda
+            </button>
+
+        </nav>
+
+        <div class="top-space"></div>
+
+        <div class="top-right">
+
+            <button>—</button>
+            <button>□</button>
+            <button>×</button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         TOOLBAR
+    ================================================== -->
+
+    <div class="toolbar">
+
+        <div class="tool-group">
+
+            <button
+                class="tool"
+                onclick="newProject()">
+                ＋ Novo
+            </button>
+
+            <button
+                class="tool"
+                onclick="saveProject()">
+                💾 Salvar
+            </button>
+
+        </div>
+
+
+        <div class="tool-group">
+
+            <button
+                class="tool blue"
+                onclick="runPreview()">
+                ▶ Executar
+            </button>
+
+            <button
+                class="tool"
+                onclick="openBrowserPreview()">
+                ↗ Preview
+            </button>
+
+        </div>
+
+
+        <div class="tool-group">
+
+            <button
+                class="tool"
+                onclick="formatCurrentHTML()">
+                ✨ Formatar
+            </button>
+
+            <button
+                class="tool"
+                onclick="insertCredits()">
+                © Crédito
+            </button>
+
+        </div>
+
+
+        <div class="tool-group">
+
+            <button
+                class="tool export"
+                onclick="exportZIP()">
+                📦 Exportar ZIP
             </button>
 
         </div>
@@ -1120,317 +887,365 @@ body {
     </div>
 
 
-    <div class="project-root">
-        ▾ MEU-PROJETO
-    </div>
+    <!-- =================================================
+         ÁREA PRINCIPAL
+    ================================================== -->
+
+    <main class="main">
 
 
-    <div class="tree-folder">
-        ▾ PUBLIC
-    </div>
+        <!-- ATIVIDADE -->
+
+        <aside class="activity">
+
+            <button class="active">
+                ▦
+            </button>
+
+            <button>
+                ⌕
+            </button>
+
+            <button onclick="openPageGenerator()">
+                ⊞
+            </button>
+
+            <div class="activity-space"></div>
+
+            <button onclick="openAbout()">
+                ?
+            </button>
+
+        </aside>
 
 
-    <div
-        class="tree-file active"
-        data-file="html"
-        onclick="selectFile('html', this)">
+        <!-- EXPLORADOR -->
 
-        <span class="file-html">
-            ◈
-        </span>
+        <aside class="explorer">
 
-        index.html
+            <div class="explorer-title">
 
-    </div>
+                EXPLORADOR
 
+                <div class="explorer-title-buttons">
 
-    <div
-        class="tree-file"
-        data-file="css"
-        onclick="selectFile('css', this)">
+                    <button onclick="newProject()">
+                        +
+                    </button>
 
-        <span class="file-css">
-            ◈
-        </span>
+                    <button onclick="saveProject()">
+                        ↓
+                    </button>
 
-        style.css
+                </div>
 
-    </div>
+            </div>
 
 
-    <div
-        class="tree-file"
-        data-file="js"
-        onclick="selectFile('js', this)">
-
-        <span class="file-js">
-            ◈
-        </span>
-
-        script.js
-
-    </div>
+            <div class="root">
+                ▾ MEU-PROJETO
+            </div>
 
 
-    <div
-        class="tree-file"
-        data-file="json"
-        onclick="selectFile('json', this)">
-
-        <span class="file-json">
-            ◈
-        </span>
-
-        projeto.json
-
-    </div>
+            <div class="folder">
+                ▾ PUBLIC
+            </div>
 
 
-    <div class="sidebar-divider"></div>
+            <div
+                class="file active"
+                data-file="html"
+                onclick="selectFile('html', this)">
 
+                <span class="html-icon">
+                    ◈
+                </span>
 
-    <div class="tree-folder">
-        FERRAMENTAS
-    </div>
-
-
-    <div
-        class="sidebar-tool"
-        onclick="openGenerator()">
-
-        ＋ Gerador de páginas
-
-    </div>
-
-
-    <div
-        class="sidebar-tool"
-        onclick="openCredits()">
-
-        © Gerenciar créditos
-
-    </div>
-
-
-    <div
-        class="sidebar-tool"
-        onclick="formatHTML()">
-
-        ✨ Formatar HTML
-
-    </div>
-
-
-</aside>
-
-
-<!-- EDITOR -->
-
-<section class="editor-area">
-
-
-    <div class="editor-header">
-
-        <div class="editor-tab">
-
-            <span class="file-html">
-                ◈
-            </span>
-
-            <span id="tabName">
                 index.html
-            </span>
 
-            <span class="tab-dot">
-                ●
-            </span>
-
-        </div>
-
-
-        <div class="editor-actions">
-
-            <button
-                onclick="selectAllCode()">
-                Selecionar tudo
-            </button>
-
-            <button
-                onclick="copyCode()">
-                Copiar
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <div class="code-area">
-
-        <div
-            class="line-numbers"
-            id="lineNumbers">
-        </div>
-
-
-        <textarea
-            id="editor"
-            spellcheck="false"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"></textarea>
-
-    </div>
-
-
-    <div class="bottom-panel">
-
-        <div class="bottom-header">
-
-            <span class="bottom-tab active">
-                TERMINAL
-            </span>
-
-            <span class="bottom-tab">
-                PROBLEMAS
-            </span>
-
-            <span class="bottom-tab">
-                SAÍDA
-            </span>
-
-        </div>
-
-
-        <div
-            class="terminal"
-            id="terminal">
-
-            <div>
-                MultiScript HTML Editor V14.0.0
             </div>
 
-            <div class="log-success">
-                ✓ Sistema iniciado.
+
+            <div
+                class="file"
+                data-file="css"
+                onclick="selectFile('css', this)">
+
+                <span class="css-icon">
+                    ◈
+                </span>
+
+                style.css
+
             </div>
 
+
+            <div
+                class="file"
+                data-file="js"
+                onclick="selectFile('js', this)">
+
+                <span class="js-icon">
+                    ◈
+                </span>
+
+                script.js
+
+            </div>
+
+
+            <div
+                class="file"
+                data-file="json"
+                onclick="selectFile('json', this)">
+
+                <span class="json-icon">
+                    ◈
+                </span>
+
+                projeto.json
+
+            </div>
+
+
+            <div class="divider"></div>
+
+
+            <div class="folder">
+                FERRAMENTAS
+            </div>
+
+
+            <div
+                class="side-option"
+                onclick="openPageGenerator()">
+
+                ＋ Gerador de páginas
+
+            </div>
+
+
+            <div
+                class="side-option"
+                onclick="openCredits()">
+
+                © Gerenciar créditos
+
+            </div>
+
+
+            <div
+                class="side-option"
+                onclick="formatCurrentHTML()">
+
+                ✨ Formatar HTML
+
+            </div>
+
+        </aside>
+
+
+        <!-- EDITOR -->
+
+        <section class="editor">
+
+            <div class="editor-tabs">
+
+                <div class="editor-tab">
+
+                    <span
+                        id="tabIcon"
+                        class="html-icon">
+                        ◈
+                    </span>
+
+                    <span id="tabName">
+                        index.html
+                    </span>
+
+                    <span
+                        class="tab-unsaved"
+                        id="unsaved">
+                        ●
+                    </span>
+
+                </div>
+
+
+                <div class="editor-tools">
+
+                    <button onclick="selectAllCode()">
+                        Selecionar tudo
+                    </button>
+
+                    <button onclick="copyCode()">
+                        Copiar
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="code-wrapper">
+
+                <div
+                    class="line-numbers"
+                    id="lineNumbers">
+                </div>
+
+
+                <textarea
+                    id="code"
+                    spellcheck="false"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"></textarea>
+
+            </div>
+
+
+            <div class="bottom">
+
+                <div class="bottom-tabs">
+
+                    <span class="active">
+                        TERMINAL
+                    </span>
+
+                    <span>
+                        PROBLEMAS
+                    </span>
+
+                    <span>
+                        SAÍDA
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="terminal"
+                    id="terminal">
+
+                    <div>
+                        MultiScript HTML Editor V14.0.0
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PREVIEW -->
+
+        <section class="preview">
+
+            <div class="preview-header">
+
+                <span class="preview-title">
+                    PREVIEW
+                </span>
+
+                <div class="preview-actions">
+
+                    <button onclick="runPreview()">
+                        ↻
+                    </button>
+
+                    <button onclick="openBrowserPreview()">
+                        ↗
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="browser">
+
+                <span class="browser-dot"></span>
+                <span class="browser-dot"></span>
+                <span class="browser-dot"></span>
+
+                <div class="browser-url">
+                    multiscript://preview/index.html
+                </div>
+
+            </div>
+
+
+            <iframe
+                id="preview"
+                sandbox="allow-scripts allow-forms allow-modals">
+            </iframe>
+
+        </section>
+
+    </main>
+
+
+    <!-- =================================================
+         STATUS
+    ================================================== -->
+
+    <footer class="statusbar">
+
+        <div class="status-left">
+            MultiScript HTML Editor V14
         </div>
 
-    </div>
+        <div class="status-right">
 
-</section>
+            <span id="statusLanguage">
+                HTML
+            </span>
 
+            <span id="statusPosition">
+                Ln 1, Col 1
+            </span>
 
-<!-- PREVIEW -->
+            <span id="statusChars">
+                0 caracteres
+            </span>
 
-<section class="preview">
-
-    <div class="preview-top">
-
-        <span class="preview-title">
-            PREVIEW
-        </span>
-
-        <div class="preview-buttons">
-
-            <button onclick="runPreview()">
-                ↻
-            </button>
-
-            <button
-                onclick="openExternalPreview()">
-                ↗
-            </button>
+            <span>
+                UTF-8
+            </span>
 
         </div>
 
-    </div>
-
-
-    <div class="browser-bar">
-
-        <span class="browser-dot"></span>
-        <span class="browser-dot"></span>
-        <span class="browser-dot"></span>
-
-        <div class="browser-address">
-            multiscript://preview/index.html
-        </div>
-
-    </div>
-
-
-    <iframe
-        id="preview"
-        sandbox="allow-scripts allow-forms allow-modals">
-    </iframe>
-
-</section>
-
-</main>
-
-
-<!-- STATUS -->
-
-<footer class="statusbar">
-
-    <div class="status-left">
-        MultiScript HTML Editor V14
-    </div>
-
-    <div class="status-right">
-
-        <span id="statusLanguage">
-            HTML
-        </span>
-
-        <span id="statusPosition">
-            Ln 1, Col 1
-        </span>
-
-        <span id="statusChars">
-            0 caracteres
-        </span>
-
-        <span>
-            UTF-8
-        </span>
-
-    </div>
-
-</footer>
+    </footer>
 
 </div>
 
 
 <!-- =====================================================
      MODAL
-===================================================== -->
+====================================================== -->
 
 <div
-    class="modal-background"
+    class="modal-overlay"
     id="modal">
 
     <div class="modal">
 
         <div
-            class="modal-head"
+            class="modal-title"
             id="modalTitle">
         </div>
 
         <div
-            class="modal-content"
-            id="modalContent">
+            class="modal-body"
+            id="modalBody">
         </div>
 
-        <div class="modal-foot">
+        <div class="modal-footer">
 
-            <button
-                id="modalCancel"
-                onclick="closeModal()">
-
+            <button onclick="closeModal()">
                 Cancelar
-
             </button>
 
             <button
@@ -1452,16 +1267,16 @@ body {
 <script>
 
 /* =========================================================
-   ESTADO
+   ESTADO DO EDITOR
 ========================================================= */
 
-const editor =
-    document.getElementById("editor");
+const codeEditor =
+    document.getElementById("code");
 
 const preview =
     document.getElementById("preview");
 
-const lines =
+const lineNumbers =
     document.getElementById("lineNumbers");
 
 const terminal =
@@ -1469,11 +1284,16 @@ const terminal =
 
 let currentFile = "html";
 
+let modalAction = null;
+
+
+/* =========================================================
+   ARQUIVOS BASE
+========================================================= */
 
 let files = {
 
-    html:
-`<!DOCTYPE html>
+html: `<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -1484,66 +1304,530 @@ let files = {
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>Minha Página</title>
+    <title>Minha Empresa</title>
 
 </head>
 
 <body>
 
-    <header>
+    <header class="site-header">
 
-        <h1>Minha Página</h1>
+        <div class="container">
 
-        <p>
-            Desenvolvida com o MultiScript HTML Editor V14.
-        </p>
+            <div class="logo">
+                Minha Empresa
+            </div>
+
+            <nav>
+
+                <a href="#inicio">
+                    Início
+                </a>
+
+                <a href="#servicos">
+                    Serviços
+                </a>
+
+                <a href="#sobre">
+                    Quem Somos
+                </a>
+
+                <a href="#contato">
+                    Contato
+                </a>
+
+            </nav>
+
+        </div>
 
     </header>
 
+
     <main>
 
-        <h2>Bem-vindo</h2>
+        <section
+            id="inicio"
+            class="hero">
 
-        <p>
-            Comece a editar sua página.
-        </p>
+            <div class="container">
+
+                <span class="eyebrow">
+                    BEM-VINDO AO NOSSO SITE
+                </span>
+
+                <h1>
+                    Sua empresa,
+                    sua presença digital.
+                </h1>
+
+                <p>
+                    Uma página profissional criada
+                    para apresentar sua empresa,
+                    seus serviços e seus diferenciais.
+                </p>
+
+                <a
+                    class="button"
+                    href="#contato">
+
+                    Fale Conosco
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <section
+            id="servicos"
+            class="section">
+
+            <div class="container">
+
+                <div class="section-title">
+
+                    <span>
+                        O QUE FAZEMOS
+                    </span>
+
+                    <h2>
+                        Nossos Serviços
+                    </h2>
+
+                </div>
+
+
+                <div class="cards">
+
+                    <article class="card">
+
+                        <div class="card-icon">
+                            01
+                        </div>
+
+                        <h3>
+                            Serviço Principal
+                        </h3>
+
+                        <p>
+                            Apresente aqui o principal
+                            serviço oferecido pela empresa.
+                        </p>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icon">
+                            02
+                        </div>
+
+                        <h3>
+                            Atendimento
+                        </h3>
+
+                        <p>
+                            Mostre aos seus clientes
+                            como sua empresa trabalha.
+                        </p>
+
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-icon">
+                            03
+                        </div>
+
+                        <h3>
+                            Soluções
+                        </h3>
+
+                        <p>
+                            Destaque soluções,
+                            produtos ou diferenciais.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section
+            id="sobre"
+            class="about">
+
+            <div class="container">
+
+                <div>
+
+                    <span class="eyebrow">
+                        SOBRE A EMPRESA
+                    </span>
+
+                    <h2>
+                        Quem Somos
+                    </h2>
+
+                    <p>
+                        Escreva aqui a história,
+                        missão, visão e valores
+                        da sua empresa.
+                    </p>
+
+                    <p>
+                        Este conteúdo pode ser
+                        completamente alterado
+                        diretamente pelo editor.
+                    </p>
+
+                </div>
+
+                <div class="about-box">
+
+                    <strong>
+                        V14
+                    </strong>
+
+                    <span>
+                        MultiScript HTML Editor
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section
+            id="contato"
+            class="contact">
+
+            <div class="container">
+
+                <div>
+
+                    <span class="eyebrow">
+                        ENTRE EM CONTATO
+                    </span>
+
+                    <h2>
+                        Vamos conversar?
+                    </h2>
+
+                    <p>
+                        Utilize este espaço para
+                        colocar telefone, WhatsApp,
+                        e-mail, endereço ou formulário.
+                    </p>
+
+                </div>
+
+
+                <form>
+
+                    <input
+                        type="text"
+                        placeholder="Seu nome">
+
+                    <input
+                        type="email"
+                        placeholder="Seu e-mail">
+
+                    <textarea
+                        placeholder="Sua mensagem"></textarea>
+
+                    <button
+                        type="button">
+
+                        Enviar Mensagem
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
 
     </main>
+
+
+    <footer>
+
+        <div class="container">
+
+            <strong>
+                Minha Empresa
+            </strong>
+
+            <span>
+                Todos os direitos reservados.
+            </span>
+
+        </div>
+
+    </footer>
 
 </body>
 
 </html>`,
 
-    css:
-`body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    color: #222;
+css: `* {
+    box-sizing: border-box;
 }
 
-header {
-    padding: 60px 30px;
-    text-align: center;
-    background: #111;
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #1d232a;
+    background: #ffffff;
+}
+
+.container {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.site-header {
+    height: 72px;
+    background: #111827;
     color: white;
 }
 
-main {
-    width: 900px;
-    margin: 40px auto;
-    padding: 40px;
+.site-header .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: #dce3eb;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+nav a:hover {
+    color: white;
+}
+
+.hero {
+    padding: 110px 0;
+    background: #eef3f8;
+}
+
+.eyebrow {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #367db9;
+}
+
+.hero h1 {
+    width: 700px;
+    margin: 18px 0;
+    font-size: 54px;
+    line-height: 1.05;
+}
+
+.hero p {
+    width: 650px;
+    color: #596573;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 23px;
+    background: #176db4;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.section {
+    padding: 90px 0;
+}
+
+.section-title {
+    margin-bottom: 35px;
+}
+
+.section-title h2,
+.about h2,
+.contact h2 {
+    margin: 10px 0;
+    font-size: 35px;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    flex: 1;
+    min-height: 230px;
+    padding: 28px;
+    border: 1px solid #dce2e8;
     background: white;
+}
+
+.card-icon {
+    margin-bottom: 20px;
+    color: #367db9;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.card h3 {
+    font-size: 19px;
+}
+
+.card p,
+.about p,
+.contact p {
+    color: #65717e;
+    line-height: 1.7;
+}
+
+.about {
+    padding: 90px 0;
+    background: #f3f6f9;
+}
+
+.about .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.about .container > div:first-child {
+    width: 600px;
+}
+
+.about-box {
+    width: 230px;
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #111827;
+    color: white;
+}
+
+.about-box strong {
+    font-size: 55px;
+}
+
+.about-box span {
+    margin-top: 8px;
+    color: #aeb8c3;
+    font-size: 11px;
+}
+
+.contact {
+    padding: 90px 0;
+}
+
+.contact .container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact .container > div {
+    width: 440px;
+}
+
+form {
+    width: 420px;
+}
+
+input,
+textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 13px;
+    border: 1px solid #ccd4dc;
+    outline: none;
+    font-family: Arial, sans-serif;
+}
+
+textarea {
+    height: 130px;
+    resize: vertical;
+}
+
+form button {
+    padding: 13px 20px;
+    border: 0;
+    background: #176db4;
+    color: white;
+    cursor: pointer;
+}
+
+footer {
+    padding: 28px 0;
+    background: #111827;
+    color: white;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+}
+
+footer span {
+    color: #8793a0;
+    font-size: 11px;
 }`,
 
-    js:
-`console.log("MultiScript HTML Editor V14");`,
+js: `console.log("MultiScript HTML Editor V14 iniciado.");
 
-    json:
-`{
+document.querySelectorAll("nav a").forEach(function(link) {
+
+    link.addEventListener("click", function() {
+
+        console.log(
+            "Navegação:",
+            link.textContent.trim()
+        );
+
+    });
+
+});`,
+
+json: `{
     "editor": "MultiScript HTML Editor",
     "version": "V14.0.0",
-    "project": "Meu Projeto"
+    "project": "Minha Empresa",
+    "language": "pt-BR"
 }`
 
 };
@@ -1561,33 +1845,24 @@ const credits = {
     },
 
     multipage: {
-        name:
-            "Multipage Mel - Criação de Sites",
-        url:
-            "https://multipagemel.pages.dev/"
+        name: "Multipage Mel - Criação de Sites",
+        url: "https://multipagemel.pages.dev/"
     },
 
     corretores: {
-        name:
-            "Apenas Corretores - Criação de Sites para Corretores de Seguro",
-        url:
-            "https://apenascorretores.pages.dev/"
+        name: "Apenas Corretores - Criação de Sites para Corretores de Seguro",
+        url: "https://apenascorretores.pages.dev/"
     },
 
     homemsite: {
-        name:
-            "Homem Site - Criação de Sites com Bootstrap",
-        url:
-            "https://homemsite.pages.dev/"
+        name: "Homem Site - Criação de Sites com Bootstrap",
+        url: "https://homemsite.pages.dev/"
     },
 
     parana: {
-        name:
-            "CRIAÇÃO DE SITE NO PARANÁ",
-        url:
-            "https://homemsite.pages.dev/parana/",
-        title:
-            "CRIAÇÃO DE SITE NO PARANÁ"
+        name: "CRIAÇÃO DE SITE NO PARANÁ",
+        url: "https://homemsite.pages.dev/parana/",
+        title: "CRIAÇÃO DE SITE NO PARANÁ"
     }
 
 };
@@ -1597,31 +1872,42 @@ const credits = {
    INICIALIZAÇÃO
 ========================================================= */
 
-loadProject();
-
-loadFile();
-
-updateLines();
-
+loadSavedProject();
+loadCurrentFile();
+updateLineNumbers();
 updateStatus();
-
 runPreview();
+
+log(
+    "✓ MultiScript HTML Editor V14 carregado.",
+    "success"
+);
+
+log(
+    "✓ Página-base carregada.",
+    "success"
+);
 
 
 /* =========================================================
    ARQUIVOS
 ========================================================= */
 
-function getFileName(type) {
+function fileName(type) {
 
-    return {
+    if (type === "html") {
+        return "index.html";
+    }
 
-        html: "index.html",
-        css: "style.css",
-        js: "script.js",
-        json: "projeto.json"
+    if (type === "css") {
+        return "style.css";
+    }
 
-    }[type];
+    if (type === "js") {
+        return "script.js";
+    }
+
+    return "projeto.json";
 
 }
 
@@ -1629,64 +1915,87 @@ function getFileName(type) {
 function selectFile(type, element) {
 
     files[currentFile] =
-        editor.value;
+        codeEditor.value;
 
     currentFile =
         type;
 
     document
-        .querySelectorAll(".tree-file")
-        .forEach(
-            item =>
-                item.classList.remove(
-                    "active"
-                )
-        );
+        .querySelectorAll(".file")
+        .forEach(function(item) {
 
-    element.classList.add(
-        "active"
-    );
+            item.classList.remove("active");
 
-    document.getElementById(
-        "tabName"
-    ).textContent =
-        getFileName(type);
+        });
+
+    element.classList.add("active");
+
+    document.getElementById("tabName").textContent =
+        fileName(type);
+
+
+    const icon =
+        document.getElementById("tabIcon");
+
+    icon.className = "";
+
+    if (type === "html") {
+        icon.classList.add("html-icon");
+    }
+
+    if (type === "css") {
+        icon.classList.add("css-icon");
+    }
+
+    if (type === "js") {
+        icon.classList.add("js-icon");
+    }
+
+    if (type === "json") {
+        icon.classList.add("json-icon");
+    }
+
 
     document.getElementById(
         "statusLanguage"
     ).textContent =
         type.toUpperCase();
 
-    loadFile();
+    loadCurrentFile();
 
 }
 
 
-function loadFile() {
+function loadCurrentFile() {
 
-    editor.value =
+    codeEditor.value =
         files[currentFile] || "";
 
-    updateLines();
-
+    updateLineNumbers();
     updateStatus();
 
 }
 
 
-editor.addEventListener(
+codeEditor.addEventListener(
     "input",
     function() {
 
         files[currentFile] =
-            editor.value;
+            codeEditor.value;
 
-        updateLines();
+        document.getElementById(
+            "unsaved"
+        ).style.color =
+            "#d3a64d";
 
+        updateLineNumbers();
         updateStatus();
 
         if (
-            currentFile === "html"
+            currentFile === "html" ||
+            currentFile === "css" ||
+            currentFile === "js"
         ) {
 
             runPreview();
@@ -1701,17 +2010,15 @@ editor.addEventListener(
    LINHAS
 ========================================================= */
 
-function updateLines() {
+function updateLineNumbers() {
 
     const count =
         Math.max(
             1,
-            editor.value
-                .split("\n")
-                .length
+            codeEditor.value.split("\n").length
         );
 
-    let html = "";
+    let output = "";
 
     for (
         let i = 1;
@@ -1719,64 +2026,66 @@ function updateLines() {
         i++
     ) {
 
-        html +=
+        output +=
             "<div>" +
             i +
             "</div>";
 
     }
 
-    lines.innerHTML =
-        html;
+    lineNumbers.innerHTML =
+        output;
 
-    lines.scrollTop =
-        editor.scrollTop;
+    lineNumbers.scrollTop =
+        codeEditor.scrollTop;
 
 }
 
 
-editor.addEventListener(
+codeEditor.addEventListener(
     "scroll",
     function() {
 
-        lines.scrollTop =
-            editor.scrollTop;
+        lineNumbers.scrollTop =
+            codeEditor.scrollTop;
 
     }
 );
 
 
 /* =========================================================
-   STATUS
+   POSIÇÃO
 ========================================================= */
 
 function updateStatus() {
 
     const text =
-        editor.value;
+        codeEditor.value;
 
-    const pos =
-        editor.selectionStart;
+    const position =
+        codeEditor.selectionStart;
 
     const before =
         text.substring(
             0,
-            pos
+            position
         );
 
     const line =
         before.split("\n").length;
 
-    const last =
+    const lastBreak =
         before.lastIndexOf("\n");
 
     const column =
-        pos -
+        position -
         (
-            last === -1
+            lastBreak === -1
                 ? 0
-                : last + 1
-        ) + 1;
+                : lastBreak + 1
+        ) +
+        1;
+
 
     document.getElementById(
         "statusPosition"
@@ -1785,6 +2094,7 @@ function updateStatus() {
         line +
         ", Col " +
         column;
+
 
     document.getElementById(
         "statusChars"
@@ -1795,22 +2105,22 @@ function updateStatus() {
 }
 
 
-editor.addEventListener(
+codeEditor.addEventListener(
     "keyup",
     updateStatus
 );
 
-editor.addEventListener(
+codeEditor.addEventListener(
     "click",
     updateStatus
 );
 
 
 /* =========================================================
-   TAB
+   TAB / ATALHOS
 ========================================================= */
 
-editor.addEventListener(
+codeEditor.addEventListener(
     "keydown",
     function(event) {
 
@@ -1821,30 +2131,29 @@ editor.addEventListener(
             event.preventDefault();
 
             const start =
-                editor.selectionStart;
+                codeEditor.selectionStart;
 
             const end =
-                editor.selectionEnd;
+                codeEditor.selectionEnd;
 
-            editor.value =
-                editor.value.substring(
+            codeEditor.value =
+                codeEditor.value.substring(
                     0,
                     start
                 ) +
                 "    " +
-                editor.value.substring(
+                codeEditor.value.substring(
                     end
                 );
 
-            editor.selectionStart =
-                editor.selectionEnd =
+            codeEditor.selectionStart =
+                codeEditor.selectionEnd =
                     start + 4;
 
             files[currentFile] =
-                editor.value;
+                codeEditor.value;
 
-            updateLines();
-
+            updateLineNumbers();
             updateStatus();
 
         }
@@ -1881,49 +2190,46 @@ editor.addEventListener(
    PREVIEW
 ========================================================= */
 
-function buildPreview() {
+function buildPreviewDocument() {
 
     let html =
         files.html;
 
 
-    if (
-        files.css.trim()
-    ) {
+    const css =
+        files.css.trim();
 
-        const css =
-            "<style>\n" +
-            files.css +
-            "\n</style>";
+    const js =
+        files.js.trim();
+
+
+    if (css) {
 
         html =
             html.replace(
                 "</head>",
+                "<style>\n" +
                 css +
-                "\n</head>"
+                "\n</style>\n</head>"
             );
 
     }
 
 
-    if (
-        files.js.trim()
-    ) {
+    if (js) {
 
-        const js =
-            "<script>\n" +
-            files.js
-                .replace(
-                    /<\/script>/gi,
-                    "<\\/script>"
-                ) +
-            "\n<\/script>";
+        const safeJS =
+            js.replace(
+                /<\/script/gi,
+                "<" + "/script"
+            );
 
         html =
             html.replace(
                 "</body>",
-                js +
-                "\n</body>"
+                "<script>\n" +
+                safeJS +
+                "\n<" + "/script>\n</body>"
             );
 
     }
@@ -1936,17 +2242,16 @@ function buildPreview() {
 
 function runPreview() {
 
-    if (
-        currentFile === "html"
-    ) {
-
-        files.html =
-            editor.value;
-
-    }
+    files[currentFile] =
+        codeEditor.value;
 
     preview.srcdoc =
-        buildPreview();
+        buildPreviewDocument();
+
+    document.getElementById(
+        "unsaved"
+    ).style.color =
+        "#d3a64d";
 
     log(
         "✓ Preview atualizado.",
@@ -1956,56 +2261,63 @@ function runPreview() {
 }
 
 
-function openExternalPreview() {
+function openBrowserPreview() {
 
-    const win =
+    const newWindow =
         window.open(
             "",
             "_blank"
         );
 
-    if (!win) {
+    if (!newWindow) {
 
         alert(
-            "O navegador bloqueou a janela."
+            "O navegador bloqueou a nova janela."
         );
 
         return;
 
     }
 
-    win.document.write(
-        buildPreview()
+    newWindow.document.open();
+
+    newWindow.document.write(
+        buildPreviewDocument()
     );
 
-    win.document.close();
+    newWindow.document.close();
 
 }
 
 
 /* =========================================================
-   PROJETO
+   SALVAR
 ========================================================= */
 
 function saveProject() {
 
     files[currentFile] =
-        editor.value;
+        codeEditor.value;
 
     localStorage.setItem(
         "MultiScriptV14Project",
         JSON.stringify(files)
     );
 
+    document.getElementById(
+        "unsaved"
+    ).style.color =
+        "#596573";
+
     log(
-        "✓ Projeto salvo.",
+        "✓ Projeto salvo no navegador.",
         "success"
     );
 
 }
 
 
-function loadProject() {
+function loadSavedProject() {
 
     const saved =
         localStorage.getItem(
@@ -2018,34 +2330,58 @@ function loadProject() {
 
     try {
 
-        files =
+        const parsed =
             JSON.parse(saved);
+
+        if (
+            parsed &&
+            typeof parsed === "object"
+        ) {
+
+            files =
+                Object.assign(
+                    files,
+                    parsed
+                );
+
+        }
+
+        log(
+            "✓ Projeto anterior recuperado.",
+            "info"
+        );
 
     } catch(error) {
 
-        console.error(error);
+        log(
+            "Não foi possível recuperar o projeto anterior.",
+            "error"
+        );
 
     }
 
 }
 
 
+/* =========================================================
+   NOVO PROJETO
+========================================================= */
+
 function newProject() {
 
-    if (
-        !confirm(
-            "Criar um novo projeto?"
-        )
-    ) {
+    const answer =
+        confirm(
+            "Criar um novo projeto?\n\nO conteúdo atual continuará salvo apenas se você já tiver utilizado Salvar."
+        );
 
+    if (!answer) {
         return;
-
     }
+
 
     files = {
 
-        html:
-`<!DOCTYPE html>
+html: `<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -2058,30 +2394,39 @@ function newProject() {
 
 <body>
 
-    <h1>Novo Projeto</h1>
+    <h1>
+        Novo Projeto
+    </h1>
+
+    <p>
+        Comece a desenvolver sua página.
+    </p>
 
 </body>
 
 </html>`,
 
-        css: "",
+css: `body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}`,
 
-        js: "",
+js: `console.log("Novo projeto.");`,
 
-        json:
-`{
+json: `{
     "editor": "MultiScript HTML Editor",
     "version": "V14.0.0"
 }`
 
     };
 
+
     currentFile =
         "html";
 
-    refreshFileSelection();
+    refreshExplorer();
 
-    loadFile();
+    loadCurrentFile();
 
     runPreview();
 
@@ -2093,48 +2438,223 @@ function newProject() {
 }
 
 
-function refreshFileSelection() {
+function refreshExplorer() {
 
     document
-        .querySelectorAll(".tree-file")
-        .forEach(
-            item =>
-                item.classList.remove(
-                    "active"
-                )
+        .querySelectorAll(".file")
+        .forEach(function(item) {
+
+            item.classList.remove("active");
+
+        });
+
+
+    const htmlFile =
+        document.querySelector(
+            '.file[data-file="html"]'
         );
 
-    document
-        .querySelector(
-            '.tree-file[data-file="html"]'
-        )
-        .classList.add(
-            "active"
-        );
+    if (htmlFile) {
+        htmlFile.classList.add("active");
+    }
+
 
     document.getElementById(
         "tabName"
     ).textContent =
         "index.html";
 
+
+    document.getElementById(
+        "tabIcon"
+    ).className =
+        "html-icon";
+
+
+    document.getElementById(
+        "statusLanguage"
+    ).textContent =
+        "HTML";
+
 }
 
 
 /* =========================================================
-   GERADOR
+   FORMATAR HTML
 ========================================================= */
 
-function openGenerator() {
+function formatCurrentHTML() {
+
+    if (
+        currentFile !== "html"
+    ) {
+
+        alert(
+            "Abra o index.html para formatar HTML."
+        );
+
+        return;
+
+    }
+
+
+    let source =
+        codeEditor.value
+            .replace(
+                />\s+</g,
+                "><"
+            )
+            .replace(
+                /></g,
+                ">\n<"
+            );
+
+
+    const input =
+        source.split("\n");
+
+    const output = [];
+
+    let level = 0;
+
+
+    input.forEach(function(line) {
+
+        const clean =
+            line.trim();
+
+        if (!clean) {
+            return;
+        }
+
+
+        if (
+            /^<\/[^>]+>/.test(clean)
+        ) {
+
+            level =
+                Math.max(
+                    0,
+                    level - 1
+                );
+
+        }
+
+
+        output.push(
+            "    ".repeat(level) +
+            clean
+        );
+
+
+        const opening =
+            /^<([a-zA-Z][^\/\s>]*)[^>]*>$/
+                .test(clean);
+
+        const closing =
+            /<\/[^>]+>$/
+                .test(clean);
+
+        const selfClosing =
+            /\/>$/.test(clean);
+
+        const voidElement =
+            /^<(meta|link|img|input|br|hr|area|base|embed|source|track|wbr)\b/i
+                .test(clean);
+
+
+        if (
+            opening &&
+            !closing &&
+            !selfClosing &&
+            !voidElement
+        ) {
+
+            level++;
+
+        }
+
+    });
+
+
+    codeEditor.value =
+        output.join("\n");
+
+    files.html =
+        codeEditor.value;
+
+    updateLineNumbers();
+    updateStatus();
+    runPreview();
+
+    log(
+        "✓ HTML formatado.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   SELECIONAR / COPIAR
+========================================================= */
+
+function selectAllCode() {
+
+    codeEditor.focus();
+
+    codeEditor.select();
+
+}
+
+
+async function copyCode() {
+
+    try {
+
+        await navigator.clipboard.writeText(
+            codeEditor.value
+        );
+
+        log(
+            "✓ Código copiado.",
+            "success"
+        );
+
+    } catch(error) {
+
+        codeEditor.select();
+
+        document.execCommand(
+            "copy"
+        );
+
+        log(
+            "✓ Código copiado.",
+            "success"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GERADOR DE PÁGINAS
+========================================================= */
+
+function openPageGenerator() {
 
     openModal(
-        "Gerador de Páginas",
+        "Gerador de Páginas V14",
         `
 
         <div class="notice">
 
-            Crie rapidamente uma estrutura de página
-            e depois continue editando o código
-            normalmente no editor.
+            Selecione uma página-base.
+            O conteúdo será colocado diretamente
+            no editor e poderá ser completamente
+            modificado.
 
         </div>
 
@@ -2146,11 +2666,11 @@ function openGenerator() {
                 onclick="generatePage('blank')">
 
                 <strong>
-                    Página em branco
+                    Página em Branco
                 </strong>
 
                 <span>
-                    Estrutura HTML limpa para começar do zero.
+                    HTML limpo para começar um projeto.
                 </span>
 
             </div>
@@ -2161,12 +2681,11 @@ function openGenerator() {
                 onclick="generatePage('business')">
 
                 <strong>
-                    Página empresarial
+                    Página Empresarial
                 </strong>
 
                 <span>
-                    Estrutura com apresentação,
-                    serviços e contato.
+                    Home, serviços, empresa e contato.
                 </span>
 
             </div>
@@ -2181,8 +2700,7 @@ function openGenerator() {
                 </strong>
 
                 <span>
-                    Página de apresentação focada
-                    em conversão.
+                    Página de apresentação e conversão.
                 </span>
 
             </div>
@@ -2193,11 +2711,11 @@ function openGenerator() {
                 onclick="generatePage('contact')">
 
                 <strong>
-                    Página de contato
+                    Página de Contato
                 </strong>
 
                 <span>
-                    Estrutura com formulário de contato.
+                    Página com formulário de contato.
                 </span>
 
             </div>
@@ -2214,6 +2732,7 @@ function generatePage(type) {
 
     closeModal();
 
+
     if (
         type === "blank"
     ) {
@@ -2226,31 +2745,15 @@ function generatePage(type) {
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
     <title>Nova Página</title>
 
 </head>
 
 <body>
 
-    <header>
-
-        <h1>Nova Página</h1>
-
-    </header>
-
-    <main>
-
-        <h2>Conteúdo</h2>
-
-        <p>
-            Edite esta página no MultiScript HTML Editor V14.
-        </p>
-
-    </main>
+    <h1>
+        Nova Página
+    </h1>
 
 </body>
 
@@ -2260,25 +2763,10 @@ function generatePage(type) {
 `body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    color: #222;
-}
-
-header {
-    padding: 60px 30px;
-    text-align: center;
-    background: #111;
-    color: white;
-}
-
-main {
-    width: 900px;
-    margin: 40px auto;
-    padding: 40px;
-    background: white;
 }`;
 
-        files.js = "";
+        files.js =
+`console.log("Nova página.");`;
 
     }
 
@@ -2295,31 +2783,24 @@ main {
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
     <title>Empresa</title>
 
 </head>
 
 <body>
 
-    <header class="hero">
+    <header>
 
         <h1>
             Nome da Empresa
         </h1>
 
         <p>
-            Soluções profissionais para você.
+            Soluções profissionais.
         </p>
 
-        <a href="#contato">
-            Entre em contato
-        </a>
-
     </header>
+
 
     <main>
 
@@ -2330,8 +2811,7 @@ main {
             </h2>
 
             <p>
-                Apresente sua empresa,
-                sua história e seus diferenciais.
+                Conte a história da empresa.
             </p>
 
         </section>
@@ -2343,36 +2823,21 @@ main {
                 Serviços
             </h2>
 
-            <div class="cards">
-
-                <article>
-                    <h3>Serviço 01</h3>
-                    <p>Descrição.</p>
-                </article>
-
-                <article>
-                    <h3>Serviço 02</h3>
-                    <p>Descrição.</p>
-                </article>
-
-                <article>
-                    <h3>Serviço 03</h3>
-                    <p>Descrição.</p>
-                </article>
-
-            </div>
+            <p>
+                Apresente seus serviços.
+            </p>
 
         </section>
 
 
-        <section id="contato">
+        <section>
 
             <h2>
                 Contato
             </h2>
 
             <p>
-                Informações de contato.
+                Coloque suas informações.
             </p>
 
         </section>
@@ -2387,50 +2852,24 @@ main {
 `body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f5f5f5;
     color: #222;
 }
 
-.hero {
-    padding: 90px 40px;
+header {
+    padding: 80px 30px;
     text-align: center;
-    background: #111;
+    background: #111827;
     color: white;
 }
 
-.hero h1 {
-    font-size: 42px;
-}
-
-.hero a {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 12px 22px;
-    background: white;
-    color: #111;
-    text-decoration: none;
-}
-
 main {
-    width: 1000px;
+    width: 900px;
     margin: auto;
-    padding: 50px 0;
+    padding: 60px 0;
 }
 
 section {
-    margin-bottom: 60px;
-}
-
-.cards {
-    display: flex;
-    gap: 20px;
-}
-
-.cards article {
-    flex: 1;
-    padding: 25px;
-    background: white;
-    border: 1px solid #ddd;
+    margin-bottom: 50px;
 }`;
 
         files.js = "";
@@ -2449,10 +2888,6 @@ section {
 <head>
 
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
 
     <title>Landing Page</title>
 
@@ -2473,8 +2908,8 @@ section {
             </h1>
 
             <p>
-                Apresente sua marca,
-                produto ou serviço.
+                Apresente seu produto,
+                serviço ou empresa.
             </p>
 
             <a href="#inicio">
@@ -2497,14 +2932,11 @@ section {
 
 .landing {
     min-height: 100vh;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     text-align: center;
-
-    background: #111;
+    background: #111827;
     color: white;
 }
 
@@ -2513,22 +2945,20 @@ section {
 }
 
 .landing h1 {
-    font-size: 54px;
+    font-size: 52px;
 }
 
 .landing p {
-    color: #bbb;
+    color: #aeb8c3;
     font-size: 18px;
 }
 
 .landing a {
     display: inline-block;
     margin-top: 20px;
-    padding: 14px 25px;
-
+    padding: 14px 24px;
     background: white;
-    color: #111;
-
+    color: #111827;
     text-decoration: none;
 }`;
 
@@ -2549,10 +2979,6 @@ section {
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
     <title>Contato</title>
 
 </head>
@@ -2572,26 +2998,26 @@ section {
             </label>
 
             <input
-                type="text"
-                name="nome">
+                type="text">
 
             <label>
                 E-mail
             </label>
 
             <input
-                type="email"
-                name="email">
+                type="email">
 
             <label>
                 Mensagem
             </label>
 
-            <textarea
-                name="mensagem"></textarea>
+            <textarea></textarea>
 
-            <button>
+            <button
+                type="button">
+
                 Enviar
+
             </button>
 
         </form>
@@ -2606,18 +3032,14 @@ section {
 `body {
     margin: 0;
     padding: 60px;
-
     font-family: Arial, sans-serif;
-
-    background: #f2f2f2;
+    background: #f1f3f5;
 }
 
 main {
     width: 600px;
-
     margin: auto;
     padding: 40px;
-
     background: white;
 }
 
@@ -2630,8 +3052,7 @@ input,
 textarea {
     width: 100%;
     padding: 11px;
-
-    border: 1px solid #ccc;
+    border: 1px solid #ccd4dc;
 }
 
 textarea {
@@ -2651,117 +3072,12 @@ button {
     currentFile =
         "html";
 
-    refreshFileSelection();
-
-    loadFile();
-
+    refreshExplorer();
+    loadCurrentFile();
     runPreview();
 
     log(
-        "✓ Página gerada.",
-        "success"
-    );
-
-}
-
-
-/* =========================================================
-   FORMATADOR
-========================================================= */
-
-function formatHTML() {
-
-    if (
-        currentFile !== "html"
-    ) {
-
-        alert(
-            "Abra o index.html primeiro."
-        );
-
-        return;
-
-    }
-
-    let source =
-        editor.value
-            .replace(
-                />\s+</g,
-                "><"
-            )
-            .replace(
-                /></g,
-                ">\n<"
-            );
-
-    const sourceLines =
-        source.split("\n");
-
-    let level = 0;
-
-    const output = [];
-
-    sourceLines.forEach(
-        function(line) {
-
-            const clean =
-                line.trim();
-
-            if (!clean) {
-                return;
-            }
-
-            if (
-                /^<\/.+>/.test(
-                    clean
-                )
-            ) {
-
-                level =
-                    Math.max(
-                        0,
-                        level - 1
-                    );
-
-            }
-
-            output.push(
-                "    ".repeat(level) +
-                clean
-            );
-
-            if (
-                /^<[^!/?][^>]*[^/]?>$/
-                    .test(clean)
-                &&
-                !/<(meta|link|img|input|br|hr|area|base|embed|source|track|wbr)\b/i
-                    .test(clean)
-                &&
-                !/<\/.+>$/
-                    .test(clean)
-            ) {
-
-                level++;
-
-            }
-
-        }
-    );
-
-    editor.value =
-        output.join("\n");
-
-    files.html =
-        editor.value;
-
-    updateLines();
-
-    updateStatus();
-
-    runPreview();
-
-    log(
-        "✓ HTML formatado.",
+        "✓ Nova página gerada.",
         "success"
     );
 
@@ -2772,9 +3088,17 @@ function formatHTML() {
    CRÉDITOS
 ========================================================= */
 
-function createCreditHTML(
-    type
-) {
+function removeOldCredits(html) {
+
+    return html.replace(
+        /<!-- MULTISCRIPT CREDITOS INICIO -->[\s\S]*?<!-- MULTISCRIPT CREDITOS FIM -->/gi,
+        ""
+    );
+
+}
+
+
+function createCreditHTML(type) {
 
     if (
         !type ||
@@ -2785,23 +3109,27 @@ function createCreditHTML(
 
     }
 
+
     const credit =
         credits[type];
 
-    const title =
-        credit.title
-            ? ` title="${credit.title}"`
-            : "";
 
-    return `
+    return `<!-- MULTISCRIPT CREDITOS INICIO -->
 
-<!-- MULTISCRIPT CREDITOS INICIO -->
-
-<footer class="multiscript-credits">
+<footer
+    class="multiscript-credit"
+    style="
+        padding:25px;
+        text-align:center;
+        font-family:Arial,sans-serif;
+        font-size:11px;
+        color:#777;
+        background:#f5f5f5;
+    ">
 
     <p>
-        Este site garante a segurança na coleta e tratamento de dados,
-        em conformidade com a LGPD.
+        Este site garante a segurança na coleta
+        e tratamento de dados, em conformidade com a LGPD.
     </p>
 
     <p>
@@ -2813,66 +3141,48 @@ function createCreditHTML(
         <a
             href="${credit.url}"
             target="_blank"
-            rel="noopener noreferrer"${title}
-        >
+            rel="noopener noreferrer"
+            ${credit.title ? 'title="' + credit.title + '"' : ""}>
+
             ${credit.name}
+
         </a>
 
     </p>
 
 </footer>
 
-<!-- MULTISCRIPT CREDITOS FIM -->
-
-`;
-
-}
-
-
-function removeCredits(
-    html
-) {
-
-    return html.replace(
-        /<!-- MULTISCRIPT CREDITOS INICIO -->[\s\S]*?<!-- MULTISCRIPT CREDITOS FIM -->/gi,
-        ""
-    );
+<!-- MULTISCRIPT CREDITOS FIM -->`;
 
 }
 
 
 function insertCredits() {
 
-    openCreditSelector(
-        "Inserir crédito",
+    openCreditModal(
+        "Inserir Crédito",
         function(type) {
 
-            if (
-                currentFile !== "html"
-            ) {
+            currentFile =
+                "html";
 
-                currentFile =
-                    "html";
+            refreshExplorer();
+            loadCurrentFile();
 
-                refreshFileSelection();
-
-                loadFile();
-
-            }
 
             let html =
-                removeCredits(
-                    editor.value
+                removeOldCredits(
+                    codeEditor.value
                 );
+
 
             const creditHTML =
                 createCreditHTML(
                     type
                 );
 
-            if (
-                creditHTML
-            ) {
+
+            if (creditHTML) {
 
                 if (
                     html.includes(
@@ -2890,26 +3200,28 @@ function insertCredits() {
                 } else {
 
                     html +=
+                        "\n" +
                         creditHTML;
 
                 }
 
             }
 
-            editor.value =
+
+            codeEditor.value =
                 html;
 
             files.html =
                 html;
 
-            updateLines();
-
+            updateLineNumbers();
             updateStatus();
-
             runPreview();
 
             log(
-                "✓ Crédito atualizado.",
+                type === "none"
+                    ? "✓ Crédito removido."
+                    : "✓ Crédito inserido.",
                 "success"
             );
 
@@ -2920,10 +3232,27 @@ function insertCredits() {
 
 
 /* =========================================================
-   CRÉDITOS — SELETOR
+   MODAL DE CRÉDITOS
 ========================================================= */
 
-function openCreditSelector(
+function openCredits() {
+
+    openCreditModal(
+        "Gerenciar Créditos",
+        function(type) {
+
+            log(
+                "✓ Crédito configurado para o projeto.",
+                "success"
+            );
+
+        }
+    );
+
+}
+
+
+function openCreditModal(
     title,
     callback
 ) {
@@ -2931,7 +3260,9 @@ function openCreditSelector(
     const saved =
         localStorage.getItem(
             "MultiScriptV14Credit"
-        ) || "multipage";
+        ) ||
+        "multipage";
+
 
     openModal(
         title,
@@ -2939,14 +3270,16 @@ function openCreditSelector(
 
         <div class="notice">
 
-            O crédito selecionado será utilizado
-            no projeto HTML.
+            Escolha qual crédito será utilizado
+            no projeto.
 
         </div>
 
-        <div class="form-title">
+
+        <label class="form-label">
             Crédito
-        </div>
+        </label>
+
 
         <select
             class="form-select"
@@ -2974,10 +3307,10 @@ function openCreditSelector(
 
         </select>
 
+
         <div
             class="credit-preview"
             id="creditPreview">
-
         </div>
 
         `,
@@ -2997,7 +3330,8 @@ function openCreditSelector(
 
             callback(type);
 
-        }
+        },
+        true
     );
 
 
@@ -3006,11 +3340,21 @@ function openCreditSelector(
             "creditSelect"
         );
 
+
     select.value =
         saved;
 
 
-    function previewCredit() {
+    updateCreditPreview();
+
+
+    select.addEventListener(
+        "change",
+        updateCreditPreview
+    );
+
+
+    function updateCreditPreview() {
 
         const type =
             select.value;
@@ -3020,300 +3364,6 @@ function openCreditSelector(
                 "creditPreview"
             );
 
-        if (
-            type === "none"
-        ) {
-
-            box.innerHTML =
-                "<strong>Sem crédito</strong>";
-
-            return;
-
-        }
-
-        const credit =
-            credits[type];
-
-        box.innerHTML =
-
-            "Este site garante a segurança na coleta " +
-            "e tratamento de dados, em conformidade com a LGPD." +
-
-            "<br><br>" +
-
-            "© V14.0.0 by Multipage SEO Editor" +
-
-            "<br><br>" +
-
-            "<strong>" +
-            credit.name +
-            "</strong>";
-
-    }
-
-
-    previewCredit();
-
-    select.onchange =
-        previewCredit;
-
-}
-
-
-/* =========================================================
-   EXPORTAÇÃO ZIP
-========================================================= */
-
-async function exportZIP() {
-
-    files[currentFile] =
-        editor.value;
-
-
-    openCreditExportModal(
-        async function(
-            creditType
-        ) {
-
-            if (
-                creditType === null
-            ) {
-
-                return;
-
-            }
-
-
-            const finalHTML =
-                buildExportHTML(
-                    creditType
-                );
-
-
-            const projectData = {
-
-                editor:
-                    "MultiScript HTML Editor",
-
-                version:
-                    "V14.0.0",
-
-                credit:
-                    creditType,
-
-                exportedAt:
-                    new Date().toISOString()
-
-            };
-
-
-            const zip =
-                new JSZip();
-
-
-            const folder =
-                zip.folder(
-                    "MEU-PROJETO"
-                );
-
-
-            folder.file(
-                "index.html",
-                finalHTML
-            );
-
-
-            folder.file(
-                "style.css",
-                files.css
-            );
-
-
-            folder.file(
-                "script.js",
-                files.js
-            );
-
-
-            folder.file(
-                "projeto.json",
-                JSON.stringify(
-                    projectData,
-                    null,
-                    4
-                )
-            );
-
-
-            const blob =
-                await zip.generateAsync({
-                    type: "blob",
-                    compression: "DEFLATE"
-                });
-
-
-            const url =
-                URL.createObjectURL(
-                    blob
-                );
-
-
-            const link =
-                document.createElement(
-                    "a"
-                );
-
-            link.href =
-                url;
-
-            link.download =
-                "MultiScript-V14-Projeto.zip";
-
-            document.body.appendChild(
-                link
-            );
-
-            link.click();
-
-            link.remove();
-
-
-            setTimeout(
-                function() {
-
-                    URL.revokeObjectURL(
-                        url
-                    );
-
-                },
-                1000
-            );
-
-
-            log(
-                "✓ ZIP V14 criado com sucesso.",
-                "success"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   MODAL DE EXPORTAÇÃO
-========================================================= */
-
-function openCreditExportModal(
-    callback
-) {
-
-    const saved =
-        localStorage.getItem(
-            "MultiScriptV14Credit"
-        ) || "multipage";
-
-
-    openModal(
-        "Exportar projeto em ZIP",
-        `
-
-        <div class="notice">
-
-            <strong>
-                Escolha o crédito deste projeto.
-            </strong>
-
-            <br><br>
-
-            Esta pergunta aparece
-            <strong>em toda exportação ZIP</strong>.
-
-            O crédito escolhido será colocado
-            no final do <strong>index.html</strong>.
-
-        </div>
-
-
-        <div class="form-title">
-            Crédito para este ZIP
-        </div>
-
-
-        <select
-            class="form-select"
-            id="zipCredit">
-
-            <option value="none">
-                Sem crédito
-            </option>
-
-            <option value="multipage">
-                Multipage Mel - Criação de Sites
-            </option>
-
-            <option value="corretores">
-                Apenas Corretores - Criação de Sites para Corretores de Seguro
-            </option>
-
-            <option value="homemsite">
-                Homem Site - Criação de Sites com Bootstrap
-            </option>
-
-            <option value="parana">
-                CRIAÇÃO DE SITE NO PARANÁ
-            </option>
-
-        </select>
-
-
-        <div
-            class="credit-preview"
-            id="zipPreview">
-
-        </div>
-
-        `,
-        function() {
-
-            const type =
-                document.getElementById(
-                    "zipCredit"
-                ).value;
-
-            localStorage.setItem(
-                "MultiScriptV14Credit",
-                type
-            );
-
-            closeModal();
-
-            callback(type);
-
-        },
-        true
-    );
-
-
-    const select =
-        document.getElementById(
-            "zipCredit"
-        );
-
-    select.value =
-        saved;
-
-
-    function update() {
-
-        const type =
-            select.value;
-
-        const box =
-            document.getElementById(
-                "zipPreview"
-            );
 
         if (
             type === "none"
@@ -3326,8 +3376,10 @@ function openCreditExportModal(
 
         }
 
+
         const credit =
             credits[type];
+
 
         box.innerHTML =
 
@@ -3346,25 +3398,54 @@ function openCreditExportModal(
 
     }
 
+}
 
-    update();
 
-    select.onchange =
-        update;
+/* =========================================================
+   EXPORTAÇÃO ZIP
+========================================================= */
+
+async function exportZIP() {
+
+    files[currentFile] =
+        codeEditor.value;
+
+
+    if (
+        typeof JSZip === "undefined"
+    ) {
+
+        alert(
+            "O módulo de exportação ZIP não foi carregado. Verifique sua conexão com a internet e tente novamente."
+        );
+
+        return;
+
+    }
+
+
+    openCreditModal(
+        "Exportar projeto em ZIP",
+        async function(type) {
+
+            await createZIP(type);
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   HTML DO ZIP
+   CRIAR ZIP
 ========================================================= */
 
-function buildExportHTML(
+async function createZIP(
     creditType
 ) {
 
     let html =
-        removeCredits(
+        removeOldCredits(
             files.html
         );
 
@@ -3375,9 +3456,7 @@ function buildExportHTML(
         );
 
 
-    if (
-        creditHTML
-    ) {
+    if (creditHTML) {
 
         if (
             html.includes(
@@ -3395,6 +3474,7 @@ function buildExportHTML(
         } else {
 
             html +=
+                "\n" +
                 creditHTML;
 
         }
@@ -3403,11 +3483,8 @@ function buildExportHTML(
 
 
     if (
-        !html.includes(
-            'href="style.css"'
-        )
-        &&
-        files.css.trim()
+        files.css.trim() &&
+        !/href=["']style\.css["']/i.test(html)
     ) {
 
         html =
@@ -3420,23 +3497,152 @@ function buildExportHTML(
 
 
     if (
-        !html.includes(
-            'src="script.js"'
-        )
-        &&
-        files.js.trim()
+        files.js.trim() &&
+        !/src=["']script\.js["']/i.test(html)
     ) {
 
         html =
             html.replace(
                 "</body>",
-                '    <script src="script.js"></script>\n\n</body>'
+                '    <script src="script.js"></' + 'script>\n\n</body>'
             );
 
     }
 
 
-    return html;
+    const projectInfo = {
+
+        editor:
+            "MultiScript HTML Editor",
+
+        version:
+            "V14.0.0",
+
+        project:
+            "MEU-PROJETO",
+
+        credit:
+            creditType,
+
+        exportedAt:
+            new Date().toISOString(),
+
+        files: [
+            "index.html",
+            "style.css",
+            "script.js",
+            "projeto.json"
+        ]
+
+    };
+
+
+    const zip =
+        new JSZip();
+
+
+    const folder =
+        zip.folder(
+            "MEU-PROJETO"
+        );
+
+
+    folder.file(
+        "index.html",
+        html
+    );
+
+
+    folder.file(
+        "style.css",
+        files.css
+    );
+
+
+    folder.file(
+        "script.js",
+        files.js
+    );
+
+
+    folder.file(
+        "projeto.json",
+        JSON.stringify(
+            projectInfo,
+            null,
+            4
+        )
+    );
+
+
+    try {
+
+        const blob =
+            await zip.generateAsync({
+                type: "blob",
+                compression: "DEFLATE"
+            });
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        link.href =
+            url;
+
+        link.download =
+            "MultiScript-V14-Projeto.zip";
+
+
+        document.body.appendChild(
+            link
+        );
+
+        link.click();
+
+        link.remove();
+
+
+        setTimeout(
+            function() {
+
+                URL.revokeObjectURL(
+                    url
+                );
+
+            },
+            1000
+        );
+
+
+        log(
+            "✓ Projeto ZIP exportado.",
+            "success"
+        );
+
+    } catch(error) {
+
+        console.error(error);
+
+        log(
+            "✕ Erro ao gerar o ZIP.",
+            "error"
+        );
+
+        alert(
+            "Não foi possível gerar o arquivo ZIP."
+        );
+
+    }
 
 }
 
@@ -3449,43 +3655,49 @@ function openModal(
     title,
     content,
     confirmFunction,
-    showConfirm = true
+    showConfirm
 ) {
+
+    const modal =
+        document.getElementById(
+            "modal"
+        );
 
     document.getElementById(
         "modalTitle"
     ).textContent =
         title;
 
+
     document.getElementById(
-        "modalContent"
+        "modalBody"
     ).innerHTML =
         content;
 
 
-    const confirm =
+    const button =
         document.getElementById(
             "modalConfirm"
         );
 
 
-    confirm.style.display =
+    button.style.display =
         showConfirm
             ? "inline-block"
             : "none";
 
 
-    confirm.textContent =
-        "Confirmar";
+    if (
+        showConfirm
+    ) {
+
+        button.onclick =
+            confirmFunction;
+
+    }
 
 
-    confirm.onclick =
-        confirmFunction;
-
-
-    document.getElementById(
-        "modal"
-    ).style.display =
+    modal.style.display =
         "flex";
 
 }
@@ -3497,50 +3709,6 @@ function closeModal() {
         "modal"
     ).style.display =
         "none";
-
-}
-
-
-/* =========================================================
-   SELECIONAR / COPIAR
-========================================================= */
-
-function selectAllCode() {
-
-    editor.focus();
-
-    editor.select();
-
-}
-
-
-async function copyCode() {
-
-    try {
-
-        await navigator.clipboard.writeText(
-            editor.value
-        );
-
-        log(
-            "✓ Código copiado.",
-            "success"
-        );
-
-    } catch(error) {
-
-        editor.select();
-
-        document.execCommand(
-            "copy"
-        );
-
-        log(
-            "✓ Código copiado.",
-            "success"
-        );
-
-    }
 
 }
 
@@ -3564,49 +3732,42 @@ function openAbout() {
             <br><br>
 
             Ambiente para criação,
-            edição e geração de páginas HTML.
+            edição, geração e exportação
+            de páginas HTML.
 
         </div>
 
-        <p>
-            <strong>Editor</strong><br>
-            HTML · CSS · JavaScript
-        </p>
 
         <p>
-            <strong>Projeto</strong><br>
-            MultiScript HTML Editor V14
+            <strong>
+                Arquivos
+            </strong>
+            <br>
+            HTML · CSS · JavaScript · JSON
         </p>
 
+
         <p>
-            <strong>Exportação</strong><br>
+            <strong>
+                Preview
+            </strong>
+            <br>
+            Execução da página diretamente
+            dentro do editor.
+        </p>
+
+
+        <p>
+            <strong>
+                Exportação
+            </strong>
+            <br>
             Projeto completo em ZIP.
         </p>
 
-        `
-    );
-
-}
-
-
-/* =========================================================
-   CRÉDITOS
-========================================================= */
-
-function openCredits() {
-
-    openCreditSelector(
-        "Gerenciar créditos",
-        function(type) {
-
-            log(
-                type === "none"
-                    ? "Crédito desativado."
-                    : "Crédito configurado.",
-                "success"
-            );
-
-        }
+        `,
+        null,
+        false
     );
 
 }
@@ -3618,13 +3779,14 @@ function openCredits() {
 
 function log(
     message,
-    type = ""
+    type
 ) {
 
     const item =
         document.createElement(
             "div"
         );
+
 
     if (
         type
@@ -3636,12 +3798,15 @@ function log(
 
     }
 
+
     item.textContent =
         message;
+
 
     terminal.appendChild(
         item
     );
+
 
     terminal.scrollTop =
         terminal.scrollHeight;
