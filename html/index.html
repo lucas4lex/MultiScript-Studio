@@ -2,206 +2,346 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1">
+
+<meta name="theme-color"
+      content="#0d6efd">
+
 <title>MultiScript HTML Editor V14</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<!-- Bootstrap 5 -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>
+
+<!-- Bootstrap Icons -->
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+>
+
+<!-- JSZip -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js">
+</script>
 
 <style>
+
+:root {
+    --ms-bg: #101419;
+    --ms-panel: #191e24;
+    --ms-panel-2: #1d232b;
+    --ms-border: #303640;
+    --ms-text: #e7eaf0;
+    --ms-muted: #8993a1;
+    --ms-blue: #0d6efd;
+    --ms-terminal: #090c0f;
+}
+
 * {
     box-sizing: border-box;
 }
 
 html,
 body {
-    margin: 0;
     width: 100%;
     height: 100%;
+    margin: 0;
+}
+
+body {
     overflow: hidden;
+    background: var(--ms-bg);
+    color: var(--ms-text);
     font-family: "Segoe UI", Arial, sans-serif;
-    background: #11151a;
-    color: #e7eaf0;
 }
 
-button,
-input,
-textarea,
-select {
-    font-family: inherit;
+/* =========================================================
+   BOOTSTRAP AJUSTES
+========================================================= */
+
+.dropdown-menu {
+    background: #20262e;
+    border: 1px solid #3b434e;
+    box-shadow: 0 15px 45px rgba(0,0,0,.45);
 }
 
-button {
-    cursor: pointer;
+.dropdown-item {
+    color: #dce2ea;
+    font-size: 13px;
 }
 
-.app {
+.dropdown-item:hover {
+    background: #303741;
+    color: white;
+}
+
+.dropdown-divider {
+    border-color: #39414c;
+}
+
+.btn-ms {
+    background: #242a32;
+    border: 1px solid #39414c;
+    color: #dfe4ec;
+}
+
+.btn-ms:hover {
+    background: #303741;
+    border-color: #4a5564;
+    color: white;
+}
+
+.btn-ms-primary {
+    background: #0d6efd;
+    border: 1px solid #0d6efd;
+    color: white;
+}
+
+.btn-ms-primary:hover {
+    background: #0b5ed7;
+    color: white;
+}
+
+/* =========================================================
+   APLICAÇÃO
+========================================================= */
+
+.ms-app {
     width: 100vw;
     height: 100vh;
+
     display: grid;
-    grid-template-rows: 48px 1fr 24px;
+
+    grid-template-rows:
+        54px
+        1fr
+        25px;
 }
 
-/* TOPBAR */
+/* =========================================================
+   TOPBAR
+========================================================= */
 
-.topbar {
+.ms-topbar {
     background: #1b2027;
-    border-bottom: 1px solid #303640;
+    border-bottom: 1px solid var(--ms-border);
+
     display: flex;
     align-items: center;
-    padding: 0 14px;
-    gap: 12px;
+
+    padding: 0 12px;
+
+    gap: 10px;
+
+    z-index: 100;
 }
 
-.logo {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    background: linear-gradient(135deg, #1677ff, #744cff);
+.ms-logo {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 7px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    font-size: 13px;
     font-weight: 800;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d6efd,
+            #744cff
+        );
+}
+
+.ms-title {
+    line-height: 15px;
+}
+
+.ms-title-main {
     font-size: 14px;
+    font-weight: 700;
 }
 
-.title {
-    font-size: 14px;
-    font-weight: 600;
+.ms-title-version {
+    color: #7f8997;
+    font-size: 10px;
 }
 
-.version {
-    color: #8c96a6;
-    font-size: 11px;
-}
-
-.top-actions {
+.ms-top-actions {
     margin-left: auto;
+
     display: flex;
+    align-items: center;
+
     gap: 6px;
 }
 
-.tool-btn {
-    border: 1px solid #353c47;
-    background: #242a32;
-    color: #dfe4ec;
-    padding: 7px 11px;
-    border-radius: 5px;
-    font-size: 12px;
+.ms-mobile-menu {
+    display: none;
 }
 
-.tool-btn:hover {
-    background: #303741;
-}
+/* =========================================================
+   MAIN DESKTOP
+========================================================= */
 
-.tool-btn.primary {
-    background: #1266d6;
-    border-color: #1975ed;
-    color: white;
-}
-
-.tool-btn.primary:hover {
-    background: #1975ed;
-}
-
-/* MAIN */
-
-.main {
+.ms-main {
     min-height: 0;
+
     display: grid;
-    grid-template-columns: 54px 250px minmax(500px, 1fr) 40%;
+
+    grid-template-columns:
+        54px
+        250px
+        minmax(400px, 1fr)
+        40%;
 }
 
-/* ACTIVITY BAR */
+/* =========================================================
+   ACTIVITY BAR
+========================================================= */
 
-.activity {
+.ms-activity {
     background: #171b20;
-    border-right: 1px solid #2c323b;
+    border-right: 1px solid var(--ms-border);
+
     display: flex;
     flex-direction: column;
+
     align-items: center;
-    padding-top: 10px;
+
+    padding-top: 9px;
+
     gap: 5px;
 }
 
-.activity-btn {
+.ms-activity-button {
     width: 42px;
     height: 42px;
+
     border: 0;
+
     background: transparent;
+
     color: #818a98;
+
+    border-radius: 6px;
+
     font-size: 18px;
-    border-radius: 5px;
 }
 
-.activity-btn:hover,
-.activity-btn.active {
+.ms-activity-button:hover,
+.ms-activity-button.active {
     background: #272d35;
     color: white;
 }
 
-/* SIDEBAR */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
-.sidebar {
+.ms-sidebar {
+    min-height: 0;
+
     background: #191e24;
-    border-right: 1px solid #303640;
-    overflow: hidden;
+
+    border-right: 1px solid var(--ms-border);
+
+    overflow: auto;
 }
 
-.sidebar-header {
-    height: 44px;
+.ms-sidebar-header {
+    height: 43px;
+
     display: flex;
     align-items: center;
+
     padding: 0 14px;
+
     color: #aab3c0;
+
     font-size: 11px;
     font-weight: 700;
+
     letter-spacing: .7px;
 }
 
-.project-name {
-    padding: 7px 14px;
+.ms-project-name {
+    padding: 6px 14px;
+
     color: #dce2eb;
+
     font-size: 12px;
     font-weight: 700;
 }
 
-.file-tree {
-    padding: 3px 7px;
+.ms-tree {
+    padding: 4px 7px;
 }
 
-.tree-title {
+.ms-tree-title {
     color: #7f8997;
+
     font-size: 10px;
+
     padding: 8px 7px 5px;
+
     letter-spacing: .7px;
+
     font-weight: 700;
 }
 
-.file-item {
+.ms-file-item {
     height: 31px;
+
     padding: 0 9px;
+
     display: flex;
     align-items: center;
+
     gap: 8px;
+
     border-radius: 4px;
+
     color: #cbd1db;
+
     font-size: 12px;
+
     cursor: pointer;
 }
 
-.file-item:hover {
+.ms-file-item:hover {
     background: #272d35;
 }
 
-.file-item.active {
+.ms-file-item.active {
     background: #303742;
     color: white;
 }
 
-.folder {
+.ms-folder {
     color: #8e99a8;
+
     font-size: 11px;
-    padding-left: 7px;
+
+    padding: 8px 7px 4px;
+}
+
+.ms-plugin-area {
+    margin-top: 14px;
+
+    border-top: 1px solid #2c323a;
+
+    padding-top: 6px;
 }
 
 .file-html {
@@ -220,91 +360,146 @@ button {
     color: #777bb4;
 }
 
-.plugin-area {
-    margin-top: 15px;
-    border-top: 1px solid #2c323a;
-    padding-top: 8px;
-}
+/* =========================================================
+   EDITOR
+========================================================= */
 
-/* EDITOR */
-
-.editor-area {
+.ms-editor-area {
     min-width: 0;
+    min-height: 0;
+
     display: grid;
-    grid-template-rows: 38px 1fr 150px;
+
+    grid-template-rows:
+        39px
+        minmax(0, 1fr)
+        145px;
+
     background: #101419;
 }
 
-.tabs {
+.ms-tabs {
+    min-width: 0;
+
     display: flex;
-    background: #191e24;
-    border-bottom: 1px solid #303640;
+
     overflow: hidden;
+
+    background: #191e24;
+
+    border-bottom: 1px solid var(--ms-border);
 }
 
-.tab {
-    min-width: 130px;
-    height: 38px;
+.ms-tab {
+    min-width: 145px;
+
+    height: 39px;
+
     display: flex;
     align-items: center;
+
     padding: 0 12px;
+
     gap: 8px;
-    border-right: 1px solid #303640;
+
+    border-right: 1px solid var(--ms-border);
+
     color: #9da6b4;
+
     font-size: 12px;
 }
 
-.tab.active {
+.ms-tab.active {
     color: white;
+
     background: #101419;
-    border-top: 2px solid #1877f2;
+
+    border-top: 2px solid #0d6efd;
 }
 
-.editor-wrapper {
+.ms-editor-wrapper {
     min-height: 0;
+
     display: grid;
-    grid-template-columns: 48px 1fr;
+
+    grid-template-columns:
+        48px
+        1fr;
+
     overflow: hidden;
 }
 
-.lines {
+.ms-lines {
     background: #0d1115;
+
     color: #56606d;
+
     text-align: right;
+
     padding: 13px 9px;
-    font: 13px/20px Consolas, monospace;
+
+    font:
+        13px/20px
+        Consolas,
+        monospace;
+
     user-select: none;
+
     overflow: hidden;
 }
 
 #editor {
     width: 100%;
     height: 100%;
+
+    resize: none;
+
     border: 0;
     outline: 0;
-    resize: none;
+
     padding: 13px 15px;
+
     background: #101419;
+
     color: #d9dee7;
-    font: 13px/20px Consolas, "Courier New", monospace;
+
+    font:
+        13px/20px
+        Consolas,
+        "Courier New",
+        monospace;
+
     tab-size: 4;
+
     white-space: pre;
+
     overflow: auto;
 }
 
-/* TERMINAL */
+/* =========================================================
+   TERMINAL
+========================================================= */
 
-.terminal {
+.ms-terminal {
     min-height: 0;
-    background: #0b0e11;
-    border-top: 1px solid #303640;
-    overflow: auto;
-    font: 12px/19px Consolas, monospace;
+
+    background: var(--ms-terminal);
+
+    border-top: 1px solid var(--ms-border);
+
     padding: 9px 12px;
+
+    overflow: auto;
+
+    font:
+        12px/19px
+        Consolas,
+        monospace;
 }
 
-.terminal-title {
+.ms-terminal-title {
     color: #788392;
+
     margin-bottom: 5px;
 }
 
@@ -324,316 +519,403 @@ button {
     color: #62a9ff;
 }
 
-/* PREVIEW */
+/* =========================================================
+   PREVIEW
+========================================================= */
 
-.preview {
+.ms-preview {
     min-width: 0;
-    background: #dfe3e8;
+    min-height: 0;
+
     display: grid;
-    grid-template-rows: 38px 1fr;
-    border-left: 1px solid #303640;
+
+    grid-template-rows:
+        39px
+        minmax(0, 1fr);
+
+    background: #dfe3e8;
+
+    border-left: 1px solid var(--ms-border);
 }
 
-.preview-header {
+.ms-preview-header {
     background: #191e24;
-    border-bottom: 1px solid #303640;
+
+    border-bottom: 1px solid var(--ms-border);
+
     display: flex;
     align-items: center;
+
     padding: 0 12px;
+
     color: #aeb6c2;
+
     font-size: 11px;
 }
 
-.preview-header strong {
+.ms-preview-header strong {
     color: white;
+
     margin-right: 8px;
 }
 
 #previewFrame {
     width: 100%;
     height: 100%;
+
     border: 0;
+
     background: white;
 }
 
-/* STATUS */
+/* =========================================================
+   STATUS BAR
+========================================================= */
 
-.statusbar {
-    background: #1266d6;
+.ms-statusbar {
+    background: #0d6efd;
+
     color: white;
+
     display: flex;
     align-items: center;
+
     padding: 0 12px;
+
     font-size: 10px;
 }
 
-.status-right {
+.ms-status-right {
     margin-left: auto;
+
     display: flex;
+
     gap: 15px;
 }
 
-/* MODAL */
+/* =========================================================
+   MODAL
+========================================================= */
 
-.modal-backdrop {
+.ms-modal-backdrop {
     position: fixed;
+
     inset: 0;
-    background: rgba(0, 0, 0, .68);
+
+    z-index: 9999;
+
+    background: rgba(0,0,0,.70);
+
     display: none;
+
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+
+    padding: 20px;
 }
 
-.modal-backdrop.open {
+.ms-modal-backdrop.open {
     display: flex;
 }
 
-.modal {
+.ms-modal {
     width: 720px;
-    max-height: 86vh;
+    max-width: 100%;
+
+    max-height: 90vh;
+
     background: #1b2027;
+
     border: 1px solid #3a424d;
+
     border-radius: 9px;
-    box-shadow: 0 25px 80px rgba(0,0,0,.5);
+
+    box-shadow:
+        0 25px 80px
+        rgba(0,0,0,.55);
+
+    overflow: hidden;
+
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
-.modal.small {
-    width: 500px;
-}
+.ms-modal-header {
+    min-height: 52px;
 
-.modal-header {
-    min-height: 50px;
+    padding: 0 18px;
+
     display: flex;
     align-items: center;
-    padding: 0 18px;
-    border-bottom: 1px solid #303640;
+
+    border-bottom: 1px solid var(--ms-border);
 }
 
-.modal-header h2 {
+.ms-modal-header h2 {
     margin: 0;
+
     font-size: 14px;
 }
 
-.modal-close {
+.ms-modal-close {
     margin-left: auto;
-    width: 30px;
-    height: 30px;
+
+    width: 31px;
+    height: 31px;
+
     border: 0;
-    border-radius: 4px;
+
     background: transparent;
+
     color: #8f99a8;
-    font-size: 18px;
+
+    font-size: 20px;
+
+    border-radius: 5px;
 }
 
-.modal-close:hover {
+.ms-modal-close:hover {
     background: #2a3038;
+
     color: white;
 }
 
-.modal-body {
+.ms-modal-body {
     padding: 20px;
+
     overflow: auto;
 }
 
-.modal-footer {
-    min-height: 58px;
-    border-top: 1px solid #303640;
+.ms-modal-footer {
+    min-height: 59px;
+
     padding: 10px 18px;
+
+    border-top: 1px solid var(--ms-border);
+
     display: flex;
     justify-content: flex-end;
+
     gap: 8px;
 }
 
-.form-label {
-    display: block;
-    color: #aeb7c4;
-    font-size: 11px;
-    margin-bottom: 7px;
-    font-weight: 600;
-}
+/* =========================================================
+   GERADOR
+========================================================= */
 
-.form-control {
-    width: 100%;
-    border: 1px solid #39414c;
-    background: #11151a;
-    color: #e5e9ef;
-    padding: 10px 11px;
-    border-radius: 5px;
-    outline: 0;
-    font-size: 12px;
-}
-
-.form-control:focus {
-    border-color: #1877f2;
-}
-
-textarea.form-control {
-    min-height: 180px;
-    resize: vertical;
-    font-family: Consolas, monospace;
-}
-
-.form-group {
-    margin-bottom: 17px;
-}
-
-/* PAGE TYPE */
-
-.type-question {
+.ms-type-question {
     text-align: center;
-    margin-bottom: 22px;
+
+    margin-bottom: 23px;
 }
 
-.type-question h3 {
+.ms-type-question h3 {
     margin: 0 0 7px;
-    font-size: 18px;
+
     color: white;
+
+    font-size: 18px;
 }
 
-.type-question p {
+.ms-type-question p {
     margin: 0;
+
     color: #8e98a6;
+
     font-size: 12px;
 }
 
-.type-grid {
+.ms-type-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
     gap: 12px;
 }
 
-.type-card {
+.ms-type-card {
     position: relative;
 }
 
-.type-card input {
+.ms-type-card input {
     position: absolute;
+
     opacity: 0;
+
     pointer-events: none;
 }
 
-.type-card label {
+.ms-type-card label {
     min-height: 145px;
+
     border: 1px solid #39414c;
+
     border-radius: 8px;
+
     background: #14191f;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
     justify-content: center;
+
     text-align: center;
+
     padding: 15px;
+
     cursor: pointer;
+
     transition: .15s;
 }
 
-.type-card label:hover {
+.ms-type-card label:hover {
     background: #20262e;
+
     border-color: #536071;
 }
 
-.type-card input:checked + label {
+.ms-type-card input:checked + label {
     background: #172b48;
-    border-color: #1877f2;
-    box-shadow: inset 0 0 0 1px #1877f2;
+
+    border-color: #0d6efd;
+
+    box-shadow:
+        inset 0 0 0 1px #0d6efd;
 }
 
-.type-icon {
+.ms-type-icon {
     width: 48px;
     height: 48px;
+
     border-radius: 10px;
+
     background: #262d36;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-size: 22px;
+
     margin-bottom: 12px;
 }
 
-.type-name {
+.ms-type-name {
     color: white;
+
     font-size: 13px;
+
     font-weight: 700;
 }
 
-.type-desc {
+.ms-type-desc {
     color: #818b99;
+
     font-size: 10px;
+
     margin-top: 5px;
 }
 
-/* PLUGINS */
+/* =========================================================
+   PLUGINS
+========================================================= */
 
-.plugin-list {
+.ms-plugin-list {
     border: 1px solid #353d48;
+
     border-radius: 5px;
+
     background: #11151a;
+
     max-height: 170px;
+
     overflow: auto;
 }
 
-.plugin-row {
+.ms-plugin-row {
     display: flex;
     align-items: center;
+
     gap: 9px;
+
     padding: 9px 11px;
+
     border-bottom: 1px solid #252b33;
+
     font-size: 11px;
 }
 
-.plugin-row:last-child {
+.ms-plugin-row:last-child {
     border-bottom: 0;
 }
 
-.plugin-row input {
-    accent-color: #1877f2;
+.ms-plugin-row input {
+    accent-color: #0d6efd;
 }
 
-.no-plugins {
+.ms-no-plugins {
     padding: 13px;
+
     color: #737d8a;
+
     font-size: 11px;
 }
 
-/* CREDIT */
+/* =========================================================
+   CREDITOS
+========================================================= */
 
-.credit-grid {
+.ms-credit-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
     gap: 9px;
 }
 
-.credit-option {
+.ms-credit-option {
     border: 1px solid #39414c;
+
     background: #14191f;
+
     border-radius: 6px;
+
     padding: 12px;
+
     cursor: pointer;
 }
 
-.credit-option:hover {
+.ms-credit-option:hover {
     border-color: #596576;
+
     background: #1d232b;
 }
 
-.credit-option strong {
+.ms-credit-option strong {
     display: block;
+
     color: white;
+
     font-size: 12px;
 }
 
-.credit-option span {
+.ms-credit-option span {
     display: block;
+
     margin-top: 4px;
+
     color: #7f8996;
+
     font-size: 10px;
 }
 
-/* SCROLLBAR */
+/* =========================================================
+   SCROLLBAR
+========================================================= */
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -646,90 +928,485 @@ textarea.form-control {
 
 ::-webkit-scrollbar-thumb {
     background: #353d48;
+
     border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #46505d;
 }
+
+/* =========================================================
+   OFFCANVAS MOBILE
+========================================================= */
+
+.offcanvas {
+    background: #191e24 !important;
+
+    color: white;
+
+    width: 290px !important;
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid var(--ms-border);
+}
+
+.offcanvas-title {
+    font-size: 14px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    body {
+        overflow: hidden;
+    }
+
+    .ms-app {
+        grid-template-rows:
+            54px
+            1fr
+            25px;
+    }
+
+    .ms-mobile-menu {
+        display: block;
+    }
+
+    .ms-top-actions {
+        display: none;
+    }
+
+    .ms-title-version {
+        display: none;
+    }
+
+    .ms-main {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1fr);
+    }
+
+    .ms-activity,
+    .ms-sidebar {
+        display: none;
+    }
+
+    .ms-editor-area {
+        grid-template-rows:
+            39px
+            minmax(0, 1fr)
+            120px;
+    }
+
+    .ms-preview {
+        display: none;
+    }
+
+    .ms-status-right {
+        display: none;
+    }
+
+    .ms-statusbar {
+        font-size: 9px;
+    }
+
+    .ms-type-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ms-type-card label {
+        min-height: 105px;
+
+        flex-direction: row;
+
+        justify-content: flex-start;
+
+        text-align: left;
+
+        gap: 14px;
+    }
+
+    .ms-type-icon {
+        margin-bottom: 0;
+
+        flex-shrink: 0;
+    }
+
+    .ms-credit-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .ms-title-main {
+        font-size: 12px;
+    }
+
+    .ms-logo {
+        width: 31px;
+        height: 31px;
+    }
+
+    .ms-editor-area {
+        grid-template-rows:
+            38px
+            minmax(0, 1fr)
+            105px;
+    }
+
+    .ms-editor-wrapper {
+        grid-template-columns:
+            39px
+            1fr;
+    }
+
+    .ms-lines {
+        padding-right: 7px;
+
+        font-size: 11px;
+    }
+
+    #editor {
+        padding: 11px;
+
+        font-size: 12px;
+    }
+
+    .ms-tab {
+        min-width: 125px;
+
+        font-size: 11px;
+    }
+
+    .ms-terminal {
+        font-size: 10px;
+    }
+
+    .ms-modal-backdrop {
+        padding: 8px;
+    }
+
+    .ms-modal {
+        max-height: 95vh;
+
+        border-radius: 7px;
+    }
+
+    .ms-modal-body {
+        padding: 15px;
+    }
+
+    .ms-modal-footer {
+        padding: 9px 12px;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="ms-app">
 
-    <!-- TOPBAR -->
-    <header class="topbar">
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
 
-        <div class="logo">MS</div>
+    <header class="ms-topbar">
 
-        <div>
-            <div class="title">MultiScript HTML Editor</div>
-            <div class="version">V14.0.0 — Page Generator</div>
+        <!-- MOBILE MENU -->
+
+        <button
+            class="btn btn-ms ms-mobile-menu"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobileExplorer"
+            aria-label="Abrir menu"
+        >
+            <i class="bi bi-list"></i>
+        </button>
+
+
+        <!-- LOGO -->
+
+        <div class="ms-logo">
+            MS
         </div>
 
-        <div class="top-actions">
-            <button class="tool-btn" onclick="openGenerator()">＋ Gerar Página</button>
-            <button class="tool-btn" onclick="openPHPImporter()">＋ Plugin PHP</button>
-            <button class="tool-btn" onclick="openPluginManager()">Plugins</button>
-            <button class="tool-btn" onclick="formatHTML()">Formatar</button>
-            <button class="tool-btn" onclick="saveProject()">Salvar</button>
-            <button class="tool-btn" onclick="previewPage()">Preview</button>
-            <button class="tool-btn primary" onclick="openCreditDialog()">Exportar ZIP</button>
+
+        <!-- TITLE -->
+
+        <div class="ms-title">
+
+            <div class="ms-title-main">
+                MultiScript HTML Editor
+            </div>
+
+            <div class="ms-title-version">
+                V14.0.0 — Page Generator
+            </div>
+
+        </div>
+
+
+        <!-- DESKTOP ACTIONS -->
+
+        <div class="ms-top-actions">
+
+            <button
+                class="btn btn-sm btn-ms"
+                onclick="openGenerator()"
+            >
+                <i class="bi bi-file-earmark-plus"></i>
+                Gerar Página
+            </button>
+
+
+            <div class="dropdown">
+
+                <button
+                    class="btn btn-sm btn-ms dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                >
+                    <i class="bi bi-three-dots"></i>
+                    Ações
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+
+                    <li>
+                        <button
+                            class="dropdown-item"
+                            onclick="openPHPImporter()"
+                        >
+                            <i class="bi bi-filetype-php"></i>
+                            Plugin PHP
+                        </button>
+                    </li>
+
+                    <li>
+                        <button
+                            class="dropdown-item"
+                            onclick="openPluginManager()"
+                        >
+                            <i class="bi bi-puzzle"></i>
+                            Gerenciar Plugins
+                        </button>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <button
+                            class="dropdown-item"
+                            onclick="formatHTML()"
+                        >
+                            <i class="bi bi-code-square"></i>
+                            Formatar HTML
+                        </button>
+                    </li>
+
+                    <li>
+                        <button
+                            class="dropdown-item"
+                            onclick="previewPage()"
+                        >
+                            <i class="bi bi-eye"></i>
+                            Atualizar Preview
+                        </button>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="dropdown">
+
+                <button
+                    class="btn btn-sm btn-ms dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                >
+                    <i class="bi bi-folder2-open"></i>
+                    Projeto
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+
+                    <li>
+                        <button
+                            class="dropdown-item"
+                            onclick="saveProject()"
+                        >
+                            <i class="bi bi-save"></i>
+                            Salvar Projeto
+                        </button>
+                    </li>
+
+                    <li>
+                        <button
+                            class="dropdown-item"
+                            onclick="openCreditDialog()"
+                        >
+                            <i class="bi bi-file-zip"></i>
+                            Exportar ZIP
+                        </button>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <button
+                class="btn btn-sm btn-ms-primary"
+                onclick="openCreditDialog()"
+            >
+                <i class="bi bi-box-arrow-down"></i>
+                Exportar
+            </button>
+
         </div>
 
     </header>
 
-    <!-- MAIN -->
-    <main class="main">
 
-        <!-- ACTIVITY -->
-        <aside class="activity">
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
-            <button class="activity-btn active" title="Explorer">▤</button>
-            <button class="activity-btn" title="Gerar Página" onclick="openGenerator()">＋</button>
-            <button class="activity-btn" title="Plugins" onclick="openPluginManager()">◇</button>
-            <button class="activity-btn" title="Salvar" onclick="saveProject()">▣</button>
+    <main class="ms-main">
+
+
+        <!-- ACTIVITY BAR -->
+
+        <aside class="ms-activity">
+
+            <button
+                class="ms-activity-button active"
+                title="Explorer"
+                onclick="openDesktopExplorer()"
+            >
+                <i class="bi bi-files"></i>
+            </button>
+
+
+            <button
+                class="ms-activity-button"
+                title="Gerar Página"
+                onclick="openGenerator()"
+            >
+                <i class="bi bi-file-earmark-plus"></i>
+            </button>
+
+
+            <button
+                class="ms-activity-button"
+                title="Plugins"
+                onclick="openPluginManager()"
+            >
+                <i class="bi bi-puzzle"></i>
+            </button>
+
+
+            <button
+                class="ms-activity-button"
+                title="Salvar"
+                onclick="saveProject()"
+            >
+                <i class="bi bi-save"></i>
+            </button>
 
         </aside>
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
 
-            <div class="sidebar-header">
+        <!-- SIDEBAR DESKTOP -->
+
+        <aside class="ms-sidebar">
+
+            <div class="ms-sidebar-header">
                 EXPLORER
             </div>
 
-            <div class="project-name">
-                ▾ MEU-PROJETO
+            <div class="ms-project-name">
+                <i class="bi bi-chevron-down"></i>
+                MEU-PROJETO
             </div>
 
-            <div id="fileTree" class="file-tree"></div>
+            <div
+                id="fileTree"
+                class="ms-tree"
+            ></div>
 
-            <div class="plugin-area">
-                <div class="tree-title">
+
+            <div class="ms-plugin-area">
+
+                <div class="ms-tree-title">
                     PLUGINS DO USUÁRIO
                 </div>
 
-                <div id="pluginTree" class="file-tree"></div>
+                <div
+                    id="pluginTree"
+                    class="ms-tree"
+                ></div>
+
             </div>
 
         </aside>
 
-        <!-- EDITOR -->
-        <section class="editor-area">
 
-            <div class="tabs">
-                <div class="tab active" id="currentTab">
-                    <span class="file-html">▤</span>
-                    <span>index.html</span>
+        <!-- EDITOR -->
+
+        <section class="ms-editor-area">
+
+
+            <!-- TABS -->
+
+            <div class="ms-tabs">
+
+                <div
+                    class="ms-tab active"
+                    id="currentTab"
+                >
+
+                    <span class="file-html">
+                        <i class="bi bi-filetype-html"></i>
+                    </span>
+
+                    <span>
+                        index.html
+                    </span>
+
                 </div>
+
             </div>
 
-            <div class="editor-wrapper">
 
-                <div id="lineNumbers" class="lines">1</div>
+            <!-- EDITOR -->
+
+            <div class="ms-editor-wrapper">
+
+                <div
+                    id="lineNumbers"
+                    class="ms-lines"
+                >
+                    1
+                </div>
+
 
                 <textarea
                     id="editor"
@@ -741,67 +1418,246 @@ textarea.form-control {
 
             </div>
 
-            <div class="terminal">
 
-                <div class="terminal-title">
+            <!-- TERMINAL -->
+
+            <div class="ms-terminal">
+
+                <div class="ms-terminal-title">
+
+                    <i class="bi bi-terminal"></i>
+
                     TERMINAL — MULTISCRIPT
+
                 </div>
 
-                <div id="terminalOutput"></div>
+                <div
+                    id="terminalOutput"
+                ></div>
 
             </div>
 
         </section>
 
-        <!-- PREVIEW -->
-        <section class="preview">
 
-            <div class="preview-header">
-                <strong>PREVIEW</strong>
-                <span id="previewFile">index.html</span>
+        <!-- PREVIEW -->
+
+        <section class="ms-preview">
+
+            <div class="ms-preview-header">
+
+                <strong>
+                    <i class="bi bi-eye"></i>
+                    PREVIEW
+                </strong>
+
+                <span id="previewFile">
+                    index.html
+                </span>
+
             </div>
 
-            <iframe id="previewFrame"></iframe>
+
+            <iframe
+                id="previewFrame"
+                title="Preview"
+            ></iframe>
 
         </section>
 
     </main>
 
-    <!-- STATUS -->
-    <footer class="statusbar">
 
-        <span id="statusText">Pronto</span>
+    <!-- =====================================================
+         STATUS
+    ====================================================== -->
 
-        <div class="status-right">
-            <span id="fileStatus">index.html</span>
-            <span>HTML</span>
-            <span>UTF-8</span>
-            <span>V14</span>
+    <footer class="ms-statusbar">
+
+        <span id="statusText">
+            Pronto
+        </span>
+
+
+        <div class="ms-status-right">
+
+            <span id="fileStatus">
+                index.html
+            </span>
+
+            <span>
+                HTML
+            </span>
+
+            <span>
+                UTF-8
+            </span>
+
+            <span>
+                V14
+            </span>
+
         </div>
 
     </footer>
 
 </div>
 
-<!-- MODAL -->
-<div id="modalBackdrop" class="modal-backdrop">
 
-    <div class="modal" id="modalBox">
+<!-- =========================================================
+     MOBILE OFFCANVAS
+========================================================== -->
 
-        <div class="modal-header">
-            <h2 id="modalTitle">MultiScript</h2>
-            <button class="modal-close" onclick="closeModal()">×</button>
+<div
+    class="offcanvas offcanvas-start"
+    tabindex="-1"
+    id="mobileExplorer"
+>
+
+    <div class="offcanvas-header">
+
+        <h5 class="offcanvas-title">
+            <i class="bi bi-files"></i>
+            MultiScript Explorer
+        </h5>
+
+        <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="offcanvas"
+        ></button>
+
+    </div>
+
+
+    <div class="offcanvas-body p-0">
+
+        <div class="p-3">
+
+            <div class="fw-bold small mb-2">
+                MEU-PROJETO
+            </div>
+
+            <div
+                id="mobileFileTree"
+                class="ms-tree"
+            ></div>
+
         </div>
 
-        <div class="modal-body" id="modalBody"></div>
 
-        <div class="modal-footer" id="modalFooter"></div>
+        <hr>
+
+
+        <div class="p-3">
+
+            <div
+                class="ms-tree-title"
+                style="padding-left:0"
+            >
+                AÇÕES
+            </div>
+
+
+            <button
+                class="btn btn-ms w-100 mb-2"
+                onclick="mobileAction('generator')"
+            >
+                <i class="bi bi-file-earmark-plus"></i>
+                Gerar Página
+            </button>
+
+
+            <button
+                class="btn btn-ms w-100 mb-2"
+                onclick="mobileAction('plugin')"
+            >
+                <i class="bi bi-filetype-php"></i>
+                Importar Plugin PHP
+            </button>
+
+
+            <button
+                class="btn btn-ms w-100 mb-2"
+                onclick="mobileAction('plugins')"
+            >
+                <i class="bi bi-puzzle"></i>
+                Gerenciar Plugins
+            </button>
+
+
+            <button
+                class="btn btn-ms w-100 mb-2"
+                onclick="mobileAction('save')"
+            >
+                <i class="bi bi-save"></i>
+                Salvar
+            </button>
+
+
+            <button
+                class="btn btn-ms-primary w-100"
+                onclick="mobileAction('export')"
+            >
+                <i class="bi bi-file-zip"></i>
+                Exportar ZIP
+            </button>
+
+        </div>
 
     </div>
 
 </div>
 
-<!-- PHP IMPORT -->
+
+<!-- =========================================================
+     MODAL MULTISCRIPT
+========================================================== -->
+
+<div
+    id="modalBackdrop"
+    class="ms-modal-backdrop"
+>
+
+    <div class="ms-modal">
+
+        <div class="ms-modal-header">
+
+            <h2 id="modalTitle">
+                MultiScript
+            </h2>
+
+
+            <button
+                class="ms-modal-close"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            class="ms-modal-body"
+            id="modalBody"
+        ></div>
+
+
+        <div
+            class="ms-modal-footer"
+            id="modalFooter"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PHP IMPORT
+========================================================== -->
+
 <input
     type="file"
     id="phpInput"
@@ -810,7 +1666,18 @@ textarea.form-control {
     hidden
 >
 
+
+<!-- =========================================================
+     BOOTSTRAP JS
+========================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
 <script>
+
 "use strict";
 
 /* =========================================================
@@ -818,23 +1685,37 @@ textarea.form-control {
 ========================================================= */
 
 let project = {
+
     name: "MEU-PROJETO",
 
     files: {
+
         "index.html": `<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
 <title>Meu Projeto</title>
+
 </head>
+
 <body>
 
 <h1>Meu Projeto</h1>
 
-<p>Comece a criar seu site usando o MultiScript HTML Editor V14.</p>
+<p>
+Comece a criar seu site usando o MultiScript HTML Editor V14.
+</p>
 
 </body>
+
 </html>`,
 
         "style.css": `body {
@@ -842,32 +1723,54 @@ let project = {
 }`,
 
         "script.js": `console.log("MultiScript V14");`
+
     },
 
     plugins: {}
+
 };
 
+
 let currentFile = "index.html";
-let modalCallback = null;
 
 
 /* =========================================================
    INICIALIZAÇÃO
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    loadProject();
+        loadProject();
 
-    renderFiles();
-    renderPlugins();
-    openFile("index.html");
-    previewPage();
+        renderFiles();
 
-    log("MultiScript HTML Editor V14 iniciado.", "success");
-    log("Projeto pronto para edição.", "info");
+        renderPlugins();
 
-});
+        renderMobileFiles();
+
+        openFile("index.html");
+
+        previewPage();
+
+        log(
+            "MultiScript HTML Editor V14 iniciado.",
+            "success"
+        );
+
+        log(
+            "Bootstrap 5 carregado no projeto.",
+            "info"
+        );
+
+        log(
+            "Modo mobile ativado.",
+            "info"
+        );
+
+    }
+);
 
 
 /* =========================================================
@@ -883,12 +1786,22 @@ function saveProject() {
             JSON.stringify(project)
         );
 
-        log("Projeto salvo no armazenamento local.", "success");
-        setStatus("Projeto salvo");
+        log(
+            "Projeto salvo no armazenamento local.",
+            "success"
+        );
+
+        setStatus(
+            "Projeto salvo"
+        );
 
     } catch (error) {
 
-        log("Erro ao salvar projeto: " + error.message, "error");
+        log(
+            "Erro ao salvar projeto: " +
+            error.message,
+            "error"
+        );
 
     }
 
@@ -899,23 +1812,35 @@ function loadProject() {
 
     try {
 
-        const saved = localStorage.getItem(
-            "multiscript-v14-project"
-        );
+        const saved =
+            localStorage.getItem(
+                "multiscript-v14-project"
+            );
+
 
         if (saved) {
 
-            const parsed = JSON.parse(saved);
+            const parsed =
+                JSON.parse(saved);
 
-            if (parsed && parsed.files) {
+
+            if (
+                parsed &&
+                parsed.files
+            ) {
+
                 project = parsed;
+
             }
 
         }
 
     } catch (error) {
 
-        log("Não foi possível carregar o projeto salvo.", "error");
+        log(
+            "Não foi possível carregar o projeto salvo.",
+            "error"
+        );
 
     }
 
@@ -928,19 +1853,30 @@ function loadProject() {
 
 function renderFiles() {
 
-    const tree = document.getElementById("fileTree");
+    const tree =
+        document.getElementById(
+            "fileTree"
+        );
+
 
     tree.innerHTML = "";
 
-    const files = Object.keys(project.files)
-        .sort(function (a, b) {
 
-            const ad = a.split("/").length;
-            const bd = b.split("/").length;
+    const files =
+        Object.keys(project.files)
+        .sort(function(a, b) {
+
+            const ad =
+                a.split("/").length;
+
+            const bd =
+                b.split("/").length;
+
 
             if (ad !== bd) {
                 return ad - bd;
             }
+
 
             return a.localeCompare(b);
 
@@ -949,21 +1885,35 @@ function renderFiles() {
 
     const folders = {};
 
-    files.forEach(function (file) {
 
-        const parts = file.split("/");
+    files.forEach(function(file) {
+
+        const parts =
+            file.split("/");
+
 
         if (parts.length === 1) {
 
-            addFileItem(tree, file, 0);
+            addFileItem(
+                tree,
+                file,
+                0
+            );
 
         } else {
 
-            const folder = parts.slice(0, -1).join("/");
+            const folder =
+                parts
+                .slice(0, -1)
+                .join("/");
+
 
             if (!folders[folder]) {
+
                 folders[folder] = [];
+
             }
+
 
             folders[folder].push(file);
 
@@ -973,46 +1923,159 @@ function renderFiles() {
 
 
     Object.keys(folders)
-        .sort()
-        .forEach(function (folder) {
+    .sort()
+    .forEach(function(folder) {
 
-            const folderDiv = document.createElement("div");
+        const folderDiv =
+            document.createElement(
+                "div"
+            );
 
-            folderDiv.className = "folder";
-            folderDiv.textContent = "▾ " + folder;
 
-            tree.appendChild(folderDiv);
+        folderDiv.className =
+            "ms-folder";
 
-            folders[folder].forEach(function (file) {
 
-                addFileItem(
-                    tree,
-                    file,
-                    1
-                );
+        folderDiv.innerHTML =
+            '<i class="bi bi-folder2-open"></i> ' +
+            escapeHTML(folder);
 
-            });
+
+        tree.appendChild(
+            folderDiv
+        );
+
+
+        folders[folder]
+        .forEach(function(file) {
+
+            addFileItem(
+                tree,
+                file,
+                1
+            );
 
         });
+
+    });
 
 }
 
 
-function addFileItem(container, file, level) {
+function renderMobileFiles() {
 
-    const item = document.createElement("div");
+    const tree =
+        document.getElementById(
+            "mobileFileTree"
+        );
+
+
+    if (!tree) {
+        return;
+    }
+
+
+    tree.innerHTML = "";
+
+
+    const files =
+        Object.keys(project.files)
+        .sort();
+
+
+    files.forEach(function(file) {
+
+        const item =
+            document.createElement(
+                "div"
+            );
+
+
+        item.className =
+            "ms-file-item";
+
+
+        if (
+            file === currentFile
+        ) {
+
+            item.classList.add(
+                "active"
+            );
+
+        }
+
+
+        item.innerHTML =
+            getFileIcon(file) +
+            "<span>" +
+            escapeHTML(
+                file
+            ) +
+            "</span>";
+
+
+        item.onclick =
+            function() {
+
+                openFile(file);
+
+                closeMobileExplorer();
+
+            };
+
+
+        tree.appendChild(
+            item
+        );
+
+    });
+
+}
+
+
+function addFileItem(
+    container,
+    file,
+    level
+) {
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
 
     item.className =
-        "file-item" +
-        (file === currentFile ? " active" : "");
+        "ms-file-item";
+
+
+    if (
+        file === currentFile
+    ) {
+
+        item.classList.add(
+            "active"
+        );
+
+    }
+
 
     item.style.paddingLeft =
-        (9 + level * 17) + "px";
+        (
+            9 +
+            level * 17
+        ) + "px";
 
 
-    const icon = document.createElement("span");
+    const icon =
+        document.createElement(
+            "span"
+        );
 
-    const ext = file
+
+    const ext =
+        file
         .split(".")
         .pop()
         .toLowerCase();
@@ -1020,45 +2083,72 @@ function addFileItem(container, file, level) {
 
     if (ext === "html") {
 
-        icon.className = "file-html";
-        icon.textContent = "▤";
+        icon.className =
+            "file-html";
 
-    } else if (ext === "css") {
+        icon.innerHTML =
+            '<i class="bi bi-filetype-html"></i>';
 
-        icon.className = "file-css";
-        icon.textContent = "#";
+    }
 
-    } else if (ext === "js") {
+    else if (ext === "css") {
 
-        icon.className = "file-js";
-        icon.textContent = "JS";
+        icon.className =
+            "file-css";
 
-    } else if (ext === "php") {
+        icon.innerHTML =
+            '<i class="bi bi-filetype-css"></i>';
 
-        icon.className = "file-php";
-        icon.textContent = "PHP";
+    }
 
-    } else {
+    else if (ext === "js") {
+
+        icon.className =
+            "file-js";
+
+        icon.innerHTML =
+            '<i class="bi bi-filetype-js"></i>';
+
+    }
+
+    else if (ext === "php") {
+
+        icon.className =
+            "file-php";
+
+        icon.innerHTML =
+            '<i class="bi bi-filetype-php"></i>';
+
+    }
+
+    else {
 
         icon.textContent = "•";
 
     }
 
 
-    const name = document.createElement("span");
+    const name =
+        document.createElement(
+            "span"
+        );
 
-    name.textContent = file.split("/").pop();
+
+    name.textContent =
+        file.split("/").pop();
 
 
     item.appendChild(icon);
+
     item.appendChild(name);
 
 
-    item.onclick = function () {
+    item.onclick =
+        function() {
 
-        openFile(file);
+            openFile(file);
 
-    };
+        };
 
 
     container.appendChild(item);
@@ -1066,63 +2156,96 @@ function addFileItem(container, file, level) {
 }
 
 
+/* =========================================================
+   PLUGINS
+========================================================= */
+
 function renderPlugins() {
 
-    const tree = document.getElementById("pluginTree");
+    const tree =
+        document.getElementById(
+            "pluginTree"
+        );
+
 
     tree.innerHTML = "";
 
-    const plugins = Object.keys(project.plugins || {});
+
+    const plugins =
+        Object.keys(
+            project.plugins || {}
+        );
 
 
     if (!plugins.length) {
 
-        const empty = document.createElement("div");
+        const empty =
+            document.createElement(
+                "div"
+            );
 
-        empty.style.color = "#66717f";
-        empty.style.fontSize = "10px";
-        empty.style.padding = "7px";
+
+        empty.style.color =
+            "#66717f";
+
+        empty.style.fontSize =
+            "10px";
+
+        empty.style.padding =
+            "7px";
+
 
         empty.textContent =
             "Nenhum plugin PHP importado.";
 
-        tree.appendChild(empty);
+
+        tree.appendChild(
+            empty
+        );
+
 
         return;
 
     }
 
 
-    plugins.forEach(function (plugin) {
+    plugins.forEach(function(plugin) {
 
-        const item = document.createElement("div");
-
-        item.className = "file-item";
-
-        const icon = document.createElement("span");
-
-        icon.className = "file-php";
-        icon.textContent = "PHP";
+        const item =
+            document.createElement(
+                "div"
+            );
 
 
-        const name = document.createElement("span");
-
-        name.textContent =
-            plugin.replace(/^plugins\//, "");
+        item.className =
+            "ms-file-item";
 
 
-        item.appendChild(icon);
-        item.appendChild(name);
+        item.innerHTML =
+            '<span class="file-php">' +
+            '<i class="bi bi-filetype-php"></i>' +
+            '</span>' +
+            '<span>' +
+            escapeHTML(
+                plugin.replace(
+                    /^plugins\//,
+                    ""
+                )
+            ) +
+            '</span>';
 
 
-        item.onclick = function () {
+        item.onclick =
+            function() {
 
-            openFile(plugin);
+                openFile(plugin);
 
-        };
+            };
 
 
-        tree.appendChild(item);
+        tree.appendChild(
+            item
+        );
 
     });
 
@@ -1139,34 +2262,58 @@ function openFile(file) {
         return;
     }
 
-    currentFile = file;
 
-    document.getElementById("editor").value =
-        project.files[file];
-
-    document.getElementById("currentTab").innerHTML =
-        getFileIcon(file) +
-        "<span>" +
-        escapeHTML(file.split("/").pop()) +
-        "</span>";
-
-
-    document.getElementById("previewFile").textContent =
+    currentFile =
         file;
 
 
-    document.getElementById("fileStatus").textContent =
+    document.getElementById(
+        "editor"
+    ).value =
+        project.files[file];
+
+
+    document.getElementById(
+        "currentTab"
+    ).innerHTML =
+        getFileIcon(file) +
+        "<span>" +
+        escapeHTML(
+            file.split("/").pop()
+        ) +
+        "</span>";
+
+
+    document.getElementById(
+        "previewFile"
+    ).textContent =
+        file;
+
+
+    document.getElementById(
+        "fileStatus"
+    ).textContent =
         file;
 
 
     updateLineNumbers();
+
     renderFiles();
 
-    if (file.toLowerCase().endsWith(".html")) {
+    renderMobileFiles();
+
+
+    if (
+        file
+        .toLowerCase()
+        .endsWith(".html")
+    ) {
 
         previewPage();
 
-    } else {
+    }
+
+    else {
 
         document.getElementById(
             "previewFrame"
@@ -1183,7 +2330,8 @@ function openFile(file) {
 
 function getFileIcon(file) {
 
-    const ext = file
+    const ext =
+        file
         .split(".")
         .pop()
         .toLowerCase();
@@ -1191,27 +2339,47 @@ function getFileIcon(file) {
 
     if (ext === "html") {
 
-        return '<span class="file-html">▤</span>';
+        return (
+            '<span class="file-html">' +
+            '<i class="bi bi-filetype-html"></i>' +
+            '</span>'
+        );
 
     }
+
 
     if (ext === "css") {
 
-        return '<span class="file-css">#</span>';
+        return (
+            '<span class="file-css">' +
+            '<i class="bi bi-filetype-css"></i>' +
+            '</span>'
+        );
 
     }
+
 
     if (ext === "js") {
 
-        return '<span class="file-js">JS</span>';
+        return (
+            '<span class="file-js">' +
+            '<i class="bi bi-filetype-js"></i>' +
+            '</span>'
+        );
 
     }
+
 
     if (ext === "php") {
 
-        return '<span class="file-php">PHP</span>';
+        return (
+            '<span class="file-php">' +
+            '<i class="bi bi-filetype-php"></i>' +
+            '</span>'
+        );
 
     }
+
 
     return "<span>•</span>";
 
@@ -1225,12 +2393,18 @@ function getFileIcon(file) {
 function editorInput() {
 
     project.files[currentFile] =
-        document.getElementById("editor").value;
+        document.getElementById(
+            "editor"
+        ).value;
+
 
     updateLineNumbers();
 
+
     if (
-        currentFile.toLowerCase().endsWith(".html")
+        currentFile
+        .toLowerCase()
+        .endsWith(".html")
     ) {
 
         previewPage();
@@ -1243,23 +2417,36 @@ function editorInput() {
 function updateLineNumbers() {
 
     const editor =
-        document.getElementById("editor");
+        document.getElementById(
+            "editor"
+        );
+
 
     const lines =
-        editor.value.split("\n").length;
+        editor.value
+        .split("\n")
+        .length;
 
 
     let output = "";
 
-    for (let i = 1; i <= lines; i++) {
 
-        output += i + "\n";
+    for (
+        let i = 1;
+        i <= lines;
+        i++
+    ) {
+
+        output +=
+            i + "\n";
 
     }
 
+
     document.getElementById(
         "lineNumbers"
-    ).textContent = output;
+    ).textContent =
+        output;
 
 }
 
@@ -1267,40 +2454,56 @@ function updateLineNumbers() {
 function syncEditorScroll() {
 
     const editor =
-        document.getElementById("editor");
+        document.getElementById(
+            "editor"
+        );
+
 
     document.getElementById(
         "lineNumbers"
-    ).scrollTop = editor.scrollTop;
+    ).scrollTop =
+        editor.scrollTop;
 
 }
 
 
 function handleEditorKey(event) {
 
-    if (event.key === "Tab") {
+    if (
+        event.key === "Tab"
+    ) {
 
         event.preventDefault();
 
+
         const editor =
-            document.getElementById("editor");
+            document.getElementById(
+                "editor"
+            );
+
 
         const start =
             editor.selectionStart;
+
 
         const end =
             editor.selectionEnd;
 
 
         editor.value =
-            editor.value.substring(0, start) +
+            editor.value.substring(
+                0,
+                start
+            ) +
             "    " +
-            editor.value.substring(end);
+            editor.value.substring(
+                end
+            );
 
 
         editor.selectionStart =
             editor.selectionEnd =
-            start + 4;
+                start + 4;
 
 
         editorInput();
@@ -1316,21 +2519,29 @@ function handleEditorKey(event) {
 
 function previewPage() {
 
+    if (
+        !currentFile
+        .toLowerCase()
+        .endsWith(".html")
+    ) {
+
+        return;
+
+    }
+
+
     const html =
         project.files[currentFile];
 
 
-    if (!currentFile.toLowerCase().endsWith(".html")) {
-        return;
-    }
-
-
     const css =
-        project.files["style.css"] || "";
+        project.files["style.css"] ||
+        "";
 
 
     const js =
-        project.files["script.js"] || "";
+        project.files["script.js"] ||
+        "";
 
 
     const safeJS =
@@ -1340,11 +2551,14 @@ function previewPage() {
         );
 
 
-    let finalHTML = html;
+    let finalHTML =
+        html;
 
 
     if (
-        finalHTML.includes("<head>")
+        finalHTML.includes(
+            "<head>"
+        )
     ) {
 
         finalHTML =
@@ -1359,7 +2573,9 @@ function previewPage() {
 
 
     if (
-        finalHTML.includes("</body>")
+        finalHTML.includes(
+            "</body>"
+        )
     ) {
 
         finalHTML =
@@ -1375,7 +2591,8 @@ function previewPage() {
 
     document.getElementById(
         "previewFrame"
-    ).srcdoc = finalHTML;
+    ).srcdoc =
+        finalHTML;
 
 }
 
@@ -1386,7 +2603,11 @@ function previewPage() {
 
 function formatHTML() {
 
-    if (!currentFile.toLowerCase().endsWith(".html")) {
+    if (
+        !currentFile
+        .toLowerCase()
+        .endsWith(".html")
+    ) {
 
         log(
             "Formatação disponível para HTML.",
@@ -1399,12 +2620,21 @@ function formatHTML() {
 
 
     let html =
-        document.getElementById("editor").value;
+        document.getElementById(
+            "editor"
+        ).value;
 
 
-    html = html
-        .replace(/>\s+</g, "><")
-        .replace(/></g, ">\n<");
+    html =
+        html
+        .replace(
+            />\s+</g,
+            "><"
+        )
+        .replace(
+            /></g,
+            ">\n<"
+        );
 
 
     const lines =
@@ -1416,43 +2646,52 @@ function formatHTML() {
     const formatted = [];
 
 
-    lines.forEach(function (line) {
+    lines.forEach(
+        function(line) {
 
-        line = line.trim();
-
-        if (!line) {
-            return;
-        }
+            line =
+                line.trim();
 
 
-        if (
-            /^<\/(body|html|head|div|section|main|header|footer|nav|article|ul|ol|li|form)/i.test(line)
-        ) {
+            if (!line) {
+                return;
+            }
 
-            indent = Math.max(
-                0,
-                indent - 1
+
+            if (
+                /^<\/(body|html|head|div|section|main|header|footer|nav|article|ul|ol|li|form)/i
+                .test(line)
+            ) {
+
+                indent =
+                    Math.max(
+                        0,
+                        indent - 1
+                    );
+
+            }
+
+
+            formatted.push(
+                "    ".repeat(
+                    indent
+                ) +
+                line
             );
 
-        }
 
+            if (
+                /^<(html|head|body|div|section|main|header|footer|nav|article|ul|ol|form)(\s|>)/i
+                .test(line) &&
+                !/<\/[^>]+>$/.test(line)
+            ) {
 
-        formatted.push(
-            "    ".repeat(indent) +
-            line
-        );
+                indent++;
 
-
-        if (
-            /^<(html|head|body|div|section|main|header|footer|nav|article|ul|ol|form)(\s|>)/i.test(line) &&
-            !/<\/[^>]+>$/.test(line)
-        ) {
-
-            indent++;
+            }
 
         }
-
-    });
+    );
 
 
     document.getElementById(
@@ -1463,6 +2702,7 @@ function formatHTML() {
 
     editorInput();
 
+
     log(
         "HTML formatado.",
         "success"
@@ -1472,7 +2712,7 @@ function formatHTML() {
 
 
 /* =========================================================
-   GERADOR DE PÁGINAS
+   GERADOR
 ========================================================= */
 
 function openGenerator() {
@@ -1482,17 +2722,15 @@ function openGenerator() {
 }
 
 
-/* =========================================================
-   ETAPA 1 — TIPO DA PÁGINA
-========================================================= */
-
 function openPageTypeSelector() {
 
     const body = `
 
-        <div class="type-question">
+        <div class="ms-type-question">
 
-            <h3>Que tipo de página você deseja criar?</h3>
+            <h3>
+                Que tipo de página você deseja criar?
+            </h3>
 
             <p>
                 Escolha a estrutura que será usada pelo gerador.
@@ -1501,9 +2739,10 @@ function openPageTypeSelector() {
         </div>
 
 
-        <div class="type-grid">
+        <div class="ms-type-grid">
 
-            <div class="type-card">
+
+            <div class="ms-type-card">
 
                 <input
                     type="radio"
@@ -1513,18 +2752,24 @@ function openPageTypeSelector() {
                     checked
                 >
 
-                <label for="typeCategory">
+                <label
+                    for="typeCategory"
+                >
 
-                    <div class="type-icon">
-                        📁
+                    <div class="ms-type-icon">
+                        <i class="bi bi-folder"></i>
                     </div>
 
-                    <div class="type-name">
-                        Categoria.html
-                    </div>
+                    <div>
 
-                    <div class="type-desc">
-                        Página principal de uma categoria.
+                        <div class="ms-type-name">
+                            Categoria.html
+                        </div>
+
+                        <div class="ms-type-desc">
+                            Página principal de uma categoria.
+                        </div>
+
                     </div>
 
                 </label>
@@ -1532,7 +2777,7 @@ function openPageTypeSelector() {
             </div>
 
 
-            <div class="type-card">
+            <div class="ms-type-card">
 
                 <input
                     type="radio"
@@ -1541,18 +2786,24 @@ function openPageTypeSelector() {
                     value="institutional"
                 >
 
-                <label for="typeInstitutional">
+                <label
+                    for="typeInstitutional"
+                >
 
-                    <div class="type-icon">
-                        🏢
+                    <div class="ms-type-icon">
+                        <i class="bi bi-building"></i>
                     </div>
 
-                    <div class="type-name">
-                        Institucional.html
-                    </div>
+                    <div>
 
-                    <div class="type-desc">
-                        Página institucional ou informativa.
+                        <div class="ms-type-name">
+                            Institucional.html
+                        </div>
+
+                        <div class="ms-type-desc">
+                            Página institucional ou informativa.
+                        </div>
+
                     </div>
 
                 </label>
@@ -1560,7 +2811,7 @@ function openPageTypeSelector() {
             </div>
 
 
-            <div class="type-card">
+            <div class="ms-type-card">
 
                 <input
                     type="radio"
@@ -1569,23 +2820,30 @@ function openPageTypeSelector() {
                     value="subpage"
                 >
 
-                <label for="typeSubpage">
+                <label
+                    for="typeSubpage"
+                >
 
-                    <div class="type-icon">
-                        📄
+                    <div class="ms-type-icon">
+                        <i class="bi bi-file-earmark"></i>
                     </div>
 
-                    <div class="type-name">
-                        Sub página
-                    </div>
+                    <div>
 
-                    <div class="type-desc">
-                        Página dentro de uma categoria.
+                        <div class="ms-type-name">
+                            Sub página
+                        </div>
+
+                        <div class="ms-type-desc">
+                            Página dentro de uma categoria.
+                        </div>
+
                     </div>
 
                 </label>
 
             </div>
+
 
         </div>
 
@@ -1596,28 +2854,27 @@ function openPageTypeSelector() {
         "GERADOR DE PÁGINAS — V14",
         body,
         `
+
             <button
-                class="tool-btn"
+                class="btn btn-ms"
                 onclick="closeModal()"
             >
                 Cancelar
             </button>
 
             <button
-                class="tool-btn primary"
+                class="btn btn-ms-primary"
                 onclick="continuePageType()"
             >
-                Continuar →
+                Continuar
+                <i class="bi bi-arrow-right"></i>
             </button>
+
         `
     );
 
 }
 
-
-/* =========================================================
-   ETAPA 2 — CONFIGURAÇÃO
-========================================================= */
 
 function continuePageType() {
 
@@ -1628,9 +2885,7 @@ function continuePageType() {
 
 
     if (!selected) {
-
         return;
-
     }
 
 
@@ -1642,16 +2897,19 @@ function continuePageType() {
 
 
 /* =========================================================
-   FORMULÁRIO DO GERADOR
+   FORMULÁRIO
 ========================================================= */
 
 function openGeneratorForm(type) {
 
     let title = "";
+
     let body = "";
 
 
-    if (type === "category") {
+    if (
+        type === "category"
+    ) {
 
         title =
             "CRIAR CATEGORIA.HTML";
@@ -1659,7 +2917,7 @@ function openGeneratorForm(type) {
 
         body = `
 
-            <div class="form-group">
+            <div class="mb-3">
 
                 <label class="form-label">
                     Nome da categoria
@@ -1667,7 +2925,7 @@ function openGeneratorForm(type) {
 
                 <input
                     id="pageName"
-                    class="form-control"
+                    class="form-control bg-dark text-light border-secondary"
                     placeholder="Ex.: Produtos"
                     autocomplete="off"
                 >
@@ -1675,7 +2933,7 @@ function openGeneratorForm(type) {
             </div>
 
 
-            <div class="form-group">
+            <div class="mb-3">
 
                 <label class="form-label">
                     Conteúdo da página
@@ -1683,7 +2941,8 @@ function openGeneratorForm(type) {
 
                 <textarea
                     id="pageContent"
-                    class="form-control"
+                    class="form-control bg-dark text-light border-secondary"
+                    style="min-height:180px;font-family:Consolas,monospace"
                     placeholder="Digite o conteúdo HTML da categoria..."
                 ></textarea>
 
@@ -1697,7 +2956,9 @@ function openGeneratorForm(type) {
     }
 
 
-    if (type === "institutional") {
+    if (
+        type === "institutional"
+    ) {
 
         title =
             "CRIAR PÁGINA INSTITUCIONAL";
@@ -1705,7 +2966,7 @@ function openGeneratorForm(type) {
 
         body = `
 
-            <div class="form-group">
+            <div class="mb-3">
 
                 <label class="form-label">
                     Nome da página
@@ -1713,7 +2974,7 @@ function openGeneratorForm(type) {
 
                 <input
                     id="pageName"
-                    class="form-control"
+                    class="form-control bg-dark text-light border-secondary"
                     placeholder="Ex.: Quem Somos"
                     autocomplete="off"
                 >
@@ -1721,7 +2982,7 @@ function openGeneratorForm(type) {
             </div>
 
 
-            <div class="form-group">
+            <div class="mb-3">
 
                 <label class="form-label">
                     Conteúdo da página
@@ -1729,7 +2990,8 @@ function openGeneratorForm(type) {
 
                 <textarea
                     id="pageContent"
-                    class="form-control"
+                    class="form-control bg-dark text-light border-secondary"
+                    style="min-height:180px;font-family:Consolas,monospace"
                     placeholder="Digite o conteúdo HTML da página..."
                 ></textarea>
 
@@ -1743,7 +3005,9 @@ function openGeneratorForm(type) {
     }
 
 
-    if (type === "subpage") {
+    if (
+        type === "subpage"
+    ) {
 
         title =
             "CRIAR SUB PÁGINA";
@@ -1751,7 +3015,7 @@ function openGeneratorForm(type) {
 
         body = `
 
-            <div class="form-group">
+            <div class="mb-3">
 
                 <label class="form-label">
                     Categoria / pasta
@@ -1759,7 +3023,7 @@ function openGeneratorForm(type) {
 
                 <input
                     id="parentCategory"
-                    class="form-control"
+                    class="form-control bg-dark text-light border-secondary"
                     list="categoryList"
                     placeholder="Ex.: Produtos"
                     autocomplete="off"
@@ -1774,7 +3038,7 @@ function openGeneratorForm(type) {
             </div>
 
 
-            <div class="form-group">
+            <div class="mb-3">
 
                 <label class="form-label">
                     Nome da sub página
@@ -1782,7 +3046,7 @@ function openGeneratorForm(type) {
 
                 <input
                     id="pageName"
-                    class="form-control"
+                    class="form-control bg-dark text-light border-secondary"
                     placeholder="Ex.: Produto X"
                     autocomplete="off"
                 >
@@ -1790,7 +3054,7 @@ function openGeneratorForm(type) {
             </div>
 
 
-            <div class="form-group">
+            <div class="mb-3">
 
                 <label class="form-label">
                     Conteúdo da página
@@ -1798,7 +3062,8 @@ function openGeneratorForm(type) {
 
                 <textarea
                     id="pageContent"
-                    class="form-control"
+                    class="form-control bg-dark text-light border-secondary"
+                    style="min-height:180px;font-family:Consolas,monospace"
                     placeholder="Digite o conteúdo HTML da sub página..."
                 ></textarea>
 
@@ -1816,19 +3081,23 @@ function openGeneratorForm(type) {
         title,
         body,
         `
+
             <button
-                class="tool-btn"
+                class="btn btn-ms"
                 onclick="openPageTypeSelector()"
             >
-                ← Voltar
+                <i class="bi bi-arrow-left"></i>
+                Voltar
             </button>
 
             <button
-                class="tool-btn primary"
+                class="btn btn-ms-primary"
                 onclick="generatePage('${type}')"
             >
+                <i class="bi bi-file-earmark-plus"></i>
                 Gerar Página
             </button>
+
         `
     );
 
@@ -1836,73 +3105,82 @@ function openGeneratorForm(type) {
 
 
 /* =========================================================
-   PLUGINS NO GERADOR
+   PLUGIN SELECTOR
 ========================================================= */
 
 function pluginSelector() {
 
     const plugins =
-        Object.keys(project.plugins || {});
+        Object.keys(
+            project.plugins || {}
+        );
 
 
     let html = `
 
-        <div class="form-group">
+        <div class="mb-3">
 
             <label class="form-label">
                 Plugins PHP do usuário
             </label>
 
-            <div class="plugin-list">
+            <div class="ms-plugin-list">
     `;
 
 
     if (!plugins.length) {
 
         html += `
-            <div class="no-plugins">
+
+            <div class="ms-no-plugins">
+
                 Nenhum plugin PHP instalado.
-                Você pode importar seus próprios arquivos
-                .php pelo botão "Plugin PHP".
+
+                Você pode importar seus próprios
+                arquivos .php pelo botão
+                "Plugin PHP".
+
             </div>
+
         `;
 
-    } else {
+    }
 
-        plugins.forEach(function (plugin, index) {
+    else {
 
-            const id =
-                "plugin_" +
-                index;
+        plugins.forEach(
+            function(plugin, index) {
 
+                html += `
 
-            html += `
+                    <label class="ms-plugin-row">
 
-                <label class="plugin-row">
+                        <input
+                            type="checkbox"
+                            class="generator-plugin"
+                            value="${escapeAttribute(plugin)}"
+                        >
 
-                    <input
-                        type="checkbox"
-                        class="generator-plugin"
-                        value="${escapeAttribute(plugin)}"
-                    >
+                        <span>
+                            ${escapeHTML(plugin)}
+                        </span>
 
-                    <span>
-                        ${escapeHTML(plugin)}
-                    </span>
+                    </label>
 
-                </label>
+                `;
 
-            `;
-
-        });
+            }
+        );
 
     }
 
 
     html += `
+
             </div>
 
         </div>
+
     `;
 
 
@@ -1912,39 +3190,50 @@ function pluginSelector() {
 
 
 /* =========================================================
-   CATEGORIAS EXISTENTES
+   CATEGORIAS
 ========================================================= */
 
 function getCategoryOptions() {
 
     const files =
-        Object.keys(project.files);
+        Object.keys(
+            project.files
+        );
 
 
     let html = "";
 
 
-    files.forEach(function (file) {
+    files.forEach(
+        function(file) {
 
-        if (
-            file.endsWith(".html") &&
-            file.split("/").length === 1 &&
-            file !== "index.html"
-        ) {
+            if (
+                file.endsWith(".html") &&
+                file.split("/").length === 1 &&
+                file !== "index.html"
+            ) {
 
-            const name =
-                file
-                    .replace(".html", "")
-                    .replace(/-/g, " ");
+                const name =
+                    file
+                    .replace(
+                        ".html",
+                        ""
+                    )
+                    .replace(
+                        /-/g,
+                        " "
+                    );
 
 
-            html += `
-                <option value="${escapeAttribute(name)}">
-            `;
+                html +=
+                    '<option value="' +
+                    escapeAttribute(name) +
+                    '">';
+
+            }
 
         }
-
-    });
+    );
 
 
     return html;
@@ -1959,23 +3248,27 @@ function getCategoryOptions() {
 function generatePage(type) {
 
     const nameElement =
-        document.getElementById("pageName");
+        document.getElementById(
+            "pageName"
+        );
 
 
     const contentElement =
-        document.getElementById("pageContent");
+        document.getElementById(
+            "pageContent"
+        );
 
 
     const name =
         nameElement
-            ? nameElement.value.trim()
-            : "";
+        ? nameElement.value.trim()
+        : "";
 
 
     const content =
         contentElement
-            ? contentElement.value
-            : "";
+        ? contentElement.value
+        : "";
 
 
     if (!name) {
@@ -2007,23 +3300,31 @@ function generatePage(type) {
     let path = "";
 
 
-    if (type === "category") {
+    if (
+        type === "category"
+    ) {
 
         path =
-            slug + ".html";
+            slug +
+            ".html";
 
     }
 
 
-    if (type === "institutional") {
+    if (
+        type === "institutional"
+    ) {
 
         path =
-            slug + ".html";
+            slug +
+            ".html";
 
     }
 
 
-    if (type === "subpage") {
+    if (
+        type === "subpage"
+    ) {
 
         const parentElement =
             document.getElementById(
@@ -2033,8 +3334,8 @@ function generatePage(type) {
 
         const parent =
             parentElement
-                ? parentElement.value.trim()
-                : "";
+            ? parentElement.value.trim()
+            : "";
 
 
         if (!parent) {
@@ -2072,7 +3373,9 @@ function generatePage(type) {
     }
 
 
-    if (project.files[path]) {
+    if (
+        project.files[path]
+    ) {
 
         const overwrite =
             confirm(
@@ -2084,9 +3387,7 @@ function generatePage(type) {
 
 
         if (!overwrite) {
-
             return;
-
         }
 
     }
@@ -2097,11 +3398,11 @@ function generatePage(type) {
             document.querySelectorAll(
                 ".generator-plugin:checked"
             )
-        ).map(function (input) {
-
-            return input.value;
-
-        });
+        ).map(
+            function(input) {
+                return input.value;
+            }
+        );
 
 
     project.files[path] =
@@ -2117,24 +3418,30 @@ function generatePage(type) {
 
     renderFiles();
 
+    renderMobileFiles();
+
     closeModal();
 
     openFile(path);
 
+
     log(
-        "Página criada: " + path,
+        "Página criada: " +
+        path,
         "success"
     );
 
+
     setStatus(
-        "Página criada: " + path
+        "Página criada: " +
+        path
     );
 
 }
 
 
 /* =========================================================
-   TEMPLATE DA PÁGINA
+   TEMPLATE
 ========================================================= */
 
 function createPageTemplate(
@@ -2151,14 +3458,26 @@ function createPageTemplate(
     let breadcrumb = "";
 
 
-    if (type === "subpage") {
+    if (
+        type === "subpage"
+    ) {
 
         breadcrumb = `
+
     <nav aria-label="Breadcrumb">
-        <a href="../index.html">Início</a>
+
+        <a href="../index.html">
+            Início
+        </a>
+
         /
-        <span>${title}</span>
+
+        <span>
+            ${title}
+        </span>
+
     </nav>
+
 `;
 
     }
@@ -2167,46 +3486,67 @@ function createPageTemplate(
     let pluginComment = "";
 
 
-    if (plugins.length) {
+    if (
+        plugins.length
+    ) {
 
         pluginComment =
             "\n<!-- MultiScript — Plugins PHP associados:\n" +
-            plugins.map(function (plugin) {
+            plugins
+            .map(
+                function(plugin) {
 
-                return "     " + plugin;
+                    return (
+                        "     " +
+                        plugin
+                    );
 
-            }).join("\n") +
+                }
+            )
+            .join("\n") +
             "\n-->\n";
 
     }
 
 
-    let pageDescription =
+    let description =
         "Página criada pelo MultiScript HTML Editor V14.";
 
 
-    if (type === "category") {
+    if (
+        type === "category"
+    ) {
 
-        pageDescription =
+        description =
             "Página de categoria criada pelo MultiScript HTML Editor V14.";
 
     }
 
 
-    if (type === "institutional") {
+    if (
+        type === "institutional"
+    ) {
 
-        pageDescription =
+        description =
             "Página institucional criada pelo MultiScript HTML Editor V14.";
 
     }
 
 
-    if (type === "subpage") {
+    if (
+        type === "subpage"
+    ) {
 
-        pageDescription =
+        description =
             "Sub página criada pelo MultiScript HTML Editor V14.";
 
     }
+
+
+    const base =
+        type === "subpage"
+        ? "../"
+        : "";
 
 
     return `<!DOCTYPE html>
@@ -2223,14 +3563,14 @@ function createPageTemplate(
 
     <meta
         name="description"
-        content="${escapeAttribute(pageDescription)}"
+        content="${escapeAttribute(description)}"
     >
 
     <title>${title}</title>
 
     <link
         rel="stylesheet"
-        href="${type === "subpage" ? "../" : ""}style.css"
+        href="${base}style.css"
     >
 
 </head>
@@ -2244,7 +3584,7 @@ ${pluginComment}
 
     <nav>
 
-        <a href="${type === "subpage" ? "../" : ""}index.html">
+        <a href="${base}index.html">
             Início
         </a>
 
@@ -2258,13 +3598,16 @@ ${breadcrumb}
 
     <section>
 
-        ${content || `
+        ${
+            content ||
+            `
         <h2>${title}</h2>
 
         <p>
             Conteúdo da página ${title}.
         </p>
-        `}
+            `
+        }
 
     </section>
 
@@ -2278,7 +3621,7 @@ ${breadcrumb}
 
 </footer>
 
-<script src="${type === "subpage" ? "../" : ""}script.js"><\/script>
+<script src="${base}script.js"><\/script>
 
 </body>
 
@@ -2288,18 +3631,33 @@ ${breadcrumb}
 
 
 /* =========================================================
-   SLUG
+   SLUGIFY
 ========================================================= */
 
 function slugify(value) {
 
     return String(value)
+
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
+
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+
         .toLowerCase()
+
         .trim()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
+
+        .replace(
+            /[^a-z0-9]+/g,
+            "-"
+        )
+
+        .replace(
+            /^-+|-+$/g,
+            ""
+        );
 
 }
 
@@ -2308,23 +3666,16 @@ function slugify(value) {
    PHP IMPORT
 ========================================================= */
 
-function openPHPImporter() {
-
-    document.getElementById(
-        "phpInput"
-    ).click();
-
-}
-
-
 document.getElementById(
     "phpInput"
 ).addEventListener(
     "change",
-    async function (event) {
+    async function(event) {
 
         const files =
-            Array.from(event.target.files || []);
+            Array.from(
+                event.target.files || []
+            );
 
 
         if (!files.length) {
@@ -2332,12 +3683,14 @@ document.getElementById(
         }
 
 
-        for (const file of files) {
+        for (
+            const file of files
+        ) {
 
             if (
                 !file.name
-                    .toLowerCase()
-                    .endsWith(".php")
+                .toLowerCase()
+                .endsWith(".php")
             ) {
 
                 continue;
@@ -2363,7 +3716,8 @@ document.getElementById(
 
 
             log(
-                "Plugin PHP importado: " + path,
+                "Plugin PHP importado: " +
+                path,
                 "success"
             );
 
@@ -2371,14 +3725,27 @@ document.getElementById(
 
 
         renderFiles();
+
         renderPlugins();
 
+        renderMobileFiles();
+
         saveProject();
+
 
         event.target.value = "";
 
     }
 );
+
+
+function openPHPImporter() {
+
+    document.getElementById(
+        "phpInput"
+    ).click();
+
+}
 
 
 /* =========================================================
@@ -2388,7 +3755,9 @@ document.getElementById(
 function openPluginManager() {
 
     const plugins =
-        Object.keys(project.plugins || {});
+        Object.keys(
+            project.plugins || {}
+        );
 
 
     let body = "";
@@ -2398,60 +3767,69 @@ function openPluginManager() {
 
         body = `
 
-            <p style="color:#8993a1;font-size:12px">
-                Nenhum plugin PHP do usuário foi importado.
-            </p>
+            <div class="alert alert-dark border-secondary">
 
-            <p style="color:#66717f;font-size:11px">
-                O MultiScript não possui plugins PHP fixos.
-                Os arquivos .php são adicionados pelo próprio usuário.
-            </p>
+                <div class="fw-bold mb-2">
+                    Nenhum plugin PHP
+                </div>
 
-        `;
+                <div class="small text-secondary">
 
-    } else {
+                    O MultiScript não possui plugins PHP
+                    fixos.
 
-        plugins.forEach(function (plugin) {
-
-            body += `
-
-                <div
-                    style="
-                        display:flex;
-                        align-items:center;
-                        gap:10px;
-                        padding:10px;
-                        border-bottom:1px solid #303640;
-                    "
-                >
-
-                    <span class="file-php">
-                        PHP
-                    </span>
-
-                    <span style="flex:1;font-size:12px">
-                        ${escapeHTML(plugin)}
-                    </span>
-
-                    <button
-                        class="tool-btn"
-                        onclick="openFile('${escapeAttribute(plugin)}');closeModal()"
-                    >
-                        Abrir
-                    </button>
-
-                    <button
-                        class="tool-btn"
-                        onclick="removePlugin('${escapeAttribute(plugin)}')"
-                    >
-                        Remover
-                    </button>
+                    Os arquivos .php são adicionados
+                    pelo próprio usuário.
 
                 </div>
 
-            `;
+            </div>
 
-        });
+        `;
+
+    }
+
+    else {
+
+        plugins.forEach(
+            function(plugin) {
+
+                body += `
+
+                    <div
+                        class="d-flex align-items-center gap-2 p-2 border-bottom border-secondary"
+                    >
+
+                        <span class="file-php">
+                            <i class="bi bi-filetype-php"></i>
+                        </span>
+
+                        <span
+                            class="flex-grow-1 small"
+                        >
+                            ${escapeHTML(plugin)}
+                        </span>
+
+                        <button
+                            class="btn btn-sm btn-ms"
+                            onclick="openFile('${escapeAttribute(plugin)}');closeModal()"
+                        >
+                            Abrir
+                        </button>
+
+                        <button
+                            class="btn btn-sm btn-danger"
+                            onclick="removePlugin('${escapeAttribute(plugin)}')"
+                        >
+                            Remover
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+        );
 
     }
 
@@ -2460,19 +3838,22 @@ function openPluginManager() {
         "PLUGINS PHP DO USUÁRIO",
         body,
         `
+
             <button
-                class="tool-btn"
+                class="btn btn-ms"
                 onclick="openPHPImporter();closeModal()"
             >
-                + Importar PHP
+                <i class="bi bi-plus"></i>
+                Importar PHP
             </button>
 
             <button
-                class="tool-btn primary"
+                class="btn btn-ms-primary"
                 onclick="closeModal()"
             >
                 Fechar
             </button>
+
         `
     );
 
@@ -2481,7 +3862,7 @@ function openPluginManager() {
 
 function removePlugin(path) {
 
-    const confirmRemove =
+    const confirmed =
         confirm(
             "Remover o plugin " +
             path +
@@ -2489,18 +3870,23 @@ function removePlugin(path) {
         );
 
 
-    if (!confirmRemove) {
+    if (!confirmed) {
         return;
     }
 
 
     delete project.files[path];
+
     delete project.plugins[path];
 
 
-    if (currentFile === path) {
+    if (
+        currentFile === path
+    ) {
 
-        openFile("index.html");
+        openFile(
+            "index.html"
+        );
 
     }
 
@@ -2508,12 +3894,18 @@ function removePlugin(path) {
     saveProject();
 
     renderFiles();
+
     renderPlugins();
+
+    renderMobileFiles();
+
 
     openPluginManager();
 
+
     log(
-        "Plugin removido: " + path,
+        "Plugin removido: " +
+        path,
         "success"
     );
 
@@ -2528,26 +3920,25 @@ function openCreditDialog() {
 
     const body = `
 
-        <p
-            style="
-                color:#aeb7c4;
-                font-size:12px;
-                margin-top:0;
-            "
-        >
+        <p class="text-secondary small">
+
             Escolha o crédito que será incluído
             no projeto exportado.
+
         </p>
 
 
-        <div class="credit-grid">
+        <div class="ms-credit-grid">
+
 
             <div
-                class="credit-option"
+                class="ms-credit-option"
                 onclick="confirmExport('none')"
             >
 
-                <strong>Sem crédito</strong>
+                <strong>
+                    Sem crédito
+                </strong>
 
                 <span>
                     Exportar sem crédito.
@@ -2557,11 +3948,13 @@ function openCreditDialog() {
 
 
             <div
-                class="credit-option"
+                class="ms-credit-option"
                 onclick="confirmExport('multipage')"
             >
 
-                <strong>Multipage Mel</strong>
+                <strong>
+                    Multipage Mel
+                </strong>
 
                 <span>
                     Crédito da Multipage Mel.
@@ -2571,11 +3964,13 @@ function openCreditDialog() {
 
 
             <div
-                class="credit-option"
+                class="ms-credit-option"
                 onclick="confirmExport('corretores')"
             >
 
-                <strong>Apenas Corretores</strong>
+                <strong>
+                    Apenas Corretores
+                </strong>
 
                 <span>
                     Crédito da Apenas Corretores.
@@ -2585,11 +3980,13 @@ function openCreditDialog() {
 
 
             <div
-                class="credit-option"
+                class="ms-credit-option"
                 onclick="confirmExport('homemsite')"
             >
 
-                <strong>HomemSite</strong>
+                <strong>
+                    HomemSite
+                </strong>
 
                 <span>
                     Crédito da HomemSite.
@@ -2599,17 +3996,20 @@ function openCreditDialog() {
 
 
             <div
-                class="credit-option"
+                class="ms-credit-option"
                 onclick="confirmExport('homemsite-pr')"
             >
 
-                <strong>HomemSite Paraná</strong>
+                <strong>
+                    HomemSite Paraná
+                </strong>
 
                 <span>
                     Crédito da versão Paraná.
                 </span>
 
             </div>
+
 
         </div>
 
@@ -2620,21 +4020,26 @@ function openCreditDialog() {
         "EXPORTAR PROJETO — ZIP",
         body,
         `
+
             <button
-                class="tool-btn"
+                class="btn btn-ms"
                 onclick="closeModal()"
             >
                 Cancelar
             </button>
+
         `
     );
 
 }
 
 
-async function confirmExport(credit) {
+async function confirmExport(
+    credit
+) {
 
     closeModal();
+
 
     setStatus(
         "Preparando ZIP..."
@@ -2646,38 +4051,50 @@ async function confirmExport(credit) {
 
 
     const files =
-        { ...project.files };
+        {
+            ...project.files
+        };
 
 
-    if (credit !== "none") {
+    if (
+        credit !== "none"
+    ) {
 
-        Object.keys(files).forEach(function (path) {
+        Object.keys(files)
+        .forEach(
+            function(path) {
 
-            if (
-                path.toLowerCase().endsWith(".html")
-            ) {
+                if (
+                    path
+                    .toLowerCase()
+                    .endsWith(".html")
+                ) {
 
-                files[path] =
-                    insertCredits(
-                        files[path],
-                        credit
-                    );
+                    files[path] =
+                        insertCredits(
+                            files[path],
+                            credit
+                        );
+
+                }
 
             }
-
-        });
+        );
 
     }
 
 
-    Object.keys(files).forEach(function (path) {
+    Object.keys(files)
+    .forEach(
+        function(path) {
 
-        zip.file(
-            path,
-            files[path]
-        );
+            zip.file(
+                path,
+                files[path]
+            );
 
-    });
+        }
+    );
 
 
     const blob =
@@ -2687,27 +4104,40 @@ async function confirmExport(credit) {
 
 
     const url =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+            blob
+        );
 
 
     const link =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
 
-    link.href = url;
+    link.href =
+        url;
+
 
     link.download =
         project.name +
         ".zip";
 
 
-    document.body.appendChild(link);
+    document.body.appendChild(
+        link
+    );
+
 
     link.click();
 
+
     link.remove();
 
-    URL.revokeObjectURL(url);
+
+    URL.revokeObjectURL(
+        url
+    );
 
 
     setStatus(
@@ -2727,40 +4157,64 @@ async function confirmExport(credit) {
    CRÉDITOS
 ========================================================= */
 
-function insertCredits(html, credit) {
+function insertCredits(
+    html,
+    credit
+) {
 
     let name = "";
+
     let url = "";
 
 
-    if (credit === "multipage") {
+    if (
+        credit === "multipage"
+    ) {
 
-        name = "Multipage Mel";
-        url = "https://multipagemel.pages.dev/";
+        name =
+            "Multipage Mel";
 
-    }
-
-
-    if (credit === "corretores") {
-
-        name = "Apenas Corretores";
-        url = "https://apenascorretores.pages.dev/";
+        url =
+            "https://multipagemel.pages.dev/";
 
     }
 
 
-    if (credit === "homemsite") {
+    if (
+        credit === "corretores"
+    ) {
 
-        name = "HomemSite";
-        url = "https://homemsite.pages.dev/";
+        name =
+            "Apenas Corretores";
+
+        url =
+            "https://apenascorretores.pages.dev/";
 
     }
 
 
-    if (credit === "homemsite-pr") {
+    if (
+        credit === "homemsite"
+    ) {
 
-        name = "HomemSite Paraná";
-        url = "https://homemsite.pages.dev/parana/";
+        name =
+            "HomemSite";
+
+        url =
+            "https://homemsite.pages.dev/";
+
+    }
+
+
+    if (
+        credit === "homemsite-pr"
+    ) {
+
+        name =
+            "HomemSite Paraná";
+
+        url =
+            "https://homemsite.pages.dev/parana/";
 
     }
 
@@ -2785,8 +4239,9 @@ function insertCredits(html, credit) {
 >
 
     <p>
-        Este site garante a segurança na coleta
-        e tratamento de dados, em conformidade com a LGPD.
+        Este site garante a segurança
+        na coleta e tratamento de dados,
+        em conformidade com a LGPD.
     </p>
 
     <p>
@@ -2813,18 +4268,25 @@ function insertCredits(html, credit) {
 
 
     if (
-        html.toLowerCase().includes("</body>")
+        html
+        .toLowerCase()
+        .includes("</body>")
     ) {
 
         return html.replace(
             /<\/body>/i,
-            block + "<" + "/body>"
+            block +
+            "<" +
+            "/body>"
         );
 
     }
 
 
-    return html + block;
+    return (
+        html +
+        block
+    );
 
 }
 
@@ -2841,22 +4303,27 @@ function openModal(
 
     document.getElementById(
         "modalTitle"
-    ).textContent = title;
+    ).textContent =
+        title;
 
 
     document.getElementById(
         "modalBody"
-    ).innerHTML = body;
+    ).innerHTML =
+        body;
 
 
     document.getElementById(
         "modalFooter"
-    ).innerHTML = footer || "";
+    ).innerHTML =
+        footer || "";
 
 
     document.getElementById(
         "modalBackdrop"
-    ).classList.add("open");
+    ).classList.add(
+        "open"
+    );
 
 }
 
@@ -2865,7 +4332,9 @@ function closeModal() {
 
     document.getElementById(
         "modalBackdrop"
-    ).classList.remove("open");
+    ).classList.remove(
+        "open"
+    );
 
 }
 
@@ -2874,7 +4343,7 @@ document.getElementById(
     "modalBackdrop"
 ).addEventListener(
     "click",
-    function (event) {
+    function(event) {
 
         if (
             event.target === this
@@ -2889,10 +4358,128 @@ document.getElementById(
 
 
 /* =========================================================
+   MOBILE
+========================================================= */
+
+function closeMobileExplorer() {
+
+    const element =
+        document.getElementById(
+            "mobileExplorer"
+        );
+
+
+    const instance =
+        bootstrap.Offcanvas
+        .getInstance(
+            element
+        );
+
+
+    if (instance) {
+
+        instance.hide();
+
+    }
+
+}
+
+
+function mobileAction(
+    action
+) {
+
+    closeMobileExplorer();
+
+
+    setTimeout(
+        function() {
+
+            if (
+                action === "generator"
+            ) {
+
+                openGenerator();
+
+            }
+
+
+            if (
+                action === "plugin"
+            ) {
+
+                openPHPImporter();
+
+            }
+
+
+            if (
+                action === "plugins"
+            ) {
+
+                openPluginManager();
+
+            }
+
+
+            if (
+                action === "save"
+            ) {
+
+                saveProject();
+
+            }
+
+
+            if (
+                action === "export"
+            ) {
+
+                openCreditDialog();
+
+            }
+
+        },
+        250
+    );
+
+}
+
+
+function openDesktopExplorer() {
+
+    if (
+        window.innerWidth <= 991
+    ) {
+
+        const element =
+            document.getElementById(
+                "mobileExplorer"
+            );
+
+
+        const instance =
+            bootstrap.Offcanvas
+            .getOrCreateInstance(
+                element
+            );
+
+
+        instance.show();
+
+    }
+
+}
+
+
+/* =========================================================
    TERMINAL
 ========================================================= */
 
-function log(message, type) {
+function log(
+    message,
+    type
+) {
 
     const output =
         document.getElementById(
@@ -2901,7 +4488,9 @@ function log(message, type) {
 
 
     const line =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     line.className =
@@ -2918,10 +4507,13 @@ function log(message, type) {
 
 
     line.textContent =
-        "> " + message;
+        "> " +
+        message;
 
 
-    output.appendChild(line);
+    output.appendChild(
+        line
+    );
 
 
     output.scrollTop =
@@ -2930,7 +4522,9 @@ function log(message, type) {
 }
 
 
-function setStatus(message) {
+function setStatus(
+    message
+) {
 
     document.getElementById(
         "statusText"
@@ -2944,23 +4538,50 @@ function setStatus(message) {
    UTILITÁRIOS
 ========================================================= */
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
-function escapeAttribute(value) {
+function escapeAttribute(
+    value
+) {
 
-    return escapeHTML(value);
+    return escapeHTML(
+        value
+    );
 
 }
+
 </script>
 
 </body>
