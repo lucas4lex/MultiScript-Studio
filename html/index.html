@@ -5,798 +5,629 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MultiScript HTML Editor V14</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
 <style>
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-html,
-body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #11151a;
-    color: #e7eaf0;
-    font-family: "Segoe UI", Arial, sans-serif;
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Consolas,"Courier New",monospace;
+    background:#0d1117;
+    color:#d7dee8;
 }
 
 button,
 input,
 textarea,
-select {
-    font-family: inherit;
+select{
+    font:inherit;
 }
 
-button {
-    cursor: pointer;
+button{
+    cursor:pointer;
 }
 
-.app {
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    grid-template-rows: 48px 1fr 24px;
+.app{
+    width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
 }
 
 /* TOPBAR */
 
-.topbar {
-    background: #1b2027;
-    border-bottom: 1px solid #303640;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 14px;
+.topbar{
+    height:52px;
+    background:#111820;
+    border-bottom:1px solid #27313d;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 12px;
+    flex-shrink:0;
 }
 
-.logo {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    background: linear-gradient(135deg, #1677ff, #744cff);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 800;
+.logo{
+    font-weight:bold;
+    color:#58a6ff;
+    margin-right:12px;
+    white-space:nowrap;
 }
 
-.title {
-    font-size: 14px;
-    font-weight: 600;
+.logo span{
+    color:#8b949e;
+    font-size:11px;
 }
 
-.version {
-    color: #8c96a6;
-    font-size: 11px;
+.tool-btn{
+    background:#171f29;
+    border:1px solid #303b48;
+    color:#d7dee8;
+    padding:7px 11px;
+    border-radius:5px;
+    font-size:12px;
 }
 
-.top-actions {
-    margin-left: auto;
-    display: flex;
-    gap: 6px;
+.tool-btn:hover{
+    background:#202b38;
+    border-color:#58a6ff;
 }
 
-.tool-btn {
-    border: 1px solid #353c47;
-    background: #242a32;
-    color: #dfe4ec;
-    padding: 7px 11px;
-    border-radius: 5px;
-    font-size: 12px;
+.tool-btn.primary{
+    background:#1f6feb;
+    border-color:#388bfd;
+    color:white;
 }
 
-.tool-btn:hover {
-    background: #303741;
+.tool-btn.danger{
+    color:#ff7b72;
 }
 
-.tool-btn.primary {
-    background: #1266d6;
-    border-color: #1975ed;
-    color: #fff;
+.spacer{
+    flex:1;
 }
 
-.tool-btn.success {
-    background: #16794c;
-    border-color: #1b915b;
-    color: #fff;
+.project-name{
+    color:#8b949e;
+    font-size:12px;
 }
 
-/* MAIN */
+/* WORKSPACE */
 
-.main {
-    min-height: 0;
-    display: grid;
-    grid-template-columns: 54px 250px minmax(500px, 1fr) 40%;
+.workspace{
+    flex:1;
+    min-height:0;
+    display:flex;
 }
 
-/* ACTIVITY */
+/* ACTIVITY BAR */
 
-.activity {
-    background: #171b20;
-    border-right: 1px solid #2c323b;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 10px;
-    gap: 5px;
+.activity{
+    width:50px;
+    background:#0b1016;
+    border-right:1px solid #27313d;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top:10px;
+    gap:10px;
 }
 
-.activity-btn {
-    width: 42px;
-    height: 42px;
-    border: 0;
-    background: transparent;
-    color: #818a98;
-    font-size: 18px;
-    border-radius: 5px;
+.activity button{
+    width:36px;
+    height:36px;
+    border:0;
+    background:transparent;
+    color:#7d8590;
+    border-radius:5px;
+    font-size:17px;
 }
 
-.activity-btn:hover,
-.activity-btn.active {
-    background: #272d35;
-    color: #fff;
+.activity button:hover,
+.activity button.active{
+    background:#1b2530;
+    color:#58a6ff;
 }
 
 /* SIDEBAR */
 
-.sidebar {
-    background: #191e24;
-    border-right: 1px solid #303640;
-    overflow: auto;
+.sidebar{
+    width:260px;
+    min-width:260px;
+    background:#10161e;
+    border-right:1px solid #27313d;
+    display:flex;
+    flex-direction:column;
 }
 
-.sidebar-header {
-    height: 44px;
-    display: flex;
-    align-items: center;
-    padding: 0 14px;
-    color: #aab3c0;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .7px;
+.sidebar-title{
+    height:40px;
+    padding:12px 14px;
+    font-size:11px;
+    color:#8b949e;
+    border-bottom:1px solid #202a35;
 }
 
-.project-name {
-    padding: 7px 14px;
-    color: #dce2eb;
-    font-size: 12px;
-    font-weight: 700;
+.explorer{
+    flex:1;
+    overflow:auto;
+    padding:8px;
 }
 
-.file-tree {
-    padding: 3px 7px;
+.tree-root{
+    color:#e6edf3;
+    font-weight:bold;
+    font-size:12px;
+    padding:7px;
 }
 
-.tree-title {
-    color: #7f8997;
-    font-size: 10px;
-    padding: 8px 7px 5px;
-    letter-spacing: .7px;
-    font-weight: 700;
+.tree-section{
+    margin-top:7px;
 }
 
-.file-item {
-    min-height: 31px;
-    padding: 0 9px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-radius: 4px;
-    color: #cbd1db;
-    font-size: 12px;
-    cursor: pointer;
+.tree-section-title{
+    color:#8b949e;
+    font-size:10px;
+    padding:5px 8px;
+    text-transform:uppercase;
 }
 
-.file-item:hover {
-    background: #272d35;
+.file{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#c9d1d9;
+    text-align:left;
+    padding:7px 9px;
+    border-radius:4px;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    gap:7px;
 }
 
-.file-item.active {
-    background: #303742;
-    color: #fff;
+.file:hover{
+    background:#1a222d;
 }
 
-.folder {
-    color: #8e99a8;
-    font-size: 11px;
-    padding: 9px 7px 4px;
+.file.active{
+    background:#1f2935;
+    color:#58a6ff;
 }
 
-.file-html {
-    color: #e44d26;
+.file.locked-file{
+    color:#8b949e;
 }
 
-.file-css {
-    color: #1677ff;
+.file.locked-file:hover{
+    background:#171d25;
 }
 
-.file-js {
-    color: #f3d34a;
+.file-indent{
+    padding-left:25px;
 }
 
-.file-php {
-    color: #777bb4;
+.file-sub{
+    padding-left:45px;
 }
 
-.file-json {
-    color: #e8b84a;
+.folder{
+    color:#e3b341;
 }
 
-.locked-file {
-    color: #8993a1;
+/* EDITOR AREA */
+
+.main{
+    flex:1;
+    min-width:0;
+    display:flex;
+    flex-direction:column;
 }
 
-.plugin-area {
-    margin-top: 15px;
-    border-top: 1px solid #2c323a;
-    padding-top: 8px;
+.tabs{
+    height:38px;
+    display:flex;
+    background:#10161e;
+    border-bottom:1px solid #27313d;
+    overflow-x:auto;
 }
 
-/* EDITOR */
-
-.editor-area {
-    min-width: 0;
-    display: grid;
-    grid-template-rows: 38px 1fr 150px;
-    background: #101419;
+.tab{
+    min-width:120px;
+    max-width:200px;
+    padding:10px 14px;
+    color:#8b949e;
+    border-right:1px solid #27313d;
+    font-size:11px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-.tabs {
-    display: flex;
-    background: #191e24;
-    border-bottom: 1px solid #303640;
-    overflow: hidden;
+.tab.active{
+    color:#e6edf3;
+    background:#161d26;
+    border-top:2px solid #58a6ff;
 }
 
-.tab {
-    min-width: 150px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    gap: 8px;
-    border-right: 1px solid #303640;
-    color: #9da6b4;
-    font-size: 12px;
+.editor-wrap{
+    flex:1;
+    min-height:0;
+    position:relative;
+    display:flex;
+    background:#0d1117;
 }
 
-.tab.active {
-    color: #fff;
-    background: #101419;
-    border-top: 2px solid #1877f2;
+.line-numbers{
+    width:54px;
+    padding:13px 9px;
+    background:#0b1016;
+    color:#484f58;
+    border-right:1px solid #1c252f;
+    text-align:right;
+    font-size:13px;
+    line-height:1.55;
+    overflow:hidden;
+    user-select:none;
+    white-space:pre;
 }
 
-.editor-wrapper {
-    min-height: 0;
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    overflow: hidden;
+#editor{
+    flex:1;
+    resize:none;
+    border:0;
+    outline:0;
+    padding:13px 15px;
+    background:#0d1117;
+    color:#c9d1d9;
+    font-size:13px;
+    line-height:1.55;
+    tab-size:4;
+    white-space:pre;
+    overflow:auto;
 }
 
-.lines {
-    background: #0d1115;
-    color: #56606d;
-    text-align: right;
-    padding: 13px 9px;
-    font: 13px/20px Consolas, monospace;
-    user-select: none;
-    overflow: hidden;
+#editor:read-only{
+    color:#8b949e;
 }
 
-#editor {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    outline: 0;
-    resize: none;
-    padding: 13px 15px;
-    background: #101419;
-    color: #d9dee7;
-    font: 13px/20px Consolas, "Courier New", monospace;
-    tab-size: 4;
-    white-space: pre;
-    overflow: auto;
+/* BOTTOM */
+
+.bottom{
+    height:145px;
+    border-top:1px solid #27313d;
+    background:#0b1016;
+    display:flex;
+    flex-direction:column;
 }
 
-/* TERMINAL */
-
-.terminal {
-    min-height: 0;
-    background: #0b0e11;
-    border-top: 1px solid #303640;
-    overflow: auto;
-    font: 12px/19px Consolas, monospace;
-    padding: 9px 12px;
+.bottom-tabs{
+    height:34px;
+    display:flex;
+    border-bottom:1px solid #202a35;
 }
 
-.terminal-title {
-    color: #788392;
-    margin-bottom: 5px;
+.bottom-tab{
+    padding:9px 14px;
+    font-size:11px;
+    color:#8b949e;
 }
 
-.log-line {
-    color: #9fa8b5;
+.bottom-tab.active{
+    color:#e6edf3;
+    border-bottom:2px solid #58a6ff;
 }
 
-.log-success {
-    color: #6bd58c;
+.terminal{
+    flex:1;
+    padding:10px 13px;
+    overflow:auto;
+    font-size:11px;
+    color:#8b949e;
 }
 
-.log-error {
-    color: #ff7272;
+.terminal-line{
+    margin:3px 0;
 }
 
-.log-info {
-    color: #62a9ff;
+.terminal-line.success{
+    color:#3fb950;
 }
 
-/* PREVIEW */
-
-.preview {
-    min-width: 0;
-    background: #dfe3e8;
-    display: grid;
-    grid-template-rows: 38px 1fr;
-    border-left: 1px solid #303640;
+.terminal-line.warning{
+    color:#d29922;
 }
 
-.preview-header {
-    background: #191e24;
-    border-bottom: 1px solid #303640;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    color: #aeb6c2;
-    font-size: 11px;
-}
-
-.preview-header strong {
-    color: #fff;
-    margin-right: 8px;
-}
-
-#previewFrame {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    background: #fff;
+.terminal-line.error{
+    color:#ff7b72;
 }
 
 /* STATUS */
 
-.statusbar {
-    background: #1266d6;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    font-size: 10px;
+.statusbar{
+    height:25px;
+    background:#1f6feb;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    padding:0 10px;
+    gap:15px;
+    font-size:10px;
+    flex-shrink:0;
 }
 
-.status-right {
-    margin-left: auto;
-    display: flex;
-    gap: 15px;
+.status-spacer{
+    flex:1;
 }
 
-/* MODAL */
+/* MODALS */
 
-.modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.68);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    padding:20px;
 }
 
-.modal-backdrop.open {
-    display: flex;
+.modal-overlay.show{
+    display:flex;
 }
 
-.modal {
-    width: 720px;
-    max-height: 86vh;
-    background: #1b2027;
-    border: 1px solid #3a424d;
-    border-radius: 9px;
-    box-shadow: 0 25px 80px rgba(0,0,0,.5);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+.modal{
+    width:min(760px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:#111820;
+    border:1px solid #303b48;
+    border-radius:8px;
+    box-shadow:0 20px 70px rgba(0,0,0,.5);
 }
 
-.modal-header {
-    min-height: 50px;
-    display: flex;
-    align-items: center;
-    padding: 0 18px;
-    border-bottom: 1px solid #303640;
+.modal.small{
+    width:min(500px,100%);
 }
 
-.modal-header h2 {
-    margin: 0;
-    font-size: 14px;
+.modal-header{
+    padding:15px 18px;
+    border-bottom:1px solid #27313d;
+    display:flex;
+    align-items:center;
 }
 
-.modal-close {
-    margin-left: auto;
-    width: 30px;
-    height: 30px;
-    border: 0;
-    border-radius: 4px;
-    background: transparent;
-    color: #8f99a8;
-    font-size: 18px;
+.modal-header h2{
+    margin:0;
+    font-size:15px;
 }
 
-.modal-close:hover {
-    background: #2a3038;
-    color: #fff;
+.modal-header .close{
+    margin-left:auto;
+    border:0;
+    background:transparent;
+    color:#8b949e;
+    font-size:18px;
 }
 
-.modal-body {
-    padding: 20px;
-    overflow: auto;
+.modal-body{
+    padding:18px;
 }
 
-.modal-footer {
-    min-height: 58px;
-    border-top: 1px solid #303640;
-    padding: 10px 18px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
+.modal-footer{
+    padding:13px 18px;
+    border-top:1px solid #27313d;
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
 }
 
-.form-label {
-    display: block;
-    color: #aeb7c4;
-    font-size: 11px;
-    margin-bottom: 7px;
-    font-weight: 600;
+.field{
+    margin-bottom:15px;
 }
 
-.form-control {
-    width: 100%;
-    border: 1px solid #39414c;
-    background: #11151a;
-    color: #e5e9ef;
-    padding: 10px 11px;
-    border-radius: 5px;
-    outline: 0;
-    font-size: 12px;
+.field label{
+    display:block;
+    margin-bottom:6px;
+    font-size:11px;
+    color:#8b949e;
 }
 
-.form-control:focus {
-    border-color: #1877f2;
+.field input,
+.field textarea,
+.field select{
+    width:100%;
+    background:#0d1117;
+    color:#e6edf3;
+    border:1px solid #303b48;
+    border-radius:5px;
+    padding:10px;
+    outline:none;
 }
 
-textarea.form-control {
-    min-height: 180px;
-    resize: vertical;
-    font-family: Consolas, monospace;
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+    border-color:#58a6ff;
 }
 
-.form-group {
-    margin-bottom: 17px;
+.field textarea{
+    min-height:100px;
+    resize:vertical;
 }
 
-/* TYPE */
-
-.type-question {
-    text-align: center;
-    margin-bottom: 22px;
+.checkbox{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    font-size:12px;
+    color:#c9d1d9;
+    margin:12px 0;
 }
 
-.type-question h3 {
-    margin: 0 0 7px;
-    font-size: 18px;
-    color: #fff;
+.info-box{
+    background:#161d26;
+    border:1px solid #303b48;
+    border-radius:6px;
+    padding:12px;
+    font-size:11px;
+    line-height:1.6;
+    color:#8b949e;
 }
 
-.type-question p {
-    margin: 0;
-    color: #8e98a6;
-    font-size: 12px;
+.info-box strong{
+    color:#e6edf3;
 }
 
-.type-grid {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 12px;
+.generator-menu{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
 }
 
-.type-card {
-    position: relative;
+.generator-option{
+    min-height:90px;
+    background:#151d26;
+    border:1px solid #303b48;
+    border-radius:7px;
+    color:#d7dee8;
+    padding:15px;
+    text-align:left;
 }
 
-.type-card input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
+.generator-option:hover{
+    background:#1c2733;
+    border-color:#58a6ff;
 }
 
-.type-card label {
-    min-height: 145px;
-    border: 1px solid #39414c;
-    border-radius: 8px;
-    background: #14191f;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 15px;
-    cursor: pointer;
+.generator-option .icon{
+    font-size:24px;
+    margin-bottom:8px;
 }
 
-.type-card label:hover {
-    background: #20262e;
-    border-color: #536071;
+.generator-option strong{
+    display:block;
+    margin-bottom:4px;
 }
 
-.type-card input:checked + label {
-    background: #172b48;
-    border-color: #1877f2;
-    box-shadow: inset 0 0 0 1px #1877f2;
+.generator-option span{
+    display:block;
+    color:#8b949e;
+    font-size:10px;
 }
 
-.type-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
-    background: #262d36;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    margin-bottom: 12px;
+.page-list{
+    max-height:180px;
+    overflow:auto;
+    background:#0d1117;
+    border:1px solid #303b48;
+    border-radius:5px;
 }
 
-.type-name {
-    color: #fff;
-    font-size: 13px;
-    font-weight: 700;
+.page-option{
+    width:100%;
+    padding:9px;
+    text-align:left;
+    border:0;
+    border-bottom:1px solid #202a35;
+    background:transparent;
+    color:#c9d1d9;
+    font-size:11px;
 }
 
-.type-desc {
-    color: #818b99;
-    font-size: 10px;
-    margin-top: 5px;
+.page-option:hover{
+    background:#171f29;
 }
 
-/* OPTIONS */
-
-.option-box {
-    border: 1px solid #39414c;
-    background: #14191f;
-    border-radius: 7px;
-    padding: 13px;
-    margin-bottom: 12px;
+.credit-options{
+    display:grid;
+    gap:8px;
 }
 
-.option-check {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    cursor: pointer;
+.credit-option{
+    padding:11px;
+    border:1px solid #303b48;
+    border-radius:5px;
+    background:#151d26;
+    color:#c9d1d9;
+    text-align:left;
 }
 
-.option-check input {
-    margin-top: 3px;
-    accent-color: #1877f2;
+.credit-option:hover{
+    border-color:#58a6ff;
+    background:#1b2530;
 }
 
-.option-check strong {
-    display: block;
-    color: #fff;
-    font-size: 12px;
+.plugin-list{
+    display:grid;
+    gap:7px;
 }
 
-.option-check span {
-    display: block;
-    color: #7f8996;
-    font-size: 10px;
-    margin-top: 4px;
+.plugin-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px;
+    background:#0d1117;
+    border:1px solid #27313d;
+    border-radius:5px;
 }
 
-/* PLUGINS */
-
-.plugin-list {
-    border: 1px solid #353d48;
-    border-radius: 5px;
-    background: #11151a;
-    max-height: 170px;
-    overflow: auto;
+.plugin-row span{
+    flex:1;
+    font-size:11px;
 }
 
-.plugin-row {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 9px 11px;
-    border-bottom: 1px solid #252b33;
-    font-size: 11px;
+.plugin-row button{
+    background:#171f29;
+    color:#ff7b72;
+    border:1px solid #303b48;
+    border-radius:4px;
+    padding:5px 8px;
 }
 
-.plugin-row:last-child {
-    border-bottom: 0;
-}
+/* RESPONSIVE */
 
-.plugin-row input {
-    accent-color: #1877f2;
-}
-
-.no-plugins {
-    padding: 13px;
-    color: #737d8a;
-    font-size: 11px;
-}
-
-/* CREDIT */
-
-.credit-grid {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 9px;
-}
-
-.credit-option {
-    border: 1px solid #39414c;
-    background: #14191f;
-    border-radius: 6px;
-    padding: 12px;
-    cursor: pointer;
-}
-
-.credit-option:hover {
-    border-color: #596576;
-    background: #1d232b;
-}
-
-.credit-option strong {
-    display: block;
-    color: #fff;
-    font-size: 12px;
-}
-
-.credit-option span {
-    display: block;
-    margin-top: 4px;
-    color: #7f8996;
-    font-size: 10px;
-}
-
-/* LOCKED */
-
-.locked-panel {
-    text-align: center;
-    padding: 20px 10px;
-}
-
-.locked-icon {
-    font-size: 40px;
-    margin-bottom: 12px;
-}
-
-.locked-panel h3 {
-    margin: 0 0 8px;
-    color: #fff;
-}
-
-.locked-panel p {
-    color: #858f9d;
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-/* MOBILE */
-
-@media (max-width:1100px) {
-
-    .main {
-        grid-template-columns: 54px 210px minmax(400px,1fr);
+@media(max-width:900px){
+    .sidebar{
+        width:210px;
+        min-width:210px;
     }
 
-    .preview {
-        display: none;
+    .tool-btn{
+        padding:6px 8px;
     }
 
-    .top-actions .optional-action {
-        display: none;
+    .logo{
+        display:none;
     }
 }
 
-@media (max-width:760px) {
-
-    .app {
-        grid-template-rows: 56px 1fr 24px;
+@media(max-width:700px){
+    .sidebar{
+        display:none;
     }
 
-    .topbar {
-        padding: 0 9px;
+    .activity{
+        width:42px;
     }
 
-    .title {
-        font-size: 12px;
+    .generator-menu{
+        grid-template-columns:1fr;
     }
 
-    .version {
-        display: none;
+    .project-name{
+        display:none;
     }
 
-    .top-actions {
-        gap: 4px;
+    .topbar{
+        overflow-x:auto;
     }
-
-    .top-actions .tool-btn {
-        padding: 6px 8px;
-        font-size: 10px;
-    }
-
-    .main {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .activity,
-    .sidebar {
-        display: none;
-    }
-
-    .editor-area {
-        flex: 1;
-        min-height: 0;
-        grid-template-rows: 38px minmax(0,1fr) 110px;
-    }
-
-    .editor-wrapper {
-        grid-template-columns: 38px 1fr;
-    }
-
-    .lines {
-        font-size: 11px;
-        padding-right: 6px;
-    }
-
-    #editor {
-        font-size: 12px;
-        padding: 10px;
-    }
-
-    .type-grid,
-    .credit-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .modal {
-        width: calc(100vw - 24px);
-        max-height: calc(100vh - 24px);
-    }
-}
-
-::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #11151a;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #353d48;
-    border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #46505d;
 }
 </style>
 </head>
@@ -805,284 +636,96 @@ textarea.form-control {
 
 <div class="app">
 
-<header class="topbar">
+    <header class="topbar">
 
-    <div class="logo">MS</div>
-
-    <div>
-        <div class="title">
-            MultiScript HTML Editor
+        <div class="logo">
+            MultiScript
+            <span>V14</span>
         </div>
 
-        <div class="version">
-            V14.0.0 — Page Generator
-        </div>
-    </div>
+        <button class="tool-btn" onclick="newProject()">＋ Novo Projeto</button>
+        <button class="tool-btn primary" onclick="openGeneratorMenu()">＋ Gerar Página</button>
+        <button class="tool-btn" onclick="document.getElementById('phpInput').click()">＋ Plugin PHP</button>
+        <button class="tool-btn" onclick="openPlugins()">Plugins</button>
+        <button class="tool-btn" onclick="formatHTML()">Formatar</button>
+        <button class="tool-btn" onclick="saveProject()">Salvar</button>
+        <button class="tool-btn" onclick="previewProject()">Preview</button>
+        <button class="tool-btn" onclick="openCreditModal()">Exportar ZIP</button>
 
-    <div class="top-actions">
+        <div class="spacer"></div>
 
-        <button
-            class="tool-btn success"
-            onclick="openNewProject()"
-        >
-            ＋ Novo Projeto
-        </button>
+        <div class="project-name" id="projectName">MEU-PROJETO</div>
 
-        <button
-            class="tool-btn"
-            onclick="openGenerator()"
-        >
-            ＋ Gerar Página
-        </button>
+    </header>
 
-        <button
-            class="tool-btn optional-action"
-            onclick="openPHPImporter()"
-        >
-            ＋ Plugin PHP
-        </button>
+    <div class="workspace">
 
-        <button
-            class="tool-btn optional-action"
-            onclick="openPluginManager()"
-        >
-            Plugins
-        </button>
+        <aside class="activity">
 
-        <button
-            class="tool-btn optional-action"
-            onclick="formatHTML()"
-        >
-            Formatar
-        </button>
+            <button class="active" title="Explorer" onclick="showExplorer()">📁</button>
+            <button title="Gerador" onclick="openGeneratorMenu()">＋</button>
+            <button title="Plugins" onclick="openPlugins()">🧩</button>
+            <button title="Preview" onclick="previewProject()">▶</button>
 
-        <button
-            class="tool-btn"
-            onclick="saveProject()"
-        >
-            Salvar
-        </button>
+        </aside>
 
-        <button
-            class="tool-btn optional-action"
-            onclick="previewPage()"
-        >
-            Preview
-        </button>
+        <aside class="sidebar">
 
-        <button
-            class="tool-btn primary"
-            onclick="openCreditDialog()"
-        >
-            Exportar ZIP
-        </button>
+            <div class="sidebar-title">
+                EXPLORER
+            </div>
 
-    </div>
+            <div class="explorer" id="explorer"></div>
 
-</header>
+        </aside>
 
+        <main class="main">
 
-<main class="main">
+            <div class="tabs" id="tabs"></div>
 
-<aside class="activity">
+            <div class="editor-wrap">
 
-    <button class="activity-btn active">
-        ▤
-    </button>
+                <div class="line-numbers" id="lineNumbers">1</div>
 
-    <button
-        class="activity-btn"
-        onclick="openNewProject()"
-    >
-        ＋
-    </button>
+                <textarea
+                    id="editor"
+                    spellcheck="false"
+                    oninput="editorInput()"
+                    onscroll="syncEditorScroll()"
+                    onkeydown="editorKeydown(event)"
+                ></textarea>
 
-    <button
-        class="activity-btn"
-        onclick="openGenerator()"
-    >
-        ◇
-    </button>
+            </div>
 
-    <button
-        class="activity-btn"
-        onclick="openPluginManager()"
-    >
-        PHP
-    </button>
+            <div class="bottom">
 
-</aside>
+                <div class="bottom-tabs">
+                    <div class="bottom-tab active">TERMINAL</div>
+                    <div class="bottom-tab">PROBLEMS</div>
+                </div>
 
+                <div class="terminal" id="terminal"></div>
 
-<aside class="sidebar">
+            </div>
 
-    <div class="sidebar-header">
-        EXPLORER
-    </div>
-
-    <div
-        class="project-name"
-        id="projectNameDisplay"
-    >
-        ▾ MEU-PROJETO
-    </div>
-
-    <div
-        id="fileTree"
-        class="file-tree"
-    ></div>
-
-    <div class="plugin-area">
-
-        <div class="tree-title">
-            PLUGINS DO USUÁRIO
-        </div>
-
-        <div
-            id="pluginTree"
-            class="file-tree"
-        ></div>
+        </main>
 
     </div>
 
-</aside>
+    <footer class="statusbar">
 
-
-<section class="editor-area">
-
-    <div class="tabs">
-
-        <div
-            class="tab active"
-            id="currentTab"
-        >
-            <span class="file-html">
-                ▤
-            </span>
-
-            <span>
-                index.html
-            </span>
-        </div>
-
-    </div>
-
-
-    <div class="editor-wrapper">
-
-        <div
-            id="lineNumbers"
-            class="lines"
-        >
-            1
-        </div>
-
-        <textarea
-            id="editor"
-            spellcheck="false"
-            oninput="editorInput()"
-            onscroll="syncEditorScroll()"
-            onkeydown="handleEditorKey(event)"
-        ></textarea>
-
-    </div>
-
-
-    <div class="terminal">
-
-        <div class="terminal-title">
-            TERMINAL — MULTISCRIPT
-        </div>
-
-        <div id="terminalOutput"></div>
-
-    </div>
-
-</section>
-
-
-<section class="preview">
-
-    <div class="preview-header">
-
-        <strong>
-            PREVIEW
-        </strong>
-
-        <span id="previewFile">
-            index.html
-        </span>
-
-    </div>
-
-    <iframe
-        id="previewFrame"
-    ></iframe>
-
-</section>
-
-</main>
-
-
-<footer class="statusbar">
-
-    <span id="statusText">
-        Pronto
-    </span>
-
-    <div class="status-right">
-
-        <span id="fileStatus">
-            index.html
-        </span>
-
-        <span>HTML</span>
+        <span id="statusFile">index.html</span>
         <span>UTF-8</span>
-        <span>V14</span>
+        <span>HTML</span>
+        <span id="statusModified">Pronto</span>
 
-    </div>
+        <div class="status-spacer"></div>
 
-</footer>
+        <span>MultiScript V14.0.0</span>
 
-</div>
-
-
-<div
-    id="modalBackdrop"
-    class="modal-backdrop"
->
-
-    <div class="modal">
-
-        <div class="modal-header">
-
-            <h2 id="modalTitle">
-                MultiScript
-            </h2>
-
-            <button
-                class="modal-close"
-                onclick="closeModal()"
-            >
-                ×
-            </button>
-
-        </div>
-
-        <div
-            class="modal-body"
-            id="modalBody"
-        ></div>
-
-        <div
-            class="modal-footer"
-            id="modalFooter"
-        ></div>
-
-    </div>
+    </footer>
 
 </div>
-
 
 <input
     type="file"
@@ -1092,12 +735,277 @@ textarea.form-control {
     hidden
 >
 
+<!-- GERADOR -->
+
+<div class="modal-overlay" id="generatorModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>Gerador de Páginas</h2>
+
+            <button class="close" onclick="closeModal('generatorModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div class="generator-menu">
+
+                <button class="generator-option" onclick="openMenuPageGenerator()">
+
+                    <div class="icon">📄</div>
+
+                    <strong>MENU</strong>
+
+                    <span>
+                        index.html, categorias.html e institucional.html
+                    </span>
+
+                </button>
+
+                <button class="generator-option" onclick="openCategoryGenerator()">
+
+                    <div class="icon">📁</div>
+
+                    <strong>CATEGORIAS</strong>
+
+                    <span>
+                        Gera somente páginas de categorias.
+                    </span>
+
+                </button>
+
+                <button class="generator-option" onclick="openInstitutionalGenerator()">
+
+                    <div class="icon">🏢</div>
+
+                    <strong>INSTITUCIONAL</strong>
+
+                    <span>
+                        Gera somente páginas institucionais.
+                    </span>
+
+                </button>
+
+                <button class="generator-option" onclick="openSubpageGenerator()">
+
+                    <div class="icon">📑</div>
+
+                    <strong>SUBPÁGINA</strong>
+
+                    <span>
+                        Gera páginas dentro da estrutura de Categorias ou Institucional.
+                    </span>
+
+                </button>
+
+                <button class="generator-option" onclick="openSitemapGenerator()">
+
+                    <div class="icon">🗺️</div>
+
+                    <strong>SITEMAP</strong>
+
+                    <span>
+                        Gera o mapa XML do site.
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FORMULÁRIO -->
+
+<div class="modal-overlay" id="formModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2 id="formTitle">Gerador</h2>
+
+            <button class="close" onclick="closeModal('formModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body" id="formBody"></div>
+
+        <div class="modal-footer">
+
+            <button class="tool-btn" onclick="closeModal('formModal')">
+                Cancelar
+            </button>
+
+            <button class="tool-btn primary" id="formSubmit">
+                Gerar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PLUGINS -->
+
+<div class="modal-overlay" id="pluginModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>Plugins PHP</h2>
+
+            <button class="close" onclick="closeModal('pluginModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div class="info-box">
+                <strong>Plugins do usuário</strong><br>
+                O MultiScript não fornece plugins PHP prontos.
+                Importe seus próprios arquivos .php para o projeto.
+                O PHP será executado somente no servidor após a publicação.
+            </div>
+
+            <br>
+
+            <div id="pluginList" class="plugin-list"></div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button class="tool-btn" onclick="document.getElementById('phpInput').click()">
+                ＋ Importar PHP
+            </button>
+
+            <button class="tool-btn" onclick="closeModal('pluginModal')">
+                Fechar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PROTECTED -->
+
+<div class="modal-overlay" id="protectedModal">
+
+    <div class="modal small">
+
+        <div class="modal-header">
+
+            <h2>Arquivo protegido</h2>
+
+            <button class="close" onclick="closeModal('protectedModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div class="info-box">
+
+                🔒 <strong>Arquivo protegido</strong><br><br>
+
+                <code>multiscript.json</code> é um arquivo interno
+                do MultiScript e não pode ser editado manualmente.
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button class="tool-btn" onclick="closeModal('protectedModal')">
+                Fechar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CRÉDITOS -->
+
+<div class="modal-overlay" id="creditModal">
+
+    <div class="modal small">
+
+        <div class="modal-header">
+
+            <h2>Crédito do projeto</h2>
+
+            <button class="close" onclick="closeModal('creditModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <p style="font-size:12px;color:#8b949e">
+                Escolha o crédito que será incluído no projeto antes
+                da exportação ZIP.
+            </p>
+
+            <div class="credit-options">
+
+                <button class="credit-option" onclick="exportZip('none')">
+                    Sem crédito
+                </button>
+
+                <button class="credit-option" onclick="exportZip('multipagemel')">
+                    Multipage Mel
+                </button>
+
+                <button class="credit-option" onclick="exportZip('apenascorretores')">
+                    Apenas Corretores
+                </button>
+
+                <button class="credit-option" onclick="exportZip('homemsite')">
+                    HomemSite
+                </button>
+
+                <button class="credit-option" onclick="exportZip('homemsite-parana')">
+                    HomemSite Paraná
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
+
 "use strict";
 
 /* =========================================================
-   PROJETO
+   ESTADO DO PROJETO
 ========================================================= */
 
 let project = {
@@ -1106,28 +1014,43 @@ let project = {
 
     files: {
 
-        "index.html":
-            createInitialHTML("MEU-PROJETO"),
+        "index.html": "",
+        "categorias.html": "",
+        "institucional.html": "",
 
-        "style.css":
-`body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}`,
+        "style.css": "",
+        "script.js": "",
 
-        "script.js":
-`console.log(
-    "script.js carregado."
-);`,
-
-        "multiscript.json":
-            createMultiScriptJSON(
-                "MEU-PROJETO"
-            )
+        "multiscript.json": ""
 
     },
 
     plugins: {},
+
+    pages: {
+
+        "index.html": {
+            type: "menu",
+            name: "Início",
+            slug: "",
+            url: "/"
+        },
+
+        "categorias.html": {
+            type: "menu",
+            name: "Categorias",
+            slug: "categorias",
+            url: "/categorias"
+        },
+
+        "institucional.html": {
+            type: "menu",
+            name: "Institucional",
+            slug: "institucional",
+            url: "/institucional"
+        }
+
+    },
 
     protectedFiles: [
         "multiscript.json"
@@ -1135,642 +1058,116 @@ let project = {
 
 };
 
-
 let currentFile = "index.html";
+let modified = false;
+let pendingGenerator = null;
 
 
 /* =========================================================
-   INÍCIO
+   BASE HTML
 ========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        loadProject();
-
-        ensureProjectMetadata();
-
-        renderProjectName();
-
-        renderFiles();
-
-        renderPlugins();
-
-        if (
-            project.files[currentFile]
-        ) {
-
-            openFile(currentFile);
-
-        } else {
-
-            const first =
-                Object.keys(
-                    project.files
-                )[0];
-
-            if (first) {
-
-                openFile(first);
-
-            }
-
-        }
-
-        previewPage();
-
-        log(
-            "MultiScript HTML Editor V14 iniciado.",
-            "success"
-        );
-
-        log(
-            "multiscript.json protegido.",
-            "info"
-        );
-
-    }
-);
-
-
-/* =========================================================
-   METADADOS
-========================================================= */
-
-function createMultiScriptJSON(
-    name
-) {
-
-    return JSON.stringify({
-
-        multiscript: {
-
-            version: "14.0.0",
-
-            generator:
-                "MultiScript HTML Editor",
-
-            project:
-                name,
-
-            type:
-                "html-project"
-
-        },
-
-        files: {
-
-            index: true,
-
-            style: true,
-
-            script: true,
-
-            plugins: true
-
-        }
-
-    }, null, 4);
-
-}
-
-
-function ensureProjectMetadata() {
-
-    if (
-        !project.files
-    ) {
-
-        project.files = {};
-
-    }
-
-
-    if (
-        !project.protectedFiles
-    ) {
-
-        project.protectedFiles = [];
-
-    }
-
-
-    if (
-        !project.protectedFiles.includes(
-            "multiscript.json"
-        )
-    ) {
-
-        project.protectedFiles.push(
-            "multiscript.json"
-        );
-
-    }
-
-
-    if (
-        !project.files[
-            "multiscript.json"
-        ]
-    ) {
-
-        project.files[
-            "multiscript.json"
-        ] =
-            createMultiScriptJSON(
-                project.name
-            );
-
-    }
-
-}
-
-
-/* =========================================================
-   NOVO PROJETO
-========================================================= */
-
-function openNewProject() {
-
-    const body = `
-
-        <div class="form-group">
-
-            <label class="form-label">
-                Nome do projeto
-            </label>
-
-            <input
-                id="newProjectName"
-                class="form-control"
-                value="MEU-PROJETO"
-                placeholder="Ex.: meu-site"
-            >
-
-        </div>
-
-        <div class="option-box">
-
-            <label class="option-check">
-
-                <input
-                    type="checkbox"
-                    id="newCreateIndex"
-                    checked
-                >
-
-                <div>
-                    <strong>
-                        Criar index.html
-                    </strong>
-
-                    <span>
-                        Página inicial do projeto.
-                    </span>
-                </div>
-
-            </label>
-
-        </div>
-
-        <div class="option-box">
-
-            <label class="option-check">
-
-                <input
-                    type="checkbox"
-                    id="newCreateCSS"
-                    checked
-                >
-
-                <div>
-                    <strong>
-                        Criar style.css
-                    </strong>
-
-                    <span>
-                        Folha de estilos principal.
-                    </span>
-                </div>
-
-            </label>
-
-        </div>
-
-        <div class="option-box">
-
-            <label class="option-check">
-
-                <input
-                    type="checkbox"
-                    id="newCreateJS"
-                    checked
-                >
-
-                <div>
-                    <strong>
-                        Criar script.js
-                    </strong>
-
-                    <span>
-                        JavaScript principal.
-                    </span>
-                </div>
-
-            </label>
-
-        </div>
-
-        <div class="option-box">
-
-            <label class="option-check">
-
-                <input
-                    type="checkbox"
-                    id="newCreateJSON"
-                    checked
-                >
-
-                <div>
-                    <strong>
-                        Criar multiscript.json 🔒
-                    </strong>
-
-                    <span>
-                        Arquivo interno e não editável
-                        do MultiScript.
-                    </span>
-                </div>
-
-            </label>
-
-        </div>
-
-        <div class="option-box">
-
-            <label class="option-check">
-
-                <input
-                    type="checkbox"
-                    id="newCreatePlugins"
-                    checked
-                >
-
-                <div>
-                    <strong>
-                        Criar pasta plugins/
-                    </strong>
-
-                    <span>
-                        Reservada para seus próprios
-                        plugins PHP.
-                    </span>
-                </div>
-
-            </label>
-
-        </div>
-
-    `;
-
-
-    openModal(
-        "CRIAR NOVO PROJETO",
-        body,
-        `
-            <button
-                class="tool-btn"
-                onclick="closeModal()"
-            >
-                Cancelar
-            </button>
-
-            <button
-                class="tool-btn primary"
-                onclick="createNewProject()"
-            >
-                Criar Projeto
-            </button>
-        `
-    );
-
-}
-
-
-function createNewProject() {
-
-    const rawName =
-        document.getElementById(
-            "newProjectName"
-        ).value.trim();
-
-
-    if (!rawName) {
-
-        alert(
-            "Informe o nome do projeto."
-        );
-
-        return;
-
-    }
-
-
-    const name =
-        rawName
-            .replace(
-                /[<>:"/\\|?*]/g,
-                "-"
-            )
-            .trim();
-
-
-    const createIndex =
-        document.getElementById(
-            "newCreateIndex"
-        ).checked;
-
-
-    const createCSS =
-        document.getElementById(
-            "newCreateCSS"
-        ).checked;
-
-
-    const createJS =
-        document.getElementById(
-            "newCreateJS"
-        ).checked;
-
-
-    const createJSON =
-        document.getElementById(
-            "newCreateJSON"
-        ).checked;
-
-
-    const createPlugins =
-        document.getElementById(
-            "newCreatePlugins"
-        ).checked;
-
-
-    const files = {};
-
-
-    if (createIndex) {
-
-        files["index.html"] =
-            createInitialHTML(
-                name
-            );
-
-    }
-
-
-    if (createCSS) {
-
-        files["style.css"] =
-`body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}`;
-
-    }
-
-
-    if (createJS) {
-
-        files["script.js"] =
-`console.log(
-    "Projeto ${escapeJSString(name)} iniciado."
-);`;
-
-    }
-
-
-    if (createJSON) {
-
-        files["multiscript.json"] =
-            createMultiScriptJSON(
-                name
-            );
-
-    }
-
-
-    if (createPlugins) {
-
-        files["plugins/.gitkeep"] =
-            "";
-
-    }
-
-
-    project = {
-
-        name: name,
-
-        files: files,
-
-        plugins: {},
-
-        protectedFiles:
-            createJSON
-                ? ["multiscript.json"]
-                : []
-
-    };
-
-
-    currentFile =
-        createIndex
-            ? "index.html"
-            : Object.keys(files)
-                .find(
-                    file =>
-                        file !==
-                        "multiscript.json"
-                );
-
-
-    saveProject();
-
-    renderProjectName();
-
-    renderFiles();
-
-    renderPlugins();
-
-
-    if (currentFile) {
-
-        openFile(
-            currentFile
-        );
-
-    }
-
-
-    closeModal();
-
-
-    log(
-        "Novo projeto criado: " +
-        name,
-        "success"
-    );
-
-
-    if (createJSON) {
-
-        log(
-            "multiscript.json criado e protegido.",
-            "success"
-        );
-
-    }
-
-
-    if (createPlugins) {
-
-        log(
-            "Pasta plugins/ preparada.",
-            "info"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   HTML INICIAL
-========================================================= */
-
-function createInitialHTML(
-    name
-) {
+function baseHTML(title, body){
 
     return `<!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>${escapeHTML(name)}</title>
-
-<link
-    rel="stylesheet"
-    href="style.css"
->
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapeHTML(title)}</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <header>
-
-    <h1>
-        ${escapeHTML(name)}
-    </h1>
-
+<nav>
+<a href="index.html">Início</a>
+<a href="categorias.html">Categorias</a>
+<a href="institucional.html">Institucional</a>
+</nav>
 </header>
 
 <main>
 
-    <h2>
-        Bem-vindo
-    </h2>
-
-    <p>
-        Este projeto foi criado pelo
-        MultiScript HTML Editor V14.
-    </p>
+${body}
 
 </main>
 
 <script src="script.js"><\/script>
-
 </body>
-
 </html>`;
 
 }
 
 
 /* =========================================================
-   SALVAR / CARREGAR
+   ESCAPE
 ========================================================= */
 
-function saveProject() {
+function escapeHTML(value){
 
-    ensureProjectMetadata();
-
-    localStorage.setItem(
-        "multiscript-v14-project",
-        JSON.stringify(project)
-    );
-
-    setStatus(
-        "Projeto salvo"
-    );
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
 
-function loadProject() {
+/* =========================================================
+   SLUG
+========================================================= */
 
-    try {
+function slugify(value){
 
-        const saved =
-            localStorage.getItem(
-                "multiscript-v14-project"
-            );
+    return String(value)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g,"-")
+        .replace(/^-+|-+$/g,"");
 
-
-        if (!saved) {
-
-            return;
-
-        }
-
-
-        const parsed =
-            JSON.parse(saved);
+}
 
 
-        if (
-            parsed &&
-            parsed.files
-        ) {
+/* =========================================================
+   TERMINAL
+========================================================= */
 
-            project = parsed;
+function terminal(message, type = ""){
 
-        }
+    const terminalBox = document.getElementById("terminal");
+
+    const line = document.createElement("div");
+
+    line.className = "terminal-line " + type;
+
+    line.textContent =
+        `[${new Date().toLocaleTimeString()}] ${message}`;
+
+    terminalBox.appendChild(line);
+
+    terminalBox.scrollTop = terminalBox.scrollHeight;
+
+}
 
 
-        if (!project.plugins) {
+/* =========================================================
+   MODAIS
+========================================================= */
 
-            project.plugins = {};
+function closeModal(id){
 
-        }
+    document.getElementById(id).classList.remove("show");
 
-    } catch (error) {
+}
 
-        log(
-            "Erro ao carregar projeto.",
-            "error"
-        );
+function openModal(id){
 
-    }
+    document.getElementById(id).classList.add("show");
 
 }
 
@@ -1779,376 +1176,269 @@ function loadProject() {
    EXPLORER
 ========================================================= */
 
-function renderProjectName() {
+function renderExplorer(){
 
-    document.getElementById(
-        "projectNameDisplay"
-    ).textContent =
-        "▾ " +
-        project.name;
+    const explorer = document.getElementById("explorer");
 
-}
+    explorer.innerHTML = "";
 
+    const root = document.createElement("div");
 
-function renderFiles() {
+    root.className = "tree-root";
 
-    const tree =
-        document.getElementById(
-            "fileTree"
-        );
+    root.textContent = "📁 " + project.name;
 
+    explorer.appendChild(root);
 
-    tree.innerHTML = "";
+    const menuFiles = [
+        "index.html",
+        "categorias.html",
+        "institucional.html"
+    ];
 
+    const menuTitle = document.createElement("div");
 
-    const files =
-        Object.keys(
-            project.files
-        ).sort();
+    menuTitle.className = "tree-section-title";
 
+    menuTitle.textContent = "MENU";
 
-    const folders = {};
+    explorer.appendChild(menuTitle);
 
+    menuFiles.forEach(file => {
 
-    files.forEach(
-        function(file) {
+        if(project.files[file]){
 
-            const parts =
-                file.split("/");
-
-
-            if (
-                parts.length === 1
-            ) {
-
-                addFileItem(
-                    tree,
-                    file,
-                    0
-                );
-
-            } else {
-
-                const folder =
-                    parts
-                        .slice(0,-1)
-                        .join("/");
-
-
-                if (
-                    !folders[folder]
-                ) {
-
-                    folders[folder] = [];
-
-                }
-
-
-                folders[folder].push(
-                    file
-                );
-
-            }
+            addFileButton(explorer,file,"file");
 
         }
-    );
 
+    });
 
-    Object.keys(folders)
-        .sort()
-        .forEach(
-            function(folder) {
+    const categories = Object.entries(project.pages)
+        .filter(([file,data]) => data.type === "category");
 
-                const folderDiv =
-                    document.createElement(
-                        "div"
-                    );
+    const categoryTitle = document.createElement("div");
 
+    categoryTitle.className = "tree-section-title";
 
-                folderDiv.className =
-                    "folder";
+    categoryTitle.textContent = "CATEGORIAS";
 
+    explorer.appendChild(categoryTitle);
 
-                folderDiv.textContent =
-                    "▾ " +
-                    folder;
+    categories.forEach(([file,data]) => {
 
-
-                tree.appendChild(
-                    folderDiv
-                );
-
-
-                folders[folder]
-                    .forEach(
-                        function(file) {
-
-                            addFileItem(
-                                tree,
-                                file,
-                                1
-                            );
-
-                        }
-                    );
-
-            }
+        addFileButton(
+            explorer,
+            file,
+            "file file-indent",
+            "📁"
         );
 
-}
+        const children = Object.entries(project.pages)
+            .filter(([childFile,child]) =>
+                child.type === "subpage" &&
+                child.parent === file
+            );
 
+        children.forEach(([childFile]) => {
 
-function addFileItem(
-    container,
-    file,
-    level
-) {
+            addFileButton(
+                explorer,
+                childFile,
+                "file file-sub",
+                "📄"
+            );
 
-    const item =
-        document.createElement(
-            "div"
+        });
+
+    });
+
+    const institutional = Object.entries(project.pages)
+        .filter(([file,data]) => data.type === "institutional");
+
+    const institutionalTitle = document.createElement("div");
+
+    institutionalTitle.className = "tree-section-title";
+
+    institutionalTitle.textContent = "INSTITUCIONAL";
+
+    explorer.appendChild(institutionalTitle);
+
+    institutional.forEach(([file,data]) => {
+
+        addFileButton(
+            explorer,
+            file,
+            "file file-indent",
+            "🏢"
         );
 
+        const children = Object.entries(project.pages)
+            .filter(([childFile,child]) =>
+                child.type === "subpage" &&
+                child.parent === file
+            );
 
-    const locked =
-        isProtectedFile(file);
+        children.forEach(([childFile]) => {
 
+            addFileButton(
+                explorer,
+                childFile,
+                "file file-sub",
+                "📄"
+            );
 
-    item.className =
-        "file-item" +
-        (
-            file === currentFile
-                ? " active"
-                : ""
-        );
+        });
 
+    });
 
-    item.style.paddingLeft =
-        (
-            9 +
-            level * 17
-        ) +
-        "px";
+    const systemTitle = document.createElement("div");
 
+    systemTitle.className = "tree-section-title";
 
-    const icon =
-        document.createElement(
-            "span"
-        );
+    systemTitle.textContent = "SISTEMA";
 
+    explorer.appendChild(systemTitle);
 
-    if (locked) {
-
-        icon.className =
-            "locked-file";
-
-        icon.textContent =
-            "🔒";
-
-    } else {
-
-        icon.textContent =
-            getFileSymbol(file);
-
-    }
-
-
-    const name =
-        document.createElement(
-            "span"
-        );
-
-
-    name.textContent =
-        file.split("/").pop();
-
-
-    item.appendChild(icon);
-
-    item.appendChild(name);
-
-
-    if (locked) {
-
-        item.title =
-            "Arquivo protegido pelo MultiScript";
-
-    }
-
-
-    item.onclick =
-        function() {
-
-            openFile(file);
-
-        };
-
-
-    container.appendChild(item);
-
-}
-
-
-function getFileSymbol(
-    file
-) {
-
-    const ext =
-        file
-            .split(".")
-            .pop()
-            .toLowerCase();
-
-
-    if (ext === "html") {
-        return "▤";
-    }
-
-    if (ext === "css") {
-        return "#";
-    }
-
-    if (ext === "js") {
-        return "JS";
-    }
-
-    if (ext === "php") {
-        return "PHP";
-    }
-
-    if (ext === "json") {
-        return "{}";
-    }
-
-    return "•";
-
-}
-
-
-function isProtectedFile(
-    file
-) {
-
-    return (
-        project.protectedFiles &&
-        project.protectedFiles.includes(
-            file
+    Object.keys(project.files)
+        .filter(file =>
+            !menuFiles.includes(file) &&
+            !project.pages[file] &&
+            file !== "style.css" &&
+            file !== "script.js" &&
+            file !== "multiscript.json" &&
+            !file.startsWith("plugins/")
         )
+        .forEach(file => {
+
+            addFileButton(explorer,file,"file");
+
+        });
+
+    addFileButton(
+        explorer,
+        "style.css",
+        "file",
+        "🎨"
     );
+
+    addFileButton(
+        explorer,
+        "script.js",
+        "file",
+        "⚙️"
+    );
+
+    if(project.files["sitemap.xml"]){
+
+        addFileButton(
+            explorer,
+            "sitemap.xml",
+            "file",
+            "🗺️"
+        );
+
+    }
+
+    const plugins = Object.keys(project.files)
+        .filter(file => file.startsWith("plugins/"));
+
+    if(plugins.length){
+
+        const pluginTitle = document.createElement("div");
+
+        pluginTitle.className = "tree-section-title";
+
+        pluginTitle.textContent = "PLUGINS PHP";
+
+        explorer.appendChild(pluginTitle);
+
+        plugins.forEach(file => {
+
+            addFileButton(
+                explorer,
+                file,
+                "file",
+                "🧩"
+            );
+
+        });
+
+    }
+
+    addFileButton(
+        explorer,
+        "multiscript.json",
+        "file locked-file",
+        "🔒"
+    );
+
+}
+
+
+function addFileButton(container,file,className,icon){
+
+    const button = document.createElement("button");
+
+    button.className = className;
+
+    const data = project.pages[file];
+
+    let label = file;
+
+    if(data){
+
+        label = data.name + " — " + file;
+
+    }
+
+    button.innerHTML =
+        `<span>${icon || getFileIcon(file)}</span><span>${escapeHTML(label)}</span>`;
+
+    button.onclick = () => openFile(file);
+
+    if(file === currentFile){
+
+        button.classList.add("active");
+
+    }
+
+    container.appendChild(button);
+
+}
+
+
+function getFileIcon(file){
+
+    if(file.endsWith(".html")) return "📄";
+    if(file.endsWith(".css")) return "🎨";
+    if(file.endsWith(".js")) return "⚙️";
+    if(file.endsWith(".php")) return "🧩";
+    if(file.endsWith(".xml")) return "🗺️";
+    if(file.endsWith(".json")) return "🔒";
+
+    return "📄";
 
 }
 
 
 /* =========================================================
-   PLUGINS
+   TABS
 ========================================================= */
 
-function renderPlugins() {
+function renderTabs(){
 
-    const tree =
-        document.getElementById(
-            "pluginTree"
-        );
+    const tabs = document.getElementById("tabs");
 
+    tabs.innerHTML = "";
 
-    tree.innerHTML = "";
+    const tab = document.createElement("div");
 
+    tab.className = "tab active";
 
-    const plugins =
-        Object.keys(
-            project.plugins || {}
-        );
+    tab.textContent = currentFile;
 
-
-    if (!plugins.length) {
-
-        const empty =
-            document.createElement(
-                "div"
-            );
-
-
-        empty.style.color =
-            "#66717f";
-
-        empty.style.fontSize =
-            "10px";
-
-        empty.style.padding =
-            "7px";
-
-
-        empty.textContent =
-            "Nenhum plugin PHP importado.";
-
-
-        tree.appendChild(
-            empty
-        );
-
-        return;
-
-    }
-
-
-    plugins.forEach(
-        function(plugin) {
-
-            const item =
-                document.createElement(
-                    "div"
-                );
-
-
-            item.className =
-                "file-item";
-
-
-            const icon =
-                document.createElement(
-                    "span"
-                );
-
-
-            icon.className =
-                "file-php";
-
-            icon.textContent =
-                "PHP";
-
-
-            const name =
-                document.createElement(
-                    "span"
-                );
-
-
-            name.textContent =
-                plugin.replace(
-                    /^plugins\//,
-                    ""
-                );
-
-
-            item.appendChild(icon);
-
-            item.appendChild(name);
-
-
-            item.onclick =
-                function() {
-
-                    openFile(plugin);
-
-                };
-
-
-            tree.appendChild(
-                item
-            );
-
-        }
-    );
+    tabs.appendChild(tab);
 
 }
 
@@ -2157,171 +1447,42 @@ function renderPlugins() {
    ABRIR ARQUIVO
 ========================================================= */
 
-function openFile(
-    file
-) {
+function openFile(file){
 
-    if (
-        !project.files[file]
-    ) {
+    if(!project.files[file]) return;
 
-        return;
+    if(file === "multiscript.json"){
 
-    }
+        openModal("protectedModal");
 
-
-    if (
-        isProtectedFile(file)
-    ) {
-
-        showProtectedFile(
-            file
+        terminal(
+            "Tentativa de edição bloqueada: multiscript.json",
+            "warning"
         );
 
         return;
 
     }
 
+    currentFile = file;
 
-    currentFile =
-        file;
+    const editor = document.getElementById("editor");
 
+    editor.readOnly = false;
 
-    document.getElementById(
-        "editor"
-    ).value =
-        project.files[file];
-
-
-    document.getElementById(
-        "currentTab"
-    ).innerHTML =
-        getFileIcon(file) +
-        "<span>" +
-        escapeHTML(
-            file.split("/").pop()
-        ) +
-        "</span>";
-
-
-    document.getElementById(
-        "previewFile"
-    ).textContent =
-        file;
-
-
-    document.getElementById(
-        "fileStatus"
-    ).textContent =
-        file;
-
+    editor.value = project.files[file];
 
     updateLineNumbers();
 
-    renderFiles();
+    renderTabs();
 
+    renderExplorer();
 
-    if (
-        file.toLowerCase()
-            .endsWith(".html")
-    ) {
+    document.getElementById("statusFile").textContent = file;
 
-        previewPage();
+    modified = false;
 
-    }
-
-}
-
-
-function showProtectedFile(
-    file
-) {
-
-    openModal(
-        "ARQUIVO PROTEGIDO",
-        `
-            <div class="locked-panel">
-
-                <div class="locked-icon">
-                    🔒
-                </div>
-
-                <h3>
-                    ${escapeHTML(file)}
-                </h3>
-
-                <p>
-                    Este arquivo é interno do
-                    MultiScript HTML Editor.
-                </p>
-
-                <p>
-                    Ele é criado e atualizado
-                    automaticamente pelo sistema.
-                </p>
-
-                <p>
-                    A edição manual está bloqueada
-                    para preservar a estrutura
-                    do projeto.
-                </p>
-
-            </div>
-        `,
-        `
-            <button
-                class="tool-btn primary"
-                onclick="closeModal()"
-            >
-                Fechar
-            </button>
-        `
-    );
-
-}
-
-
-function getFileIcon(
-    file
-) {
-
-    if (
-        isProtectedFile(file)
-    ) {
-
-        return '<span class="file-json">🔒</span>';
-
-    }
-
-
-    const ext =
-        file
-            .split(".")
-            .pop()
-            .toLowerCase();
-
-
-    if (ext === "html") {
-        return '<span class="file-html">▤</span>';
-    }
-
-    if (ext === "css") {
-        return '<span class="file-css">#</span>';
-    }
-
-    if (ext === "js") {
-        return '<span class="file-js">JS</span>';
-    }
-
-    if (ext === "php") {
-        return '<span class="file-php">PHP</span>';
-    }
-
-    if (ext === "json") {
-        return '<span class="file-json">{}</span>';
-    }
-
-    return "<span>•</span>";
+    document.getElementById("statusModified").textContent = "Pronto";
 
 }
 
@@ -2330,138 +1491,79 @@ function getFileIcon(
    EDITOR
 ========================================================= */
 
-function editorInput() {
+function editorInput(){
 
-    if (
-        isProtectedFile(
-            currentFile
-        )
-    ) {
-
-        openFile(
-            currentFile
-        );
+    if(project.protectedFiles.includes(currentFile)){
 
         return;
 
     }
 
-
     project.files[currentFile] =
-        document.getElementById(
-            "editor"
-        ).value;
+        document.getElementById("editor").value;
 
+    modified = true;
+
+    document.getElementById("statusModified").textContent =
+        "Modificado";
 
     updateLineNumbers();
 
-
-    if (
-        currentFile
-            .toLowerCase()
-            .endsWith(".html")
-    ) {
-
-        previewPage();
-
-    }
-
-
-    saveProject();
+    updateProjectMetadata();
 
 }
 
 
-function updateLineNumbers() {
+function updateLineNumbers(){
 
-    const editor =
-        document.getElementById(
-            "editor"
-        );
-
+    const editor = document.getElementById("editor");
 
     const count =
-        editor.value
-            .split("\n")
-            .length;
+        editor.value.split("\n").length;
 
+    const lines = [];
 
-    let output = "";
+    for(let i=1;i<=count;i++){
 
-
-    for (
-        let i = 1;
-        i <= count;
-        i++
-    ) {
-
-        output +=
-            i +
-            "\n";
+        lines.push(i);
 
     }
 
-
-    document.getElementById(
-        "lineNumbers"
-    ).textContent =
-        output;
+    document.getElementById("lineNumbers").textContent =
+        lines.join("\n");
 
 }
 
 
-function syncEditorScroll() {
+function syncEditorScroll(){
 
-    document.getElementById(
-        "lineNumbers"
-    ).scrollTop =
-        document.getElementById(
-            "editor"
-        ).scrollTop;
+    const editor = document.getElementById("editor");
+
+    document.getElementById("lineNumbers").scrollTop =
+        editor.scrollTop;
 
 }
 
 
-function handleEditorKey(
-    event
-) {
+function editorKeydown(event){
 
-    if (
-        event.key === "Tab"
-    ) {
+    if(event.key === "Tab"){
 
         event.preventDefault();
 
+        const editor = event.target;
 
-        const editor =
-            document.getElementById(
-                "editor"
-            );
-
-
-        const start =
-            editor.selectionStart;
-
-
-        const end =
-            editor.selectionEnd;
-
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
 
         editor.value =
-            editor.value.substring(
-                0,
-                start
-            ) +
+            editor.value.substring(0,start) +
             "    " +
-            editor.value.substring(
-                end
-            );
-
+            editor.value.substring(end);
 
         editor.selectionStart =
             editor.selectionEnd =
             start + 4;
-
 
         editorInput();
 
@@ -2471,550 +1573,350 @@ function handleEditorKey(
 
 
 /* =========================================================
-   PREVIEW
+   METADATA
 ========================================================= */
 
-function previewPage() {
+function updateProjectMetadata(){
 
-    if (
-        !currentFile ||
-        !currentFile
-            .toLowerCase()
-            .endsWith(".html")
-    ) {
+    const pages = {};
 
-        return;
+    Object.entries(project.pages).forEach(([file,data]) => {
 
-    }
+        pages[file] = data;
 
+    });
 
-    let html =
-        project.files[currentFile];
+    const metadata = {
 
+        multiscript: {
 
-    const css =
-        project.files[
-            currentFile.includes("/")
-                ? "../style.css"
-                : "style.css"
-        ] || "";
+            version: "14.0.0",
+            generator: "MultiScript HTML Editor",
+            project: project.name,
+            type: "html-project"
 
+        },
 
-    const js =
-        project.files[
-            currentFile.includes("/")
-                ? "../script.js"
-                : "script.js"
-        ] || "";
+        files: Object.keys(project.files)
+            .filter(file => file !== "multiscript.json"),
 
+        plugins: Object.keys(project.plugins || {}),
 
-    const safeJS =
-        js.replace(
-            /<\/script/gi,
-            "<" + "/script"
-        );
+        pages: pages
 
+    };
 
-    if (
-        html.includes("<head>")
-    ) {
-
-        html =
-            html.replace(
-                "<head>",
-                "<head><style>" +
-                css +
-                "</style>"
-            );
-
-    }
-
-
-    if (
-        html.includes("</body>")
-    ) {
-
-        html =
-            html.replace(
-                "</body>",
-                "<script>" +
-                safeJS +
-                "<" +
-                "/script></body>"
-            );
-
-    }
-
-
-    document.getElementById(
-        "previewFrame"
-    ).srcdoc =
-        html;
+    project.files["multiscript.json"] =
+        JSON.stringify(metadata,null,4);
 
 }
 
 
 /* =========================================================
-   GERADOR
+   NOVO PROJETO
 ========================================================= */
 
-function openGenerator() {
+function newProject(){
 
-    openPageTypeSelector();
+    const name = prompt(
+        "Nome do novo projeto:",
+        "MEU-PROJETO"
+    );
 
-}
+    if(!name) return;
 
+    project = {
 
-function openPageTypeSelector() {
+        name: name.trim(),
 
-    openModal(
-        "GERADOR DE PÁGINAS — V14",
-        `
+        files: {
 
-        <div class="type-question">
+            "index.html": createIndexPage(),
+            "categorias.html": createCategoriesPage(),
+            "institucional.html": createInstitutionalPage(),
 
-            <h3>
-                Que tipo de página você deseja criar?
-            </h3>
+            "style.css": createBaseCSS(),
+            "script.js": createBaseJS(),
 
-            <p>
-                Escolha a estrutura da nova página.
-            </p>
+            "multiscript.json": ""
 
-        </div>
+        },
 
-        <div class="type-grid">
+        plugins: {},
 
-            <div class="type-card">
+        pages: {
 
-                <input
-                    type="radio"
-                    name="pageType"
-                    id="typeCategory"
-                    value="category"
-                    checked
-                >
+            "index.html": {
+                type: "menu",
+                name: "Início",
+                slug: "",
+                url: "/"
+            },
 
-                <label for="typeCategory">
+            "categorias.html": {
+                type: "menu",
+                name: "Categorias",
+                slug: "categorias",
+                url: "/categorias"
+            },
 
-                    <div class="type-icon">
-                        📁
-                    </div>
+            "institucional.html": {
+                type: "menu",
+                name: "Institucional",
+                slug: "institucional",
+                url: "/institucional"
+            }
 
-                    <div class="type-name">
-                        Categoria.html
-                    </div>
+        },
 
-                    <div class="type-desc">
-                        Página principal de categoria.
-                    </div>
+        protectedFiles: [
+            "multiscript.json"
+        ]
 
-                </label>
+    };
 
-            </div>
+    currentFile = "index.html";
 
+    updateProjectMetadata();
 
-            <div class="type-card">
+    saveProject();
 
-                <input
-                    type="radio"
-                    name="pageType"
-                    id="typeInstitutional"
-                    value="institutional"
-                >
+    renderExplorer();
 
-                <label for="typeInstitutional">
+    renderTabs();
 
-                    <div class="type-icon">
-                        🏢
-                    </div>
+    openFile("index.html");
 
-                    <div class="type-name">
-                        Institucional.html
-                    </div>
+    document.getElementById("projectName").textContent =
+        project.name;
 
-                    <div class="type-desc">
-                        Página institucional.
-                    </div>
-
-                </label>
-
-            </div>
-
-
-            <div class="type-card">
-
-                <input
-                    type="radio"
-                    name="pageType"
-                    id="typeSubpage"
-                    value="subpage"
-                >
-
-                <label for="typeSubpage">
-
-                    <div class="type-icon">
-                        📄
-                    </div>
-
-                    <div class="type-name">
-                        Sub página
-                    </div>
-
-                    <div class="type-desc">
-                        Página dentro de categoria.
-                    </div>
-
-                </label>
-
-            </div>
-
-        </div>
-
-        `,
-        `
-            <button
-                class="tool-btn"
-                onclick="closeModal()"
-            >
-                Cancelar
-            </button>
-
-            <button
-                class="tool-btn primary"
-                onclick="continuePageType()"
-            >
-                Continuar →
-            </button>
-        `
+    terminal(
+        `Projeto "${project.name}" criado.`,
+        "success"
     );
 
 }
 
 
-function continuePageType() {
+/* =========================================================
+   BASE PÁGINAS
+========================================================= */
 
-    const selected =
-        document.querySelector(
-            'input[name="pageType"]:checked'
-        );
+function createIndexPage(){
 
+    return baseHTML(
+        "Início",
+        `
+<section>
 
-    if (!selected) {
-        return;
-    }
+    <h1>Bem-vindo ao meu site</h1>
 
+    <p>
+        Página inicial do projeto.
+    </p>
 
-    openGeneratorForm(
-        selected.value
+</section>
+`
     );
 
 }
 
 
-function openGeneratorForm(
-    type
-) {
+function createCategoriesPage(){
 
-    let title = "";
-
-    let body = "";
-
-
-    if (
-        type === "category"
-    ) {
-
-        title =
-            "CRIAR CATEGORIA.HTML";
-
-
-        body = `
-
-            <div class="form-group">
-
-                <label class="form-label">
-                    Nome da categoria
-                </label>
-
-                <input
-                    id="pageName"
-                    class="form-control"
-                    placeholder="Ex.: Produtos"
-                >
-
-            </div>
-
-            <div class="form-group">
-
-                <label class="form-label">
-                    Conteúdo HTML
-                </label>
-
-                <textarea
-                    id="pageContent"
-                    class="form-control"
-                    placeholder="Digite o conteúdo..."
-                ></textarea>
-
-            </div>
-
-            ${bootstrapOption()}
-
-            ${pluginSelector()}
-
-        `;
-
-    }
-
-
-    if (
-        type === "institutional"
-    ) {
-
-        title =
-            "CRIAR PÁGINA INSTITUCIONAL";
-
-
-        body = `
-
-            <div class="form-group">
-
-                <label class="form-label">
-                    Nome da página
-                </label>
-
-                <input
-                    id="pageName"
-                    class="form-control"
-                    placeholder="Ex.: Quem Somos"
-                >
-
-            </div>
-
-            <div class="form-group">
-
-                <label class="form-label">
-                    Conteúdo HTML
-                </label>
-
-                <textarea
-                    id="pageContent"
-                    class="form-control"
-                    placeholder="Digite o conteúdo..."
-                ></textarea>
-
-            </div>
-
-            ${bootstrapOption()}
-
-            ${pluginSelector()}
-
-        `;
-
-    }
-
-
-    if (
-        type === "subpage"
-    ) {
-
-        title =
-            "CRIAR SUB PÁGINA";
-
-
-        body = `
-
-            <div class="form-group">
-
-                <label class="form-label">
-                    Categoria / pasta
-                </label>
-
-                <input
-                    id="parentCategory"
-                    class="form-control"
-                    list="categoryList"
-                    placeholder="Ex.: Produtos"
-                >
-
-                <datalist id="categoryList">
-
-                    ${getCategoryOptions()}
-
-                </datalist>
-
-            </div>
-
-            <div class="form-group">
-
-                <label class="form-label">
-                    Nome da sub página
-                </label>
-
-                <input
-                    id="pageName"
-                    class="form-control"
-                    placeholder="Ex.: Produto X"
-                >
-
-            </div>
-
-            <div class="form-group">
-
-                <label class="form-label">
-                    Conteúdo HTML
-                </label>
-
-                <textarea
-                    id="pageContent"
-                    class="form-control"
-                    placeholder="Digite o conteúdo..."
-                ></textarea>
-
-            </div>
-
-            ${bootstrapOption()}
-
-            ${pluginSelector()}
-
-        `;
-
-    }
-
-
-    openModal(
-        title,
-        body,
+    return baseHTML(
+        "Categorias",
         `
-            <button
-                class="tool-btn"
-                onclick="openPageTypeSelector()"
-            >
-                ← Voltar
-            </button>
+<section>
 
-            <button
-                class="tool-btn primary"
-                onclick="generatePage('${type}')"
-            >
-                Gerar Página
-            </button>
-        `
+    <h1>Categorias</h1>
+
+    <p>
+        Confira nossas categorias.
+    </p>
+
+    <ul id="category-list">
+    </ul>
+
+</section>
+`
     );
 
 }
 
 
-function bootstrapOption() {
+function createInstitutionalPage(){
+
+    return baseHTML(
+        "Institucional",
+        `
+<section>
+
+    <h1>Institucional</h1>
+
+    <p>
+        Conheça nossa empresa.
+    </p>
+
+    <ul id="institutional-list">
+    </ul>
+
+</section>
+`
+    );
+
+}
+
+
+function createBaseCSS(){
+
+    return `
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    color:#222;
+    background:#fff;
+}
+
+header{
+    background:#111;
+    padding:15px;
+}
+
+nav{
+    display:flex;
+    gap:20px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+h1{
+    font-size:36px;
+}
+
+a{
+    color:#06c;
+}
+`;
+
+}
+
+
+function createBaseJS(){
 
     return `
 
-        <div class="option-box">
+document.addEventListener("DOMContentLoaded",function(){
 
-            <label class="option-check">
+    console.log("MultiScript site carregado.");
 
-                <input
-                    type="checkbox"
-                    id="useBootstrap"
-                    checked
-                >
+});
 
-                <div>
-
-                    <strong>
-                        Usar Bootstrap 5 + Mobile
-                    </strong>
-
-                    <span>
-                        Aplicado somente ao projeto HTML.
-                    </span>
-
-                </div>
-
-            </label>
-
-        </div>
-
-    `;
+`;
 
 }
 
 
 /* =========================================================
-   PLUGINS NO GERADOR
+   GERADOR MENU
 ========================================================= */
 
-function pluginSelector() {
+function openGeneratorMenu(){
 
-    const plugins =
-        Object.keys(
-            project.plugins || {}
-        );
+    openModal("generatorModal");
 
-
-    let html = `
-
-        <div class="form-group">
-
-            <label class="form-label">
-                Plugins PHP do usuário
-            </label>
-
-            <div class="plugin-list">
-
-    `;
+}
 
 
-    if (!plugins.length) {
+function openMenuPageGenerator(){
 
-        html += `
+    closeModal("generatorModal");
 
-            <div class="no-plugins">
-                Nenhum plugin PHP instalado.
-            </div>
+    openForm(
+        "MENU",
+        `
+<div class="info-box">
 
-        `;
+<strong>Estrutura principal</strong><br><br>
 
-    } else {
+O MultiScript utiliza três páginas principais:
 
-        plugins.forEach(
-            function(plugin) {
+<br><br>
 
-                html += `
+📄 <strong>index.html</strong><br>
+Página inicial.
 
-                    <label class="plugin-row">
+<br><br>
 
-                        <input
-                            type="checkbox"
-                            class="generator-plugin"
-                            value="${escapeAttribute(plugin)}"
-                        >
+📁 <strong>categorias.html</strong><br>
+Lista das páginas de categorias.
 
-                        <span>
-                            ${escapeHTML(plugin)}
-                        </span>
+<br><br>
 
-                    </label>
+🏢 <strong>institucional.html</strong><br>
+Lista das páginas institucionais.
 
-                `;
+</div>
+`,
+        "Criar / Atualizar MENU",
+        createMenuPages
+    );
 
-            }
-        );
-
-    }
+}
 
 
-    html += `
+function createMenuPages(){
 
-            </div>
+    project.files["index.html"] ||= createIndexPage();
 
-        </div>
+    project.files["categorias.html"] ||= createCategoriesPage();
 
-    `;
+    project.files["institucional.html"] ||= createInstitutionalPage();
 
+    project.pages["index.html"] = {
 
-    return html;
+        type:"menu",
+        name:"Início",
+        slug:"",
+        url:"/"
+
+    };
+
+    project.pages["categorias.html"] = {
+
+        type:"menu",
+        name:"Categorias",
+        slug:"categorias",
+        url:"/categorias"
+
+    };
+
+    project.pages["institucional.html"] = {
+
+        type:"menu",
+        name:"Institucional",
+        slug:"institucional",
+        url:"/institucional"
+
+    };
+
+    updateProjectMetadata();
+
+    renderExplorer();
+
+    terminal(
+        "MENU atualizado: index.html, categorias.html e institucional.html.",
+        "success"
+    );
 
 }
 
@@ -3023,185 +1925,126 @@ function pluginSelector() {
    CATEGORIAS
 ========================================================= */
 
-function getCategoryOptions() {
+function openCategoryGenerator(){
 
-    const files =
-        Object.keys(
-            project.files
-        );
+    closeModal("generatorModal");
 
+    openForm(
+        "GERAR CATEGORIA",
+        `
+<div class="field">
 
-    let html = "";
+<label>Nome da categoria</label>
 
+<input
+    id="generatorName"
+    placeholder="Ex.: Seguros para Veículos"
+>
 
-    files.forEach(
-        function(file) {
+</div>
 
-            if (
-                file.endsWith(".html") &&
-                file.split("/").length === 1 &&
-                file !== "index.html"
-            ) {
+<div class="field">
 
-                const name =
-                    file
-                        .replace(
-                            ".html",
-                            ""
-                        )
-                        .replace(
-                            /-/g,
-                            " "
-                        );
+<label>Descrição</label>
 
+<textarea
+    id="generatorContent"
+    placeholder="Descrição da categoria..."
+></textarea>
 
-                html +=
-                    `<option value="${escapeAttribute(name)}">`;
+</div>
 
-            }
+<label class="checkbox">
 
-        }
+<input
+    type="checkbox"
+    id="generatorBootstrap"
+>
+
+Aplicar Bootstrap 5 e responsividade
+
+</label>
+
+<div class="info-box">
+
+Esta opção gera somente uma página de <strong>CATEGORIA</strong>.
+
+Exemplo:
+
+<br><br>
+
+<strong>seguros-para-veiculos.html</strong>
+
+</div>
+`,
+        "Gerar Categoria",
+        generateCategoryPage
     );
-
-
-    return html;
 
 }
 
 
-/* =========================================================
-   GERAR PÁGINA
-========================================================= */
-
-function generatePage(
-    type
-) {
+function generateCategoryPage(){
 
     const name =
-        document.getElementById(
-            "pageName"
-        ).value.trim();
-
+        document.getElementById("generatorName").value.trim();
 
     const content =
-        document.getElementById(
-            "pageContent"
-        ).value;
-
-
-    if (!name) {
-
-        alert(
-            "Informe o nome da página."
-        );
-
-        return;
-
-    }
-
-
-    const slug =
-        slugify(name);
-
-
-    let path = "";
-
-
-    if (
-        type === "category" ||
-        type === "institutional"
-    ) {
-
-        path =
-            slug +
-            ".html";
-
-    }
-
-
-    if (
-        type === "subpage"
-    ) {
-
-        const parent =
-            document.getElementById(
-                "parentCategory"
-            ).value.trim();
-
-
-        if (!parent) {
-
-            alert(
-                "Informe a categoria."
-            );
-
-            return;
-
-        }
-
-
-        path =
-            slugify(parent) +
-            "/" +
-            slug +
-            ".html";
-
-    }
-
-
-    if (
-        project.files[path] &&
-        !confirm(
-            "O arquivo " +
-            path +
-            " já existe.\n\nDeseja substituir?"
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    const plugins =
-        Array.from(
-            document.querySelectorAll(
-                ".generator-plugin:checked"
-            )
-        ).map(
-            input =>
-                input.value
-        );
-
+        document.getElementById("generatorContent").value.trim();
 
     const bootstrap =
-        document.getElementById(
-            "useBootstrap"
-        )?.checked || false;
+        document.getElementById("generatorBootstrap").checked;
 
+    if(!name){
 
-    project.files[path] =
-        createPageTemplate(
-            type,
+        alert("Informe o nome da categoria.");
+
+        return;
+
+    }
+
+    const slug = slugify(name);
+
+    const file = slug + ".html";
+
+    if(project.files[file]){
+
+        if(!confirm(
+            `O arquivo ${file} já existe. Deseja substituir?`
+        )) return;
+
+    }
+
+    project.files[file] =
+        createCategoryTemplate(
             name,
             content,
-            plugins,
             bootstrap
         );
 
+    project.pages[file] = {
+
+        type:"category",
+        name:name,
+        slug:slug,
+        url:"/" + slug
+
+    };
+
+    updateCategoryMenuPage();
+
+    updateProjectMetadata();
 
     saveProject();
 
-    renderFiles();
+    renderExplorer();
 
-    closeModal();
+    openFile(file);
 
-    openFile(path);
+    closeModal("formModal");
 
-
-    log(
-        "Página criada: " +
-        path,
+    terminal(
+        `Categoria criada: ${file}`,
         "success"
     );
 
@@ -3209,561 +2052,1115 @@ function generatePage(
 
 
 /* =========================================================
-   TEMPLATE
+   INSTITUCIONAL
 ========================================================= */
 
-function createPageTemplate(
-    type,
+function openInstitutionalGenerator(){
+
+    closeModal("generatorModal");
+
+    openForm(
+        "GERAR PÁGINA INSTITUCIONAL",
+        `
+<div class="field">
+
+<label>Nome da página</label>
+
+<input
+    id="generatorName"
+    placeholder="Ex.: Quem Somos"
+>
+
+</div>
+
+<div class="field">
+
+<label>Conteúdo</label>
+
+<textarea
+    id="generatorContent"
+    placeholder="Conteúdo institucional..."
+></textarea>
+
+</div>
+
+<label class="checkbox">
+
+<input
+    type="checkbox"
+    id="generatorBootstrap"
+>
+
+Aplicar Bootstrap 5 e responsividade
+
+</label>
+
+<div class="info-box">
+
+Esta opção gera somente páginas da área
+<strong>INSTITUCIONAL</strong>.
+
+Exemplos:
+
+<br><br>
+
+quem-somos.html<br>
+contato.html<br>
+nossa-historia.html
+
+</div>
+`,
+        "Gerar Institucional",
+        generateInstitutionalPage
+    );
+
+}
+
+
+function generateInstitutionalPage(){
+
+    const name =
+        document.getElementById("generatorName").value.trim();
+
+    const content =
+        document.getElementById("generatorContent").value.trim();
+
+    const bootstrap =
+        document.getElementById("generatorBootstrap").checked;
+
+    if(!name){
+
+        alert("Informe o nome da página.");
+
+        return;
+
+    }
+
+    const slug = slugify(name);
+
+    const file = slug + ".html";
+
+    if(project.files[file]){
+
+        if(!confirm(
+            `O arquivo ${file} já existe. Deseja substituir?`
+        )) return;
+
+    }
+
+    project.files[file] =
+        createInstitutionalTemplate(
+            name,
+            content,
+            bootstrap
+        );
+
+    project.pages[file] = {
+
+        type:"institutional",
+        name:name,
+        slug:slug,
+        url:"/" + slug
+
+    };
+
+    updateInstitutionalMenuPage();
+
+    updateProjectMetadata();
+
+    saveProject();
+
+    renderExplorer();
+
+    openFile(file);
+
+    closeModal("formModal");
+
+    terminal(
+        `Página institucional criada: ${file}`,
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   SUBPÁGINAS
+========================================================= */
+
+function openSubpageGenerator(){
+
+    closeModal("generatorModal");
+
+    const parents = Object.entries(project.pages)
+        .filter(([file,data]) =>
+            data.type === "category" ||
+            data.type === "institutional"
+        );
+
+    let options = "";
+
+    parents.forEach(([file,data]) => {
+
+        options += `
+<option value="${escapeHTML(file)}">
+${escapeHTML(data.name)} — ${escapeHTML(file)}
+</option>
+`;
+
+    });
+
+    if(!options){
+
+        openForm(
+            "SUBPÁGINA",
+            `
+<div class="info-box">
+
+<strong>Nenhuma página geradora encontrada.</strong><br><br>
+
+Crie primeiro uma página em
+<strong>CATEGORIAS</strong> ou
+<strong>INSTITUCIONAL</strong>.
+
+</div>
+`,
+            "Fechar",
+            () => closeModal("formModal")
+        );
+
+        return;
+
+    }
+
+    openForm(
+        "GERAR SUBPÁGINA",
+        `
+<div class="field">
+
+<label>Página geradora / página pai</label>
+
+<select id="generatorParent">
+
+${options}
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Nome da subpágina</label>
+
+<input
+    id="generatorName"
+    placeholder="Ex.: Seguro Auto"
+>
+
+</div>
+
+<div class="field">
+
+<label>Conteúdo</label>
+
+<textarea
+    id="generatorContent"
+    placeholder="Conteúdo da subpágina..."
+></textarea>
+
+</div>
+
+<label class="checkbox">
+
+<input
+    type="checkbox"
+    id="generatorBootstrap"
+>
+
+Aplicar Bootstrap 5 e responsividade
+
+</label>
+
+<div class="info-box">
+
+A subpágina será vinculada à página selecionada.
+
+<br><br>
+
+Exemplo:
+
+<br><br>
+
+📁 Seguros para Veículos<br>
+&nbsp;&nbsp;└── 📄 Seguro Auto
+
+<br><br>
+
+A URL pública poderá ser:
+
+<strong>/seguro-auto</strong>
+
+</div>
+`,
+        "Gerar Subpágina",
+        generateSubpage
+    );
+
+}
+
+
+function generateSubpage(){
+
+    const parent =
+        document.getElementById("generatorParent").value;
+
+    const name =
+        document.getElementById("generatorName").value.trim();
+
+    const content =
+        document.getElementById("generatorContent").value.trim();
+
+    const bootstrap =
+        document.getElementById("generatorBootstrap").checked;
+
+    if(!name){
+
+        alert("Informe o nome da subpágina.");
+
+        return;
+
+    }
+
+    const parentData =
+        project.pages[parent];
+
+    if(!parentData){
+
+        alert("Página pai inválida.");
+
+        return;
+
+    }
+
+    const slug = slugify(name);
+
+    const file = slug + ".html";
+
+    if(project.files[file]){
+
+        if(!confirm(
+            `O arquivo ${file} já existe. Deseja substituir?`
+        )) return;
+
+    }
+
+    project.files[file] =
+        createSubpageTemplate(
+            name,
+            content,
+            parent,
+            parentData,
+            bootstrap
+        );
+
+    project.pages[file] = {
+
+        type:"subpage",
+        name:name,
+        slug:slug,
+        parent:parent,
+        parentType:parentData.type,
+        url:"/" + slug
+
+    };
+
+    updateParentPage(parent);
+
+    updateProjectMetadata();
+
+    saveProject();
+
+    renderExplorer();
+
+    openFile(file);
+
+    closeModal("formModal");
+
+    terminal(
+        `Subpágina criada: ${file} → ${parent}`,
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   TEMPLATES
+========================================================= */
+
+function bootstrapHead(){
+
+    return `
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+rel="stylesheet">
+`;
+
+}
+
+
+function bootstrapScript(){
+
+    return `
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+<\/script>
+`;
+
+}
+
+
+function createCategoryTemplate(
     name,
     content,
-    plugins,
     bootstrap
-) {
+){
 
-    const title =
-        escapeHTML(name);
+    const children = getChildrenHTML(
+        getFileFromPageName(name,"category")
+    );
 
+    const extraHead =
+        bootstrap ? bootstrapHead() : "";
 
-    const relative =
-        type === "subpage"
-            ? "../"
-            : "";
+    const extraScript =
+        bootstrap ? bootstrapScript() : "";
 
+    const body = `
 
-    let bootstrapHead = "";
+<header class="${bootstrap ? "bg-dark py-3" : ""}">
 
-    let bootstrapScript = "";
+<nav class="${bootstrap ? "container navbar navbar-expand-lg navbar-dark" : ""}">
 
+<a href="index.html">
+Início
+</a>
 
-    if (bootstrap) {
+<a href="categorias.html">
+Categorias
+</a>
 
-        bootstrapHead = `
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-    rel="stylesheet"
->`;
-
-        bootstrapScript = `
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"><\/script>`;
-
-    }
-
-
-    let pluginComment = "";
-
-
-    if (plugins.length) {
-
-        pluginComment =
-`<!--
-Plugins PHP associados:
-
-${plugins
-    .map(
-        plugin =>
-            " - " + plugin
-    )
-    .join("\n")}
-
--->`;
-
-    }
-
-
-    let structure;
-
-
-    if (bootstrap) {
-
-        structure = `
-
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-
-    <div class="container">
-
-        <a
-            class="navbar-brand"
-            href="${relative}index.html"
-        >
-            ${title}
-        </a>
-
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#mainNavbar"
-            aria-controls="mainNavbar"
-            aria-expanded="false"
-            aria-label="Abrir menu"
-        >
-
-            <span class="navbar-toggler-icon"></span>
-
-        </button>
-
-        <div
-            class="collapse navbar-collapse"
-            id="mainNavbar"
-        >
-
-            <ul class="navbar-nav ms-auto">
-
-                <li class="nav-item">
-
-                    <a
-                        class="nav-link"
-                        href="${relative}index.html"
-                    >
-                        Início
-                    </a>
-
-                </li>
-
-                <li class="nav-item dropdown">
-
-                    <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                    >
-                        Menu
-                    </a>
-
-                    <ul class="dropdown-menu">
-
-                        <li>
-                            <a
-                                class="dropdown-item"
-                                href="#"
-                            >
-                                Item 1
-                            </a>
-                        </li>
-
-                        <li>
-                            <a
-                                class="dropdown-item"
-                                href="#"
-                            >
-                                Item 2
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
+<a href="institucional.html">
+Institucional
+</a>
 
 </nav>
 
-<header class="py-5">
-
-    <div class="container">
-
-        <h1 class="display-5 fw-bold">
-            ${title}
-        </h1>
-
-        <p class="lead">
-            Página criada pelo MultiScript V14.
-        </p>
-
-    </div>
-
 </header>
 
-<main class="container py-4">
+<main class="${bootstrap ? "container py-5" : ""}">
 
-    ${content || `
+<h1>${escapeHTML(name)}</h1>
 
-        <section>
+<p>
+${escapeHTML(content)}
+</p>
 
-            <h2>
-                ${title}
-            </h2>
+<section>
 
-            <p>
-                Conteúdo da página.
-            </p>
+<h2>Subpáginas</h2>
 
-        </section>
+${children || "<p>Esta categoria ainda não possui subpáginas.</p>"}
 
-    `}
+</section>
 
 </main>
-
-<footer class="border-top py-4 mt-5">
-
-    <div class="container">
-
-        <p class="mb-0 text-muted">
-            ${title} — MultiScript V14
-        </p>
-
-    </div>
-
-</footer>
-
 `;
-
-    } else {
-
-        structure = `
-
-<header>
-
-    <h1>
-        ${title}
-    </h1>
-
-</header>
-
-<main>
-
-    ${content || `
-
-        <section>
-
-            <h2>
-                ${title}
-            </h2>
-
-            <p>
-                Conteúdo da página.
-            </p>
-
-        </section>
-
-    `}
-
-</main>
-
-<footer>
-
-    <p>
-        ${title} — MultiScript V14
-    </p>
-
-</footer>
-
-`;
-
-    }
-
 
     return `<!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>${title}</title>
-
-${bootstrapHead}
-
-<link
-    rel="stylesheet"
-    href="${relative}style.css"
->
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapeHTML(name)}</title>
+<link rel="stylesheet" href="style.css">
+${extraHead}
 </head>
-
 <body>
 
-${pluginComment}
+${body}
 
-${structure}
-
-<script src="${relative}script.js"><\/script>
-
-${bootstrapScript}
+<script src="script.js"><\/script>
+${extraScript}
 
 </body>
+</html>`;
 
+}
+
+
+function createInstitutionalTemplate(
+    name,
+    content,
+    bootstrap
+){
+
+    const extraHead =
+        bootstrap ? bootstrapHead() : "";
+
+    const extraScript =
+        bootstrap ? bootstrapScript() : "";
+
+    const body = `
+
+<header class="${bootstrap ? "bg-dark py-3" : ""}">
+
+<nav class="${bootstrap ? "container navbar navbar-expand-lg navbar-dark" : ""}">
+
+<a href="index.html">
+Início
+</a>
+
+<a href="categorias.html">
+Categorias
+</a>
+
+<a href="institucional.html">
+Institucional
+</a>
+
+</nav>
+
+</header>
+
+<main class="${bootstrap ? "container py-5" : ""}">
+
+<h1>${escapeHTML(name)}</h1>
+
+<p>
+${escapeHTML(content)}
+</p>
+
+<section>
+
+<h2>Subpáginas</h2>
+
+<p>
+Esta página institucional pode receber subpáginas
+através do gerador de SUBPÁGINA.
+</p>
+
+</section>
+
+</main>
+`;
+
+    return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapeHTML(name)}</title>
+<link rel="stylesheet" href="style.css">
+${extraHead}
+</head>
+<body>
+
+${body}
+
+<script src="script.js"><\/script>
+${extraScript}
+
+</body>
+</html>`;
+
+}
+
+
+function createSubpageTemplate(
+    name,
+    content,
+    parentFile,
+    parentData,
+    bootstrap
+){
+
+    const extraHead =
+        bootstrap ? bootstrapHead() : "";
+
+    const extraScript =
+        bootstrap ? bootstrapScript() : "";
+
+    const parentLabel =
+        escapeHTML(parentData.name);
+
+    const body = `
+
+<header class="${bootstrap ? "bg-dark py-3" : ""}">
+
+<nav class="${bootstrap ? "container navbar navbar-expand-lg navbar-dark" : ""}">
+
+<a href="index.html">
+Início
+</a>
+
+<a href="categorias.html">
+Categorias
+</a>
+
+<a href="institucional.html">
+Institucional
+</a>
+
+</nav>
+
+</header>
+
+<main class="${bootstrap ? "container py-5" : ""}">
+
+<p>
+
+<a href="${escapeHTML(parentFile)}">
+← Voltar para ${parentLabel}
+</a>
+
+</p>
+
+<h1>${escapeHTML(name)}</h1>
+
+<div>
+
+${escapeHTML(content)}
+
+</div>
+
+</main>
+`;
+
+    return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapeHTML(name)}</title>
+<link rel="stylesheet" href="style.css">
+${extraHead}
+</head>
+<body>
+
+${body}
+
+<script src="script.js"><\/script>
+${extraScript}
+
+</body>
 </html>`;
 
 }
 
 
 /* =========================================================
-   SLUG
+   RELAÇÃO PAI / FILHO
 ========================================================= */
 
-function slugify(
-    value
-) {
+function getFileFromPageName(name,type){
 
-    return String(value)
-        .normalize("NFD")
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        )
-        .toLowerCase()
-        .trim()
-        .replace(
-            /[^a-z0-9]+/g,
-            "-"
-        )
-        .replace(
-            /^-+|-+$/g,
-            "");
+    const found =
+        Object.entries(project.pages)
+            .find(([file,data]) =>
+                data.name === name &&
+                data.type === type
+            );
+
+    return found ? found[0] : null;
+
+}
+
+
+function getChildrenHTML(parentFile){
+
+    if(!parentFile) return "";
+
+    const children =
+        Object.entries(project.pages)
+            .filter(([file,data]) =>
+                data.type === "subpage" &&
+                data.parent === parentFile
+            );
+
+    if(!children.length){
+
+        return "";
+
+    }
+
+    return `
+<ul>
+${children.map(([file,data]) => `
+<li>
+<a href="${escapeHTML(file)}">
+${escapeHTML(data.name)}
+</a>
+</li>
+`).join("")}
+</ul>
+`;
+
+}
+
+
+function updateParentPage(parentFile){
+
+    const parentData =
+        project.pages[parentFile];
+
+    if(!parentData) return;
+
+    if(parentData.type === "category"){
+
+        project.files[parentFile] =
+            createCategoryTemplate(
+                parentData.name,
+                "",
+                false
+            );
+
+    }
+
+    if(parentData.type === "institutional"){
+
+        project.files[parentFile] =
+            createInstitutionalTemplate(
+                parentData.name,
+                "",
+                false
+            );
+
+    }
 
 }
 
 
 /* =========================================================
-   PHP
+   MENU DE CATEGORIAS
 ========================================================= */
 
-function openPHPImporter() {
+function updateCategoryMenuPage(){
 
-    document.getElementById(
-        "phpInput"
-    ).click();
+    const categories =
+        Object.entries(project.pages)
+            .filter(([file,data]) =>
+                data.type === "category"
+            );
+
+    const list = categories.length
+
+        ? `
+<ul>
+${categories.map(([file,data]) => `
+<li>
+<a href="${escapeHTML(file)}">
+${escapeHTML(data.name)}
+</a>
+</li>
+`).join("")}
+</ul>
+`
+
+        : `
+<p>
+Nenhuma categoria cadastrada.
+</p>
+`;
+
+    project.files["categorias.html"] =
+        baseHTML(
+            "Categorias",
+            `
+<section>
+
+<h1>Categorias</h1>
+
+<p>
+Confira nossas categorias.
+</p>
+
+${list}
+
+</section>
+`
+        );
 
 }
 
 
-document.getElementById(
-    "phpInput"
-).addEventListener(
-    "change",
-    async function(event) {
+/* =========================================================
+   MENU INSTITUCIONAL
+========================================================= */
 
-        const files =
-            Array.from(
-                event.target.files || []
+function updateInstitutionalMenuPage(){
+
+    const pages =
+        Object.entries(project.pages)
+            .filter(([file,data]) =>
+                data.type === "institutional"
             );
 
+    const list = pages.length
 
-        for (
-            const file of files
-        ) {
+        ? `
+<ul>
+${pages.map(([file,data]) => `
+<li>
+<a href="${escapeHTML(file)}">
+${escapeHTML(data.name)}
+</a>
+</li>
+`).join("")}
+</ul>
+`
 
-            if (
-                !file.name
-                    .toLowerCase()
-                    .endsWith(".php")
-            ) {
+        : `
+<p>
+Nenhuma página institucional cadastrada.
+</p>
+`;
 
-                continue;
+    project.files["institucional.html"] =
+        baseHTML(
+            "Institucional",
+            `
+<section>
 
-            }
+<h1>Institucional</h1>
 
+<p>
+Conheça nossa empresa.
+</p>
 
-            const content =
-                await file.text();
+${list}
 
+</section>
+`
+        );
 
-            const path =
-                "plugins/" +
-                file.name;
-
-
-            project.files[path] =
-                content;
-
-
-            project.plugins[path] =
-                true;
-
-
-            log(
-                "Plugin importado: " +
-                path,
-                "success"
-            );
-
-        }
-
-
-        renderFiles();
-
-        renderPlugins();
-
-        saveProject();
-
-        event.target.value = "";
-
-    }
-);
+}
 
 
 /* =========================================================
-   PLUGIN MANAGER
+   FORM
 ========================================================= */
 
-function openPluginManager() {
+function openForm(
+    title,
+    html,
+    buttonText,
+    callback
+){
 
-    const plugins =
-        Object.keys(
-            project.plugins || {}
-        );
+    document.getElementById("formTitle").textContent =
+        title;
 
+    document.getElementById("formBody").innerHTML =
+        html;
 
-    let body = "";
+    const button =
+        document.getElementById("formSubmit");
 
+    button.textContent =
+        buttonText;
 
-    if (!plugins.length) {
+    button.onclick =
+        callback;
 
-        body = `
+    openModal("formModal");
 
-            <p
-                style="
-                    color:#8993a1;
-                    font-size:12px;
-                "
-            >
-                Nenhum plugin PHP foi importado.
-            </p>
-
-        `;
-
-    } else {
-
-        plugins.forEach(
-            function(plugin) {
-
-                body += `
-
-                    <div
-                        style="
-                            display:flex;
-                            align-items:center;
-                            gap:10px;
-                            padding:10px;
-                            border-bottom:1px solid #303640;
-                        "
-                    >
-
-                        <span class="file-php">
-                            PHP
-                        </span>
-
-                        <span style="flex:1">
-                            ${escapeHTML(plugin)}
-                        </span>
-
-                        <button
-                            class="tool-btn"
-                            onclick="openFile('${escapeAttribute(plugin)}');closeModal()"
-                        >
-                            Abrir
-                        </button>
-
-                        <button
-                            class="tool-btn"
-                            onclick="removePlugin('${escapeAttribute(plugin)}')"
-                        >
-                            Remover
-                        </button>
-
-                    </div>
-
-                `;
-
-            }
-        );
-
-    }
+}
 
 
-    openModal(
-        "PLUGINS PHP DO USUÁRIO",
-        body,
+/* =========================================================
+   SITEMAP
+========================================================= */
+
+function openSitemapGenerator(){
+
+    closeModal("generatorModal");
+
+    openForm(
+        "GERAR SITEMAP",
         `
-            <button
-                class="tool-btn"
-                onclick="openPHPImporter();closeModal()"
-            >
-                + Importar PHP
-            </button>
+<div class="field">
 
-            <button
-                class="tool-btn primary"
-                onclick="closeModal()"
-            >
-                Fechar
-            </button>
-        `
+<label>URL principal do site</label>
+
+<input
+    id="sitemapBase"
+    placeholder="https://christo.com.br"
+>
+
+</div>
+
+<div class="info-box">
+
+O MultiScript utilizará as páginas registradas
+no projeto para gerar automaticamente o
+<strong>sitemap.xml</strong>.
+
+<br><br>
+
+Serão incluídas:
+
+<br><br>
+
+• index.html<br>
+• categorias.html<br>
+• institucional.html<br>
+• categorias geradas<br>
+• páginas institucionais<br>
+• subpáginas
+
+</div>
+`,
+        "Gerar Sitemap",
+        generateSitemap
     );
 
 }
 
 
-function removePlugin(
-    path
-) {
+function normalizeBaseURL(url){
 
-    if (
-        !confirm(
-            "Remover o plugin " +
-            path +
-            "?"
-        )
-    ) {
+    return String(url)
+        .trim()
+        .replace(/\/+$/,"");
+
+}
+
+
+function generateSitemap(){
+
+    const base =
+        normalizeBaseURL(
+            document.getElementById("sitemapBase").value
+        );
+
+    if(!base){
+
+        alert("Informe a URL principal do site.");
 
         return;
 
     }
 
+    const urls = [];
 
-    delete project.files[path];
+    Object.entries(project.pages)
+        .forEach(([file,data]) => {
 
-    delete project.plugins[path];
-
-
-    if (
-        currentFile === path
-    ) {
-
-        currentFile =
-            project.files["index.html"]
-                ? "index.html"
-                : Object.keys(
-                    project.files
-                ).find(
-                    file =>
-                        !isProtectedFile(
-                            file
-                        )
+            const url =
+                base +
+                (
+                    data.url === "/"
+                        ? "/"
+                        : data.url
                 );
 
-    }
+            if(!urls.includes(url)){
 
+                urls.push(url);
+
+            }
+
+        });
+
+    const xml =
+`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(url => `
+    <url>
+        <loc>${escapeXML(url)}</loc>
+    </url>
+`).join("")}
+</urlset>`;
+
+    project.files["sitemap.xml"] =
+        xml;
+
+    updateProjectMetadata();
 
     saveProject();
 
-    renderFiles();
+    renderExplorer();
 
-    renderPlugins();
+    openFile("sitemap.xml");
+
+    closeModal("formModal");
+
+    terminal(
+        `Sitemap criado com ${urls.length} URLs.`,
+        "success"
+    );
+
+}
 
 
-    if (currentFile) {
+function escapeXML(value){
 
-        openFile(
-            currentFile
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&apos;");
+
+}
+
+
+/* =========================================================
+   PLUGINS
+========================================================= */
+
+document.getElementById("phpInput")
+.addEventListener("change",async function(){
+
+    const files = Array.from(this.files);
+
+    for(const file of files){
+
+        if(!file.name.toLowerCase().endsWith(".php")){
+
+            continue;
+
+        }
+
+        const content =
+            await file.text();
+
+        const path =
+            "plugins/" + file.name;
+
+        project.files[path] =
+            content;
+
+        project.plugins[path] =
+            true;
+
+        terminal(
+            `Plugin importado: ${path}`,
+            "success"
         );
 
     }
 
+    updateProjectMetadata();
 
-    openPluginManager();
+    saveProject();
+
+    renderExplorer();
+
+    renderPluginList();
+
+    this.value = "";
+
+});
+
+
+function openPlugins(){
+
+    renderPluginList();
+
+    openModal("pluginModal");
+
+}
+
+
+function renderPluginList(){
+
+    const box =
+        document.getElementById("pluginList");
+
+    const plugins =
+        Object.keys(project.files)
+            .filter(file =>
+                file.startsWith("plugins/") &&
+                file.endsWith(".php")
+            );
+
+    if(!plugins.length){
+
+        box.innerHTML = `
+<div class="info-box">
+Nenhum plugin PHP foi importado.
+</div>
+`;
+
+        return;
+
+    }
+
+    box.innerHTML = "";
+
+    plugins.forEach(file => {
+
+        const row =
+            document.createElement("div");
+
+        row.className =
+            "plugin-row";
+
+        const span =
+            document.createElement("span");
+
+        span.textContent =
+            file;
+
+        const open =
+            document.createElement("button");
+
+        open.textContent =
+            "Abrir";
+
+        open.onclick = () => {
+
+            closeModal("pluginModal");
+
+            openFile(file);
+
+        };
+
+        const remove =
+            document.createElement("button");
+
+        remove.textContent =
+            "Remover";
+
+        remove.onclick = () => {
+
+            if(!confirm(
+                `Remover ${file}?`
+            )) return;
+
+            delete project.files[file];
+
+            delete project.plugins[file];
+
+            updateProjectMetadata();
+
+            saveProject();
+
+            renderExplorer();
+
+            renderPluginList();
+
+        };
+
+        row.appendChild(span);
+        row.appendChild(open);
+        row.appendChild(remove);
+
+        box.appendChild(row);
+
+    });
 
 }
 
@@ -3772,120 +3169,84 @@ function removePlugin(
    FORMATAR
 ========================================================= */
 
-function formatHTML() {
+function formatHTML(){
 
-    if (
-        !currentFile
-            .toLowerCase()
-            .endsWith(".html")
-    ) {
+    if(
+        currentFile === "multiscript.json"
+    ){
 
-        alert(
-            "A formatação automática está disponível para HTML."
+        openModal("protectedModal");
+
+        return;
+
+    }
+
+    if(
+        !currentFile.endsWith(".html")
+    ){
+
+        terminal(
+            "Formatação automática disponível para HTML.",
+            "warning"
         );
 
         return;
 
     }
 
+    const source =
+        document.getElementById("editor").value;
 
-    let html =
-        document.getElementById(
-            "editor"
-        ).value;
+    let formatted =
+        source
+            .replace(/>\s*</g,">\n<")
+            .replace(/\n{2,}/g,"\n");
 
-
-    html =
-        html
-            .replace(
-                />\s*</g,
-                ">\n<"
-            )
-            .replace(
-                /<([a-zA-Z][^>]*)>/g,
-                function(match) {
-
-                    return match;
-
-                }
-            );
-
+    let depth = 0;
 
     const lines =
-        html
+        formatted
             .split("\n")
-            .map(
-                line =>
-                    line.trim()
-            );
+            .map(line => line.trim())
+            .filter(Boolean);
 
+    const result = [];
 
-    let indent = 0;
+    lines.forEach(line => {
 
+        if(
+            /^<\//.test(line)
+        ){
 
-    const formatted =
-        lines
-            .map(
-                function(line) {
+            depth =
+                Math.max(0,depth - 1);
 
-                    if (
-                        /^<\//.test(line)
-                    ) {
+        }
 
-                        indent =
-                            Math.max(
-                                0,
-                                indent - 1
-                            );
+        result.push(
+            "    ".repeat(depth) + line
+        );
 
-                    }
+        if(
+            /^<[^!/?][^>]*>$/.test(line) &&
+            !/<\/[^>]+>$/.test(line) &&
+            !/\/>$/.test(line) &&
+            !/^<(meta|link|img|input|br|hr)/i.test(line)
+        ){
 
+            depth++;
 
-                    const result =
-                        "    ".repeat(
-                            indent
-                        ) +
-                        line;
+        }
 
+    });
 
-                    if (
-                        /^<[^!/][^>]*>$/.test(line) &&
-                        !/<\/[^>]+>$/.test(line) &&
-                        !/\/>$/.test(line) &&
-                        !/^<(meta|link|input|img|br|hr)/i.test(line)
-                    ) {
+    document.getElementById("editor").value =
+        result.join("\n");
 
-                        indent++;
+    editorInput();
 
-                    }
-
-
-                    return result;
-
-                }
-            )
-            .join("\n");
-
-
-    project.files[currentFile] =
-        formatted;
-
-
-    document.getElementById(
-        "editor"
-    ).value =
-        formatted;
-
-
-    updateLineNumbers();
-
-    saveProject();
-
-    previewPage();
-
-
-    log(
-        "HTML formatado.",
+    terminal(
+        `Arquivo formatado: ${currentFile}`,
         "success"
     );
 
@@ -3893,237 +3254,203 @@ function formatHTML() {
 
 
 /* =========================================================
-   EXPORTAÇÃO
+   SALVAR
 ========================================================= */
 
-function openCreditDialog() {
+function saveProject(){
 
-    openModal(
-        "EXPORTAR PROJETO — ZIP",
-        `
+    updateProjectMetadata();
 
-        <p
-            style="
-                color:#aeb7c4;
-                font-size:12px;
-            "
-        >
-            Escolha o crédito que será incluído
-            no projeto exportado.
-        </p>
+    localStorage.setItem(
+        "multiscript-v14-project",
+        JSON.stringify(project)
+    );
 
-        <div class="credit-grid">
+    modified = false;
 
-            <div
-                class="credit-option"
-                onclick="confirmExport('none')"
-            >
+    document.getElementById("statusModified").textContent =
+        "Salvo";
 
-                <strong>
-                    Sem crédito
-                </strong>
-
-                <span>
-                    Exportar sem crédito.
-                </span>
-
-            </div>
-
-            <div
-                class="credit-option"
-                onclick="confirmExport('multipage')"
-            >
-
-                <strong>
-                    Multipage Mel
-                </strong>
-
-                <span>
-                    Crédito da Multipage Mel.
-                </span>
-
-            </div>
-
-            <div
-                class="credit-option"
-                onclick="confirmExport('corretores')"
-            >
-
-                <strong>
-                    Apenas Corretores
-                </strong>
-
-                <span>
-                    Crédito da Apenas Corretores.
-                </span>
-
-            </div>
-
-            <div
-                class="credit-option"
-                onclick="confirmExport('homemsite')"
-            >
-
-                <strong>
-                    HomemSite
-                </strong>
-
-                <span>
-                    Crédito da HomemSite.
-                </span>
-
-            </div>
-
-            <div
-                class="credit-option"
-                onclick="confirmExport('homemsite-pr')"
-            >
-
-                <strong>
-                    HomemSite Paraná
-                </strong>
-
-                <span>
-                    Crédito da versão Paraná.
-                </span>
-
-            </div>
-
-        </div>
-
-        `,
-        `
-            <button
-                class="tool-btn"
-                onclick="closeModal()"
-            >
-                Cancelar
-            </button>
-        `
+    terminal(
+        "Projeto salvo no armazenamento local.",
+        "success"
     );
 
 }
 
 
-async function confirmExport(
-    credit
-) {
+/* =========================================================
+   CARREGAR
+========================================================= */
 
-    closeModal();
+function loadProject(){
 
+    const saved =
+        localStorage.getItem(
+            "multiscript-v14-project"
+        );
 
-    const zip =
-        new JSZip();
+    if(!saved){
 
+        project.files["index.html"] =
+            createIndexPage();
 
-    const files = {
-        ...project.files
-    };
+        project.files["categorias.html"] =
+            createCategoriesPage();
 
+        project.files["institucional.html"] =
+            createInstitutionalPage();
 
-    if (
-        credit !== "none"
-    ) {
+        project.files["style.css"] =
+            createBaseCSS();
 
-        Object.keys(files)
-            .forEach(
-                function(path) {
+        project.files["script.js"] =
+            createBaseJS();
 
-                    if (
-                        path
-                            .toLowerCase()
-                            .endsWith(".html")
-                    ) {
+        updateProjectMetadata();
 
-                        files[path] =
-                            insertCredits(
-                                files[path],
-                                credit
-                            );
-
-                    }
-
-                }
-            );
+        return;
 
     }
 
+    try{
 
-    Object.keys(files)
-        .forEach(
-            function(path) {
+        project =
+            JSON.parse(saved);
 
-                zip.file(
-                    path,
-                    files[path]
-                );
+    }catch(error){
 
-            }
-        );
+        console.error(error);
 
+        return;
 
-    /*
-       Garante a existência física da pasta
-       plugins/ mesmo que ela esteja vazia.
-    */
+    }
 
-    if (
-        project.files[
-            "plugins/.gitkeep"
-        ]
-    ) {
+    project.plugins ||= {};
 
-        zip.folder(
-            "plugins"
+    project.pages ||= {};
+
+    project.protectedFiles ||= [
+        "multiscript.json"
+    ];
+
+    /* MIGRAÇÃO DO MULTISCRIPT.JS ANTIGO */
+
+    if(project.files["multiscript.js"]){
+
+        delete project.files["multiscript.js"];
+
+        terminal(
+            "multiscript.js antigo removido durante a migração.",
+            "warning"
         );
 
     }
 
+    /* GARANTE MENU */
 
-    const blob =
-        await zip.generateAsync({
-            type: "blob"
-        });
+    if(!project.files["index.html"]){
+
+        project.files["index.html"] =
+            createIndexPage();
+
+    }
+
+    if(!project.files["categorias.html"]){
+
+        project.files["categorias.html"] =
+            createCategoriesPage();
+
+    }
+
+    if(!project.files["institucional.html"]){
+
+        project.files["institucional.html"] =
+            createInstitutionalPage();
+
+    }
+
+    if(!project.pages["index.html"]){
+
+        project.pages["index.html"] = {
+
+            type:"menu",
+            name:"Início",
+            slug:"",
+            url:"/"
+
+        };
+
+    }
+
+    if(!project.pages["categorias.html"]){
+
+        project.pages["categorias.html"] = {
+
+            type:"menu",
+            name:"Categorias",
+            slug:"categorias",
+            url:"/categorias"
+
+        };
+
+    }
+
+    if(!project.pages["institucional.html"]){
+
+        project.pages["institucional.html"] = {
+
+            type:"menu",
+            name:"Institucional",
+            slug:"institucional",
+            url:"/institucional"
+
+        };
+
+    }
+
+    project.protectedFiles = [
+        "multiscript.json"
+    ];
+
+    updateProjectMetadata();
+
+}
 
 
-    const url =
-        URL.createObjectURL(
-            blob
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+function previewProject(){
+
+    const preview =
+        window.open(
+            "",
+            "_blank"
         );
 
+    if(!preview){
 
-    const link =
-        document.createElement(
-            "a"
+        alert(
+            "O navegador bloqueou a janela de Preview."
         );
 
+        return;
 
-    link.href =
-        url;
+    }
 
+    const html =
+        project.files["index.html"];
 
-    link.download =
-        project.name +
-        ".zip";
+    preview.document.open();
 
+    preview.document.write(html);
 
-    document.body.appendChild(
-        link
-    );
+    preview.document.close();
 
-
-    link.click();
-
-    link.remove();
-
-
-    URL.revokeObjectURL(
-        url
-    );
-
-
-    log(
-        "Projeto exportado em ZIP.",
+    terminal(
+        "Preview aberto.",
         "success"
     );
 
@@ -4134,325 +3461,205 @@ async function confirmExport(
    CRÉDITOS
 ========================================================= */
 
-function insertCredits(
-    html,
-    credit
-) {
+function openCreditModal(){
 
-    let name = "";
+    openModal("creditModal");
 
-    let url = "";
+}
 
 
-    if (
-        credit === "multipage"
-    ) {
+function getCreditHTML(type){
 
-        name =
-            "Multipage Mel";
+    const credits = {
 
-        url =
-            "https://multipagemel.pages.dev/";
-
-    }
-
-
-    if (
-        credit === "corretores"
-    ) {
-
-        name =
-            "Apenas Corretores";
-
-        url =
-            "https://apenascorretores.pages.dev/";
-
-    }
-
-
-    if (
-        credit === "homemsite"
-    ) {
-
-        name =
-            "HomemSite";
-
-        url =
-            "https://homemsite.pages.dev/";
-
-    }
-
-
-    if (
-        credit === "homemsite-pr"
-    ) {
-
-        name =
-            "HomemSite Paraná";
-
-        url =
-            "https://homemsite.pages.dev/parana/";
-
-    }
-
-
-    if (!name) {
-
-        return html;
-
-    }
-
-
-    const block = `
-
-<footer
-    class="multiscript-credit"
-    style="
-        padding:20px;
-        text-align:center;
-        font-family:Arial,sans-serif;
-        font-size:12px;
-    "
->
-
-    <p>
-        Este site garante a segurança na coleta
-        e tratamento de dados, em conformidade com a LGPD.
-    </p>
-
-    <p>
-        © V14.0.0 by MultiScript HTML Editor
-    </p>
-
-    <p>
-
-        <a
-            href="${url}"
-            target="_blank"
-            rel="noopener"
-        >
-            ${name}
-        </a>
-
-    </p>
-
+        multipagemel: `
+<footer class="multiscript-credit">
+<p>Este site garante a segurança na coleta e tratamento de dados, em conformidade com a LGPD.</p>
+<p>© V14.0.0 by MultiScript HTML Editor</p>
+<p>
+<a href="https://multipagemel.pages.dev/" target="_blank" rel="noopener">
+Multipage Mel - Criação de Sites
+</a>
+</p>
 </footer>
+`,
 
-`;
+        apenascorretores: `
+<footer class="multiscript-credit">
+<p>Este site garante a segurança na coleta e tratamento de dados, em conformidade com a LGPD.</p>
+<p>© V14.0.0 by MultiScript HTML Editor</p>
+<p>
+<a href="https://apenascorretores.pages.dev/" target="_blank" rel="noopener">
+Apenas Corretores
+</a>
+</p>
+</footer>
+`,
 
+        homemsite: `
+<footer class="multiscript-credit">
+<p>Este site garante a segurança na coleta e tratamento de dados, em conformidade com a LGPD.</p>
+<p>© V14.0.0 by MultiScript HTML Editor</p>
+<p>
+<a href="https://homemsite.pages.dev/" target="_blank" rel="noopener">
+HomemSite
+</a>
+</p>
+</footer>
+`,
 
-    if (
-        html
-            .toLowerCase()
-            .includes("</body>")
-    ) {
+        "homemsite-parana": `
+<footer class="multiscript-credit">
+<p>Este site garante a segurança na coleta e tratamento de dados, em conformidade com a LGPD.</p>
+<p>© V14.0.0 by MultiScript HTML Editor</p>
+<p>
+<a href="https://homemsite.pages.dev/parana/" target="_blank" rel="noopener">
+HomemSite Paraná
+</a>
+</p>
+</footer>
+`
 
-        return html.replace(
-            /<\/body>/i,
-            block +
-            "<" +
-            "/body>"
-        );
+    };
 
-    }
-
-
-    return html + block;
+    return credits[type] || "";
 
 }
 
 
 /* =========================================================
-   MODAL
+   EXPORTAR ZIP
 ========================================================= */
 
-function openModal(
-    title,
-    body,
-    footer
-) {
+async function exportZip(creditType){
 
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        title;
+    closeModal("creditModal");
 
+    if(typeof JSZip === "undefined"){
 
-    document.getElementById(
-        "modalBody"
-    ).innerHTML =
-        body;
+        alert(
+            "JSZip não foi carregado."
+        );
 
-
-    document.getElementById(
-        "modalFooter"
-    ).innerHTML =
-        footer || "";
-
-
-    document.getElementById(
-        "modalBackdrop"
-    ).classList.add(
-        "open"
-    );
-
-}
-
-
-function closeModal() {
-
-    document.getElementById(
-        "modalBackdrop"
-    ).classList.remove(
-        "open"
-    );
-
-}
-
-
-document.getElementById(
-    "modalBackdrop"
-).addEventListener(
-    "click",
-    function(event) {
-
-        if (
-            event.target === this
-        ) {
-
-            closeModal();
-
-        }
+        return;
 
     }
+
+    updateProjectMetadata();
+
+    const zip =
+        new JSZip();
+
+    const credit =
+        getCreditHTML(creditType);
+
+    Object.entries(project.files)
+        .forEach(([path,content]) => {
+
+            let finalContent =
+                content;
+
+            if(
+                credit &&
+                path.endsWith(".html")
+            ){
+
+                if(
+                    finalContent.includes(
+                        "</body>"
+                    )
+                ){
+
+                    finalContent =
+                        finalContent.replace(
+                            "</body>",
+                            credit + "\n</body>"
+                        );
+
+                }else{
+
+                    finalContent +=
+                        "\n" + credit;
+
+                }
+
+            }
+
+            zip.file(
+                path,
+                finalContent
+            );
+
+        });
+
+    const blob =
+        await zip.generateAsync({
+            type:"blob"
+        });
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href =
+        url;
+
+    a.download =
+        project.name + ".zip";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    setTimeout(
+        () => URL.revokeObjectURL(url),
+        1000
+    );
+
+    terminal(
+        `ZIP exportado: ${project.name}.zip`,
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+loadProject();
+
+document.getElementById("projectName").textContent =
+    project.name;
+
+renderExplorer();
+
+renderTabs();
+
+openFile(
+    currentFile
 );
 
+terminal(
+    "MultiScript HTML Editor V14 iniciado.",
+    "success"
+);
 
-/* =========================================================
-   TERMINAL
-========================================================= */
+terminal(
+    "Arquitetura: MENU → CATEGORIAS / INSTITUCIONAL → SUBPÁGINAS.",
+    "success"
+);
 
-function log(
-    message,
-    type
-) {
+terminal(
+    "multiscript.json está protegido contra edição.",
+    "warning"
+);
 
-    const output =
-        document.getElementById(
-            "terminalOutput"
-        );
-
-
-    const line =
-        document.createElement(
-            "div"
-        );
-
-
-    line.className =
-        "log-line " +
-        (
-            type === "success"
-                ? "log-success"
-                : type === "error"
-                    ? "log-error"
-                    : type === "info"
-                        ? "log-info"
-                        : ""
-        );
-
-
-    line.textContent =
-        "> " +
-        message;
-
-
-    output.appendChild(
-        line
-    );
-
-
-    output.scrollTop =
-        output.scrollHeight;
-
-}
-
-
-function setStatus(
-    message
-) {
-
-    document.getElementById(
-        "statusText"
-    ).textContent =
-        message;
-
-}
-
-
-/* =========================================================
-   UTILITÁRIOS
-========================================================= */
-
-function escapeHTML(
-    value
-) {
-
-    return String(value)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-function escapeAttribute(
-    value
-) {
-
-    return escapeHTML(
-        value
-    );
-
-}
-
-
-function escapeJSString(
-    value
-) {
-
-    return String(value)
-        .replace(
-            /\\/g,
-            "\\\\"
-        )
-        .replace(
-            /"/g,
-            '\\"'
-        )
-        .replace(
-            /\r?\n/g,
-            "\\n"
-        );
-
-}
 </script>
 
 </body>
