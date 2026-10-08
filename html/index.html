@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>MultiScript HTML Editor V14</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -19,9 +18,9 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: "Segoe UI", Arial, sans-serif;
     background: #11151a;
     color: #e7eaf0;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
 button,
@@ -42,17 +41,15 @@ button {
     grid-template-rows: 48px 1fr 24px;
 }
 
-/* =========================================================
-   TOPBAR
-========================================================= */
+/* TOPBAR */
 
 .topbar {
     background: #1b2027;
     border-bottom: 1px solid #303640;
     display: flex;
     align-items: center;
-    padding: 0 14px;
     gap: 12px;
+    padding: 0 14px;
 }
 
 .logo {
@@ -63,8 +60,8 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 800;
     font-size: 14px;
+    font-weight: 800;
 }
 
 .title {
@@ -99,22 +96,16 @@ button {
 .tool-btn.primary {
     background: #1266d6;
     border-color: #1975ed;
-    color: white;
-}
-
-.tool-btn.primary:hover {
-    background: #1975ed;
+    color: #fff;
 }
 
 .tool-btn.success {
     background: #16794c;
     border-color: #1b915b;
-    color: white;
+    color: #fff;
 }
 
-/* =========================================================
-   MAIN
-========================================================= */
+/* MAIN */
 
 .main {
     min-height: 0;
@@ -122,9 +113,7 @@ button {
     grid-template-columns: 54px 250px minmax(500px, 1fr) 40%;
 }
 
-/* =========================================================
-   ACTIVITY BAR
-========================================================= */
+/* ACTIVITY */
 
 .activity {
     background: #171b20;
@@ -149,12 +138,10 @@ button {
 .activity-btn:hover,
 .activity-btn.active {
     background: #272d35;
-    color: white;
+    color: #fff;
 }
 
-/* =========================================================
-   SIDEBAR
-========================================================= */
+/* SIDEBAR */
 
 .sidebar {
     background: #191e24;
@@ -210,7 +197,7 @@ button {
 
 .file-item.active {
     background: #303742;
-    color: white;
+    color: #fff;
 }
 
 .folder {
@@ -235,8 +222,12 @@ button {
     color: #777bb4;
 }
 
-.file-ms {
-    color: #54c7ff;
+.file-json {
+    color: #e8b84a;
+}
+
+.locked-file {
+    color: #8993a1;
 }
 
 .plugin-area {
@@ -245,9 +236,7 @@ button {
     padding-top: 8px;
 }
 
-/* =========================================================
-   EDITOR
-========================================================= */
+/* EDITOR */
 
 .editor-area {
     min-width: 0;
@@ -276,7 +265,7 @@ button {
 }
 
 .tab.active {
-    color: white;
+    color: #fff;
     background: #101419;
     border-top: 2px solid #1877f2;
 }
@@ -313,9 +302,7 @@ button {
     overflow: auto;
 }
 
-/* =========================================================
-   TERMINAL
-========================================================= */
+/* TERMINAL */
 
 .terminal {
     min-height: 0;
@@ -347,9 +334,7 @@ button {
     color: #62a9ff;
 }
 
-/* =========================================================
-   PREVIEW
-========================================================= */
+/* PREVIEW */
 
 .preview {
     min-width: 0;
@@ -370,7 +355,7 @@ button {
 }
 
 .preview-header strong {
-    color: white;
+    color: #fff;
     margin-right: 8px;
 }
 
@@ -378,16 +363,14 @@ button {
     width: 100%;
     height: 100%;
     border: 0;
-    background: white;
+    background: #fff;
 }
 
-/* =========================================================
-   STATUS
-========================================================= */
+/* STATUS */
 
 .statusbar {
     background: #1266d6;
-    color: white;
+    color: #fff;
     display: flex;
     align-items: center;
     padding: 0 12px;
@@ -400,14 +383,12 @@ button {
     gap: 15px;
 }
 
-/* =========================================================
-   MODAL
-========================================================= */
+/* MODAL */
 
 .modal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, .68);
+    background: rgba(0,0,0,.68);
     display: none;
     align-items: center;
     justify-content: center;
@@ -456,7 +437,7 @@ button {
 
 .modal-close:hover {
     background: #2a3038;
-    color: white;
+    color: #fff;
 }
 
 .modal-body {
@@ -481,8 +462,7 @@ button {
     font-weight: 600;
 }
 
-.form-control,
-.form-select {
+.form-control {
     width: 100%;
     border: 1px solid #39414c;
     background: #11151a;
@@ -493,8 +473,7 @@ button {
     font-size: 12px;
 }
 
-.form-control:focus,
-.form-select:focus {
+.form-control:focus {
     border-color: #1877f2;
 }
 
@@ -508,9 +487,7 @@ textarea.form-control {
     margin-bottom: 17px;
 }
 
-/* =========================================================
-   PAGE TYPE
-========================================================= */
+/* TYPE */
 
 .type-question {
     text-align: center;
@@ -520,7 +497,7 @@ textarea.form-control {
 .type-question h3 {
     margin: 0 0 7px;
     font-size: 18px;
-    color: white;
+    color: #fff;
 }
 
 .type-question p {
@@ -531,7 +508,7 @@ textarea.form-control {
 
 .type-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3,1fr);
     gap: 12px;
 }
 
@@ -557,7 +534,6 @@ textarea.form-control {
     text-align: center;
     padding: 15px;
     cursor: pointer;
-    transition: .15s;
 }
 
 .type-card label:hover {
@@ -584,7 +560,7 @@ textarea.form-control {
 }
 
 .type-name {
-    color: white;
+    color: #fff;
     font-size: 13px;
     font-weight: 700;
 }
@@ -595,16 +571,14 @@ textarea.form-control {
     margin-top: 5px;
 }
 
-/* =========================================================
-   CHECKBOXES
-========================================================= */
+/* OPTIONS */
 
 .option-box {
     border: 1px solid #39414c;
     background: #14191f;
     border-radius: 7px;
     padding: 13px;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 .option-check {
@@ -621,7 +595,7 @@ textarea.form-control {
 
 .option-check strong {
     display: block;
-    color: white;
+    color: #fff;
     font-size: 12px;
 }
 
@@ -632,9 +606,7 @@ textarea.form-control {
     margin-top: 4px;
 }
 
-/* =========================================================
-   PLUGINS
-========================================================= */
+/* PLUGINS */
 
 .plugin-list {
     border: 1px solid #353d48;
@@ -667,13 +639,11 @@ textarea.form-control {
     font-size: 11px;
 }
 
-/* =========================================================
-   CREDIT
-========================================================= */
+/* CREDIT */
 
 .credit-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2,1fr);
     gap: 9px;
 }
 
@@ -692,7 +662,7 @@ textarea.form-control {
 
 .credit-option strong {
     display: block;
-    color: white;
+    color: #fff;
     font-size: 12px;
 }
 
@@ -703,14 +673,35 @@ textarea.form-control {
     font-size: 10px;
 }
 
-/* =========================================================
-   MOBILE DO EDITOR
-========================================================= */
+/* LOCKED */
 
-@media (max-width: 1100px) {
+.locked-panel {
+    text-align: center;
+    padding: 20px 10px;
+}
+
+.locked-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.locked-panel h3 {
+    margin: 0 0 8px;
+    color: #fff;
+}
+
+.locked-panel p {
+    color: #858f9d;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* MOBILE */
+
+@media (max-width:1100px) {
 
     .main {
-        grid-template-columns: 54px 210px minmax(400px, 1fr);
+        grid-template-columns: 54px 210px minmax(400px,1fr);
     }
 
     .preview {
@@ -720,10 +711,9 @@ textarea.form-control {
     .top-actions .optional-action {
         display: none;
     }
-
 }
 
-@media (max-width: 760px) {
+@media (max-width:760px) {
 
     .app {
         grid-template-rows: 56px 1fr 24px;
@@ -763,7 +753,7 @@ textarea.form-control {
     .editor-area {
         flex: 1;
         min-height: 0;
-        grid-template-rows: 38px minmax(0, 1fr) 110px;
+        grid-template-rows: 38px minmax(0,1fr) 110px;
     }
 
     .editor-wrapper {
@@ -780,18 +770,7 @@ textarea.form-control {
         padding: 10px;
     }
 
-    .preview {
-        display: none;
-    }
-
-    .type-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .type-card label {
-        min-height: 95px;
-    }
-
+    .type-grid,
     .credit-grid {
         grid-template-columns: 1fr;
     }
@@ -799,11 +778,6 @@ textarea.form-control {
     .modal {
         width: calc(100vw - 24px);
         max-height: calc(100vh - 24px);
-    }
-
-    .status-right span:nth-child(2),
-    .status-right span:nth-child(3) {
-        display: none;
     }
 }
 
@@ -833,9 +807,7 @@ textarea.form-control {
 
 <header class="topbar">
 
-    <div class="logo">
-        MS
-    </div>
+    <div class="logo">MS</div>
 
     <div>
         <div class="title">
@@ -914,16 +886,12 @@ textarea.form-control {
 
 <aside class="activity">
 
-    <button
-        class="activity-btn active"
-        title="Explorer"
-    >
+    <button class="activity-btn active">
         ▤
     </button>
 
     <button
         class="activity-btn"
-        title="Novo Projeto"
         onclick="openNewProject()"
     >
         ＋
@@ -931,7 +899,6 @@ textarea.form-control {
 
     <button
         class="activity-btn"
-        title="Gerar Página"
         onclick="openGenerator()"
     >
         ◇
@@ -939,7 +906,6 @@ textarea.form-control {
 
     <button
         class="activity-btn"
-        title="Plugins"
         onclick="openPluginManager()"
     >
         PHP
@@ -1070,17 +1036,9 @@ textarea.form-control {
             index.html
         </span>
 
-        <span>
-            HTML
-        </span>
-
-        <span>
-            UTF-8
-        </span>
-
-        <span>
-            V14
-        </span>
+        <span>HTML</span>
+        <span>UTF-8</span>
+        <span>V14</span>
 
     </div>
 
@@ -1094,10 +1052,7 @@ textarea.form-control {
     class="modal-backdrop"
 >
 
-    <div
-        class="modal"
-        id="modalBox"
-    >
+    <div class="modal">
 
         <div class="modal-header">
 
@@ -1151,34 +1106,32 @@ let project = {
 
     files: {
 
-        "index.html": createInitialHTML(
-            "MEU-PROJETO"
-        ),
+        "index.html":
+            createInitialHTML("MEU-PROJETO"),
 
-        "style.css": `
-
-body {
+        "style.css":
+`body {
     margin: 0;
     font-family: Arial, sans-serif;
-}
+}`,
 
-`,
-
-        "script.js": `
-
-console.log(
+        "script.js":
+`console.log(
     "script.js carregado."
-);
+);`,
 
-`,
-
-        "multiscript.js": createMultiScriptJS(
-            "MEU-PROJETO"
-        )
+        "multiscript.json":
+            createMultiScriptJSON(
+                "MEU-PROJETO"
+            )
 
     },
 
-    plugins: {}
+    plugins: {},
+
+    protectedFiles: [
+        "multiscript.json"
+    ]
 
 };
 
@@ -1187,14 +1140,16 @@ let currentFile = "index.html";
 
 
 /* =========================================================
-   INICIALIZAÇÃO
+   INÍCIO
 ========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
-    function () {
+    function() {
 
         loadProject();
+
+        ensureProjectMetadata();
 
         renderProjectName();
 
@@ -1202,11 +1157,26 @@ document.addEventListener(
 
         renderPlugins();
 
-        openFile(
+        if (
             project.files[currentFile]
-                ? currentFile
-                : "index.html"
-        );
+        ) {
+
+            openFile(currentFile);
+
+        } else {
+
+            const first =
+                Object.keys(
+                    project.files
+                )[0];
+
+            if (first) {
+
+                openFile(first);
+
+            }
+
+        }
 
         previewPage();
 
@@ -1216,12 +1186,105 @@ document.addEventListener(
         );
 
         log(
-            "multiscript.js está sendo gerenciado pelo projeto.",
+            "multiscript.json protegido.",
             "info"
         );
 
     }
 );
+
+
+/* =========================================================
+   METADADOS
+========================================================= */
+
+function createMultiScriptJSON(
+    name
+) {
+
+    return JSON.stringify({
+
+        multiscript: {
+
+            version: "14.0.0",
+
+            generator:
+                "MultiScript HTML Editor",
+
+            project:
+                name,
+
+            type:
+                "html-project"
+
+        },
+
+        files: {
+
+            index: true,
+
+            style: true,
+
+            script: true,
+
+            plugins: true
+
+        }
+
+    }, null, 4);
+
+}
+
+
+function ensureProjectMetadata() {
+
+    if (
+        !project.files
+    ) {
+
+        project.files = {};
+
+    }
+
+
+    if (
+        !project.protectedFiles
+    ) {
+
+        project.protectedFiles = [];
+
+    }
+
+
+    if (
+        !project.protectedFiles.includes(
+            "multiscript.json"
+        )
+    ) {
+
+        project.protectedFiles.push(
+            "multiscript.json"
+        );
+
+    }
+
+
+    if (
+        !project.files[
+            "multiscript.json"
+        ]
+    ) {
+
+        project.files[
+            "multiscript.json"
+        ] =
+            createMultiScriptJSON(
+                project.name
+            );
+
+    }
+
+}
 
 
 /* =========================================================
@@ -1247,7 +1310,6 @@ function openNewProject() {
 
         </div>
 
-
         <div class="option-box">
 
             <label class="option-check">
@@ -1259,7 +1321,6 @@ function openNewProject() {
                 >
 
                 <div>
-
                     <strong>
                         Criar index.html
                     </strong>
@@ -1267,13 +1328,11 @@ function openNewProject() {
                     <span>
                         Página inicial do projeto.
                     </span>
-
                 </div>
 
             </label>
 
         </div>
-
 
         <div class="option-box">
 
@@ -1286,7 +1345,6 @@ function openNewProject() {
                 >
 
                 <div>
-
                     <strong>
                         Criar style.css
                     </strong>
@@ -1294,13 +1352,11 @@ function openNewProject() {
                     <span>
                         Folha de estilos principal.
                     </span>
-
                 </div>
 
             </label>
 
         </div>
-
 
         <div class="option-box">
 
@@ -1313,21 +1369,18 @@ function openNewProject() {
                 >
 
                 <div>
-
                     <strong>
                         Criar script.js
                     </strong>
 
                     <span>
-                        JavaScript principal do projeto.
+                        JavaScript principal.
                     </span>
-
                 </div>
 
             </label>
 
         </div>
-
 
         <div class="option-box">
 
@@ -1335,26 +1388,24 @@ function openNewProject() {
 
                 <input
                     type="checkbox"
-                    id="newCreateMultiScript"
+                    id="newCreateJSON"
                     checked
                 >
 
                 <div>
-
                     <strong>
-                        Criar multiscript.js
+                        Criar multiscript.json 🔒
                     </strong>
 
                     <span>
-                        Arquivo auxiliar exclusivo deste projeto.
+                        Arquivo interno e não editável
+                        do MultiScript.
                     </span>
-
                 </div>
 
             </label>
 
         </div>
-
 
         <div class="option-box">
 
@@ -1367,15 +1418,14 @@ function openNewProject() {
                 >
 
                 <div>
-
                     <strong>
                         Criar pasta plugins/
                     </strong>
 
                     <span>
-                        Reservada para seus próprios plugins PHP.
+                        Reservada para seus próprios
+                        plugins PHP.
                     </span>
-
                 </div>
 
             </label>
@@ -1389,7 +1439,6 @@ function openNewProject() {
         "CRIAR NOVO PROJETO",
         body,
         `
-
             <button
                 class="tool-btn"
                 onclick="closeModal()"
@@ -1403,7 +1452,6 @@ function openNewProject() {
             >
                 Criar Projeto
             </button>
-
         `
     );
 
@@ -1438,17 +1486,6 @@ function createNewProject() {
             .trim();
 
 
-    if (!name) {
-
-        alert(
-            "Nome de projeto inválido."
-        );
-
-        return;
-
-    }
-
-
     const createIndex =
         document.getElementById(
             "newCreateIndex"
@@ -1467,9 +1504,9 @@ function createNewProject() {
         ).checked;
 
 
-    const createMultiScript =
+    const createJSON =
         document.getElementById(
-            "newCreateMultiScript"
+            "newCreateJSON"
         ).checked;
 
 
@@ -1513,26 +1550,20 @@ function createNewProject() {
     }
 
 
-    if (createMultiScript) {
+    if (createJSON) {
 
-        files["multiscript.js"] =
-            createMultiScriptJS(
+        files["multiscript.json"] =
+            createMultiScriptJSON(
                 name
             );
 
     }
 
 
-    /*
-       O navegador não precisa armazenar uma pasta
-       vazia. No ZIP, a pasta plugins/ será criada.
-    */
-
     if (createPlugins) {
 
-        files[
-            "plugins/.gitkeep"
-        ] = "";
+        files["plugins/.gitkeep"] =
+            "";
 
     }
 
@@ -1543,7 +1574,12 @@ function createNewProject() {
 
         files: files,
 
-        plugins: {}
+        plugins: {},
+
+        protectedFiles:
+            createJSON
+                ? ["multiscript.json"]
+                : []
 
     };
 
@@ -1551,7 +1587,12 @@ function createNewProject() {
     currentFile =
         createIndex
             ? "index.html"
-            : Object.keys(files)[0];
+            : Object.keys(files)
+                .find(
+                    file =>
+                        file !==
+                        "multiscript.json"
+                );
 
 
     saveProject();
@@ -1562,9 +1603,15 @@ function createNewProject() {
 
     renderPlugins();
 
-    openFile(
-        currentFile
-    );
+
+    if (currentFile) {
+
+        openFile(
+            currentFile
+        );
+
+    }
+
 
     closeModal();
 
@@ -1576,10 +1623,10 @@ function createNewProject() {
     );
 
 
-    if (createMultiScript) {
+    if (createJSON) {
 
         log(
-            "multiscript.js criado automaticamente.",
+            "multiscript.json criado e protegido.",
             "success"
         );
 
@@ -1598,13 +1645,13 @@ function createNewProject() {
 }
 
 
+/* =========================================================
+   HTML INICIAL
+========================================================= */
+
 function createInitialHTML(
     name
 ) {
-
-    const safe =
-        escapeHTML(name);
-
 
     return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -1618,7 +1665,7 @@ function createInitialHTML(
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>${safe}</title>
+<title>${escapeHTML(name)}</title>
 
 <link
     rel="stylesheet"
@@ -1632,7 +1679,7 @@ function createInitialHTML(
 <header>
 
     <h1>
-        ${safe}
+        ${escapeHTML(name)}
     </h1>
 
 </header>
@@ -1650,8 +1697,6 @@ function createInitialHTML(
 
 </main>
 
-<script src="multiscript.js"><\/script>
-
 <script src="script.js"><\/script>
 
 </body>
@@ -1661,56 +1706,13 @@ function createInitialHTML(
 }
 
 
-function createMultiScriptJS(
-    name
-) {
-
-    return `/*
- * MultiScript.js
- * Arquivo auxiliar deste projeto.
- *
- * Projeto:
- * ${escapeJSString(name)}
- *
- * Gerado pelo MultiScript HTML Editor V14.
- */
-
-"use strict";
-
-const MultiScript = {
-
-    version: "14.0.0",
-
-    project: "${escapeJSString(name)}",
-
-    init() {
-
-        console.log(
-            "MultiScript.js carregado."
-        );
-
-    }
-
-};
-
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        MultiScript.init();
-
-    }
-);`;
-
-}
-
-
 /* =========================================================
-   LOCAL STORAGE
+   SALVAR / CARREGAR
 ========================================================= */
 
 function saveProject() {
+
+    ensureProjectMetadata();
 
     localStorage.setItem(
         "multiscript-v14-project",
@@ -1735,7 +1737,9 @@ function loadProject() {
 
 
         if (!saved) {
+
             return;
+
         }
 
 
@@ -1772,7 +1776,7 @@ function loadProject() {
 
 
 /* =========================================================
-   NOME DO PROJETO
+   EXPLORER
 ========================================================= */
 
 function renderProjectName() {
@@ -1785,10 +1789,6 @@ function renderProjectName() {
 
 }
 
-
-/* =========================================================
-   FILE TREE
-========================================================= */
 
 function renderFiles() {
 
@@ -1811,7 +1811,7 @@ function renderFiles() {
 
 
     files.forEach(
-        function (file) {
+        function(file) {
 
             const parts =
                 file.split("/");
@@ -1831,11 +1831,13 @@ function renderFiles() {
 
                 const folder =
                     parts
-                        .slice(0, -1)
+                        .slice(0,-1)
                         .join("/");
 
 
-                if (!folders[folder]) {
+                if (
+                    !folders[folder]
+                ) {
 
                     folders[folder] = [];
 
@@ -1855,7 +1857,7 @@ function renderFiles() {
     Object.keys(folders)
         .sort()
         .forEach(
-            function (folder) {
+            function(folder) {
 
                 const folderDiv =
                     document.createElement(
@@ -1868,7 +1870,8 @@ function renderFiles() {
 
 
                 folderDiv.textContent =
-                    "▾ " + folder;
+                    "▾ " +
+                    folder;
 
 
                 tree.appendChild(
@@ -1878,7 +1881,7 @@ function renderFiles() {
 
                 folders[folder]
                     .forEach(
-                        function (file) {
+                        function(file) {
 
                             addFileItem(
                                 tree,
@@ -1907,6 +1910,10 @@ function addFileItem(
         );
 
 
+    const locked =
+        isProtectedFile(file);
+
+
     item.className =
         "file-item" +
         (
@@ -1920,7 +1927,8 @@ function addFileItem(
         (
             9 +
             level * 17
-        ) + "px";
+        ) +
+        "px";
 
 
     const icon =
@@ -1929,69 +1937,18 @@ function addFileItem(
         );
 
 
-    const ext =
-        file
-            .split(".")
-            .pop()
-            .toLowerCase();
-
-
-    if (
-        file.endsWith(
-            "multiscript.js"
-        )
-    ) {
+    if (locked) {
 
         icon.className =
-            "file-ms";
+            "locked-file";
 
         icon.textContent =
-            "MS";
-
-    } else if (
-        ext === "html"
-    ) {
-
-        icon.className =
-            "file-html";
-
-        icon.textContent =
-            "▤";
-
-    } else if (
-        ext === "css"
-    ) {
-
-        icon.className =
-            "file-css";
-
-        icon.textContent =
-            "#";
-
-    } else if (
-        ext === "js"
-    ) {
-
-        icon.className =
-            "file-js";
-
-        icon.textContent =
-            "JS";
-
-    } else if (
-        ext === "php"
-    ) {
-
-        icon.className =
-            "file-php";
-
-        icon.textContent =
-            "PHP";
+            "🔒";
 
     } else {
 
         icon.textContent =
-            "•";
+            getFileSymbol(file);
 
     }
 
@@ -2011,8 +1968,16 @@ function addFileItem(
     item.appendChild(name);
 
 
+    if (locked) {
+
+        item.title =
+            "Arquivo protegido pelo MultiScript";
+
+    }
+
+
     item.onclick =
-        function () {
+        function() {
 
             openFile(file);
 
@@ -2020,6 +1985,56 @@ function addFileItem(
 
 
     container.appendChild(item);
+
+}
+
+
+function getFileSymbol(
+    file
+) {
+
+    const ext =
+        file
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+    if (ext === "html") {
+        return "▤";
+    }
+
+    if (ext === "css") {
+        return "#";
+    }
+
+    if (ext === "js") {
+        return "JS";
+    }
+
+    if (ext === "php") {
+        return "PHP";
+    }
+
+    if (ext === "json") {
+        return "{}";
+    }
+
+    return "•";
+
+}
+
+
+function isProtectedFile(
+    file
+) {
+
+    return (
+        project.protectedFiles &&
+        project.protectedFiles.includes(
+            file
+        )
+    );
 
 }
 
@@ -2077,7 +2092,7 @@ function renderPlugins() {
 
 
     plugins.forEach(
-        function (plugin) {
+        function(plugin) {
 
             const item =
                 document.createElement(
@@ -2121,14 +2136,16 @@ function renderPlugins() {
 
 
             item.onclick =
-                function () {
+                function() {
 
                     openFile(plugin);
 
                 };
 
 
-            tree.appendChild(item);
+            tree.appendChild(
+                item
+            );
 
         }
     );
@@ -2140,10 +2157,29 @@ function renderPlugins() {
    ABRIR ARQUIVO
 ========================================================= */
 
-function openFile(file) {
+function openFile(
+    file
+) {
 
-    if (!project.files[file]) {
+    if (
+        !project.files[file]
+    ) {
+
         return;
+
+    }
+
+
+    if (
+        isProtectedFile(file)
+    ) {
+
+        showProtectedFile(
+            file
+        );
+
+        return;
+
     }
 
 
@@ -2197,15 +2233,63 @@ function openFile(file) {
 }
 
 
-function getFileIcon(file) {
+function showProtectedFile(
+    file
+) {
+
+    openModal(
+        "ARQUIVO PROTEGIDO",
+        `
+            <div class="locked-panel">
+
+                <div class="locked-icon">
+                    🔒
+                </div>
+
+                <h3>
+                    ${escapeHTML(file)}
+                </h3>
+
+                <p>
+                    Este arquivo é interno do
+                    MultiScript HTML Editor.
+                </p>
+
+                <p>
+                    Ele é criado e atualizado
+                    automaticamente pelo sistema.
+                </p>
+
+                <p>
+                    A edição manual está bloqueada
+                    para preservar a estrutura
+                    do projeto.
+                </p>
+
+            </div>
+        `,
+        `
+            <button
+                class="tool-btn primary"
+                onclick="closeModal()"
+            >
+                Fechar
+            </button>
+        `
+    );
+
+}
+
+
+function getFileIcon(
+    file
+) {
 
     if (
-        file.endsWith(
-            "multiscript.js"
-        )
+        isProtectedFile(file)
     ) {
 
-        return '<span class="file-ms">MS</span>';
+        return '<span class="file-json">🔒</span>';
 
     }
 
@@ -2218,32 +2302,24 @@ function getFileIcon(file) {
 
 
     if (ext === "html") {
-
         return '<span class="file-html">▤</span>';
-
     }
-
 
     if (ext === "css") {
-
         return '<span class="file-css">#</span>';
-
     }
-
 
     if (ext === "js") {
-
         return '<span class="file-js">JS</span>';
-
     }
-
 
     if (ext === "php") {
-
         return '<span class="file-php">PHP</span>';
-
     }
 
+    if (ext === "json") {
+        return '<span class="file-json">{}</span>';
+    }
 
     return "<span>•</span>";
 
@@ -2255,6 +2331,21 @@ function getFileIcon(file) {
 ========================================================= */
 
 function editorInput() {
+
+    if (
+        isProtectedFile(
+            currentFile
+        )
+    ) {
+
+        openFile(
+            currentFile
+        );
+
+        return;
+
+    }
+
 
     project.files[currentFile] =
         document.getElementById(
@@ -2305,7 +2396,8 @@ function updateLineNumbers() {
     ) {
 
         output +=
-            i + "\n";
+            i +
+            "\n";
 
     }
 
@@ -2330,7 +2422,9 @@ function syncEditorScroll() {
 }
 
 
-function handleEditorKey(event) {
+function handleEditorKey(
+    event
+) {
 
     if (
         event.key === "Tab"
@@ -2383,6 +2477,7 @@ function handleEditorKey(event) {
 function previewPage() {
 
     if (
+        !currentFile ||
         !currentFile
             .toLowerCase()
             .endsWith(".html")
@@ -2398,11 +2493,19 @@ function previewPage() {
 
 
     const css =
-        project.files["style.css"] || "";
+        project.files[
+            currentFile.includes("/")
+                ? "../style.css"
+                : "style.css"
+        ] || "";
 
 
     const js =
-        project.files["script.js"] || "";
+        project.files[
+            currentFile.includes("/")
+                ? "../script.js"
+                : "script.js"
+        ] || "";
 
 
     const safeJS =
@@ -2436,7 +2539,8 @@ function previewPage() {
                 "</body>",
                 "<script>" +
                 safeJS +
-                "<" + "/script></body>"
+                "<" +
+                "/script></body>"
             );
 
     }
@@ -2463,7 +2567,9 @@ function openGenerator() {
 
 function openPageTypeSelector() {
 
-    const body = `
+    openModal(
+        "GERADOR DE PÁGINAS — V14",
+        `
 
         <div class="type-question">
 
@@ -2476,7 +2582,6 @@ function openPageTypeSelector() {
             </p>
 
         </div>
-
 
         <div class="type-grid">
 
@@ -2566,12 +2671,7 @@ function openPageTypeSelector() {
 
         </div>
 
-    `;
-
-
-    openModal(
-        "GERADOR DE PÁGINAS — V14",
-        body,
+        `,
         `
             <button
                 class="tool-btn"
@@ -2612,7 +2712,9 @@ function continuePageType() {
 }
 
 
-function openGeneratorForm(type) {
+function openGeneratorForm(
+    type
+) {
 
     let title = "";
 
@@ -2643,7 +2745,6 @@ function openGeneratorForm(type) {
 
             </div>
 
-
             <div class="form-group">
 
                 <label class="form-label">
@@ -2657,7 +2758,6 @@ function openGeneratorForm(type) {
                 ></textarea>
 
             </div>
-
 
             ${bootstrapOption()}
 
@@ -2692,7 +2792,6 @@ function openGeneratorForm(type) {
 
             </div>
 
-
             <div class="form-group">
 
                 <label class="form-label">
@@ -2706,7 +2805,6 @@ function openGeneratorForm(type) {
                 ></textarea>
 
             </div>
-
 
             ${bootstrapOption()}
 
@@ -2748,7 +2846,6 @@ function openGeneratorForm(type) {
 
             </div>
 
-
             <div class="form-group">
 
                 <label class="form-label">
@@ -2763,7 +2860,6 @@ function openGeneratorForm(type) {
 
             </div>
 
-
             <div class="form-group">
 
                 <label class="form-label">
@@ -2777,7 +2873,6 @@ function openGeneratorForm(type) {
                 ></textarea>
 
             </div>
-
 
             ${bootstrapOption()}
 
@@ -2811,10 +2906,6 @@ function openGeneratorForm(type) {
 }
 
 
-/* =========================================================
-   BOOTSTRAP NO PROJETO
-========================================================= */
-
 function bootstrapOption() {
 
     return `
@@ -2836,8 +2927,7 @@ function bootstrapOption() {
                     </strong>
 
                     <span>
-                        Bootstrap será inserido no HTML
-                        do projeto, e não no editor V14.
+                        Aplicado somente ao projeto HTML.
                     </span>
 
                 </div>
@@ -2852,7 +2942,7 @@ function bootstrapOption() {
 
 
 /* =========================================================
-   PLUGINS
+   PLUGINS NO GERADOR
 ========================================================= */
 
 function pluginSelector() {
@@ -2881,9 +2971,7 @@ function pluginSelector() {
         html += `
 
             <div class="no-plugins">
-
                 Nenhum plugin PHP instalado.
-
             </div>
 
         `;
@@ -2891,7 +2979,7 @@ function pluginSelector() {
     } else {
 
         plugins.forEach(
-            function (plugin) {
+            function(plugin) {
 
                 html += `
 
@@ -2947,7 +3035,7 @@ function getCategoryOptions() {
 
 
     files.forEach(
-        function (file) {
+        function(file) {
 
             if (
                 file.endsWith(".html") &&
@@ -2967,9 +3055,8 @@ function getCategoryOptions() {
                         );
 
 
-                html += `
-<option value="${escapeAttribute(name)}">
-`;
+                html +=
+                    `<option value="${escapeAttribute(name)}">`;
 
             }
 
@@ -2986,7 +3073,9 @@ function getCategoryOptions() {
    GERAR PÁGINA
 ========================================================= */
 
-function generatePage(type) {
+function generatePage(
+    type
+) {
 
     const name =
         document.getElementById(
@@ -3065,8 +3154,7 @@ function generatePage(type) {
         !confirm(
             "O arquivo " +
             path +
-            " já existe.\n\n" +
-            "Deseja substituir?"
+            " já existe.\n\nDeseja substituir?"
         )
     ) {
 
@@ -3081,11 +3169,8 @@ function generatePage(type) {
                 ".generator-plugin:checked"
             )
         ).map(
-            function (input) {
-
-                return input.value;
-
-            }
+            input =>
+                input.value
         );
 
 
@@ -3124,7 +3209,7 @@ function generatePage(type) {
 
 
 /* =========================================================
-   TEMPLATE DA PÁGINA
+   TEMPLATE
 ========================================================= */
 
 function createPageTemplate(
@@ -3139,65 +3224,53 @@ function createPageTemplate(
         escapeHTML(name);
 
 
-    let bootstrapHead =
-        "";
-
-
-    let bootstrapScript =
-        "";
-
-
-    if (bootstrap) {
-
-        bootstrapHead = `
-
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-    rel="stylesheet"
->
-
-`;
-
-        bootstrapScript = `
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"><\/script>
-
-`;
-
-    }
-
-
-    let pluginsComment =
-        "";
-
-
-    if (plugins.length) {
-
-        pluginsComment =
-`<!--
-MultiScript — Plugins PHP associados:
-
-${plugins
-    .map(
-        function (plugin) {
-            return "     " + plugin;
-        }
-    )
-    .join("\n")}
-
--->
-`;
-
-    }
-
-
     const relative =
         type === "subpage"
             ? "../"
             : "";
 
 
-    let structure = "";
+    let bootstrapHead = "";
+
+    let bootstrapScript = "";
+
+
+    if (bootstrap) {
+
+        bootstrapHead = `
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>`;
+
+        bootstrapScript = `
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"><\/script>`;
+
+    }
+
+
+    let pluginComment = "";
+
+
+    if (plugins.length) {
+
+        pluginComment =
+`<!--
+Plugins PHP associados:
+
+${plugins
+    .map(
+        plugin =>
+            " - " + plugin
+    )
+    .join("\n")}
+
+-->`;
+
+    }
+
+
+    let structure;
 
 
     if (bootstrap) {
@@ -3247,14 +3320,39 @@ ${plugins
 
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item dropdown">
 
                     <a
-                        class="nav-link"
-                        href="#conteudo"
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
                     >
-                        ${title}
+                        Menu
                     </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                href="#"
+                            >
+                                Item 1
+                            </a>
+                        </li>
+
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                href="#"
+                            >
+                                Item 2
+                            </a>
+                        </li>
+
+                    </ul>
 
                 </li>
 
@@ -3266,7 +3364,6 @@ ${plugins
 
 </nav>
 
-
 <header class="py-5">
 
     <div class="container">
@@ -3276,37 +3373,32 @@ ${plugins
         </h1>
 
         <p class="lead">
-            Página criada pelo MultiScript HTML Editor V14.
+            Página criada pelo MultiScript V14.
         </p>
 
     </div>
 
 </header>
 
-
-<main
-    id="conteudo"
-    class="container py-4"
->
+<main class="container py-4">
 
     ${content || `
 
-    <section>
+        <section>
 
-        <h2>
-            ${title}
-        </h2>
+            <h2>
+                ${title}
+            </h2>
 
-        <p>
-            Conteúdo da página.
-        </p>
+            <p>
+                Conteúdo da página.
+            </p>
 
-    </section>
+        </section>
 
     `}
 
 </main>
-
 
 <footer class="border-top py-4 mt-5">
 
@@ -3334,27 +3426,25 @@ ${plugins
 
 </header>
 
-
 <main>
 
     ${content || `
 
-    <section>
+        <section>
 
-        <h2>
-            ${title}
-        </h2>
+            <h2>
+                ${title}
+            </h2>
 
-        <p>
-            Conteúdo da página.
-        </p>
+            <p>
+                Conteúdo da página.
+            </p>
 
-    </section>
+        </section>
 
     `}
 
 </main>
-
 
 <footer>
 
@@ -3394,11 +3484,9 @@ ${bootstrapHead}
 
 <body>
 
-${pluginsComment}
+${pluginComment}
 
 ${structure}
-
-<script src="${relative}multiscript.js"><\/script>
 
 <script src="${relative}script.js"><\/script>
 
@@ -3415,7 +3503,9 @@ ${bootstrapScript}
    SLUG
 ========================================================= */
 
-function slugify(value) {
+function slugify(
+    value
+) {
 
     return String(value)
         .normalize("NFD")
@@ -3437,7 +3527,7 @@ function slugify(value) {
 
 
 /* =========================================================
-   PHP IMPORT
+   PHP
 ========================================================= */
 
 function openPHPImporter() {
@@ -3453,7 +3543,7 @@ document.getElementById(
     "phpInput"
 ).addEventListener(
     "change",
-    async function (event) {
+    async function(event) {
 
         const files =
             Array.from(
@@ -3539,8 +3629,7 @@ function openPluginManager() {
                     font-size:12px;
                 "
             >
-                Nenhum plugin PHP do usuário
-                foi importado.
+                Nenhum plugin PHP foi importado.
             </p>
 
         `;
@@ -3548,7 +3637,7 @@ function openPluginManager() {
     } else {
 
         plugins.forEach(
-            function (plugin) {
+            function(plugin) {
 
                 body += `
 
@@ -3617,7 +3706,9 @@ function openPluginManager() {
 }
 
 
-function removePlugin(path) {
+function removePlugin(
+    path
+) {
 
     if (
         !confirm(
@@ -3646,7 +3737,12 @@ function removePlugin(path) {
                 ? "index.html"
                 : Object.keys(
                     project.files
-                )[0];
+                ).find(
+                    file =>
+                        !isProtectedFile(
+                            file
+                        )
+                );
 
     }
 
@@ -3657,9 +3753,15 @@ function removePlugin(path) {
 
     renderPlugins();
 
-    openFile(
-        currentFile
-    );
+
+    if (currentFile) {
+
+        openFile(
+            currentFile
+        );
+
+    }
+
 
     openPluginManager();
 
@@ -3667,12 +3769,138 @@ function removePlugin(path) {
 
 
 /* =========================================================
-   EXPORTAR ZIP
+   FORMATAR
+========================================================= */
+
+function formatHTML() {
+
+    if (
+        !currentFile
+            .toLowerCase()
+            .endsWith(".html")
+    ) {
+
+        alert(
+            "A formatação automática está disponível para HTML."
+        );
+
+        return;
+
+    }
+
+
+    let html =
+        document.getElementById(
+            "editor"
+        ).value;
+
+
+    html =
+        html
+            .replace(
+                />\s*</g,
+                ">\n<"
+            )
+            .replace(
+                /<([a-zA-Z][^>]*)>/g,
+                function(match) {
+
+                    return match;
+
+                }
+            );
+
+
+    const lines =
+        html
+            .split("\n")
+            .map(
+                line =>
+                    line.trim()
+            );
+
+
+    let indent = 0;
+
+
+    const formatted =
+        lines
+            .map(
+                function(line) {
+
+                    if (
+                        /^<\//.test(line)
+                    ) {
+
+                        indent =
+                            Math.max(
+                                0,
+                                indent - 1
+                            );
+
+                    }
+
+
+                    const result =
+                        "    ".repeat(
+                            indent
+                        ) +
+                        line;
+
+
+                    if (
+                        /^<[^!/][^>]*>$/.test(line) &&
+                        !/<\/[^>]+>$/.test(line) &&
+                        !/\/>$/.test(line) &&
+                        !/^<(meta|link|input|img|br|hr)/i.test(line)
+                    ) {
+
+                        indent++;
+
+                    }
+
+
+                    return result;
+
+                }
+            )
+            .join("\n");
+
+
+    project.files[currentFile] =
+        formatted;
+
+
+    document.getElementById(
+        "editor"
+    ).value =
+        formatted;
+
+
+    updateLineNumbers();
+
+    saveProject();
+
+    previewPage();
+
+
+    log(
+        "HTML formatado.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   EXPORTAÇÃO
 ========================================================= */
 
 function openCreditDialog() {
 
-    const body = `
+    openModal(
+        "EXPORTAR PROJETO — ZIP",
+        `
 
         <p
             style="
@@ -3683,7 +3911,6 @@ function openCreditDialog() {
             Escolha o crédito que será incluído
             no projeto exportado.
         </p>
-
 
         <div class="credit-grid">
 
@@ -3702,7 +3929,6 @@ function openCreditDialog() {
 
             </div>
 
-
             <div
                 class="credit-option"
                 onclick="confirmExport('multipage')"
@@ -3717,7 +3943,6 @@ function openCreditDialog() {
                 </span>
 
             </div>
-
 
             <div
                 class="credit-option"
@@ -3734,7 +3959,6 @@ function openCreditDialog() {
 
             </div>
 
-
             <div
                 class="credit-option"
                 onclick="confirmExport('homemsite')"
@@ -3749,7 +3973,6 @@ function openCreditDialog() {
                 </span>
 
             </div>
-
 
             <div
                 class="credit-option"
@@ -3768,12 +3991,7 @@ function openCreditDialog() {
 
         </div>
 
-    `;
-
-
-    openModal(
-        "EXPORTAR PROJETO — ZIP",
-        body,
+        `,
         `
             <button
                 class="tool-btn"
@@ -3798,10 +4016,9 @@ async function confirmExport(
         new JSZip();
 
 
-    const files =
-        {
-            ...project.files
-        };
+    const files = {
+        ...project.files
+    };
 
 
     if (
@@ -3810,7 +4027,7 @@ async function confirmExport(
 
         Object.keys(files)
             .forEach(
-                function (path) {
+                function(path) {
 
                     if (
                         path
@@ -3834,7 +4051,7 @@ async function confirmExport(
 
     Object.keys(files)
         .forEach(
-            function (path) {
+            function(path) {
 
                 zip.file(
                     path,
@@ -3843,6 +4060,24 @@ async function confirmExport(
 
             }
         );
+
+
+    /*
+       Garante a existência física da pasta
+       plugins/ mesmo que ela esteja vazia.
+    */
+
+    if (
+        project.files[
+            "plugins/.gitkeep"
+        ]
+    ) {
+
+        zip.folder(
+            "plugins"
+        );
+
+    }
 
 
     const blob =
@@ -4079,7 +4314,7 @@ document.getElementById(
     "modalBackdrop"
 ).addEventListener(
     "click",
-    function (event) {
+    function(event) {
 
         if (
             event.target === this
@@ -4128,7 +4363,8 @@ function log(
 
 
     line.textContent =
-        "> " + message;
+        "> " +
+        message;
 
 
     output.appendChild(
