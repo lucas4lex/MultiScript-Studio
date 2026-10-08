@@ -2,48 +2,47 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MultiScript HTML Editor V14</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MultiScript V14 — Image Editor</title>
 
 <style>
 *{
     box-sizing:border-box;
 }
 
-html,body{
+body{
     margin:0;
-    width:100%;
-    height:100%;
+    background:#111827;
+    color:#e5e7eb;
+    font-family:Arial,Helvetica,sans-serif;
     overflow:hidden;
-    font-family:Consolas,"Courier New",monospace;
-    background:#0d1117;
-    color:#d7dee8;
 }
 
 button,
 input,
-textarea,
 select{
     font:inherit;
 }
 
-button{
-    cursor:pointer;
-}
+/* =========================
+   EDITOR
+========================= */
 
-.app{
-    width:100%;
+.image-editor{
+    width:100vw;
     height:100vh;
     display:flex;
     flex-direction:column;
 }
 
-/* TOPBAR */
+/* =========================
+   TOPBAR
+========================= */
 
-.topbar{
-    height:52px;
-    background:#111820;
-    border-bottom:1px solid #27313d;
+.image-topbar{
+    height:54px;
+    background:#0b1220;
+    border-bottom:1px solid #263244;
     display:flex;
     align-items:center;
     gap:8px;
@@ -51,582 +50,316 @@ button{
     flex-shrink:0;
 }
 
-.logo{
+.image-topbar .brand{
     font-weight:bold;
-    color:#58a6ff;
-    margin-right:12px;
-    white-space:nowrap;
+    color:#fff;
+    margin-right:15px;
 }
 
-.logo span{
-    color:#8b949e;
-    font-size:11px;
-}
-
-.tool-btn{
-    background:#171f29;
-    border:1px solid #303b48;
-    color:#d7dee8;
-    padding:7px 11px;
+.image-topbar button{
+    border:1px solid #334155;
+    background:#182235;
+    color:#dbeafe;
     border-radius:5px;
-    font-size:12px;
+    padding:7px 11px;
+    cursor:pointer;
 }
 
-.tool-btn:hover{
-    background:#202b38;
-    border-color:#58a6ff;
+.image-topbar button:hover{
+    background:#24324a;
 }
 
-.tool-btn.primary{
-    background:#1f6feb;
-    border-color:#388bfd;
+.image-topbar button.primary{
+    background:#2563eb;
+    border-color:#2563eb;
     color:white;
 }
 
-.tool-btn.danger{
-    color:#ff7b72;
+.image-topbar button.primary:hover{
+    background:#1d4ed8;
 }
 
-.spacer{
+/* =========================
+   MAIN
+========================= */
+
+.image-main{
     flex:1;
-}
-
-.project-name{
-    color:#8b949e;
-    font-size:12px;
-}
-
-/* WORKSPACE */
-
-.workspace{
-    flex:1;
+    display:flex;
     min-height:0;
-    display:flex;
 }
 
-/* ACTIVITY BAR */
+/* =========================
+   LEFT TOOLBAR
+========================= */
 
-.activity{
-    width:50px;
-    background:#0b1016;
-    border-right:1px solid #27313d;
+.image-tools{
+    width:72px;
+    background:#0b1220;
+    border-right:1px solid #263244;
+    padding:8px 5px;
     display:flex;
     flex-direction:column;
-    align-items:center;
-    padding-top:10px;
-    gap:10px;
+    gap:5px;
 }
 
-.activity button{
-    width:36px;
-    height:36px;
-    border:0;
+.tool{
+    width:60px;
+    min-height:52px;
+    border:1px solid transparent;
     background:transparent;
-    color:#7d8590;
-    border-radius:5px;
-    font-size:17px;
-}
-
-.activity button:hover,
-.activity button.active{
-    background:#1b2530;
-    color:#58a6ff;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-    width:260px;
-    min-width:260px;
-    background:#10161e;
-    border-right:1px solid #27313d;
-    display:flex;
-    flex-direction:column;
-}
-
-.sidebar-title{
-    height:40px;
-    padding:12px 14px;
+    color:#cbd5e1;
+    border-radius:6px;
+    cursor:pointer;
     font-size:11px;
-    color:#8b949e;
-    border-bottom:1px solid #202a35;
-}
-
-.explorer{
-    flex:1;
-    overflow:auto;
-    padding:8px;
-}
-
-.tree-root{
-    color:#e6edf3;
-    font-weight:bold;
-    font-size:12px;
-    padding:7px;
-}
-
-.tree-section{
-    margin-top:7px;
-}
-
-.tree-section-title{
-    color:#8b949e;
-    font-size:10px;
-    padding:5px 8px;
-    text-transform:uppercase;
-}
-
-.file{
-    width:100%;
-    border:0;
-    background:transparent;
-    color:#c9d1d9;
-    text-align:left;
-    padding:7px 9px;
-    border-radius:4px;
-    font-size:12px;
     display:flex;
+    flex-direction:column;
     align-items:center;
-    gap:7px;
+    justify-content:center;
+    gap:3px;
 }
 
-.file:hover{
-    background:#1a222d;
+.tool span{
+    font-size:20px;
 }
 
-.file.active{
-    background:#1f2935;
-    color:#58a6ff;
+.tool:hover{
+    background:#172033;
 }
 
-.file.locked-file{
-    color:#8b949e;
+.tool.active{
+    background:#1d4ed8;
+    border-color:#3b82f6;
+    color:white;
 }
 
-.file.locked-file:hover{
-    background:#171d25;
-}
+/* =========================
+   CANVAS AREA
+========================= */
 
-.file-indent{
-    padding-left:25px;
-}
-
-.file-sub{
-    padding-left:45px;
-}
-
-.folder{
-    color:#e3b341;
-}
-
-/* EDITOR AREA */
-
-.main{
+.canvas-area{
     flex:1;
     min-width:0;
-    display:flex;
-    flex-direction:column;
-}
-
-.tabs{
-    height:38px;
-    display:flex;
-    background:#10161e;
-    border-bottom:1px solid #27313d;
-    overflow-x:auto;
-}
-
-.tab{
-    min-width:120px;
-    max-width:200px;
-    padding:10px 14px;
-    color:#8b949e;
-    border-right:1px solid #27313d;
-    font-size:11px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.tab.active{
-    color:#e6edf3;
-    background:#161d26;
-    border-top:2px solid #58a6ff;
-}
-
-.editor-wrap{
-    flex:1;
-    min-height:0;
     position:relative;
-    display:flex;
-    background:#0d1117;
-}
-
-.line-numbers{
-    width:54px;
-    padding:13px 9px;
-    background:#0b1016;
-    color:#484f58;
-    border-right:1px solid #1c252f;
-    text-align:right;
-    font-size:13px;
-    line-height:1.55;
-    overflow:hidden;
-    user-select:none;
-    white-space:pre;
-}
-
-#editor{
-    flex:1;
-    resize:none;
-    border:0;
-    outline:0;
-    padding:13px 15px;
-    background:#0d1117;
-    color:#c9d1d9;
-    font-size:13px;
-    line-height:1.55;
-    tab-size:4;
-    white-space:pre;
     overflow:auto;
+    background:
+        linear-gradient(45deg,#151d2b 25%,transparent 25%),
+        linear-gradient(-45deg,#151d2b 25%,transparent 25%),
+        linear-gradient(45deg,transparent 75%,#151d2b 75%),
+        linear-gradient(-45deg,transparent 75%,#151d2b 75%);
+    background-size:28px 28px;
+    background-position:0 0,0 14px,14px -14px,-14px 0;
 }
 
-#editor:read-only{
-    color:#8b949e;
+/* =========================
+   SVG WORKSPACE
+========================= */
+
+.workspace{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    transform-origin:center center;
+    box-shadow:0 15px 50px rgba(0,0,0,.5);
 }
 
-/* BOTTOM */
-
-.bottom{
-    height:145px;
-    border-top:1px solid #27313d;
-    background:#0b1016;
-    display:flex;
-    flex-direction:column;
+#svgCanvas{
+    display:block;
+    background:white;
+    overflow:visible;
 }
 
-.bottom-tabs{
-    height:34px;
-    display:flex;
-    border-bottom:1px solid #202a35;
+.selection-box{
+    fill:none;
+    stroke:#2563eb;
+    stroke-width:1;
+    stroke-dasharray:5 3;
+    pointer-events:none;
 }
 
-.bottom-tab{
-    padding:9px 14px;
-    font-size:11px;
-    color:#8b949e;
+.selection-handle{
+    fill:white;
+    stroke:#2563eb;
+    stroke-width:1;
+    pointer-events:none;
 }
 
-.bottom-tab.active{
-    color:#e6edf3;
-    border-bottom:2px solid #58a6ff;
-}
+/* =========================
+   RIGHT PANEL
+========================= */
 
-.terminal{
-    flex:1;
-    padding:10px 13px;
+.properties{
+    width:285px;
+    background:#0b1220;
+    border-left:1px solid #263244;
     overflow:auto;
-    font-size:11px;
-    color:#8b949e;
-}
-
-.terminal-line{
-    margin:3px 0;
-}
-
-.terminal-line.success{
-    color:#3fb950;
-}
-
-.terminal-line.warning{
-    color:#d29922;
-}
-
-.terminal-line.error{
-    color:#ff7b72;
-}
-
-/* STATUS */
-
-.statusbar{
-    height:25px;
-    background:#1f6feb;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    padding:0 10px;
-    gap:15px;
-    font-size:10px;
     flex-shrink:0;
 }
 
-.status-spacer{
-    flex:1;
+.panel{
+    border-bottom:1px solid #263244;
+    padding:13px;
 }
 
-/* MODALS */
-
-.modal-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.72);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:1000;
-    padding:20px;
-}
-
-.modal-overlay.show{
-    display:flex;
-}
-
-.modal{
-    width:min(760px,100%);
-    max-height:90vh;
-    overflow:auto;
-    background:#111820;
-    border:1px solid #303b48;
-    border-radius:8px;
-    box-shadow:0 20px 70px rgba(0,0,0,.5);
-}
-
-.modal.small{
-    width:min(500px,100%);
-}
-
-.modal-header{
-    padding:15px 18px;
-    border-bottom:1px solid #27313d;
-    display:flex;
-    align-items:center;
-}
-
-.modal-header h2{
-    margin:0;
-    font-size:15px;
-}
-
-.modal-header .close{
-    margin-left:auto;
-    border:0;
-    background:transparent;
-    color:#8b949e;
-    font-size:18px;
-}
-
-.modal-body{
-    padding:18px;
-}
-
-.modal-footer{
-    padding:13px 18px;
-    border-top:1px solid #27313d;
-    display:flex;
-    justify-content:flex-end;
-    gap:8px;
+.panel-title{
+    color:white;
+    font-size:12px;
+    font-weight:bold;
+    text-transform:uppercase;
+    margin-bottom:12px;
 }
 
 .field{
-    margin-bottom:15px;
+    margin-bottom:10px;
 }
 
 .field label{
     display:block;
-    margin-bottom:6px;
+    color:#94a3b8;
     font-size:11px;
-    color:#8b949e;
-}
-
-.field input,
-.field textarea,
-.field select{
-    width:100%;
-    background:#0d1117;
-    color:#e6edf3;
-    border:1px solid #303b48;
-    border-radius:5px;
-    padding:10px;
-    outline:none;
-}
-
-.field input:focus,
-.field textarea:focus,
-.field select:focus{
-    border-color:#58a6ff;
-}
-
-.field textarea{
-    min-height:100px;
-    resize:vertical;
-}
-
-.checkbox{
-    display:flex;
-    gap:8px;
-    align-items:center;
-    font-size:12px;
-    color:#c9d1d9;
-    margin:12px 0;
-}
-
-.info-box{
-    background:#161d26;
-    border:1px solid #303b48;
-    border-radius:6px;
-    padding:12px;
-    font-size:11px;
-    line-height:1.6;
-    color:#8b949e;
-}
-
-.info-box strong{
-    color:#e6edf3;
-}
-
-.generator-menu{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-}
-
-.generator-option{
-    min-height:90px;
-    background:#151d26;
-    border:1px solid #303b48;
-    border-radius:7px;
-    color:#d7dee8;
-    padding:15px;
-    text-align:left;
-}
-
-.generator-option:hover{
-    background:#1c2733;
-    border-color:#58a6ff;
-}
-
-.generator-option .icon{
-    font-size:24px;
-    margin-bottom:8px;
-}
-
-.generator-option strong{
-    display:block;
     margin-bottom:4px;
 }
 
-.generator-option span{
-    display:block;
-    color:#8b949e;
-    font-size:10px;
-}
-
-.page-list{
-    max-height:180px;
-    overflow:auto;
-    background:#0d1117;
-    border:1px solid #303b48;
-    border-radius:5px;
-}
-
-.page-option{
+.field input,
+.field select{
     width:100%;
-    padding:9px;
-    text-align:left;
-    border:0;
-    border-bottom:1px solid #202a35;
-    background:transparent;
-    color:#c9d1d9;
-    font-size:11px;
+    background:#111827;
+    border:1px solid #334155;
+    color:#e5e7eb;
+    border-radius:4px;
+    padding:7px;
 }
 
-.page-option:hover{
-    background:#171f29;
-}
-
-.credit-options{
+.field-row{
     display:grid;
+    grid-template-columns:1fr 1fr;
     gap:8px;
 }
 
-.credit-option{
-    padding:11px;
-    border:1px solid #303b48;
+.color-row{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.color-row input[type=color]{
+    width:45px;
+    height:35px;
+    padding:2px;
+    cursor:pointer;
+}
+
+.color-value{
+    flex:1;
+    background:#111827;
+    border:1px solid #334155;
+    border-radius:4px;
+    padding:8px;
+    color:#cbd5e1;
+    font-size:12px;
+}
+
+/* =========================
+   LAYERS
+========================= */
+
+.layers{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.layer{
+    background:#151e2e;
+    border:1px solid #273449;
     border-radius:5px;
-    background:#151d26;
-    color:#c9d1d9;
-    text-align:left;
-}
-
-.credit-option:hover{
-    border-color:#58a6ff;
-    background:#1b2530;
-}
-
-.plugin-list{
-    display:grid;
-    gap:7px;
-}
-
-.plugin-row{
+    padding:8px;
     display:flex;
     align-items:center;
-    gap:8px;
-    padding:9px;
-    background:#0d1117;
-    border:1px solid #27313d;
-    border-radius:5px;
+    gap:7px;
+    cursor:pointer;
 }
 
-.plugin-row span{
+.layer:hover{
+    background:#1b2940;
+}
+
+.layer.selected{
+    border-color:#3b82f6;
+    background:#172d52;
+}
+
+.layer-eye{
+    width:22px;
+    border:0;
+    background:none;
+    color:#cbd5e1;
+    cursor:pointer;
+}
+
+.layer-name{
     flex:1;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    font-size:12px;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.statusbar{
+    height:30px;
+    background:#0b1220;
+    border-top:1px solid #263244;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 12px;
+    color:#94a3b8;
     font-size:11px;
+    flex-shrink:0;
 }
 
-.plugin-row button{
-    background:#171f29;
-    color:#ff7b72;
-    border:1px solid #303b48;
-    border-radius:4px;
-    padding:5px 8px;
+.zoom-controls{
+    display:flex;
+    align-items:center;
+    gap:5px;
 }
 
-/* RESPONSIVE */
+.zoom-controls button{
+    width:25px;
+    height:22px;
+    border:1px solid #334155;
+    background:#182235;
+    color:white;
+    cursor:pointer;
+    border-radius:3px;
+}
 
 @media(max-width:900px){
-    .sidebar{
-        width:210px;
-        min-width:210px;
-    }
-
-    .tool-btn{
-        padding:6px 8px;
-    }
-
-    .logo{
-        display:none;
+    .properties{
+        width:240px;
     }
 }
 
 @media(max-width:700px){
-    .sidebar{
+    .properties{
         display:none;
     }
 
-    .activity{
-        width:42px;
+    .image-tools{
+        width:60px;
     }
 
-    .generator-menu{
-        grid-template-columns:1fr;
+    .tool{
+        width:50px;
     }
 
-    .project-name{
+    .image-topbar .brand{
         display:none;
-    }
-
-    .topbar{
-        overflow-x:auto;
     }
 }
 </style>
@@ -634,3031 +367,2300 @@ button{
 
 <body>
 
-<div class="app">
+<div class="image-editor">
 
-    <header class="topbar">
+    <!-- TOPBAR -->
+    <div class="image-topbar">
 
-        <div class="logo">
-            MultiScript
-            <span>V14</span>
+        <div class="brand">
+            🎨 MultiScript Image Editor
         </div>
 
-        <button class="tool-btn" onclick="newProject()">＋ Novo Projeto</button>
-        <button class="tool-btn primary" onclick="openGeneratorMenu()">＋ Gerar Página</button>
-        <button class="tool-btn" onclick="document.getElementById('phpInput').click()">＋ Plugin PHP</button>
-        <button class="tool-btn" onclick="openPlugins()">Plugins</button>
-        <button class="tool-btn" onclick="formatHTML()">Formatar</button>
-        <button class="tool-btn" onclick="saveProject()">Salvar</button>
-        <button class="tool-btn" onclick="previewProject()">Preview</button>
-        <button class="tool-btn" onclick="openCreditModal()">Exportar ZIP</button>
+        <button onclick="newImage()">Novo</button>
+        <button onclick="undo()">↶</button>
+        <button onclick="redo()">↷</button>
 
-        <div class="spacer"></div>
+        <button onclick="zoomOut()">−</button>
+        <button onclick="zoomReset()">100%</button>
+        <button onclick="zoomIn()">+</button>
 
-        <div class="project-name" id="projectName">MEU-PROJETO</div>
+        <button onclick="downloadPNG()">PNG</button>
 
-    </header>
+        <button class="primary" onclick="saveSVG()">
+            💾 Salvar SVG
+        </button>
 
-    <div class="workspace">
+        <button onclick="closeEditor()">
+            ✕ Fechar
+        </button>
 
-        <aside class="activity">
+    </div>
 
-            <button class="active" title="Explorer" onclick="showExplorer()">📁</button>
-            <button title="Gerador" onclick="openGeneratorMenu()">＋</button>
-            <button title="Plugins" onclick="openPlugins()">🧩</button>
-            <button title="Preview" onclick="previewProject()">▶</button>
+    <!-- MAIN -->
+    <div class="image-main">
+
+        <!-- TOOLS -->
+        <aside class="image-tools">
+
+            <button class="tool active"
+                    data-tool="select"
+                    onclick="setTool('select')">
+                <span>↖</span>
+                Seleção
+            </button>
+
+            <button class="tool"
+                    data-tool="rect"
+                    onclick="setTool('rect')">
+                <span>▭</span>
+                Retângulo
+            </button>
+
+            <button class="tool"
+                    data-tool="circle"
+                    onclick="setTool('circle')">
+                <span>○</span>
+                Círculo
+            </button>
+
+            <button class="tool"
+                    data-tool="line"
+                    onclick="setTool('line')">
+                <span>╱</span>
+                Linha
+            </button>
+
+            <button class="tool"
+                    data-tool="text"
+                    onclick="setTool('text')">
+                <span>T</span>
+                Texto
+            </button>
+
+            <button class="tool"
+                    data-tool="free"
+                    onclick="setTool('free')">
+                <span>✎</span>
+                Pincel
+            </button>
+
+            <button class="tool"
+                    data-tool="image"
+                    onclick="importImage()">
+                <span>🖼</span>
+                Imagem
+            </button>
 
         </aside>
 
-        <aside class="sidebar">
+        <!-- CANVAS -->
+        <main class="canvas-area" id="canvasArea">
 
-            <div class="sidebar-title">
-                EXPLORER
-            </div>
+            <div class="workspace" id="workspace">
 
-            <div class="explorer" id="explorer"></div>
+                <svg
+                    id="svgCanvas"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1000"
+                    height="650"
+                    viewBox="0 0 1000 650">
 
-        </aside>
+                    <rect
+                        id="background"
+                        x="0"
+                        y="0"
+                        width="1000"
+                        height="650"
+                        fill="#ffffff"/>
 
-        <main class="main">
-
-            <div class="tabs" id="tabs"></div>
-
-            <div class="editor-wrap">
-
-                <div class="line-numbers" id="lineNumbers">1</div>
-
-                <textarea
-                    id="editor"
-                    spellcheck="false"
-                    oninput="editorInput()"
-                    onscroll="syncEditorScroll()"
-                    onkeydown="editorKeydown(event)"
-                ></textarea>
-
-            </div>
-
-            <div class="bottom">
-
-                <div class="bottom-tabs">
-                    <div class="bottom-tab active">TERMINAL</div>
-                    <div class="bottom-tab">PROBLEMS</div>
-                </div>
-
-                <div class="terminal" id="terminal"></div>
+                </svg>
 
             </div>
 
         </main>
 
+        <!-- PROPERTIES -->
+        <aside class="properties">
+
+            <!-- DOCUMENT -->
+            <section class="panel">
+
+                <div class="panel-title">
+                    Documento
+                </div>
+
+                <div class="field-row">
+
+                    <div class="field">
+                        <label>Largura</label>
+                        <input
+                            id="canvasWidth"
+                            type="number"
+                            value="1000"
+                            onchange="resizeCanvas()">
+                    </div>
+
+                    <div class="field">
+                        <label>Altura</label>
+                        <input
+                            id="canvasHeight"
+                            type="number"
+                            value="650"
+                            onchange="resizeCanvas()">
+                    </div>
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Fundo
+                    </label>
+
+                    <div class="color-row">
+
+                        <input
+                            id="backgroundColor"
+                            type="color"
+                            value="#ffffff"
+                            onchange="changeBackground()">
+
+                        <div
+                            class="color-value"
+                            id="backgroundValue">
+                            #ffffff
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- OBJECT -->
+            <section class="panel">
+
+                <div class="panel-title">
+                    Objeto
+                </div>
+
+                <div class="field-row">
+
+                    <div class="field">
+                        <label>X</label>
+                        <input
+                            id="objX"
+                            type="number"
+                            onchange="updateObject()">
+                    </div>
+
+                    <div class="field">
+                        <label>Y</label>
+                        <input
+                            id="objY"
+                            type="number"
+                            onchange="updateObject()">
+                    </div>
+
+                </div>
+
+                <div class="field-row">
+
+                    <div class="field">
+                        <label>Largura</label>
+                        <input
+                            id="objW"
+                            type="number"
+                            onchange="updateObject()">
+                    </div>
+
+                    <div class="field">
+                        <label>Altura</label>
+                        <input
+                            id="objH"
+                            type="number"
+                            onchange="updateObject()">
+                    </div>
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Rotação
+                    </label>
+
+                    <input
+                        id="objRotation"
+                        type="number"
+                        value="0"
+                        onchange="updateObject()">
+
+                </div>
+
+            </section>
+
+            <!-- APPEARANCE -->
+            <section class="panel">
+
+                <div class="panel-title">
+                    Aparência
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Preenchimento
+                    </label>
+
+                    <div class="color-row">
+
+                        <input
+                            id="fillColor"
+                            type="color"
+                            value="#2563eb"
+                            onchange="updateAppearance()">
+
+                        <div
+                            id="fillValue"
+                            class="color-value">
+                            #2563eb
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Borda
+                    </label>
+
+                    <div class="color-row">
+
+                        <input
+                            id="strokeColor"
+                            type="color"
+                            value="#111827"
+                            onchange="updateAppearance()">
+
+                        <div
+                            id="strokeValue"
+                            class="color-value">
+                            #111827
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Espessura da borda
+                    </label>
+
+                    <input
+                        id="strokeWidth"
+                        type="number"
+                        min="0"
+                        value="0"
+                        onchange="updateAppearance()">
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Opacidade
+                    </label>
+
+                    <input
+                        id="opacity"
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value="1"
+                        onchange="updateAppearance()">
+
+                </div>
+
+            </section>
+
+            <!-- TEXT -->
+            <section
+                class="panel"
+                id="textPanel"
+                style="display:none">
+
+                <div class="panel-title">
+                    Texto
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Conteúdo
+                    </label>
+
+                    <input
+                        id="textContent"
+                        type="text"
+                        onchange="updateText()">
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Tamanho
+                    </label>
+
+                    <input
+                        id="textSize"
+                        type="number"
+                        value="40"
+                        onchange="updateText()">
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Fonte
+                    </label>
+
+                    <select
+                        id="textFont"
+                        onchange="updateText()">
+
+                        <option>Arial</option>
+                        <option>Verdana</option>
+                        <option>Tahoma</option>
+                        <option>Georgia</option>
+                        <option>Times New Roman</option>
+                        <option>Courier New</option>
+
+                    </select>
+
+                </div>
+
+            </section>
+
+            <!-- LAYERS -->
+            <section class="panel">
+
+                <div class="panel-title">
+                    Camadas
+                </div>
+
+                <div
+                    id="layers"
+                    class="layers">
+                </div>
+
+            </section>
+
+        </aside>
+
     </div>
 
-    <footer class="statusbar">
+    <!-- STATUS -->
+    <div class="statusbar">
 
-        <span id="statusFile">index.html</span>
-        <span>UTF-8</span>
-        <span>HTML</span>
-        <span id="statusModified">Pronto</span>
+        <span id="fileStatus">
+            Novo SVG
+        </span>
 
-        <div class="status-spacer"></div>
+        <div class="zoom-controls">
 
-        <span>MultiScript V14.0.0</span>
+            <button onclick="zoomOut()">−</button>
 
-    </footer>
+            <span id="zoomLabel">
+                100%
+            </span>
 
-</div>
-
-<input
-    type="file"
-    id="phpInput"
-    accept=".php"
-    multiple
-    hidden
->
-
-<!-- GERADOR -->
-
-<div class="modal-overlay" id="generatorModal">
-
-    <div class="modal">
-
-        <div class="modal-header">
-
-            <h2>Gerador de Páginas</h2>
-
-            <button class="close" onclick="closeModal('generatorModal')">
-                ×
-            </button>
-
-        </div>
-
-        <div class="modal-body">
-
-            <div class="generator-menu">
-
-                <button class="generator-option" onclick="openMenuPageGenerator()">
-
-                    <div class="icon">📄</div>
-
-                    <strong>MENU</strong>
-
-                    <span>
-                        index.html, categorias.html e institucional.html
-                    </span>
-
-                </button>
-
-                <button class="generator-option" onclick="openCategoryGenerator()">
-
-                    <div class="icon">📁</div>
-
-                    <strong>CATEGORIAS</strong>
-
-                    <span>
-                        Gera somente páginas de categorias.
-                    </span>
-
-                </button>
-
-                <button class="generator-option" onclick="openInstitutionalGenerator()">
-
-                    <div class="icon">🏢</div>
-
-                    <strong>INSTITUCIONAL</strong>
-
-                    <span>
-                        Gera somente páginas institucionais.
-                    </span>
-
-                </button>
-
-                <button class="generator-option" onclick="openSubpageGenerator()">
-
-                    <div class="icon">📑</div>
-
-                    <strong>SUBPÁGINA</strong>
-
-                    <span>
-                        Gera páginas dentro da estrutura de Categorias ou Institucional.
-                    </span>
-
-                </button>
-
-                <button class="generator-option" onclick="openSitemapGenerator()">
-
-                    <div class="icon">🗺️</div>
-
-                    <strong>SITEMAP</strong>
-
-                    <span>
-                        Gera o mapa XML do site.
-                    </span>
-
-                </button>
-
-            </div>
+            <button onclick="zoomIn()">+</button>
 
         </div>
 
     </div>
 
 </div>
-
-<!-- FORMULÁRIO -->
-
-<div class="modal-overlay" id="formModal">
-
-    <div class="modal">
-
-        <div class="modal-header">
-
-            <h2 id="formTitle">Gerador</h2>
-
-            <button class="close" onclick="closeModal('formModal')">
-                ×
-            </button>
-
-        </div>
-
-        <div class="modal-body" id="formBody"></div>
-
-        <div class="modal-footer">
-
-            <button class="tool-btn" onclick="closeModal('formModal')">
-                Cancelar
-            </button>
-
-            <button class="tool-btn primary" id="formSubmit">
-                Gerar
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- PLUGINS -->
-
-<div class="modal-overlay" id="pluginModal">
-
-    <div class="modal">
-
-        <div class="modal-header">
-
-            <h2>Plugins PHP</h2>
-
-            <button class="close" onclick="closeModal('pluginModal')">
-                ×
-            </button>
-
-        </div>
-
-        <div class="modal-body">
-
-            <div class="info-box">
-                <strong>Plugins do usuário</strong><br>
-                O MultiScript não fornece plugins PHP prontos.
-                Importe seus próprios arquivos .php para o projeto.
-                O PHP será executado somente no servidor após a publicação.
-            </div>
-
-            <br>
-
-            <div id="pluginList" class="plugin-list"></div>
-
-        </div>
-
-        <div class="modal-footer">
-
-            <button class="tool-btn" onclick="document.getElementById('phpInput').click()">
-                ＋ Importar PHP
-            </button>
-
-            <button class="tool-btn" onclick="closeModal('pluginModal')">
-                Fechar
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- PROTECTED -->
-
-<div class="modal-overlay" id="protectedModal">
-
-    <div class="modal small">
-
-        <div class="modal-header">
-
-            <h2>Arquivo protegido</h2>
-
-            <button class="close" onclick="closeModal('protectedModal')">
-                ×
-            </button>
-
-        </div>
-
-        <div class="modal-body">
-
-            <div class="info-box">
-
-                🔒 <strong>Arquivo protegido</strong><br><br>
-
-                <code>multiscript.json</code> é um arquivo interno
-                do MultiScript e não pode ser editado manualmente.
-
-            </div>
-
-        </div>
-
-        <div class="modal-footer">
-
-            <button class="tool-btn" onclick="closeModal('protectedModal')">
-                Fechar
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- CRÉDITOS -->
-
-<div class="modal-overlay" id="creditModal">
-
-    <div class="modal small">
-
-        <div class="modal-header">
-
-            <h2>Crédito do projeto</h2>
-
-            <button class="close" onclick="closeModal('creditModal')">
-                ×
-            </button>
-
-        </div>
-
-        <div class="modal-body">
-
-            <p style="font-size:12px;color:#8b949e">
-                Escolha o crédito que será incluído no projeto antes
-                da exportação ZIP.
-            </p>
-
-            <div class="credit-options">
-
-                <button class="credit-option" onclick="exportZip('none')">
-                    Sem crédito
-                </button>
-
-                <button class="credit-option" onclick="exportZip('multipagemel')">
-                    Multipage Mel
-                </button>
-
-                <button class="credit-option" onclick="exportZip('apenascorretores')">
-                    Apenas Corretores
-                </button>
-
-                <button class="credit-option" onclick="exportZip('homemsite')">
-                    HomemSite
-                </button>
-
-                <button class="credit-option" onclick="exportZip('homemsite-parana')">
-                    HomemSite Paraná
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
 
-"use strict";
-
 /* =========================================================
-   ESTADO DO PROJETO
+   MULTISCRIPT IMAGE EDITOR
 ========================================================= */
 
-let project = {
+let currentFile = "images/logo.svg";
 
-    name: "MEU-PROJETO",
+let currentTool = "select";
 
-    files: {
+let selectedElement = null;
 
-        "index.html": "",
-        "categorias.html": "",
-        "institucional.html": "",
+let zoom = 1;
 
-        "style.css": "",
-        "script.js": "",
+let history = [];
 
-        "multiscript.json": ""
+let historyIndex = -1;
 
-    },
+let drawing = false;
 
-    plugins: {},
+let drawingPath = null;
 
-    pages: {
+let startPoint = null;
 
-        "index.html": {
-            type: "menu",
-            name: "Início",
-            slug: "",
-            url: "/"
+
+/* =========================================================
+   SVG
+========================================================= */
+
+const svg = document.getElementById("svgCanvas");
+
+const workspace = document.getElementById("workspace");
+
+
+/* =========================================================
+   PROJECT
+   Se project já existir no MultiScript, será utilizado.
+========================================================= */
+
+if(typeof project === "undefined"){
+
+    window.project = {
+
+        name:"MEU-PROJETO",
+
+        files:{
+
+            "images/logo.svg":
+`<svg xmlns="http://www.w3.org/2000/svg" width="600" height="220" viewBox="0 0 600 220">
+<rect width="600" height="220" rx="30" fill="#2563eb"/>
+<text x="300" y="140"
+      text-anchor="middle"
+      font-family="Arial"
+      font-size="72"
+      font-weight="bold"
+      fill="#ffffff">
+MULTISCRIPT
+</text>
+</svg>`,
+
+            "images/favicon.svg":
+`<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<rect width="128" height="128" rx="25" fill="#2563eb"/>
+<text x="64" y="88"
+      text-anchor="middle"
+      font-family="Arial"
+      font-size="70"
+      font-weight="bold"
+      fill="#ffffff">
+M
+</text>
+</svg>`
+
         },
 
-        "categorias.html": {
-            type: "menu",
-            name: "Categorias",
-            slug: "categorias",
-            url: "/categorias"
-        },
+        plugins:{},
 
-        "institucional.html": {
-            type: "menu",
-            name: "Institucional",
-            slug: "institucional",
-            url: "/institucional"
-        }
+        pages:{},
 
-    },
+        protectedFiles:["multiscript.json"]
 
-    protectedFiles: [
-        "multiscript.json"
-    ]
-
-};
-
-let currentFile = "index.html";
-let modified = false;
-let pendingGenerator = null;
-
-
-/* =========================================================
-   BASE HTML
-========================================================= */
-
-function baseHTML(title, body){
-
-    return `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${escapeHTML(title)}</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header>
-<nav>
-<a href="index.html">Início</a>
-<a href="categorias.html">Categorias</a>
-<a href="institucional.html">Institucional</a>
-</nav>
-</header>
-
-<main>
-
-${body}
-
-</main>
-
-<script src="script.js"><\/script>
-</body>
-</html>`;
+    };
 
 }
 
 
 /* =========================================================
-   ESCAPE
+   TOOL
 ========================================================= */
 
-function escapeHTML(value){
+function setTool(tool){
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    currentTool = tool;
+
+    document
+        .querySelectorAll(".tool")
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.tool === tool
+            );
+
+        });
 
 }
 
 
 /* =========================================================
-   SLUG
+   COORDENADAS
 ========================================================= */
 
-function slugify(value){
+function getSVGPoint(event){
 
-    return String(value)
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g,"")
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g,"-")
-        .replace(/^-+|-+$/g,"");
+    const rect = svg.getBoundingClientRect();
+
+    return {
+
+        x:(event.clientX - rect.left) / zoom,
+
+        y:(event.clientY - rect.top) / zoom
+
+    };
 
 }
 
 
 /* =========================================================
-   TERMINAL
+   MOUSE
 ========================================================= */
 
-function terminal(message, type = ""){
+svg.addEventListener("mousedown", function(event){
 
-    const terminalBox = document.getElementById("terminal");
+    const point = getSVGPoint(event);
 
-    const line = document.createElement("div");
+    if(currentTool === "select"){
 
-    line.className = "terminal-line " + type;
+        const target =
+            event.target.closest("[data-layer]");
 
-    line.textContent =
-        `[${new Date().toLocaleTimeString()}] ${message}`;
+        if(target){
 
-    terminalBox.appendChild(line);
+            selectElement(target);
 
-    terminalBox.scrollTop = terminalBox.scrollHeight;
+        }else{
 
-}
-
-
-/* =========================================================
-   MODAIS
-========================================================= */
-
-function closeModal(id){
-
-    document.getElementById(id).classList.remove("show");
-
-}
-
-function openModal(id){
-
-    document.getElementById(id).classList.add("show");
-
-}
-
-
-/* =========================================================
-   EXPLORER
-========================================================= */
-
-function renderExplorer(){
-
-    const explorer = document.getElementById("explorer");
-
-    explorer.innerHTML = "";
-
-    const root = document.createElement("div");
-
-    root.className = "tree-root";
-
-    root.textContent = "📁 " + project.name;
-
-    explorer.appendChild(root);
-
-    const menuFiles = [
-        "index.html",
-        "categorias.html",
-        "institucional.html"
-    ];
-
-    const menuTitle = document.createElement("div");
-
-    menuTitle.className = "tree-section-title";
-
-    menuTitle.textContent = "MENU";
-
-    explorer.appendChild(menuTitle);
-
-    menuFiles.forEach(file => {
-
-        if(project.files[file]){
-
-            addFileButton(explorer,file,"file");
+            deselect();
 
         }
 
-    });
-
-    const categories = Object.entries(project.pages)
-        .filter(([file,data]) => data.type === "category");
-
-    const categoryTitle = document.createElement("div");
-
-    categoryTitle.className = "tree-section-title";
-
-    categoryTitle.textContent = "CATEGORIAS";
-
-    explorer.appendChild(categoryTitle);
-
-    categories.forEach(([file,data]) => {
-
-        addFileButton(
-            explorer,
-            file,
-            "file file-indent",
-            "📁"
-        );
-
-        const children = Object.entries(project.pages)
-            .filter(([childFile,child]) =>
-                child.type === "subpage" &&
-                child.parent === file
-            );
-
-        children.forEach(([childFile]) => {
-
-            addFileButton(
-                explorer,
-                childFile,
-                "file file-sub",
-                "📄"
-            );
-
-        });
-
-    });
-
-    const institutional = Object.entries(project.pages)
-        .filter(([file,data]) => data.type === "institutional");
-
-    const institutionalTitle = document.createElement("div");
-
-    institutionalTitle.className = "tree-section-title";
-
-    institutionalTitle.textContent = "INSTITUCIONAL";
-
-    explorer.appendChild(institutionalTitle);
-
-    institutional.forEach(([file,data]) => {
-
-        addFileButton(
-            explorer,
-            file,
-            "file file-indent",
-            "🏢"
-        );
-
-        const children = Object.entries(project.pages)
-            .filter(([childFile,child]) =>
-                child.type === "subpage" &&
-                child.parent === file
-            );
-
-        children.forEach(([childFile]) => {
-
-            addFileButton(
-                explorer,
-                childFile,
-                "file file-sub",
-                "📄"
-            );
-
-        });
-
-    });
-
-    const systemTitle = document.createElement("div");
-
-    systemTitle.className = "tree-section-title";
-
-    systemTitle.textContent = "SISTEMA";
-
-    explorer.appendChild(systemTitle);
-
-    Object.keys(project.files)
-        .filter(file =>
-            !menuFiles.includes(file) &&
-            !project.pages[file] &&
-            file !== "style.css" &&
-            file !== "script.js" &&
-            file !== "multiscript.json" &&
-            !file.startsWith("plugins/")
-        )
-        .forEach(file => {
-
-            addFileButton(explorer,file,"file");
-
-        });
-
-    addFileButton(
-        explorer,
-        "style.css",
-        "file",
-        "🎨"
-    );
-
-    addFileButton(
-        explorer,
-        "script.js",
-        "file",
-        "⚙️"
-    );
-
-    if(project.files["sitemap.xml"]){
-
-        addFileButton(
-            explorer,
-            "sitemap.xml",
-            "file",
-            "🗺️"
-        );
+        return;
 
     }
 
-    const plugins = Object.keys(project.files)
-        .filter(file => file.startsWith("plugins/"));
 
-    if(plugins.length){
+    if(currentTool === "rect"){
 
-        const pluginTitle = document.createElement("div");
-
-        pluginTitle.className = "tree-section-title";
-
-        pluginTitle.textContent = "PLUGINS PHP";
-
-        explorer.appendChild(pluginTitle);
-
-        plugins.forEach(file => {
-
-            addFileButton(
-                explorer,
-                file,
-                "file",
-                "🧩"
-            );
-
-        });
-
-    }
-
-    addFileButton(
-        explorer,
-        "multiscript.json",
-        "file locked-file",
-        "🔒"
-    );
-
-}
-
-
-function addFileButton(container,file,className,icon){
-
-    const button = document.createElement("button");
-
-    button.className = className;
-
-    const data = project.pages[file];
-
-    let label = file;
-
-    if(data){
-
-        label = data.name + " — " + file;
-
-    }
-
-    button.innerHTML =
-        `<span>${icon || getFileIcon(file)}</span><span>${escapeHTML(label)}</span>`;
-
-    button.onclick = () => openFile(file);
-
-    if(file === currentFile){
-
-        button.classList.add("active");
-
-    }
-
-    container.appendChild(button);
-
-}
-
-
-function getFileIcon(file){
-
-    if(file.endsWith(".html")) return "📄";
-    if(file.endsWith(".css")) return "🎨";
-    if(file.endsWith(".js")) return "⚙️";
-    if(file.endsWith(".php")) return "🧩";
-    if(file.endsWith(".xml")) return "🗺️";
-    if(file.endsWith(".json")) return "🔒";
-
-    return "📄";
-
-}
-
-
-/* =========================================================
-   TABS
-========================================================= */
-
-function renderTabs(){
-
-    const tabs = document.getElementById("tabs");
-
-    tabs.innerHTML = "";
-
-    const tab = document.createElement("div");
-
-    tab.className = "tab active";
-
-    tab.textContent = currentFile;
-
-    tabs.appendChild(tab);
-
-}
-
-
-/* =========================================================
-   ABRIR ARQUIVO
-========================================================= */
-
-function openFile(file){
-
-    if(!project.files[file]) return;
-
-    if(file === "multiscript.json"){
-
-        openModal("protectedModal");
-
-        terminal(
-            "Tentativa de edição bloqueada: multiscript.json",
-            "warning"
+        createRectangle(
+            point.x,
+            point.y
         );
 
         return;
 
     }
 
-    currentFile = file;
 
-    const editor = document.getElementById("editor");
+    if(currentTool === "circle"){
 
-    editor.readOnly = false;
-
-    editor.value = project.files[file];
-
-    updateLineNumbers();
-
-    renderTabs();
-
-    renderExplorer();
-
-    document.getElementById("statusFile").textContent = file;
-
-    modified = false;
-
-    document.getElementById("statusModified").textContent = "Pronto";
-
-}
-
-
-/* =========================================================
-   EDITOR
-========================================================= */
-
-function editorInput(){
-
-    if(project.protectedFiles.includes(currentFile)){
+        createCircle(
+            point.x,
+            point.y
+        );
 
         return;
 
     }
 
-    project.files[currentFile] =
-        document.getElementById("editor").value;
 
-    modified = true;
+    if(currentTool === "line"){
 
-    document.getElementById("statusModified").textContent =
-        "Modificado";
+        createLine(
+            point.x,
+            point.y
+        );
 
-    updateLineNumbers();
-
-    updateProjectMetadata();
-
-}
-
-
-function updateLineNumbers(){
-
-    const editor = document.getElementById("editor");
-
-    const count =
-        editor.value.split("\n").length;
-
-    const lines = [];
-
-    for(let i=1;i<=count;i++){
-
-        lines.push(i);
+        return;
 
     }
 
-    document.getElementById("lineNumbers").textContent =
-        lines.join("\n");
 
-}
+    if(currentTool === "text"){
 
+        createText(
+            point.x,
+            point.y
+        );
 
-function syncEditorScroll(){
-
-    const editor = document.getElementById("editor");
-
-    document.getElementById("lineNumbers").scrollTop =
-        editor.scrollTop;
-
-}
-
-
-function editorKeydown(event){
-
-    if(event.key === "Tab"){
-
-        event.preventDefault();
-
-        const editor = event.target;
-
-        const start = editor.selectionStart;
-        const end = editor.selectionEnd;
-
-        editor.value =
-            editor.value.substring(0,start) +
-            "    " +
-            editor.value.substring(end);
-
-        editor.selectionStart =
-            editor.selectionEnd =
-            start + 4;
-
-        editorInput();
+        return;
 
     }
 
-}
 
+    if(currentTool === "free"){
 
-/* =========================================================
-   METADATA
-========================================================= */
+        startFreeDrawing(point);
 
-function updateProjectMetadata(){
-
-    const pages = {};
-
-    Object.entries(project.pages).forEach(([file,data]) => {
-
-        pages[file] = data;
-
-    });
-
-    const metadata = {
-
-        multiscript: {
-
-            version: "14.0.0",
-            generator: "MultiScript HTML Editor",
-            project: project.name,
-            type: "html-project"
-
-        },
-
-        files: Object.keys(project.files)
-            .filter(file => file !== "multiscript.json"),
-
-        plugins: Object.keys(project.plugins || {}),
-
-        pages: pages
-
-    };
-
-    project.files["multiscript.json"] =
-        JSON.stringify(metadata,null,4);
-
-}
-
-
-/* =========================================================
-   NOVO PROJETO
-========================================================= */
-
-function newProject(){
-
-    const name = prompt(
-        "Nome do novo projeto:",
-        "MEU-PROJETO"
-    );
-
-    if(!name) return;
-
-    project = {
-
-        name: name.trim(),
-
-        files: {
-
-            "index.html": createIndexPage(),
-            "categorias.html": createCategoriesPage(),
-            "institucional.html": createInstitutionalPage(),
-
-            "style.css": createBaseCSS(),
-            "script.js": createBaseJS(),
-
-            "multiscript.json": ""
-
-        },
-
-        plugins: {},
-
-        pages: {
-
-            "index.html": {
-                type: "menu",
-                name: "Início",
-                slug: "",
-                url: "/"
-            },
-
-            "categorias.html": {
-                type: "menu",
-                name: "Categorias",
-                slug: "categorias",
-                url: "/categorias"
-            },
-
-            "institucional.html": {
-                type: "menu",
-                name: "Institucional",
-                slug: "institucional",
-                url: "/institucional"
-            }
-
-        },
-
-        protectedFiles: [
-            "multiscript.json"
-        ]
-
-    };
-
-    currentFile = "index.html";
-
-    updateProjectMetadata();
-
-    saveProject();
-
-    renderExplorer();
-
-    renderTabs();
-
-    openFile("index.html");
-
-    document.getElementById("projectName").textContent =
-        project.name;
-
-    terminal(
-        `Projeto "${project.name}" criado.`,
-        "success"
-    );
-
-}
-
-
-/* =========================================================
-   BASE PÁGINAS
-========================================================= */
-
-function createIndexPage(){
-
-    return baseHTML(
-        "Início",
-        `
-<section>
-
-    <h1>Bem-vindo ao meu site</h1>
-
-    <p>
-        Página inicial do projeto.
-    </p>
-
-</section>
-`
-    );
-
-}
-
-
-function createCategoriesPage(){
-
-    return baseHTML(
-        "Categorias",
-        `
-<section>
-
-    <h1>Categorias</h1>
-
-    <p>
-        Confira nossas categorias.
-    </p>
-
-    <ul id="category-list">
-    </ul>
-
-</section>
-`
-    );
-
-}
-
-
-function createInstitutionalPage(){
-
-    return baseHTML(
-        "Institucional",
-        `
-<section>
-
-    <h1>Institucional</h1>
-
-    <p>
-        Conheça nossa empresa.
-    </p>
-
-    <ul id="institutional-list">
-    </ul>
-
-</section>
-`
-    );
-
-}
-
-
-function createBaseCSS(){
-
-    return `
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    color:#222;
-    background:#fff;
-}
-
-header{
-    background:#111;
-    padding:15px;
-}
-
-nav{
-    display:flex;
-    gap:20px;
-}
-
-nav a{
-    color:#fff;
-    text-decoration:none;
-}
-
-main{
-    max-width:1100px;
-    margin:auto;
-    padding:40px 20px;
-}
-
-h1{
-    font-size:36px;
-}
-
-a{
-    color:#06c;
-}
-`;
-
-}
-
-
-function createBaseJS(){
-
-    return `
-
-document.addEventListener("DOMContentLoaded",function(){
-
-    console.log("MultiScript site carregado.");
+    }
 
 });
 
-`;
 
-}
+svg.addEventListener("mousemove", function(event){
 
-
-/* =========================================================
-   GERADOR MENU
-========================================================= */
-
-function openGeneratorMenu(){
-
-    openModal("generatorModal");
-
-}
-
-
-function openMenuPageGenerator(){
-
-    closeModal("generatorModal");
-
-    openForm(
-        "MENU",
-        `
-<div class="info-box">
-
-<strong>Estrutura principal</strong><br><br>
-
-O MultiScript utiliza três páginas principais:
-
-<br><br>
-
-📄 <strong>index.html</strong><br>
-Página inicial.
-
-<br><br>
-
-📁 <strong>categorias.html</strong><br>
-Lista das páginas de categorias.
-
-<br><br>
-
-🏢 <strong>institucional.html</strong><br>
-Lista das páginas institucionais.
-
-</div>
-`,
-        "Criar / Atualizar MENU",
-        createMenuPages
-    );
-
-}
-
-
-function createMenuPages(){
-
-    project.files["index.html"] ||= createIndexPage();
-
-    project.files["categorias.html"] ||= createCategoriesPage();
-
-    project.files["institucional.html"] ||= createInstitutionalPage();
-
-    project.pages["index.html"] = {
-
-        type:"menu",
-        name:"Início",
-        slug:"",
-        url:"/"
-
-    };
-
-    project.pages["categorias.html"] = {
-
-        type:"menu",
-        name:"Categorias",
-        slug:"categorias",
-        url:"/categorias"
-
-    };
-
-    project.pages["institucional.html"] = {
-
-        type:"menu",
-        name:"Institucional",
-        slug:"institucional",
-        url:"/institucional"
-
-    };
-
-    updateProjectMetadata();
-
-    renderExplorer();
-
-    terminal(
-        "MENU atualizado: index.html, categorias.html e institucional.html.",
-        "success"
-    );
-
-}
-
-
-/* =========================================================
-   CATEGORIAS
-========================================================= */
-
-function openCategoryGenerator(){
-
-    closeModal("generatorModal");
-
-    openForm(
-        "GERAR CATEGORIA",
-        `
-<div class="field">
-
-<label>Nome da categoria</label>
-
-<input
-    id="generatorName"
-    placeholder="Ex.: Seguros para Veículos"
->
-
-</div>
-
-<div class="field">
-
-<label>Descrição</label>
-
-<textarea
-    id="generatorContent"
-    placeholder="Descrição da categoria..."
-></textarea>
-
-</div>
-
-<label class="checkbox">
-
-<input
-    type="checkbox"
-    id="generatorBootstrap"
->
-
-Aplicar Bootstrap 5 e responsividade
-
-</label>
-
-<div class="info-box">
-
-Esta opção gera somente uma página de <strong>CATEGORIA</strong>.
-
-Exemplo:
-
-<br><br>
-
-<strong>seguros-para-veiculos.html</strong>
-
-</div>
-`,
-        "Gerar Categoria",
-        generateCategoryPage
-    );
-
-}
-
-
-function generateCategoryPage(){
-
-    const name =
-        document.getElementById("generatorName").value.trim();
-
-    const content =
-        document.getElementById("generatorContent").value.trim();
-
-    const bootstrap =
-        document.getElementById("generatorBootstrap").checked;
-
-    if(!name){
-
-        alert("Informe o nome da categoria.");
+    if(currentTool !== "free" || !drawing){
 
         return;
 
     }
 
-    const slug = slugify(name);
+    const point = getSVGPoint(event);
 
-    const file = slug + ".html";
+    drawingPath.setAttribute(
+        "d",
+        drawingPath.getAttribute("d") +
+        ` L ${point.x} ${point.y}`
+    );
 
-    if(project.files[file]){
+});
 
-        if(!confirm(
-            `O arquivo ${file} já existe. Deseja substituir?`
-        )) return;
+
+svg.addEventListener("mouseup", function(){
+
+    if(currentTool === "free" && drawing){
+
+        drawing = false;
+
+        saveHistory();
+
+        updateLayers();
 
     }
 
-    project.files[file] =
-        createCategoryTemplate(
-            name,
-            content,
-            bootstrap
+});
+
+
+/* =========================================================
+   CREATE RECTANGLE
+========================================================= */
+
+function createRectangle(x,y){
+
+    const rect =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "rect"
         );
 
-    project.pages[file] = {
+    rect.setAttribute("data-layer","true");
 
-        type:"category",
-        name:name,
-        slug:slug,
-        url:"/" + slug
+    rect.setAttribute("x",x);
 
-    };
+    rect.setAttribute("y",y);
 
-    updateCategoryMenuPage();
+    rect.setAttribute("width",180);
 
-    updateProjectMetadata();
+    rect.setAttribute("height",100);
 
-    saveProject();
+    rect.setAttribute("rx",8);
 
-    renderExplorer();
+    rect.setAttribute("fill","#2563eb");
 
-    openFile(file);
+    rect.setAttribute("stroke","#111827");
 
-    closeModal("formModal");
+    rect.setAttribute("stroke-width","0");
 
-    terminal(
-        `Categoria criada: ${file}`,
-        "success"
-    );
+    svg.appendChild(rect);
+
+    selectElement(rect);
+
+    saveHistory();
 
 }
 
 
 /* =========================================================
-   INSTITUCIONAL
+   CREATE CIRCLE
 ========================================================= */
 
-function openInstitutionalGenerator(){
+function createCircle(x,y){
 
-    closeModal("generatorModal");
+    const circle =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+        );
 
-    openForm(
-        "GERAR PÁGINA INSTITUCIONAL",
-        `
-<div class="field">
+    circle.setAttribute("data-layer","true");
 
-<label>Nome da página</label>
+    circle.setAttribute("cx",x);
 
-<input
-    id="generatorName"
-    placeholder="Ex.: Quem Somos"
->
+    circle.setAttribute("cy",y);
 
-</div>
+    circle.setAttribute("r",70);
 
-<div class="field">
+    circle.setAttribute("fill","#ef4444");
 
-<label>Conteúdo</label>
+    circle.setAttribute("stroke","#111827");
 
-<textarea
-    id="generatorContent"
-    placeholder="Conteúdo institucional..."
-></textarea>
+    circle.setAttribute("stroke-width","0");
 
-</div>
+    svg.appendChild(circle);
 
-<label class="checkbox">
+    selectElement(circle);
 
-<input
-    type="checkbox"
-    id="generatorBootstrap"
->
-
-Aplicar Bootstrap 5 e responsividade
-
-</label>
-
-<div class="info-box">
-
-Esta opção gera somente páginas da área
-<strong>INSTITUCIONAL</strong>.
-
-Exemplos:
-
-<br><br>
-
-quem-somos.html<br>
-contato.html<br>
-nossa-historia.html
-
-</div>
-`,
-        "Gerar Institucional",
-        generateInstitutionalPage
-    );
+    saveHistory();
 
 }
 
 
-function generateInstitutionalPage(){
+/* =========================================================
+   CREATE LINE
+========================================================= */
 
-    const name =
-        document.getElementById("generatorName").value.trim();
+function createLine(x,y){
 
-    const content =
-        document.getElementById("generatorContent").value.trim();
+    const line =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+        );
 
-    const bootstrap =
-        document.getElementById("generatorBootstrap").checked;
+    line.setAttribute("data-layer","true");
 
-    if(!name){
+    line.setAttribute("x1",x);
 
-        alert("Informe o nome da página.");
+    line.setAttribute("y1",y);
+
+    line.setAttribute("x2",x+200);
+
+    line.setAttribute("y2",y+100);
+
+    line.setAttribute("stroke","#111827");
+
+    line.setAttribute("stroke-width","5");
+
+    svg.appendChild(line);
+
+    selectElement(line);
+
+    saveHistory();
+
+}
+
+
+/* =========================================================
+   CREATE TEXT
+========================================================= */
+
+function createText(x,y){
+
+    const text =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "text"
+        );
+
+    text.setAttribute("data-layer","true");
+
+    text.setAttribute("x",x);
+
+    text.setAttribute("y",y);
+
+    text.setAttribute("font-family","Arial");
+
+    text.setAttribute("font-size","40");
+
+    text.setAttribute("font-weight","bold");
+
+    text.setAttribute("fill","#111827");
+
+    text.textContent="Novo Texto";
+
+    svg.appendChild(text);
+
+    selectElement(text);
+
+    saveHistory();
+
+}
+
+
+/* =========================================================
+   FREE DRAW
+========================================================= */
+
+function startFreeDrawing(point){
+
+    drawing = true;
+
+    drawingPath =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "path"
+        );
+
+    drawingPath.setAttribute(
+        "data-layer",
+        "true"
+    );
+
+    drawingPath.setAttribute(
+        "d",
+        `M ${point.x} ${point.y}`
+    );
+
+    drawingPath.setAttribute(
+        "fill",
+        "none"
+    );
+
+    drawingPath.setAttribute(
+        "stroke",
+        "#111827"
+    );
+
+    drawingPath.setAttribute(
+        "stroke-width",
+        "5"
+    );
+
+    drawingPath.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+    drawingPath.setAttribute(
+        "stroke-linejoin",
+        "round"
+    );
+
+    svg.appendChild(drawingPath);
+
+    selectElement(drawingPath);
+
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+function selectElement(element){
+
+    selectedElement = element;
+
+    document
+        .querySelectorAll("[data-layer]")
+        .forEach(el => {
+
+            el.style.outline =
+                el === element
+                    ? "1px dashed #2563eb"
+                    : "";
+
+        });
+
+    updateProperties();
+
+    updateLayers();
+
+}
+
+
+/* =========================================================
+   DESELECT
+========================================================= */
+
+function deselect(){
+
+    selectedElement = null;
+
+    document
+        .querySelectorAll("[data-layer]")
+        .forEach(el => {
+
+            el.style.outline="";
+
+        });
+
+    updateLayers();
+
+}
+
+
+/* =========================================================
+   PROPERTIES
+========================================================= */
+
+function updateProperties(){
+
+    if(!selectedElement){
 
         return;
 
     }
 
-    const slug = slugify(name);
+    const el = selectedElement;
 
-    const file = slug + ".html";
+    let x = 0;
 
-    if(project.files[file]){
+    let y = 0;
 
-        if(!confirm(
-            `O arquivo ${file} já existe. Deseja substituir?`
-        )) return;
+    let w = 0;
+
+    let h = 0;
+
+
+    if(el.tagName === "rect"){
+
+        x = parseFloat(el.getAttribute("x")) || 0;
+
+        y = parseFloat(el.getAttribute("y")) || 0;
+
+        w = parseFloat(el.getAttribute("width")) || 0;
+
+        h = parseFloat(el.getAttribute("height")) || 0;
 
     }
 
-    project.files[file] =
-        createInstitutionalTemplate(
-            name,
-            content,
-            bootstrap
+
+    if(el.tagName === "circle"){
+
+        const r =
+            parseFloat(el.getAttribute("r")) || 0;
+
+        x =
+            (parseFloat(el.getAttribute("cx")) || 0) - r;
+
+        y =
+            (parseFloat(el.getAttribute("cy")) || 0) - r;
+
+        w = r * 2;
+
+        h = r * 2;
+
+    }
+
+
+    if(el.tagName === "text"){
+
+        x =
+            parseFloat(el.getAttribute("x")) || 0;
+
+        y =
+            parseFloat(el.getAttribute("y")) || 0;
+
+        w = 0;
+
+        h = 0;
+
+    }
+
+
+    document.getElementById("objX").value =
+        Math.round(x);
+
+    document.getElementById("objY").value =
+        Math.round(y);
+
+    document.getElementById("objW").value =
+        Math.round(w);
+
+    document.getElementById("objH").value =
+        Math.round(h);
+
+
+    const fill =
+        el.getAttribute("fill") || "#000000";
+
+    if(fill !== "none"){
+
+        document.getElementById("fillColor").value =
+            normalizeColor(fill);
+
+        document.getElementById("fillValue").textContent =
+            normalizeColor(fill);
+
+    }
+
+
+    const stroke =
+        el.getAttribute("stroke") || "#000000";
+
+    if(stroke !== "none"){
+
+        document.getElementById("strokeColor").value =
+            normalizeColor(stroke);
+
+        document.getElementById("strokeValue").textContent =
+            normalizeColor(stroke);
+
+    }
+
+
+    document.getElementById("strokeWidth").value =
+        parseFloat(
+            el.getAttribute("stroke-width") || 0
         );
 
-    project.pages[file] = {
+    document.getElementById("opacity").value =
+        parseFloat(
+            el.getAttribute("opacity") || 1
+        );
 
-        type:"institutional",
-        name:name,
-        slug:slug,
-        url:"/" + slug
 
-    };
+    const textPanel =
+        document.getElementById("textPanel");
 
-    updateInstitutionalMenuPage();
+    if(el.tagName === "text"){
 
-    updateProjectMetadata();
+        textPanel.style.display="block";
 
-    saveProject();
+        document.getElementById("textContent").value =
+            el.textContent;
 
-    renderExplorer();
+        document.getElementById("textSize").value =
+            parseFloat(
+                el.getAttribute("font-size") || 40
+            );
 
-    openFile(file);
+        document.getElementById("textFont").value =
+            el.getAttribute("font-family") || "Arial";
 
-    closeModal("formModal");
+    }else{
 
-    terminal(
-        `Página institucional criada: ${file}`,
-        "success"
-    );
+        textPanel.style.display="none";
+
+    }
 
 }
 
 
 /* =========================================================
-   SUBPÁGINAS
+   UPDATE OBJECT
 ========================================================= */
 
-function openSubpageGenerator(){
+function updateObject(){
 
-    closeModal("generatorModal");
-
-    const parents = Object.entries(project.pages)
-        .filter(([file,data]) =>
-            data.type === "category" ||
-            data.type === "institutional"
-        );
-
-    let options = "";
-
-    parents.forEach(([file,data]) => {
-
-        options += `
-<option value="${escapeHTML(file)}">
-${escapeHTML(data.name)} — ${escapeHTML(file)}
-</option>
-`;
-
-    });
-
-    if(!options){
-
-        openForm(
-            "SUBPÁGINA",
-            `
-<div class="info-box">
-
-<strong>Nenhuma página geradora encontrada.</strong><br><br>
-
-Crie primeiro uma página em
-<strong>CATEGORIAS</strong> ou
-<strong>INSTITUCIONAL</strong>.
-
-</div>
-`,
-            "Fechar",
-            () => closeModal("formModal")
-        );
+    if(!selectedElement){
 
         return;
 
     }
 
-    openForm(
-        "GERAR SUBPÁGINA",
-        `
-<div class="field">
+    const el = selectedElement;
 
-<label>Página geradora / página pai</label>
+    const x =
+        parseFloat(
+            document.getElementById("objX").value
+        ) || 0;
 
-<select id="generatorParent">
+    const y =
+        parseFloat(
+            document.getElementById("objY").value
+        ) || 0;
 
-${options}
+    const w =
+        parseFloat(
+            document.getElementById("objW").value
+        ) || 0;
 
-</select>
+    const h =
+        parseFloat(
+            document.getElementById("objH").value
+        ) || 0;
 
-</div>
 
-<div class="field">
+    if(el.tagName === "rect"){
 
-<label>Nome da subpágina</label>
+        el.setAttribute("x",x);
 
-<input
-    id="generatorName"
-    placeholder="Ex.: Seguro Auto"
->
+        el.setAttribute("y",y);
 
-</div>
+        el.setAttribute("width",w);
 
-<div class="field">
+        el.setAttribute("height",h);
 
-<label>Conteúdo</label>
+    }
 
-<textarea
-    id="generatorContent"
-    placeholder="Conteúdo da subpágina..."
-></textarea>
 
-</div>
+    if(el.tagName === "circle"){
 
-<label class="checkbox">
+        const r =
+            Math.min(w,h) / 2;
 
-<input
-    type="checkbox"
-    id="generatorBootstrap"
->
+        el.setAttribute(
+            "cx",
+            x + r
+        );
 
-Aplicar Bootstrap 5 e responsividade
+        el.setAttribute(
+            "cy",
+            y + r
+        );
 
-</label>
+        el.setAttribute(
+            "r",
+            r
+        );
 
-<div class="info-box">
+    }
 
-A subpágina será vinculada à página selecionada.
 
-<br><br>
+    if(el.tagName === "text"){
 
-Exemplo:
+        el.setAttribute("x",x);
 
-<br><br>
+        el.setAttribute("y",y);
 
-📁 Seguros para Veículos<br>
-&nbsp;&nbsp;└── 📄 Seguro Auto
+    }
 
-<br><br>
-
-A URL pública poderá ser:
-
-<strong>/seguro-auto</strong>
-
-</div>
-`,
-        "Gerar Subpágina",
-        generateSubpage
-    );
+    saveHistory();
 
 }
 
 
-function generateSubpage(){
+/* =========================================================
+   APPEARANCE
+========================================================= */
 
-    const parent =
-        document.getElementById("generatorParent").value;
+function updateAppearance(){
 
-    const name =
-        document.getElementById("generatorName").value.trim();
-
-    const content =
-        document.getElementById("generatorContent").value.trim();
-
-    const bootstrap =
-        document.getElementById("generatorBootstrap").checked;
-
-    if(!name){
-
-        alert("Informe o nome da subpágina.");
+    if(!selectedElement){
 
         return;
 
     }
 
-    const parentData =
-        project.pages[parent];
+    const fill =
+        document.getElementById("fillColor").value;
 
-    if(!parentData){
+    const stroke =
+        document.getElementById("strokeColor").value;
 
-        alert("Página pai inválida.");
+    const strokeWidth =
+        document.getElementById("strokeWidth").value;
+
+    const opacity =
+        document.getElementById("opacity").value;
+
+
+    selectedElement.setAttribute(
+        "fill",
+        fill
+    );
+
+    selectedElement.setAttribute(
+        "stroke",
+        stroke
+    );
+
+    selectedElement.setAttribute(
+        "stroke-width",
+        strokeWidth
+    );
+
+    selectedElement.setAttribute(
+        "opacity",
+        opacity
+    );
+
+
+    document.getElementById("fillValue").textContent =
+        fill;
+
+    document.getElementById("strokeValue").textContent =
+        stroke;
+
+    saveHistory();
+
+}
+
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+function updateText(){
+
+    if(!selectedElement ||
+       selectedElement.tagName !== "text"){
 
         return;
 
     }
 
-    const slug = slugify(name);
+    selectedElement.textContent =
+        document.getElementById(
+            "textContent"
+        ).value;
 
-    const file = slug + ".html";
-
-    if(project.files[file]){
-
-        if(!confirm(
-            `O arquivo ${file} já existe. Deseja substituir?`
-        )) return;
-
-    }
-
-    project.files[file] =
-        createSubpageTemplate(
-            name,
-            content,
-            parent,
-            parentData,
-            bootstrap
-        );
-
-    project.pages[file] = {
-
-        type:"subpage",
-        name:name,
-        slug:slug,
-        parent:parent,
-        parentType:parentData.type,
-        url:"/" + slug
-
-    };
-
-    updateParentPage(parent);
-
-    updateProjectMetadata();
-
-    saveProject();
-
-    renderExplorer();
-
-    openFile(file);
-
-    closeModal("formModal");
-
-    terminal(
-        `Subpágina criada: ${file} → ${parent}`,
-        "success"
+    selectedElement.setAttribute(
+        "font-size",
+        document.getElementById(
+            "textSize"
+        ).value
     );
 
-}
-
-
-/* =========================================================
-   TEMPLATES
-========================================================= */
-
-function bootstrapHead(){
-
-    return `
-<link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-rel="stylesheet">
-`;
-
-}
-
-
-function bootstrapScript(){
-
-    return `
-<script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
-<\/script>
-`;
-
-}
-
-
-function createCategoryTemplate(
-    name,
-    content,
-    bootstrap
-){
-
-    const children = getChildrenHTML(
-        getFileFromPageName(name,"category")
+    selectedElement.setAttribute(
+        "font-family",
+        document.getElementById(
+            "textFont"
+        ).value
     );
 
-    const extraHead =
-        bootstrap ? bootstrapHead() : "";
-
-    const extraScript =
-        bootstrap ? bootstrapScript() : "";
-
-    const body = `
-
-<header class="${bootstrap ? "bg-dark py-3" : ""}">
-
-<nav class="${bootstrap ? "container navbar navbar-expand-lg navbar-dark" : ""}">
-
-<a href="index.html">
-Início
-</a>
-
-<a href="categorias.html">
-Categorias
-</a>
-
-<a href="institucional.html">
-Institucional
-</a>
-
-</nav>
-
-</header>
-
-<main class="${bootstrap ? "container py-5" : ""}">
-
-<h1>${escapeHTML(name)}</h1>
-
-<p>
-${escapeHTML(content)}
-</p>
-
-<section>
-
-<h2>Subpáginas</h2>
-
-${children || "<p>Esta categoria ainda não possui subpáginas.</p>"}
-
-</section>
-
-</main>
-`;
-
-    return `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${escapeHTML(name)}</title>
-<link rel="stylesheet" href="style.css">
-${extraHead}
-</head>
-<body>
-
-${body}
-
-<script src="script.js"><\/script>
-${extraScript}
-
-</body>
-</html>`;
-
-}
-
-
-function createInstitutionalTemplate(
-    name,
-    content,
-    bootstrap
-){
-
-    const extraHead =
-        bootstrap ? bootstrapHead() : "";
-
-    const extraScript =
-        bootstrap ? bootstrapScript() : "";
-
-    const body = `
-
-<header class="${bootstrap ? "bg-dark py-3" : ""}">
-
-<nav class="${bootstrap ? "container navbar navbar-expand-lg navbar-dark" : ""}">
-
-<a href="index.html">
-Início
-</a>
-
-<a href="categorias.html">
-Categorias
-</a>
-
-<a href="institucional.html">
-Institucional
-</a>
-
-</nav>
-
-</header>
-
-<main class="${bootstrap ? "container py-5" : ""}">
-
-<h1>${escapeHTML(name)}</h1>
-
-<p>
-${escapeHTML(content)}
-</p>
-
-<section>
-
-<h2>Subpáginas</h2>
-
-<p>
-Esta página institucional pode receber subpáginas
-através do gerador de SUBPÁGINA.
-</p>
-
-</section>
-
-</main>
-`;
-
-    return `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${escapeHTML(name)}</title>
-<link rel="stylesheet" href="style.css">
-${extraHead}
-</head>
-<body>
-
-${body}
-
-<script src="script.js"><\/script>
-${extraScript}
-
-</body>
-</html>`;
-
-}
-
-
-function createSubpageTemplate(
-    name,
-    content,
-    parentFile,
-    parentData,
-    bootstrap
-){
-
-    const extraHead =
-        bootstrap ? bootstrapHead() : "";
-
-    const extraScript =
-        bootstrap ? bootstrapScript() : "";
-
-    const parentLabel =
-        escapeHTML(parentData.name);
-
-    const body = `
-
-<header class="${bootstrap ? "bg-dark py-3" : ""}">
-
-<nav class="${bootstrap ? "container navbar navbar-expand-lg navbar-dark" : ""}">
-
-<a href="index.html">
-Início
-</a>
-
-<a href="categorias.html">
-Categorias
-</a>
-
-<a href="institucional.html">
-Institucional
-</a>
-
-</nav>
-
-</header>
-
-<main class="${bootstrap ? "container py-5" : ""}">
-
-<p>
-
-<a href="${escapeHTML(parentFile)}">
-← Voltar para ${parentLabel}
-</a>
-
-</p>
-
-<h1>${escapeHTML(name)}</h1>
-
-<div>
-
-${escapeHTML(content)}
-
-</div>
-
-</main>
-`;
-
-    return `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${escapeHTML(name)}</title>
-<link rel="stylesheet" href="style.css">
-${extraHead}
-</head>
-<body>
-
-${body}
-
-<script src="script.js"><\/script>
-${extraScript}
-
-</body>
-</html>`;
+    saveHistory();
 
 }
 
 
 /* =========================================================
-   RELAÇÃO PAI / FILHO
+   BACKGROUND
 ========================================================= */
 
-function getFileFromPageName(name,type){
+function changeBackground(){
 
-    const found =
-        Object.entries(project.pages)
-            .find(([file,data]) =>
-                data.name === name &&
-                data.type === type
-            );
+    const color =
+        document.getElementById(
+            "backgroundColor"
+        ).value;
 
-    return found ? found[0] : null;
-
-}
-
-
-function getChildrenHTML(parentFile){
-
-    if(!parentFile) return "";
-
-    const children =
-        Object.entries(project.pages)
-            .filter(([file,data]) =>
-                data.type === "subpage" &&
-                data.parent === parentFile
-            );
-
-    if(!children.length){
-
-        return "";
-
-    }
-
-    return `
-<ul>
-${children.map(([file,data]) => `
-<li>
-<a href="${escapeHTML(file)}">
-${escapeHTML(data.name)}
-</a>
-</li>
-`).join("")}
-</ul>
-`;
-
-}
-
-
-function updateParentPage(parentFile){
-
-    const parentData =
-        project.pages[parentFile];
-
-    if(!parentData) return;
-
-    if(parentData.type === "category"){
-
-        project.files[parentFile] =
-            createCategoryTemplate(
-                parentData.name,
-                "",
-                false
-            );
-
-    }
-
-    if(parentData.type === "institutional"){
-
-        project.files[parentFile] =
-            createInstitutionalTemplate(
-                parentData.name,
-                "",
-                false
-            );
-
-    }
-
-}
-
-
-/* =========================================================
-   MENU DE CATEGORIAS
-========================================================= */
-
-function updateCategoryMenuPage(){
-
-    const categories =
-        Object.entries(project.pages)
-            .filter(([file,data]) =>
-                data.type === "category"
-            );
-
-    const list = categories.length
-
-        ? `
-<ul>
-${categories.map(([file,data]) => `
-<li>
-<a href="${escapeHTML(file)}">
-${escapeHTML(data.name)}
-</a>
-</li>
-`).join("")}
-</ul>
-`
-
-        : `
-<p>
-Nenhuma categoria cadastrada.
-</p>
-`;
-
-    project.files["categorias.html"] =
-        baseHTML(
-            "Categorias",
-            `
-<section>
-
-<h1>Categorias</h1>
-
-<p>
-Confira nossas categorias.
-</p>
-
-${list}
-
-</section>
-`
+    const background =
+        document.getElementById(
+            "background"
         );
 
-}
-
-
-/* =========================================================
-   MENU INSTITUCIONAL
-========================================================= */
-
-function updateInstitutionalMenuPage(){
-
-    const pages =
-        Object.entries(project.pages)
-            .filter(([file,data]) =>
-                data.type === "institutional"
-            );
-
-    const list = pages.length
-
-        ? `
-<ul>
-${pages.map(([file,data]) => `
-<li>
-<a href="${escapeHTML(file)}">
-${escapeHTML(data.name)}
-</a>
-</li>
-`).join("")}
-</ul>
-`
-
-        : `
-<p>
-Nenhuma página institucional cadastrada.
-</p>
-`;
-
-    project.files["institucional.html"] =
-        baseHTML(
-            "Institucional",
-            `
-<section>
-
-<h1>Institucional</h1>
-
-<p>
-Conheça nossa empresa.
-</p>
-
-${list}
-
-</section>
-`
-        );
-
-}
-
-
-/* =========================================================
-   FORM
-========================================================= */
-
-function openForm(
-    title,
-    html,
-    buttonText,
-    callback
-){
-
-    document.getElementById("formTitle").textContent =
-        title;
-
-    document.getElementById("formBody").innerHTML =
-        html;
-
-    const button =
-        document.getElementById("formSubmit");
-
-    button.textContent =
-        buttonText;
-
-    button.onclick =
-        callback;
-
-    openModal("formModal");
-
-}
-
-
-/* =========================================================
-   SITEMAP
-========================================================= */
-
-function openSitemapGenerator(){
-
-    closeModal("generatorModal");
-
-    openForm(
-        "GERAR SITEMAP",
-        `
-<div class="field">
-
-<label>URL principal do site</label>
-
-<input
-    id="sitemapBase"
-    placeholder="https://christo.com.br"
->
-
-</div>
-
-<div class="info-box">
-
-O MultiScript utilizará as páginas registradas
-no projeto para gerar automaticamente o
-<strong>sitemap.xml</strong>.
-
-<br><br>
-
-Serão incluídas:
-
-<br><br>
-
-• index.html<br>
-• categorias.html<br>
-• institucional.html<br>
-• categorias geradas<br>
-• páginas institucionais<br>
-• subpáginas
-
-</div>
-`,
-        "Gerar Sitemap",
-        generateSitemap
+    background.setAttribute(
+        "fill",
+        color
     );
 
-}
+    document.getElementById(
+        "backgroundValue"
+    ).textContent = color;
 
-
-function normalizeBaseURL(url){
-
-    return String(url)
-        .trim()
-        .replace(/\/+$/,"");
+    saveHistory();
 
 }
 
 
-function generateSitemap(){
+/* =========================================================
+   CANVAS
+========================================================= */
 
-    const base =
-        normalizeBaseURL(
-            document.getElementById("sitemapBase").value
+function resizeCanvas(){
+
+    const width =
+        parseInt(
+            document.getElementById(
+                "canvasWidth"
+            ).value
+        ) || 1000;
+
+    const height =
+        parseInt(
+            document.getElementById(
+                "canvasHeight"
+            ).value
+        ) || 650;
+
+
+    svg.setAttribute(
+        "width",
+        width
+    );
+
+    svg.setAttribute(
+        "height",
+        height
+    );
+
+    svg.setAttribute(
+        "viewBox",
+        `0 0 ${width} ${height}`
+    );
+
+
+    const background =
+        document.getElementById(
+            "background"
         );
 
-    if(!base){
+    background.setAttribute(
+        "width",
+        width
+    );
 
-        alert("Informe a URL principal do site.");
+    background.setAttribute(
+        "height",
+        height
+    );
 
-        return;
+    saveHistory();
 
-    }
+}
 
-    const urls = [];
 
-    Object.entries(project.pages)
-        .forEach(([file,data]) => {
+/* =========================================================
+   LAYERS
+========================================================= */
 
-            const url =
-                base +
+function updateLayers(){
+
+    const container =
+        document.getElementById(
+            "layers"
+        );
+
+    container.innerHTML="";
+
+
+    const elements =
+        Array.from(
+            svg.querySelectorAll(
+                "[data-layer]"
+            )
+        );
+
+
+    elements.reverse().forEach(
+        (element,index) => {
+
+            const layer =
+                document.createElement("div");
+
+            layer.className =
+                "layer" +
                 (
-                    data.url === "/"
-                        ? "/"
-                        : data.url
+                    element === selectedElement
+                        ? " selected"
+                        : ""
                 );
 
-            if(!urls.includes(url)){
 
-                urls.push(url);
+            const eye =
+                document.createElement("button");
 
-            }
+            eye.className="layer-eye";
 
-        });
+            eye.textContent =
+                element.style.display === "none"
+                    ? "○"
+                    : "●";
 
-    const xml =
-`<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(url => `
-    <url>
-        <loc>${escapeXML(url)}</loc>
-    </url>
-`).join("")}
-</urlset>`;
 
-    project.files["sitemap.xml"] =
-        xml;
+            eye.onclick = function(event){
 
-    updateProjectMetadata();
+                event.stopPropagation();
 
-    saveProject();
+                if(element.style.display === "none"){
 
-    renderExplorer();
-
-    openFile("sitemap.xml");
-
-    closeModal("formModal");
-
-    terminal(
-        `Sitemap criado com ${urls.length} URLs.`,
-        "success"
-    );
-
-}
-
-
-function escapeXML(value){
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&apos;");
-
-}
-
-
-/* =========================================================
-   PLUGINS
-========================================================= */
-
-document.getElementById("phpInput")
-.addEventListener("change",async function(){
-
-    const files = Array.from(this.files);
-
-    for(const file of files){
-
-        if(!file.name.toLowerCase().endsWith(".php")){
-
-            continue;
-
-        }
-
-        const content =
-            await file.text();
-
-        const path =
-            "plugins/" + file.name;
-
-        project.files[path] =
-            content;
-
-        project.plugins[path] =
-            true;
-
-        terminal(
-            `Plugin importado: ${path}`,
-            "success"
-        );
-
-    }
-
-    updateProjectMetadata();
-
-    saveProject();
-
-    renderExplorer();
-
-    renderPluginList();
-
-    this.value = "";
-
-});
-
-
-function openPlugins(){
-
-    renderPluginList();
-
-    openModal("pluginModal");
-
-}
-
-
-function renderPluginList(){
-
-    const box =
-        document.getElementById("pluginList");
-
-    const plugins =
-        Object.keys(project.files)
-            .filter(file =>
-                file.startsWith("plugins/") &&
-                file.endsWith(".php")
-            );
-
-    if(!plugins.length){
-
-        box.innerHTML = `
-<div class="info-box">
-Nenhum plugin PHP foi importado.
-</div>
-`;
-
-        return;
-
-    }
-
-    box.innerHTML = "";
-
-    plugins.forEach(file => {
-
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "plugin-row";
-
-        const span =
-            document.createElement("span");
-
-        span.textContent =
-            file;
-
-        const open =
-            document.createElement("button");
-
-        open.textContent =
-            "Abrir";
-
-        open.onclick = () => {
-
-            closeModal("pluginModal");
-
-            openFile(file);
-
-        };
-
-        const remove =
-            document.createElement("button");
-
-        remove.textContent =
-            "Remover";
-
-        remove.onclick = () => {
-
-            if(!confirm(
-                `Remover ${file}?`
-            )) return;
-
-            delete project.files[file];
-
-            delete project.plugins[file];
-
-            updateProjectMetadata();
-
-            saveProject();
-
-            renderExplorer();
-
-            renderPluginList();
-
-        };
-
-        row.appendChild(span);
-        row.appendChild(open);
-        row.appendChild(remove);
-
-        box.appendChild(row);
-
-    });
-
-}
-
-
-/* =========================================================
-   FORMATAR
-========================================================= */
-
-function formatHTML(){
-
-    if(
-        currentFile === "multiscript.json"
-    ){
-
-        openModal("protectedModal");
-
-        return;
-
-    }
-
-    if(
-        !currentFile.endsWith(".html")
-    ){
-
-        terminal(
-            "Formatação automática disponível para HTML.",
-            "warning"
-        );
-
-        return;
-
-    }
-
-    const source =
-        document.getElementById("editor").value;
-
-    let formatted =
-        source
-            .replace(/>\s*</g,">\n<")
-            .replace(/\n{2,}/g,"\n");
-
-    let depth = 0;
-
-    const lines =
-        formatted
-            .split("\n")
-            .map(line => line.trim())
-            .filter(Boolean);
-
-    const result = [];
-
-    lines.forEach(line => {
-
-        if(
-            /^<\//.test(line)
-        ){
-
-            depth =
-                Math.max(0,depth - 1);
-
-        }
-
-        result.push(
-            "    ".repeat(depth) + line
-        );
-
-        if(
-            /^<[^!/?][^>]*>$/.test(line) &&
-            !/<\/[^>]+>$/.test(line) &&
-            !/\/>$/.test(line) &&
-            !/^<(meta|link|img|input|br|hr)/i.test(line)
-        ){
-
-            depth++;
-
-        }
-
-    });
-
-    document.getElementById("editor").value =
-        result.join("\n");
-
-    editorInput();
-
-    terminal(
-        `Arquivo formatado: ${currentFile}`,
-        "success"
-    );
-
-}
-
-
-/* =========================================================
-   SALVAR
-========================================================= */
-
-function saveProject(){
-
-    updateProjectMetadata();
-
-    localStorage.setItem(
-        "multiscript-v14-project",
-        JSON.stringify(project)
-    );
-
-    modified = false;
-
-    document.getElementById("statusModified").textContent =
-        "Salvo";
-
-    terminal(
-        "Projeto salvo no armazenamento local.",
-        "success"
-    );
-
-}
-
-
-/* =========================================================
-   CARREGAR
-========================================================= */
-
-function loadProject(){
-
-    const saved =
-        localStorage.getItem(
-            "multiscript-v14-project"
-        );
-
-    if(!saved){
-
-        project.files["index.html"] =
-            createIndexPage();
-
-        project.files["categorias.html"] =
-            createCategoriesPage();
-
-        project.files["institucional.html"] =
-            createInstitutionalPage();
-
-        project.files["style.css"] =
-            createBaseCSS();
-
-        project.files["script.js"] =
-            createBaseJS();
-
-        updateProjectMetadata();
-
-        return;
-
-    }
-
-    try{
-
-        project =
-            JSON.parse(saved);
-
-    }catch(error){
-
-        console.error(error);
-
-        return;
-
-    }
-
-    project.plugins ||= {};
-
-    project.pages ||= {};
-
-    project.protectedFiles ||= [
-        "multiscript.json"
-    ];
-
-    /* MIGRAÇÃO DO MULTISCRIPT.JS ANTIGO */
-
-    if(project.files["multiscript.js"]){
-
-        delete project.files["multiscript.js"];
-
-        terminal(
-            "multiscript.js antigo removido durante a migração.",
-            "warning"
-        );
-
-    }
-
-    /* GARANTE MENU */
-
-    if(!project.files["index.html"]){
-
-        project.files["index.html"] =
-            createIndexPage();
-
-    }
-
-    if(!project.files["categorias.html"]){
-
-        project.files["categorias.html"] =
-            createCategoriesPage();
-
-    }
-
-    if(!project.files["institucional.html"]){
-
-        project.files["institucional.html"] =
-            createInstitutionalPage();
-
-    }
-
-    if(!project.pages["index.html"]){
-
-        project.pages["index.html"] = {
-
-            type:"menu",
-            name:"Início",
-            slug:"",
-            url:"/"
-
-        };
-
-    }
-
-    if(!project.pages["categorias.html"]){
-
-        project.pages["categorias.html"] = {
-
-            type:"menu",
-            name:"Categorias",
-            slug:"categorias",
-            url:"/categorias"
-
-        };
-
-    }
-
-    if(!project.pages["institucional.html"]){
-
-        project.pages["institucional.html"] = {
-
-            type:"menu",
-            name:"Institucional",
-            slug:"institucional",
-            url:"/institucional"
-
-        };
-
-    }
-
-    project.protectedFiles = [
-        "multiscript.json"
-    ];
-
-    updateProjectMetadata();
-
-}
-
-
-/* =========================================================
-   PREVIEW
-========================================================= */
-
-function previewProject(){
-
-    const preview =
-        window.open(
-            "",
-            "_blank"
-        );
-
-    if(!preview){
-
-        alert(
-            "O navegador bloqueou a janela de Preview."
-        );
-
-        return;
-
-    }
-
-    const html =
-        project.files["index.html"];
-
-    preview.document.open();
-
-    preview.document.write(html);
-
-    preview.document.close();
-
-    terminal(
-        "Preview aberto.",
-        "success"
-    );
-
-}
-
-
-/* =========================================================
-   CRÉDITOS
-========================================================= */
-
-function openCreditModal(){
-
-    openModal("creditModal");
-
-}
-
-
-function getCreditHTML(type){
-
-    const credits = {
-
-        multipagemel: `
-<footer class="multiscript-credit">
-<p>Este site garante a segurança na coleta e tratamento de dados, em conformidade com a LGPD.</p>
-<p>© V14.0.0 by MultiScript HTML Editor</p>
-<p>
-<a href="https://multipagemel.pages.dev/" target="_blank" rel="noopener">
-Multipage Mel - Criação de Sites
-</a>
-</p>
-</footer>
-`,
-
-        apenascorretores: `
-<footer class="multiscript-credit">
-<p>Este site garante a segurança na coleta e tratamento de dados, em conformidade com a LGPD.</p>
-<p>© V14.0.0 by MultiScript HTML Editor</p>
-<p>
-<a href="https://apenascorretores.pages.dev/" target="_blank" rel="noopener">
-Apenas Corretores
-</a>
-</p>
-</footer>
-`,
-
-        homemsite: `
-<footer class="multiscript-credit">
-<p>Este site garante a segurança na coleta e tratamento de dados, em conformidade com a LGPD.</p>
-<p>© V14.0.0 by MultiScript HTML Editor</p>
-<p>
-<a href="https://homemsite.pages.dev/" target="_blank" rel="noopener">
-HomemSite
-</a>
-</p>
-</footer>
-`,
-
-        "homemsite-parana": `
-<footer class="multiscript-credit">
-<p>Este site garante a segurança na coleta e tratamento de dados, em conformidade com a LGPD.</p>
-<p>© V14.0.0 by MultiScript HTML Editor</p>
-<p>
-<a href="https://homemsite.pages.dev/parana/" target="_blank" rel="noopener">
-HomemSite Paraná
-</a>
-</p>
-</footer>
-`
-
-    };
-
-    return credits[type] || "";
-
-}
-
-
-/* =========================================================
-   EXPORTAR ZIP
-========================================================= */
-
-async function exportZip(creditType){
-
-    closeModal("creditModal");
-
-    if(typeof JSZip === "undefined"){
-
-        alert(
-            "JSZip não foi carregado."
-        );
-
-        return;
-
-    }
-
-    updateProjectMetadata();
-
-    const zip =
-        new JSZip();
-
-    const credit =
-        getCreditHTML(creditType);
-
-    Object.entries(project.files)
-        .forEach(([path,content]) => {
-
-            let finalContent =
-                content;
-
-            if(
-                credit &&
-                path.endsWith(".html")
-            ){
-
-                if(
-                    finalContent.includes(
-                        "</body>"
-                    )
-                ){
-
-                    finalContent =
-                        finalContent.replace(
-                            "</body>",
-                            credit + "\n</body>"
-                        );
+                    element.style.display="";
 
                 }else{
 
-                    finalContent +=
-                        "\n" + credit;
+                    element.style.display="none";
 
                 }
 
-            }
+                updateLayers();
 
-            zip.file(
-                path,
-                finalContent
+            };
+
+
+            const name =
+                document.createElement("div");
+
+            name.className =
+                "layer-name";
+
+
+            name.textContent =
+                getElementName(
+                    element,
+                    index
+                );
+
+
+            layer.appendChild(eye);
+
+            layer.appendChild(name);
+
+
+            layer.onclick = function(){
+
+                selectElement(element);
+
+            };
+
+
+            container.appendChild(layer);
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LAYER NAME
+========================================================= */
+
+function getElementName(element,index){
+
+    if(element.tagName === "text"){
+
+        return "🔤 " +
+            (
+                element.textContent ||
+                "Texto"
             );
 
-        });
+    }
+
+    if(element.tagName === "rect"){
+
+        if(element.id === "background"){
+
+            return "Fundo";
+
+        }
+
+        return "▭ Retângulo " +
+            (index + 1);
+
+    }
+
+    if(element.tagName === "circle"){
+
+        return "○ Círculo " +
+            (index + 1);
+
+    }
+
+    if(element.tagName === "line"){
+
+        return "╱ Linha " +
+            (index + 1);
+
+    }
+
+    if(element.tagName === "path"){
+
+        return "✎ Desenho " +
+            (index + 1);
+
+    }
+
+    if(element.tagName === "image"){
+
+        return "🖼 Imagem " +
+            (index + 1);
+
+    }
+
+    return element.tagName;
+
+}
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Delete" &&
+            selectedElement &&
+            selectedElement.id !== "background"
+        ){
+
+            selectedElement.remove();
+
+            selectedElement=null;
+
+            saveHistory();
+
+            updateLayers();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   DUPLICATE
+========================================================= */
+
+function duplicateSelected(){
+
+    if(!selectedElement){
+
+        return;
+
+    }
+
+    const clone =
+        selectedElement.cloneNode(true);
+
+    clone.removeAttribute("id");
+
+    clone.setAttribute(
+        "data-layer",
+        "true"
+    );
+
+
+    if(clone.hasAttribute("x")){
+
+        clone.setAttribute(
+            "x",
+            parseFloat(
+                clone.getAttribute("x")
+            ) + 20
+        );
+
+    }
+
+    if(clone.hasAttribute("y")){
+
+        clone.setAttribute(
+            "y",
+            parseFloat(
+                clone.getAttribute("y")
+            ) + 20
+        );
+
+    }
+
+
+    svg.appendChild(clone);
+
+    selectElement(clone);
+
+    saveHistory();
+
+}
+
+
+/* =========================================================
+   MOVE LAYER
+========================================================= */
+
+function bringForward(){
+
+    if(!selectedElement){
+
+        return;
+
+    }
+
+    const next =
+        selectedElement.nextElementSibling;
+
+    if(next){
+
+        svg.insertBefore(
+            next,
+            selectedElement
+        );
+
+    }
+
+    saveHistory();
+
+    updateLayers();
+
+}
+
+
+function sendBackward(){
+
+    if(!selectedElement){
+
+        return;
+
+    }
+
+    const previous =
+        selectedElement.previousElementSibling;
+
+    if(previous){
+
+        svg.insertBefore(
+            selectedElement,
+            previous
+        );
+
+    }
+
+    saveHistory();
+
+    updateLayers();
+
+}
+
+
+/* =========================================================
+   IMPORT IMAGE
+========================================================= */
+
+function importImage(){
+
+    const input =
+        document.createElement("input");
+
+    input.type="file";
+
+    input.accept="image/*,.svg";
+
+    input.onchange = function(){
+
+        const file =
+            input.files[0];
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload = function(event){
+
+            const image =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "image"
+                );
+
+
+            image.setAttribute(
+                "data-layer",
+                "true"
+            );
+
+            image.setAttribute(
+                "x",
+                100
+            );
+
+            image.setAttribute(
+                "y",
+                100
+            );
+
+            image.setAttribute(
+                "width",
+                300
+            );
+
+            image.setAttribute(
+                "height",
+                200
+            );
+
+
+            image.setAttribute(
+                "preserveAspectRatio",
+                "xMidYMid meet"
+            );
+
+
+            image.setAttribute(
+                "href",
+                event.target.result
+            );
+
+
+            svg.appendChild(image);
+
+            selectElement(image);
+
+            saveHistory();
+
+        };
+
+
+        reader.readAsDataURL(file);
+
+    };
+
+    input.click();
+
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+function saveHistory(){
+
+    const content =
+        svg.outerHTML;
+
+    history =
+        history.slice(
+            0,
+            historyIndex + 1
+        );
+
+    history.push(content);
+
+    historyIndex =
+        history.length - 1;
+
+
+    if(history.length > 50){
+
+        history.shift();
+
+        historyIndex--;
+
+    }
+
+    updateLayers();
+
+}
+
+
+function restoreHistory(content){
+
+    const parser =
+        new DOMParser();
+
+    const documentSVG =
+        parser.parseFromString(
+            content,
+            "image/svg+xml"
+        );
+
+
+    const newSVG =
+        documentSVG.documentElement;
+
+
+    svg.replaceWith(
+        newSVG
+    );
+
+
+    newSVG.id="svgCanvas";
+
+    window.svg =
+        document.getElementById(
+            "svgCanvas"
+        );
+
+
+    bindSVGEvents();
+
+    deselect();
+
+    updateLayers();
+
+}
+
+
+function undo(){
+
+    if(historyIndex <= 0){
+
+        return;
+
+    }
+
+    historyIndex--;
+
+    restoreHistory(
+        history[historyIndex]
+    );
+
+}
+
+
+function redo(){
+
+    if(
+        historyIndex >=
+        history.length - 1
+    ){
+
+        return;
+
+    }
+
+    historyIndex++;
+
+    restoreHistory(
+        history[historyIndex]
+    );
+
+}
+
+
+/* =========================================================
+   REBIND EVENTS
+========================================================= */
+
+function bindSVGEvents(){
+
+    svg.addEventListener(
+        "mousedown",
+        svgMouseDown
+    );
+
+    svg.addEventListener(
+        "mousemove",
+        svgMouseMove
+    );
+
+    svg.addEventListener(
+        "mouseup",
+        svgMouseUp
+    );
+
+}
+
+
+/* =========================================================
+   ZOOM
+========================================================= */
+
+function applyZoom(){
+
+    workspace.style.transform =
+        `translate(-50%,-50%) scale(${zoom})`;
+
+    document.getElementById(
+        "zoomLabel"
+    ).textContent =
+        Math.round(zoom * 100) + "%";
+
+}
+
+
+function zoomIn(){
+
+    zoom =
+        Math.min(
+            4,
+            zoom + .1
+        );
+
+    applyZoom();
+
+}
+
+
+function zoomOut(){
+
+    zoom =
+        Math.max(
+            .2,
+            zoom - .1
+        );
+
+    applyZoom();
+
+}
+
+
+function zoomReset(){
+
+    zoom=1;
+
+    applyZoom();
+
+}
+
+
+/* =========================================================
+   NORMALIZE COLOR
+========================================================= */
+
+function normalizeColor(color){
+
+    if(
+        !color ||
+        color === "none"
+    ){
+
+        return "#000000";
+
+    }
+
+    if(color.startsWith("#")){
+
+        return color;
+
+    }
+
+    const temp =
+        document.createElement("div");
+
+    temp.style.color=color;
+
+    document.body.appendChild(temp);
+
+    const rgb =
+        getComputedStyle(temp)
+            .color;
+
+    temp.remove();
+
+    const match =
+        rgb.match(/\d+/g);
+
+    if(!match){
+
+        return "#000000";
+
+    }
+
+    return "#" +
+        match
+            .slice(0,3)
+            .map(
+                n =>
+                    Number(n)
+                    .toString(16)
+                    .padStart(2,"0")
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   LOAD SVG
+========================================================= */
+
+function loadSVGFile(filename){
+
+    currentFile=filename;
+
+    const content =
+        project.files[filename];
+
+    if(!content){
+
+        newImage();
+
+        return;
+
+    }
+
+
+    const parser =
+        new DOMParser();
+
+    const parsed =
+        parser.parseFromString(
+            content,
+            "image/svg+xml"
+        );
+
+
+    const imported =
+        document.importNode(
+            parsed.documentElement,
+            true
+        );
+
+
+    svg.replaceWith(
+        imported
+    );
+
+
+    imported.id="svgCanvas";
+
+    window.svg =
+        document.getElementById(
+            "svgCanvas"
+        );
+
+
+    document.getElementById(
+        "fileStatus"
+    ).textContent =
+        filename;
+
+
+    bindSVGEvents();
+
+    history=[];
+
+    historyIndex=-1;
+
+    saveHistory();
+
+    updateLayers();
+
+}
+
+
+/* =========================================================
+   SAVE SVG
+========================================================= */
+
+function saveSVG(){
+
+    if(!svg){
+
+        return;
+
+    }
+
+
+    const clone =
+        svg.cloneNode(true);
+
+
+    clone
+        .querySelectorAll("[data-layer]")
+        .forEach(
+            el => {
+
+                el.style.outline="";
+
+                el.removeAttribute(
+                    "data-layer"
+                );
+
+            }
+        );
+
+
+    const serializer =
+        new XMLSerializer();
+
+
+    const svgCode =
+        serializer.serializeToString(
+            clone
+        );
+
+
+    project.files[currentFile] =
+        svgCode;
+
+
+    if(
+        typeof updateProjectMetadata ===
+        "function"
+    ){
+
+        updateProjectMetadata();
+
+    }
+
+
+    document.getElementById(
+        "fileStatus"
+    ).textContent =
+        "✓ Salvo: " + currentFile;
+
+
+    if(
+        typeof saveProject ===
+        "function"
+    ){
+
+        saveProject();
+
+    }
+
+}
+
+
+/* =========================================================
+   PNG
+========================================================= */
+
+function downloadPNG(){
+
+    const serializer =
+        new XMLSerializer();
+
+    const source =
+        serializer.serializeToString(
+            svg
+        );
+
 
     const blob =
-        await zip.generateAsync({
-            type:"blob"
-        });
+        new Blob(
+            [source],
+            {
+                type:"image/svg+xml"
+            }
+        );
+
 
     const url =
         URL.createObjectURL(blob);
 
-    const a =
-        document.createElement("a");
 
-    a.href =
-        url;
+    const image =
+        new Image();
 
-    a.download =
-        project.name + ".zip";
 
-    document.body.appendChild(a);
+    image.onload=function(){
 
-    a.click();
+        const canvas =
+            document.createElement(
+                "canvas"
+            );
 
-    a.remove();
+        canvas.width =
+            parseInt(
+                svg.getAttribute("width")
+            );
 
-    setTimeout(
-        () => URL.revokeObjectURL(url),
-        1000
-    );
+        canvas.height =
+            parseInt(
+                svg.getAttribute("height")
+            );
 
-    terminal(
-        `ZIP exportado: ${project.name}.zip`,
-        "success"
-    );
+
+        const ctx =
+            canvas.getContext(
+                "2d"
+            );
+
+
+        ctx.drawImage(
+            image,
+            0,
+            0
+        );
+
+
+        const png =
+            canvas.toDataURL(
+                "image/png"
+            );
+
+
+        const a =
+            document.createElement(
+                "a"
+            );
+
+        a.href=png;
+
+        a.download =
+            currentFile
+                .split("/")
+                .pop()
+                .replace(
+                    /\.svg$/i,
+                    ".png"
+                );
+
+        a.click();
+
+        URL.revokeObjectURL(url);
+
+    };
+
+
+    image.src=url;
 
 }
 
 
 /* =========================================================
-   INICIALIZAÇÃO
+   NEW
 ========================================================= */
 
-loadProject();
+function newImage(){
 
-document.getElementById("projectName").textContent =
-    project.name;
+    svg.innerHTML = `
+        <rect
+            id="background"
+            x="0"
+            y="0"
+            width="1000"
+            height="650"
+            fill="#ffffff"/>
+    `;
 
-renderExplorer();
+    document.getElementById(
+        "canvasWidth"
+    ).value=1000;
 
-renderTabs();
+    document.getElementById(
+        "canvasHeight"
+    ).value=650;
 
-openFile(
-    currentFile
-);
+    document.getElementById(
+        "backgroundColor"
+    ).value="#ffffff";
 
-terminal(
-    "MultiScript HTML Editor V14 iniciado.",
-    "success"
-);
+    document.getElementById(
+        "backgroundValue"
+    ).textContent="#ffffff";
 
-terminal(
-    "Arquitetura: MENU → CATEGORIAS / INSTITUCIONAL → SUBPÁGINAS.",
-    "success"
-);
+    deselect();
 
-terminal(
-    "multiscript.json está protegido contra edição.",
-    "warning"
-);
+    saveHistory();
+
+}
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+function closeEditor(){
+
+    if(
+        typeof closeImageEditor ===
+        "function"
+    ){
+
+        closeImageEditor();
+
+        return;
+
+    }
+
+    window.history.back();
+
+}
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+function initializeEditor(){
+
+    loadSVGFile(
+        currentFile
+    );
+
+    applyZoom();
+
+    updateLayers();
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+initializeEditor();
 
 </script>
 
